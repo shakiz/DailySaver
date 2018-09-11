@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Invoice_generate">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!--For client details-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="10dp"
+            android:padding="10dp"
+            android:background="@drawable/layout_shadow">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Client Details"
+                android:padding="10dp"
+                android:textColor="@color/textColorWhite"
+                android:textStyle="bold"
+                android:background="@color/textViewBackground"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:background="@drawable/editetext_shape"
+                android:hint="Company Name"
+                android:id="@+id/companyNameClient"/>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:hint="Address"
+                android:background="@drawable/editetext_shape"
+                android:id="@+id/addressClient"/>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/editetext_shape"
+                android:padding="10dp"
+                android:hint="Country name"
+                android:id="@+id/countryNameClient"/>
+
+        </LinearLayout>
+
+        <!--For in voice details-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/layout_shadow"
+            android:padding="10dp"
+            android:layout_margin="10dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Invoice Details"
+                android:background="@color/textViewBackground"
+                android:textColor="@color/textColorWhite"
+                android:padding="10dp"
+                android:textStyle="bold"/>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/editetext_shape"
+                android:padding="10dp"
+                android:hint="Invoice Name"
+                android:id="@+id/nameOftheInvoice"/>
+            <!--For invoice details date and due date-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/editetext_shape"
+                    android:layout_weight="1"
+                    android:hint="Invoice date"
+                    android:padding="10dp"
+                    android:id="@+id/invoicedate"/>
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/editetext_shape"
+                    android:layout_weight="1"
+                    android:hint="Due Date"
+                    android:padding="10dp"
+                    android:id="@+id/invoiceDueDate"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!--For product or item details-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/layout_shadow">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Item Details"
+                android:padding="10dp"
+                android:background="@color/textViewBackground"
+                android:textColor="@color/textColorWhite"
+                android:textStyle="bold"/>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/editetext_shape"
+                android:hint="Number of item"
+                android:padding="10dp"
+                android:id="@+id/numberOfItem"/>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/editetext_shape"
+                android:padding="10dp"
+                android:hint="Price for per item"
+                android:paddingBottom="10dp"
+                android:id="@+id/priceForPerItem"/>
+
+        </LinearLayout>
+
+        <!--Button for submit data to generate invoice-->
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="Generate Invoice"
+            android:textAllCaps="false"
+            android:padding="10dp"
+            android:layout_margin="10dp"
+            android:id="@+id/buttonGenerateInvoice"
+            android:background="@drawable/buttons_shape"
+            android:textColor="@color/textColorWhite" />
+
+    </LinearLayout>
+
+</ScrollView>

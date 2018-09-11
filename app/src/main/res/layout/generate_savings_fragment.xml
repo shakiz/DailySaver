@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="10dp"
+                android:padding="10dp"
+                android:text="Amount"/>
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="Enter Amount"
+                android:inputType="numberDecimal"
+                android:layout_weight="2"
+                android:id="@+id/amountOfEarning"
+                android:background="@drawable/editetext_shape"
+                android:layout_margin="10dp"
+                android:padding="10dp"/>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Interest Rate"
+                android:layout_weight="1"
+                android:layout_margin="10dp"
+                android:padding="10dp"/>
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/editetext_shape"
+                android:hint="Enter Interest Rate"
+                android:layout_margin="10dp"
+                android:padding="10dp"
+                android:layout_weight="3"
+                android:inputType="numberDecimal"
+                android:id="@+id/amountOfInterestrate"/>
+
+        </LinearLayout>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/buttons_shape"
+            android:layout_gravity="center_horizontal"
+            android:text="Generate Savings"
+            android:textColor="#fff"
+            android:padding="10dp"
+
+            android:layout_margin="10dp"
+            android:textSize="20dp"
+            android:textAllCaps="false"
+            android:id="@+id/button_generate_savings"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:padding="10dp"
+            android:id="@+id/savingsTextview"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:padding="10dp"
+            android:id="@+id/currentTextview"/>
+
+    </LinearLayout>
+
+</ScrollView>

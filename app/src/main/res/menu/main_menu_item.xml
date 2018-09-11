@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:title="generate Invoice"
+        app:showAsAction="always"
+        android:id="@+id/action_generate_invoice"
+        android:icon="@drawable/ic_generate_invoice"/>
+    <item
+        android:title="About Us"
+        android:id="@+id/action_about_us"/>
+</menu>
