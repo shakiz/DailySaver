@@ -28,9 +28,10 @@
                         </option>
                         <option name="values">
                           <map>
+                            <entry key="assetSourceType" value="FILE" />
                             <entry key="color" value="3a587d" />
-                            <entry key="outputName" value="ic_generate_invoice" />
-                            <entry key="sourceFile" value="C:\Users\Shakil" />
+                            <entry key="outputName" value="ic_arrow_down" />
+                            <entry key="sourceFile" value="C:\Users\sakha\Downloads\caret-down.svg" />
                           </map>
                         </option>
                       </PersistentState>

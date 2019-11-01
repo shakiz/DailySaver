@@ -25,9 +25,11 @@ public class MainActivity extends AppCompatActivity {
 
         //this is for tablayout to swipe around the tabs
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
-        tabLayout.addTab(tabLayout.newTab().setText("Generate Savings Amount"));
+        tabLayout.addTab(tabLayout.newTab().setText("Daily Expenses"));
         tabLayout.addTab(tabLayout.newTab().setText("Dashboard"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+        tabLayout.setTabTextColors(getResources().getColor(R.color.md_white_1000),
+                getResources().getColor(R.color.md_white_1000));
 
         //viewpager to set the tablayout inside it
         final ViewPager viewPager = findViewById(R.id.pager);

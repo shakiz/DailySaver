@@ -19,7 +19,7 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
 
         switch (position) {
             case 0:
-                Generate_Savings_Fragment tab1 = new Generate_Savings_Fragment();
+                Fragment_Daily_Expenses tab1 = new Fragment_Daily_Expenses();
                 return tab1;
             case 1:
                 Dashboard_fragment tab2 = new Dashboard_fragment();
