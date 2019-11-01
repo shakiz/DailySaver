@@ -1,10 +1,7 @@
 package com.dailysaver.shadowhite.dailysaver;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,19 +10,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import org.w3c.dom.Text;
-
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * create an instance of this fragment.
- */
-public class Generate_Savings_Fragment extends Fragment{
+
+public class Generate_Savings_Fragment extends Fragment {
     //button for calculating the savings amount and current accoutn amount
     Button calculate;
     //editext holds the user input for savings and current accounts amount
@@ -61,13 +53,21 @@ public class Generate_Savings_Fragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.generate_savings_fragment, container, false);
+        init(view);
+        return view;
+    }
+
+    private void init(View view) {
         calculate=view.findViewById(R.id.button_generate_savings);
         interestRate=view.findViewById(R.id.amountOfInterestrate);
         earningAmount=view.findViewById(R.id.amountOfEarning);
         current=view.findViewById(R.id.currentTextview);
         savings=view.findViewById(R.id.savingsTextview);
         dbConnector=new DbConnector(context);
+        bindUIWIthComponents();
+    }
 
+    private void bindUIWIthComponents() {
         calculate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -109,7 +109,6 @@ public class Generate_Savings_Fragment extends Fragment{
             }
         });
 
-        return view;
     }
 
 

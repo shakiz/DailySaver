@@ -25,9 +25,9 @@
                 android:layout_height="wrap_content"
                 android:text="Client Details"
                 android:padding="10dp"
-                android:textColor="@color/textColorWhite"
+                android:textColor="@color/md_white_1000"
                 android:textStyle="bold"
-                android:background="@color/textViewBackground"/>
+                android:background="@color/md_grey_600"/>
 
             <EditText
                 android:layout_width="match_parent"
@@ -66,8 +66,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Invoice Details"
-                android:background="@color/textViewBackground"
-                android:textColor="@color/textColorWhite"
+                android:textColor="@color/md_white_1000"
+                android:background="@color/md_grey_600"
                 android:padding="10dp"
                 android:textStyle="bold"/>
             <EditText
@@ -116,8 +116,8 @@
                 android:layout_height="wrap_content"
                 android:text="Item Details"
                 android:padding="10dp"
-                android:background="@color/textViewBackground"
-                android:textColor="@color/textColorWhite"
+                android:textColor="@color/md_white_1000"
+                android:background="@color/md_grey_600"
                 android:textStyle="bold"/>
             <EditText
                 android:layout_width="match_parent"
@@ -148,7 +148,7 @@
             android:layout_margin="10dp"
             android:id="@+id/buttonGenerateInvoice"
             android:background="@drawable/buttons_shape"
-            android:textColor="@color/textColorWhite" />
+            android:textColor="@color/md_white_1000" />
 
     </LinearLayout>
 

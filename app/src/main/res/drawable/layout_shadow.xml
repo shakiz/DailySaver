@@ -9,6 +9,6 @@
         android:width="1dp"
         android:color="#E3E3E1" />
 
-    <solid android:color="@color/textColorWhite" />
+    <solid android:color="@color/md_white_1000" />
 
 </shape>
