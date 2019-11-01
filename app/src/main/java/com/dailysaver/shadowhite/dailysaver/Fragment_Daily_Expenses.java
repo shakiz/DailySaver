@@ -1,6 +1,7 @@
 package com.dailysaver.shadowhite.dailysaver;
 
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.icu.text.SimpleDateFormat;
 import android.os.Build;
@@ -9,12 +10,17 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
+
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import java.util.Calendar;
@@ -25,12 +31,15 @@ public class Fragment_Daily_Expenses extends Fragment implements View.OnClickLis
     private Spinner currencySpinner;
     private ArrayAdapter<String> spinnerAdapter;
     private RelativeLayout mainLayout;
-    Button calculate;
-    EditText earningAmount,interestRate , dateView;
-    Context context;
-    DbConnector dbConnector;
-    String dateOdCalc,timeOfCalc;
-    double doublleAmount,doubleInterest,doubleSavingsAmount,doubleCurrentAccountAmount;
+    private Dialog itemDialog;
+    private LinearLayout dialogLinearLayout;
+    private TextView categorySelection;
+//    Button calculate;
+    private EditText earningAmount,interestRate , dateView;
+    private Context context;
+//    DbConnector dbConnector;
+//    String dateOdCalc,timeOfCalc;
+//    double doublleAmount,doubleInterest,doubleSavingsAmount,doubleCurrentAccountAmount;
     private SimpleDateFormat dateFormatter;
 
     @Override
@@ -59,18 +68,21 @@ public class Fragment_Daily_Expenses extends Fragment implements View.OnClickLis
 
     private void init(View view) {
         mainLayout = view.findViewById(R.id.parent_container);
-        interestRate=view.findViewById(R.id.amountOfInterestrate);
-        earningAmount=view.findViewById(R.id.amountOfEarning);
         currencySpinner = view.findViewById(R.id.CurrencySpinner);
         dateView = view.findViewById(R.id.Date);
-        dbConnector=new DbConnector(context);
+        categorySelection = view.findViewById(R.id.CategorySelector);
         bindUIWIthComponents();
+
+//        interestRate=view.findViewById(R.id.amountOfInterestrate);
+//        earningAmount=view.findViewById(R.id.amountOfEarning);
+//        dbConnector=new DbConnector(context);
     }
 
     private void bindUIWIthComponents() {
 
         setSpinnerAdapter();
         dateView.setOnClickListener(this);
+        categorySelection.setOnClickListener(this);
 
 
 //        calculate.setOnClickListener(new View.OnClickListener() {
@@ -140,12 +152,29 @@ public class Fragment_Daily_Expenses extends Fragment implements View.OnClickLis
         datePickerDialog.show();
     }
 
+    private void showDialog() {
+        itemDialog = new Dialog(context);
+        itemDialog.setContentView(R.layout.category_list_layout);
+        customViewInit(itemDialog);
+        itemDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        Animation a = AnimationUtils.loadAnimation(itemDialog.getContext(), R.anim.push_up_in);
+        dialogLinearLayout.startAnimation(a);
+        itemDialog.show();
+    }
+
+    private void customViewInit(Dialog itemDialog) {
+        dialogLinearLayout = itemDialog.findViewById(R.id.dialogLinearLayout);
+    }
+
 
     @Override
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.Date:
                 getAndSetDate(dateView);
+                break;
+            case R.id.CategorySelector:
+                showDialog();
                 break;
         }
     }

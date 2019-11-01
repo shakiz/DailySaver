@@ -10,4 +10,5 @@
     <string name="amount_hint">Enter Amount</string>
     <string name="date_hint">21-Oct-2019</string>
     <string name="note">Write a note or something</string>
+    <string name="category">Category</string>
 </resources>
