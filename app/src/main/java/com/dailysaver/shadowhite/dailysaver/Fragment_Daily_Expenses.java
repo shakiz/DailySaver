@@ -6,23 +6,26 @@ import android.content.Context;
 import android.icu.text.SimpleDateFormat;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
@@ -33,7 +36,12 @@ public class Fragment_Daily_Expenses extends Fragment implements View.OnClickLis
     private RelativeLayout mainLayout;
     private Dialog itemDialog;
     private LinearLayout dialogLinearLayout;
-    private TextView categorySelection;
+    private TextView categorySelection , categoryTitle;
+    private ImageView categoryIcon;
+    private RecyclerView categoryRecyclerView;
+    private CategoryRecyclerAdapter categoryRecyclerAdapter;
+    private RecyclerView.LayoutManager layoutManager;
+    private ArrayList<Category> categoryList;
 //    Button calculate;
     private EditText earningAmount,interestRate , dateView;
     private Context context;
@@ -71,6 +79,8 @@ public class Fragment_Daily_Expenses extends Fragment implements View.OnClickLis
         currencySpinner = view.findViewById(R.id.CurrencySpinner);
         dateView = view.findViewById(R.id.Date);
         categorySelection = view.findViewById(R.id.CategorySelector);
+        categoryTitle = view.findViewById(R.id.Title);
+        categoryIcon = view.findViewById(R.id.IconRes);
         bindUIWIthComponents();
 
 //        interestRate=view.findViewById(R.id.amountOfInterestrate);
@@ -83,6 +93,9 @@ public class Fragment_Daily_Expenses extends Fragment implements View.OnClickLis
         setSpinnerAdapter();
         dateView.setOnClickListener(this);
         categorySelection.setOnClickListener(this);
+
+        try{ getAndSetCategoryData(); }
+        catch (Exception e){ e.printStackTrace(); }
 
 
 //        calculate.setOnClickListener(new View.OnClickListener() {
@@ -156,14 +169,44 @@ public class Fragment_Daily_Expenses extends Fragment implements View.OnClickLis
         itemDialog = new Dialog(context);
         itemDialog.setContentView(R.layout.category_list_layout);
         customViewInit(itemDialog);
+        setCategoryAdapter();
         itemDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         Animation a = AnimationUtils.loadAnimation(itemDialog.getContext(), R.anim.push_up_in);
         dialogLinearLayout.startAnimation(a);
         itemDialog.show();
     }
 
+    private void setCategoryAdapter() {
+        categoryRecyclerAdapter = new CategoryRecyclerAdapter(getContext(),setData(),itemDialog);
+        layoutManager = new GridLayoutManager(getContext(),2);
+        categoryRecyclerView.setLayoutManager(layoutManager);
+        categoryRecyclerView.setAdapter(categoryRecyclerAdapter);
+        categoryRecyclerAdapter.notifyDataSetChanged();
+    }
+
+    private void getAndSetCategoryData(){
+        categoryTitle.setText(getArguments().getString("title"));
+        //categoryIcon.setImageResource(getArguments().getInt("iconRes"));
+    }
+
+    private ArrayList<Category> setData() {
+        categoryList.add(new Category("Food",R.drawable.ic_food_icon));
+        categoryList.add(new Category("Transport",R.drawable.ic_transport));
+        categoryList.add(new Category("Electricity",R.drawable.ic_electricity));
+        categoryList.add(new Category("Education",R.drawable.ic_education));
+        categoryList.add(new Category("Shopping",R.drawable.ic_cshopping));
+        categoryList.add(new Category("Entertainment",R.drawable.ic_entertainment));
+        categoryList.add(new Category("Family",R.drawable.ic_family));
+        categoryList.add(new Category("Friends",R.drawable.ic_friends));
+        categoryList.add(new Category("Work",R.drawable.ic_work));
+        categoryList.add(new Category("Gift",R.drawable.ic_gift));
+        return categoryList;
+    }
+
     private void customViewInit(Dialog itemDialog) {
         dialogLinearLayout = itemDialog.findViewById(R.id.dialogLinearLayout);
+        categoryRecyclerView = itemDialog.findViewById(R.id.categoryRecyclerView);
+        categoryList = new ArrayList<>();
     }
 
 

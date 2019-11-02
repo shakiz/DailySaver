@@ -62,14 +62,36 @@
                             android:textColor="@color/md_green_400"
                             android:ellipsize="end"
                             android:layout_margin="8dp"/>
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="4dp"
+                            android:padding="2dp"
+                            android:clickable="true"
+                            android:id="@+id/itemLayout"
+                            android:background="@drawable/rounded_layout_with_corner">
 
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:layout_height="40dp"
-                            android:id="@+id/Category"
-                            android:background="@drawable/rectangle_rounded_background"
-                            android:layout_margin="8dp"/>
+                            <ImageView
+                                android:id="@+id/IconRes"
+                                android:src="@drawable/ic_food_icon"
+                                android:layout_width="28dp"
+                                android:layout_height="28dp"
+                                android:layout_gravity="center"
+                                android:layout_margin="4dp"
+                                android:padding="4dp"/>
+
+                            <TextView
+                                android:id="@+id/Title"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_margin="4dp"
+                                android:padding="4dp"
+                                android:text="@string/category_sample"/>
+
+
+                        </LinearLayout>
 
                     </LinearLayout>
 
@@ -176,6 +198,7 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/button_generate_savings"
+        android:clickable="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

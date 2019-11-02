@@ -11,4 +11,5 @@
     <string name="date_hint">21-Oct-2019</string>
     <string name="note">Write a note or something</string>
     <string name="category">Category</string>
+    <string name="category_sample">Food</string>
 </resources>

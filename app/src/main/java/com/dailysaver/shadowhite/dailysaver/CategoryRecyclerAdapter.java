@@ -1,18 +1,31 @@
 package com.dailysaver.shadowhite.dailysaver;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import java.util.ArrayList;
 
 public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecyclerAdapter.ViewHolder> {
 
     private Context context;
     private ArrayList<Category> categoryList;
+    private Dialog dialog;
+
+    public CategoryRecyclerAdapter(Context context, ArrayList<Category> categoryList, Dialog dialog) {
+        this.context = context;
+        this.categoryList = categoryList;
+        this.dialog = dialog;
+    }
 
     @NonNull
     @Override
@@ -23,7 +36,26 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecycl
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        final Category category = categoryList.get(position);
+        holder.Title.setText(category.getTitle());
+        holder.IconRes.setImageResource(category.getIconRes());
+        holder.itemLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (dialog.isShowing()) dialog.dismiss();
+                setBundleData(category.getTitle(),category.getIconRes());
+            }
+        });
+    }
 
+    private void setBundleData(String title, int iconRes) {
+        Bundle bundle = new Bundle();
+        bundle.putString("title",title);
+        bundle.putString("iconRes",""+iconRes);
+        Fragment_Daily_Expenses daily_expenses = new Fragment_Daily_Expenses();
+        daily_expenses.setArguments(bundle);
+        FragmentManager fragmentManager = ((AppCompatActivity)context).getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.pager,daily_expenses).commit();
     }
 
     @Override
@@ -32,8 +64,14 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecycl
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+        TextView Title;
+        ImageView IconRes;
+        LinearLayout itemLayout;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            Title = itemView.findViewById(R.id.Title);
+            IconRes = itemView.findViewById(R.id.IconRes);
+            itemLayout = itemView.findViewById(R.id.itemLayout);
         }
     }
 }
