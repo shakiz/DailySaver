@@ -2,7 +2,6 @@ package com.dailysaver.shadowhite.dailysaver;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,8 +9,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
@@ -20,11 +17,15 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecycl
     private Context context;
     private ArrayList<Category> categoryList;
     private Dialog dialog;
+    private TextView categoryTitle;
+    private ImageView categoryIcon;
 
-    public CategoryRecyclerAdapter(Context context, ArrayList<Category> categoryList, Dialog dialog) {
+    public CategoryRecyclerAdapter(Context context, ArrayList<Category> categoryList, Dialog dialog, TextView categoryTitle, ImageView categoryIcon) {
         this.context = context;
         this.categoryList = categoryList;
         this.dialog = dialog;
+        this.categoryIcon = categoryIcon;
+        this.categoryTitle = categoryTitle;
     }
 
     @NonNull
@@ -43,19 +44,10 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecycl
             @Override
             public void onClick(View view) {
                 if (dialog.isShowing()) dialog.dismiss();
-                setBundleData(category.getTitle(),category.getIconRes());
+                categoryTitle.setText(category.getTitle());
+                categoryIcon.setImageResource(category.getIconRes());
             }
         });
-    }
-
-    private void setBundleData(String title, int iconRes) {
-        Bundle bundle = new Bundle();
-        bundle.putString("title",title);
-        bundle.putString("iconRes",""+iconRes);
-        Fragment_Daily_Expenses daily_expenses = new Fragment_Daily_Expenses();
-        daily_expenses.setArguments(bundle);
-        FragmentManager fragmentManager = ((AppCompatActivity)context).getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.pager,daily_expenses).commit();
     }
 
     @Override

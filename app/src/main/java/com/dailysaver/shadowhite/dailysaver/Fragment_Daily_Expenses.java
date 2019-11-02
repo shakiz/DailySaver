@@ -2,7 +2,6 @@ package com.dailysaver.shadowhite.dailysaver;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.content.Context;
 import android.icu.text.SimpleDateFormat;
 import android.os.Build;
 import android.os.Bundle;
@@ -22,13 +21,10 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
-
 
 public class Fragment_Daily_Expenses extends Fragment implements View.OnClickListener {
     private Spinner currencySpinner;
@@ -42,12 +38,7 @@ public class Fragment_Daily_Expenses extends Fragment implements View.OnClickLis
     private CategoryRecyclerAdapter categoryRecyclerAdapter;
     private RecyclerView.LayoutManager layoutManager;
     private ArrayList<Category> categoryList;
-//    Button calculate;
-    private EditText earningAmount,interestRate , dateView;
-    private Context context;
-//    DbConnector dbConnector;
-//    String dateOdCalc,timeOfCalc;
-//    double doublleAmount,doubleInterest,doubleSavingsAmount,doubleCurrentAccountAmount;
+    private EditText dateView;
     private SimpleDateFormat dateFormatter;
 
     @Override
@@ -58,12 +49,6 @@ public class Fragment_Daily_Expenses extends Fragment implements View.OnClickLis
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        this.context = context;
     }
 
     @Override
@@ -82,61 +67,12 @@ public class Fragment_Daily_Expenses extends Fragment implements View.OnClickLis
         categoryTitle = view.findViewById(R.id.Title);
         categoryIcon = view.findViewById(R.id.IconRes);
         bindUIWIthComponents();
-
-//        interestRate=view.findViewById(R.id.amountOfInterestrate);
-//        earningAmount=view.findViewById(R.id.amountOfEarning);
-//        dbConnector=new DbConnector(context);
     }
 
     private void bindUIWIthComponents() {
-
         setSpinnerAdapter();
         dateView.setOnClickListener(this);
         categorySelection.setOnClickListener(this);
-
-        try{ getAndSetCategoryData(); }
-        catch (Exception e){ e.printStackTrace(); }
-
-
-//        calculate.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                if (earningAmount.getText().toString().equals("") || interestRate.getText().toString().equals("")){
-//                    earningAmount.setError("Amount can not be empty.");
-//                    interestRate.setError("Interest rate can not be empty.");
-//                }else{
-//
-//                    //calculating the savings amoutn and current account amount
-//                    doublleAmount=Double.parseDouble(earningAmount.getText().toString());
-//                    doubleInterest=Double.parseDouble(interestRate.getText().toString());
-//                    doubleSavingsAmount=doublleAmount*(doubleInterest/100);
-//                    doubleCurrentAccountAmount=doublleAmount-doubleSavingsAmount;
-//
-//                    //getting the value for date and time
-//                    SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd");
-//                    dateOdCalc = sdfDate.format(new Date());
-//                    SimpleDateFormat sdfTime=new SimpleDateFormat("h:mm a");
-//                    timeOfCalc = sdfTime.format(Calendar.getInstance().getTime());
-//                    //showing toast and setting the text on textviews
-//                    Toast.makeText(context,"Current :"+doubleCurrentAccountAmount+"\nSavings:"+doubleSavingsAmount+
-//                            "\nTime :"+timeOfCalc+"\nDate:"+dateOdCalc,Toast.LENGTH_SHORT).show();
-//                    //inserting data into database
-//                    boolean bool=true;
-//                    try{
-//                        bool=dbConnector.insertData(doubleSavingsAmount,doubleCurrentAccountAmount,doubleInterest,timeOfCalc,dateOdCalc);
-//                    }catch(Exception e){
-//                        Log.d("ERROR IN FRAGMENT","ERROR : "+e.getMessage());
-//                    }
-//                    if (bool == true){
-//                        Toast.makeText(context,"Data inserted",Toast.LENGTH_SHORT).show();
-//                    }
-//                    else{
-//                        Toast.makeText(context,"Data is not inserted",Toast.LENGTH_SHORT).show();
-//                    }
-//                }
-//            }
-//        });
-
     }
 
     private void setSpinnerAdapter() {
@@ -166,7 +102,7 @@ public class Fragment_Daily_Expenses extends Fragment implements View.OnClickLis
     }
 
     private void showDialog() {
-        itemDialog = new Dialog(context);
+        itemDialog = new Dialog(getContext());
         itemDialog.setContentView(R.layout.category_list_layout);
         customViewInit(itemDialog);
         setCategoryAdapter();
@@ -177,16 +113,11 @@ public class Fragment_Daily_Expenses extends Fragment implements View.OnClickLis
     }
 
     private void setCategoryAdapter() {
-        categoryRecyclerAdapter = new CategoryRecyclerAdapter(getContext(),setData(),itemDialog);
+        categoryRecyclerAdapter = new CategoryRecyclerAdapter(getContext(),setData(),itemDialog,categoryTitle,categoryIcon);
         layoutManager = new GridLayoutManager(getContext(),2);
         categoryRecyclerView.setLayoutManager(layoutManager);
         categoryRecyclerView.setAdapter(categoryRecyclerAdapter);
         categoryRecyclerAdapter.notifyDataSetChanged();
-    }
-
-    private void getAndSetCategoryData(){
-        categoryTitle.setText(getArguments().getString("title"));
-        //categoryIcon.setImageResource(getArguments().getInt("iconRes"));
     }
 
     private ArrayList<Category> setData() {
@@ -208,7 +139,6 @@ public class Fragment_Daily_Expenses extends Fragment implements View.OnClickLis
         categoryRecyclerView = itemDialog.findViewById(R.id.categoryRecyclerView);
         categoryList = new ArrayList<>();
     }
-
 
     @Override
     public void onClick(View view) {
