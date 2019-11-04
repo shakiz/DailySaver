@@ -12,4 +12,10 @@
     <string name="note">Write a note or something</string>
     <string name="category">Category</string>
     <string name="category_sample">Food</string>
+    <string name="walletName">Wallet Name</string>
+    <string name="todays_cost">Todays Cost</string>
+    <string name="total_cost">Total Cost</string>
+    <string name="new_expense">Add New Expense</string>
+    <string name="remaining">Remaining</string>
+    <string name="new_wallet">Add New Wallet</string>
 </resources>

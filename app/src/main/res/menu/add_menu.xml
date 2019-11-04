@@ -1,0 +1,11 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_expense"
+        android:icon="@drawable/ic_expense"
+        android:title="@string/new_expense" />
+    <item
+        android:id="@+id/action_wallet"
+        android:icon="@drawable/ic_wallet"
+        android:title="@string/new_wallet"/>
+</menu>
