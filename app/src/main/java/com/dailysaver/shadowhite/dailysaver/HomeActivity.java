@@ -4,28 +4,23 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.Typeface;
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.skydoves.powermenu.CircularEffect;
 import com.skydoves.powermenu.CustomPowerMenu;
 import com.skydoves.powermenu.MenuAnimation;
 import com.skydoves.powermenu.MenuBaseAdapter;
 import com.skydoves.powermenu.OnMenuItemClickListener;
-import com.skydoves.powermenu.PowerMenu;
-import com.skydoves.powermenu.PowerMenuItem;
-
 import java.util.ArrayList;
 
 public class HomeActivity extends AppCompatActivity {
@@ -44,7 +39,8 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         init();
-
+        Animation a = AnimationUtils.loadAnimation(this, R.anim.fadein);
+        mainLayout.startAnimation(a);
         bindUiWithComponents();
     }
 
@@ -54,10 +50,12 @@ public class HomeActivity extends AppCompatActivity {
         powerMenu =new CustomPowerMenu.Builder<>(this, new IconMenuAdapter())
                 .addItem(new IconPowerMenuItem(ContextCompat.getDrawable(this, R.drawable.ic_expense), getResources().getString(R.string.add_new_expense)))
                 .addItem(new IconPowerMenuItem(ContextCompat.getDrawable(this, R.drawable.ic_wallet), getResources().getString(R.string.add_new_wallet)))
-                .setAnimation(MenuAnimation.SHOWUP_TOP_LEFT) // Animation start point (TOP | LEFT).
+                .setAnimation(MenuAnimation.SHOW_UP_CENTER) // Animation start point (TOP | LEFT).
                 .setMenuRadius(15f) // sets the corner radius.
                 .setMenuShadow(10f) // sets the shadow.
+                .setWidth(800)
                 .setCircularEffect(CircularEffect.INNER)
+                .setOnMenuItemClickListener(onMenuItemClickListener)
                 .build();
 
 
@@ -69,6 +67,14 @@ public class HomeActivity extends AppCompatActivity {
         });
 
     }
+
+    private OnMenuItemClickListener<IconPowerMenuItem> onMenuItemClickListener = new OnMenuItemClickListener<IconPowerMenuItem>() {
+        @Override
+        public void onItemClick(int position, IconPowerMenuItem item) {
+            if (position==0)startActivity(new Intent(HomeActivity.this,MainActivity.class));
+            powerMenu.dismiss();
+        }
+    };
 
     private void setAdapter() {
         getData();
@@ -111,6 +117,18 @@ public class HomeActivity extends AppCompatActivity {
             title.setText(item.getTitle());
             return super.getView(index, view, viewGroup);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        exitApp();
+    }
+
+    public void exitApp(){
+        Intent exitIntent = new Intent(Intent.ACTION_MAIN);
+        exitIntent.addCategory(Intent.CATEGORY_HOME);
+        exitIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        this.startActivity(exitIntent);
     }
 }
 

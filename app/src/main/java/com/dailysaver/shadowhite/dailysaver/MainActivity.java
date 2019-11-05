@@ -6,8 +6,11 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,11 +20,15 @@ import com.google.android.material.tabs.TabLayout;
 
 public class MainActivity extends AppCompatActivity {
 
-
+    private RelativeLayout mainLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mainLayout = findViewById(R.id.main_layout);
+        Animation a = AnimationUtils.loadAnimation(this, R.anim.fadein);
+        mainLayout.startAnimation(a);
 
         //this is for tablayout to swipe around the tabs
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
@@ -80,5 +87,11 @@ public class MainActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(MainActivity.this,HomeActivity.class));
+        overridePendingTransition(R.anim.fadein,R.anim.push_up_out);
     }
 }
