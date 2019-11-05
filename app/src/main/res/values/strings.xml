@@ -18,4 +18,6 @@
     <string name="new_expense">Add New Expense</string>
     <string name="remaining">Remaining</string>
     <string name="new_wallet">Add New Wallet</string>
+    <string name="add_new_expense">Add New Expense</string>
+    <string name="add_new_wallet">Add New Wallet</string>
 </resources>

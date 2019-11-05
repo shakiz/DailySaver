@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/home_layout"
     android:layout_margin="4dp"
     android:padding="4dp">
 
@@ -13,22 +14,29 @@
         android:id="@+id/dashboardRecyclerView"
         android:layout_margin="8dp"/>
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="16dp">
 
-        <io.github.yavski.fabspeeddial.FabSpeedDial
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            app:fabGravity="bottom_end"
-            app:fabMenu="@menu/add_menu"
-            app:miniFabBackgroundTint="@android:color/white"
-            app:miniFabDrawableTint="?attr/colorPrimaryDark"
-            app:miniFabTitleTextColor="?attr/colorPrimaryDark" />
+<!--    <io.github.yavski.fabspeeddial.FabSpeedDial-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_gravity="bottom|end"-->
+<!--        app:fabGravity="bottom_end"-->
+<!--        android:layout_alignParentBottom="true"-->
+<!--        android:layout_alignParentRight="true"-->
+<!--        app:fabDrawable="@drawable/ic_add"-->
+<!--        app:fabBackgroundTint="@color/md_grey_400"-->
+<!--        app:fabMenu="@menu/add_menu"-->
+<!--        app:miniFabTitleTextColor="@color/md_grey_600" />-->
 
-    </FrameLayout>
-
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/add"
+        android:clickable="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="24dp"
+        android:src="@drawable/ic_add"
+        app:backgroundTint="@color/white_transparent"
+        app:fabSize="normal" />
 
 </RelativeLayout>

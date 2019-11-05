@@ -6,6 +6,6 @@
         android:title="@string/new_expense" />
     <item
         android:id="@+id/action_wallet"
-        android:icon="@drawable/ic_wallet"
+        android:icon="@drawable/ic_wallet_two"
         android:title="@string/new_wallet"/>
 </menu>
