@@ -37,8 +37,8 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
         holder.RemainingBalance.setSuffixText("");
         holder.RemainingBalance.setFinishedStrokeColor(context.getResources().getColor(R.color.md_red_400));
         holder.RemainingBalance.setUnfinishedStrokeColor(context.getResources().getColor(R.color.md_green_400));
-        holder.RemainingBalance.setTextSize(80);
-        holder.RemainingBalance.setBottomText(context.getResources().getString(R.string.remaining));
+        holder.RemainingBalance.setTextSize(40);
+        holder.RemainingBalance.setBottomText(null);
         holder.RemainingBalance.setTextColor(context.getResources().getColor(R.color.md_grey_600));
         holder.RemainingBalance.setProgress(itemModel.getRemainingBalance());
         holder.TotalCost.setText(""+itemModel.getTotalCost());

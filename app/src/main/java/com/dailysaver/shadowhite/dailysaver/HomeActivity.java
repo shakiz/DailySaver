@@ -1,7 +1,9 @@
 package com.dailysaver.shadowhite.dailysaver;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
@@ -30,6 +32,7 @@ public class HomeActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     private RelativeLayout mainLayout;
+    private Toolbar toolbar;
     private FloatingActionButton addButton;
     private CustomPowerMenu powerMenu;
 
@@ -39,6 +42,16 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         init();
+
+        setSupportActionBar(toolbar);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                exitApp();
+            }
+        });
+
         Animation a = AnimationUtils.loadAnimation(this, R.anim.fadein);
         mainLayout.startAnimation(a);
         bindUiWithComponents();
@@ -79,7 +92,7 @@ public class HomeActivity extends AppCompatActivity {
     private void setAdapter() {
         getData();
         cardAdapter = new CardAdapter(cardItemList,this);
-        layoutManager = new LinearLayoutManager(this);
+        layoutManager = new GridLayoutManager(this,2);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(cardAdapter);
         cardAdapter.notifyDataSetChanged();
@@ -93,6 +106,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void init() {
+        toolbar = findViewById(R.id.tool_bar);
         recyclerView = findViewById(R.id.dashboardRecyclerView);
         mainLayout = findViewById(R.id.home_layout);
         addButton = findViewById(R.id.add);
