@@ -1,4 +1,4 @@
-package com.dailysaver.shadowhite.dailysaver.fragments;
+package com.dailysaver.shadowhite.dailysaver.fragments.addnewexpense;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -59,7 +59,7 @@ public class Fragment_Daily_Expenses extends Fragment implements View.OnClickLis
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view= inflater.inflate(R.layout.add_new_expense_fragment, container, false);
+        View view= inflater.inflate(R.layout.daily_expense_fragment, container, false);
         init(view);
         return view;
     }
@@ -89,7 +89,7 @@ public class Fragment_Daily_Expenses extends Fragment implements View.OnClickLis
 
     private void getAndSetDate(final EditText editText){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            dateFormatter = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
+            dateFormatter = new SimpleDateFormat("dd-MMM-yyyy", Locale.US);
         }
         Calendar newCalendar = Calendar.getInstance();
         DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {

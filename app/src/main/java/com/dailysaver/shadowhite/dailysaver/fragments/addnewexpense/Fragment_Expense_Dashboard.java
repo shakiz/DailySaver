@@ -1,4 +1,4 @@
-package com.dailysaver.shadowhite.dailysaver.fragments;
+package com.dailysaver.shadowhite.dailysaver.fragments.addnewexpense;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -26,7 +26,7 @@ import java.util.ArrayList;
  * Activities that contain this fragment must implement the
  * create an instance of this fragment.
  */
-public class Dashboard_fragment extends Fragment {
+public class Fragment_Expense_Dashboard extends Fragment {
 
     //instance of dbconnector class
     DbConnector dbConnector;

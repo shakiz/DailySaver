@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/md_white_1000"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/home_layout">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:id="@+id/app_bar">
+
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tool_bar"
+            app:navigationIcon="?attr/homeAsUpIndicator"
+            style="@style/TextAppearance.Widget.Event.Toolbar.Title"
+            app:title="@string/add_new_wallet"
+            app:titleTextColor="@color/md_white_1000">
+
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollView"
+        android:layout_below="@id/app_bar"
+        android:fillViewport="true"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/mainLayout"
+            android:orientation="vertical">
+
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:cardCornerRadius="12dp"
+                android:elevation="8dp"
+                app:cardElevation="4dp"
+                app:cardBackgroundColor="@color/md_white_1000"
+                android:layout_margin="12dp"
+                android:translationZ="4dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:layout_margin="2dp">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:weightSum="2"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginRight="4dp"
+                        android:layout_marginTop="8dp"
+                        android:orientation="horizontal">
+
+                        <EditText
+                            android:layout_width="0dp"
+                            android:layout_weight="1.4"
+                            android:layout_height="46dp"
+                            android:hint="@string/amount_hint"
+                            android:inputType="numberDecimal"
+                            android:textSize="14sp"
+                            android:id="@+id/amountOfEarning"
+                            android:drawableLeft="@drawable/ic_money_sign"
+                            android:drawablePadding="4dp"
+                            android:background="@color/md_white_1000"
+                            android:layout_gravity="center"
+                            android:gravity="bottom|left"
+                            android:layout_margin="8dp"
+                            android:padding="10dp"/>
+
+                        <Spinner
+                            style="@style/Base.TextAppearance.AppCompat.Medium"
+                            android:layout_width="0dp"
+                            android:layout_weight=".6"
+                            android:layout_height="40dp"
+                            android:layout_margin="8dp"
+                            android:background="@drawable/rectangle_background_without_border"
+                            android:id="@+id/CurrencySpinner"/>
+
+
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clickable="false"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginRight="4dp"
+                        android:id="@+id/emaiLAddressLayout"
+                        android:layout_marginTop="16dp">
+
+                        <LinearLayout
+                            android:layout_below="@+id/emailAddress"
+                            android:layout_width="match_parent"
+                            android:layout_height="46dp"
+                            android:padding="4dp"
+                            android:background="@drawable/rectangle_background"
+                            android:orientation="horizontal">
+
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp"
+                                android:layout_gravity="center_vertical"
+                                android:gravity="center_vertical"
+                                android:background="@null"
+                                android:layout_marginLeft="16dp"
+                                android:inputType="textEmailAddress"
+                                android:hint="@string/wallet_name_hint"
+                                android:padding="4dp"
+                                android:textColor="@color/md_grey_600"
+                                android:textSize="14sp" />
+
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/emailAddress"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="32dp"
+                            android:layout_marginBottom="-10dp"
+                            android:layout_alignParentTop="true"
+                            android:paddingLeft="8dp"
+                            android:paddingRight="8dp"
+                            android:text="@string/wallet_name"
+                            android:background="@color/md_white_1000"
+                            android:textColor="@color/md_grey_600"
+                            android:textSize="16sp" />
+
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginLeft="4dp"
+                        android:background="@drawable/rectangle_background"
+                        android:layout_marginRight="4dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/select_wallet_type"
+                            android:textColor="@color/md_grey_600"
+                            android:textSize="14sp"
+                            android:layout_margin="4dp"
+                            android:padding="4dp"/>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/md_grey_400"/>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="4dp"
+                            android:padding="4dp"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:weightSum="4"
+                            android:orientation="horizontal">
+
+
+                            <androidx.appcompat.widget.AppCompatCheckBox
+                                android:id="@+id/expense"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                app:buttonTint="@color/commonColor"
+                                android:textColor="@color/md_grey_600"
+                                android:text="@string/expense"/>
+
+                            <androidx.appcompat.widget.AppCompatCheckBox
+                                android:id="@+id/income"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                app:buttonTint="@color/commonColor"
+                                android:textColor="@color/md_grey_600"
+                                android:text="@string/income"/>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="46dp"
+                        android:hint="@string/expiry_date"
+                        android:inputType="numberDecimal"
+                        android:textSize="14sp"
+                        android:id="@+id/ExpiryDate"
+                        android:focusable="false"
+                        android:background="@drawable/rectangle_background"
+                        android:layout_gravity="center"
+                        android:gravity="center|left"
+                        android:layout_marginLeft="4dp"
+                        android:textColor="@color/md_grey_600"
+                        android:layout_marginRight="4dp"
+                        android:layout_marginTop="16dp"
+                        android:padding="10dp"/>
+
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+
+    <!--    <io.github.yavski.fabspeeddial.FabSpeedDial-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_gravity="bottom|end"-->
+    <!--        app:fabGravity="bottom_end"-->
+    <!--        android:layout_alignParentBottom="true"-->
+    <!--        android:layout_alignParentRight="true"-->
+    <!--        app:fabDrawable="@drawable/ic_add"-->
+    <!--        app:fabBackgroundTint="@color/md_grey_400"-->
+    <!--        app:fabMenu="@menu/add_menu"-->
+    <!--        app:miniFabTitleTextColor="@color/md_grey_600" />-->
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/add"
+        android:clickable="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="24dp"
+        android:src="@drawable/ic_add"
+        app:backgroundTint="@color/white_transparent"
+        app:fabSize="normal" />
+
+</RelativeLayout>

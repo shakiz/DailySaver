@@ -14,14 +14,14 @@ import com.dailysaver.shadowhite.dailysaver.adapters.PagerAdapter;
 import com.dailysaver.shadowhite.dailysaver.R;
 import com.google.android.material.tabs.TabLayout;
 
-public class MainActivity extends AppCompatActivity {
+public class AddNewExpenseActivity extends AppCompatActivity {
 
     private RelativeLayout mainLayout;
     private Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_add_new_expense);
 
         init();
         setSupportActionBar(toolbar);
@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this,HomeActivity.class));
+                startActivity(new Intent(AddNewExpenseActivity.this,HomeActivity.class));
             }
         });
 
@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
 //        switch (item.getItemId()) {
 //            //for item menu generate invoice
 //            case R.id.action_generate_invoice:
-//                startActivity(new Intent(MainActivity.this,Invoice_generate.class));
+//                startActivity(new Intent(AddNewExpenseActivity.this,Invoice_generate.class));
 //                return true;
 //            //for item menu about us
 //            case R.id.action_about_us:
@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(MainActivity.this,HomeActivity.class));
+        startActivity(new Intent(AddNewExpenseActivity.this,HomeActivity.class));
         overridePendingTransition(R.anim.fadein,R.anim.push_up_out);
     }
 }

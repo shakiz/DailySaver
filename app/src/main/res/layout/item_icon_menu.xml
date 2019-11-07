@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
     android:clickable="true"
     android:background="@color/md_white_1000"
@@ -8,7 +9,7 @@
     android:layout_height="wrap_content">
 
     <ImageView
-        android:src="@drawable/ic_wallet"
+        app:srcCompat="@drawable/ic_wallet"
         android:id="@+id/item_icon"
         android:layout_width="32dp"
         android:layout_margin="4dp"

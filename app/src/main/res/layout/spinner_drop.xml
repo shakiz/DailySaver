@@ -8,6 +8,6 @@
     android:maxLines="1"
     android:layout_marginLeft="0dp"
     android:textColor="@drawable/edit_text_color"
-    android:minHeight="?android:attr/listPreferredItemHeight"
+    android:minHeight="?attr/listPreferredItemHeight"
     android:singleLine="false"
     />

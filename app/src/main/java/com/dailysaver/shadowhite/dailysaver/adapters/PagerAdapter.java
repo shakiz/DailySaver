@@ -4,8 +4,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
-import com.dailysaver.shadowhite.dailysaver.fragments.Dashboard_fragment;
-import com.dailysaver.shadowhite.dailysaver.fragments.Fragment_Daily_Expenses;
+import com.dailysaver.shadowhite.dailysaver.fragments.addnewexpense.Fragment_Expense_Dashboard;
+import com.dailysaver.shadowhite.dailysaver.fragments.addnewexpense.Fragment_Daily_Expenses;
 
 public class PagerAdapter extends FragmentStatePagerAdapter {
     //for getting the number of tabs available
@@ -25,7 +25,7 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
                 Fragment_Daily_Expenses tab1 = new Fragment_Daily_Expenses();
                 return tab1;
             case 1:
-                Dashboard_fragment tab2 = new Dashboard_fragment();
+                Fragment_Expense_Dashboard tab2 = new Fragment_Expense_Dashboard();
                 return tab2;
             default:
                 return null;
