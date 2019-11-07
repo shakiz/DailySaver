@@ -1,4 +1,4 @@
-package com.dailysaver.shadowhite.dailysaver;
+package com.dailysaver.shadowhite.dailysaver.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -12,6 +12,11 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
+import com.dailysaver.shadowhite.dailysaver.DbConnector;
+import com.dailysaver.shadowhite.dailysaver.R;
+import com.dailysaver.shadowhite.dailysaver.models.User;
+import com.dailysaver.shadowhite.dailysaver.adapters.DataAdapter;
 
 import java.util.ArrayList;
 

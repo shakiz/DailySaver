@@ -1,10 +1,9 @@
-package com.dailysaver.shadowhite.dailysaver;
+package com.dailysaver.shadowhite.dailysaver.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
 import android.content.Intent;
@@ -17,6 +16,11 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.dailysaver.shadowhite.dailysaver.adapters.WalletDashboardAdapter;
+import com.dailysaver.shadowhite.dailysaver.models.CardItemModel;
+import com.dailysaver.shadowhite.dailysaver.models.IconPowerMenuItem;
+import com.dailysaver.shadowhite.dailysaver.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.skydoves.powermenu.CircularEffect;
 import com.skydoves.powermenu.CustomPowerMenu;
@@ -28,7 +32,7 @@ import java.util.ArrayList;
 public class HomeActivity extends AppCompatActivity {
 
     private ArrayList<CardItemModel> cardItemList;
-    private CardAdapter cardAdapter;
+    private WalletDashboardAdapter walletDashboardAdapter;
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     private RelativeLayout mainLayout;
@@ -91,11 +95,11 @@ public class HomeActivity extends AppCompatActivity {
 
     private void setAdapter() {
         getData();
-        cardAdapter = new CardAdapter(cardItemList,this);
+        walletDashboardAdapter = new WalletDashboardAdapter(cardItemList,this);
         layoutManager = new GridLayoutManager(this,2);
         recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(cardAdapter);
-        cardAdapter.notifyDataSetChanged();
+        recyclerView.setAdapter(walletDashboardAdapter);
+        walletDashboardAdapter.notifyDataSetChanged();
     }
 
     private void getData() {

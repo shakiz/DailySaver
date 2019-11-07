@@ -1,4 +1,4 @@
-package com.dailysaver.shadowhite.dailysaver;
+package com.dailysaver.shadowhite.dailysaver.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +9,9 @@ import android.widget.RelativeLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
+
+import com.dailysaver.shadowhite.dailysaver.adapters.PagerAdapter;
+import com.dailysaver.shadowhite.dailysaver.R;
 import com.google.android.material.tabs.TabLayout;
 
 public class MainActivity extends AppCompatActivity {

@@ -1,4 +1,4 @@
-package com.dailysaver.shadowhite.dailysaver;
+package com.dailysaver.shadowhite.dailysaver.fragments;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -22,6 +22,11 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.dailysaver.shadowhite.dailysaver.models.Category;
+import com.dailysaver.shadowhite.dailysaver.R;
+import com.dailysaver.shadowhite.dailysaver.adapters.CategoryRecyclerAdapter;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
@@ -54,7 +59,7 @@ public class Fragment_Daily_Expenses extends Fragment implements View.OnClickLis
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view= inflater.inflate(R.layout.generate_savings_fragment, container, false);
+        View view= inflater.inflate(R.layout.add_new_expense_fragment, container, false);
         init(view);
         return view;
     }

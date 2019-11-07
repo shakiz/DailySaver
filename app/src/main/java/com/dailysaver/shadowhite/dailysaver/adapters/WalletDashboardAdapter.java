@@ -1,4 +1,4 @@
-package com.dailysaver.shadowhite.dailysaver;
+package com.dailysaver.shadowhite.dailysaver.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,15 +7,18 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.dailysaver.shadowhite.dailysaver.models.CardItemModel;
+import com.dailysaver.shadowhite.dailysaver.R;
 import com.github.lzyzsd.circleprogress.ArcProgress;
 import java.util.ArrayList;
 
-public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
+public class WalletDashboardAdapter extends RecyclerView.Adapter<WalletDashboardAdapter.ViewHolder> {
 
     private ArrayList<CardItemModel> cardItemList;
     private Context context;
 
-    public CardAdapter(ArrayList<CardItemModel> cardItemList, Context context) {
+    public WalletDashboardAdapter(ArrayList<CardItemModel> cardItemList, Context context) {
         this.cardItemList = cardItemList;
         this.context = context;
     }
@@ -24,7 +27,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.swipe_cards_item,parent,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.card_items,parent,false);
         return new ViewHolder(view);
     }
 

@@ -1,4 +1,4 @@
-package com.dailysaver.shadowhite.dailysaver;
+package com.dailysaver.shadowhite.dailysaver.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -6,7 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.dailysaver.shadowhite.dailysaver.R;
+import com.dailysaver.shadowhite.dailysaver.models.User;
 
 import java.util.ArrayList;
 

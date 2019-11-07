@@ -1,8 +1,11 @@
-package com.dailysaver.shadowhite.dailysaver;
+package com.dailysaver.shadowhite.dailysaver.adapters;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
+
+import com.dailysaver.shadowhite.dailysaver.fragments.Dashboard_fragment;
+import com.dailysaver.shadowhite.dailysaver.fragments.Fragment_Daily_Expenses;
 
 public class PagerAdapter extends FragmentStatePagerAdapter {
     //for getting the number of tabs available
