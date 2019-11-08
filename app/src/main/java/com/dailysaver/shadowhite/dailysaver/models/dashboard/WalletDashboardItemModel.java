@@ -1,10 +1,10 @@
-package com.dailysaver.shadowhite.dailysaver.models;
+package com.dailysaver.shadowhite.dailysaver.models.dashboard;
 
-public class CardItemModel {
+public class WalletDashboardItemModel {
     private String Title;
     private int TodayCost,TotalCost,RemainingBalance;
 
-    public CardItemModel(String title, int todayCost, int totalCost, int remainingBalance) {
+    public WalletDashboardItemModel(String title, int todayCost, int totalCost, int remainingBalance) {
         this.Title = title;
         this.TodayCost = todayCost;
         this.TotalCost = totalCost;

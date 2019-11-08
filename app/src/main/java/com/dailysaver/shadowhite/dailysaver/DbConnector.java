@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.dailysaver.shadowhite.dailysaver.models.User;
+import com.dailysaver.shadowhite.dailysaver.models.expense.ExpenseModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,10 +19,10 @@ public class DbConnector extends SQLiteOpenHelper {
     // Database Name
     private static final String DATABASE_NAME = "DataSaver.db";
 
-    // User table name
+    // ExpenseModel table name
     private static final String TABLE_USER = "savingsaccountdata";
 
-    // User Table Columns names
+    // ExpenseModel Table Columns names
     private static final String COLUMN_USER_ID = "user_id";
     private static final String COLUMN_USER_SAVINGS_AMOUNT = "savings_amount";
     private static final String COLUMN_USER_CURRENT_AMOUNT = "current_amount";
@@ -81,8 +81,8 @@ public class DbConnector extends SQLiteOpenHelper {
         return true;
     }
     //for getting the data to populate the listview
-    public List<User> getAllContacts() {
-        List<User> userList = new ArrayList<User>();
+    public List<ExpenseModel> getAllContacts() {
+        List<ExpenseModel> expenseModelList = new ArrayList<ExpenseModel>();
         // Select All Query
         String selectQuery = "SELECT  * FROM " + TABLE_USER;
 
@@ -92,21 +92,21 @@ public class DbConnector extends SQLiteOpenHelper {
         // looping through all rows and adding to list
         if (cursor.moveToFirst()) {
             do {
-                User user = new User();
-                user.set_id(Integer.parseInt(cursor.getString(0)));
-                user.set_savings(cursor.getDouble(1));
-                user.set_current(cursor.getDouble(2));
-                user.set_inerestRate(cursor.getDouble(3));
-                user.setTime(cursor.getString(4));
-                user.setDate(cursor.getString(5));
+                ExpenseModel expenseModel = new ExpenseModel();
+                expenseModel.set_id(Integer.parseInt(cursor.getString(0)));
+                expenseModel.set_savings(cursor.getDouble(1));
+                expenseModel.set_current(cursor.getDouble(2));
+                expenseModel.set_inerestRate(cursor.getDouble(3));
+                expenseModel.setTime(cursor.getString(4));
+                expenseModel.setDate(cursor.getString(5));
 
-                // Adding user to list
-                userList.add(user);
+                // Adding expenseModel to list
+                expenseModelList.add(expenseModel);
             } while (cursor.moveToNext());
         }
 
         // return contact list
-        return userList;
+        return expenseModelList;
     }
 
 

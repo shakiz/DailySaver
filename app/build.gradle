@@ -33,6 +33,8 @@ dependencies {
     //Arc Progress bar
     implementation 'com.github.lzyzsd:circleprogress:1.2.1'
 
+    // circle image view
+    implementation 'de.hdodenhof:circleimageview:2.1.0'
     //Menu library
     implementation 'io.github.yavski:fab-speed-dial:1.0.6'
     implementation "com.github.skydoves:powermenu:2.1.2"

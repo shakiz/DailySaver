@@ -8,17 +8,17 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.dailysaver.shadowhite.dailysaver.models.CardItemModel;
+import com.dailysaver.shadowhite.dailysaver.models.dashboard.WalletDashboardItemModel;
 import com.dailysaver.shadowhite.dailysaver.R;
 import com.github.lzyzsd.circleprogress.ArcProgress;
 import java.util.ArrayList;
 
 public class WalletDashboardAdapter extends RecyclerView.Adapter<WalletDashboardAdapter.ViewHolder> {
 
-    private ArrayList<CardItemModel> cardItemList;
+    private ArrayList<WalletDashboardItemModel> cardItemList;
     private Context context;
 
-    public WalletDashboardAdapter(ArrayList<CardItemModel> cardItemList, Context context) {
+    public WalletDashboardAdapter(ArrayList<WalletDashboardItemModel> cardItemList, Context context) {
         this.cardItemList = cardItemList;
         this.context = context;
     }
@@ -33,7 +33,7 @@ public class WalletDashboardAdapter extends RecyclerView.Adapter<WalletDashboard
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        CardItemModel itemModel = cardItemList.get(position);
+        WalletDashboardItemModel itemModel = cardItemList.get(position);
         holder.Title.setText(itemModel.getTitle());
         holder.TodayCost.setText(""+itemModel.getTodayCost());
         holder.RemainingBalance.setMax(itemModel.getTotalCost());

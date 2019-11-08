@@ -1,6 +1,6 @@
-package com.dailysaver.shadowhite.dailysaver.models;
+package com.dailysaver.shadowhite.dailysaver.models.expense;
 
-public class User {
+public class ExpenseModel {
     //private variables
     private int _id;
     private double _savings;
@@ -11,11 +11,11 @@ public class User {
 
 
     // Empty constructor
-    public User(){
+    public ExpenseModel(){
 
     }
     // constructor
-    public User(int id, double savings, double current, double inerestRate,String time,String date){
+    public ExpenseModel(int id, double savings, double current, double inerestRate, String time, String date){
         this._id = id;
         this._savings = savings;
         this._current = current;
@@ -25,7 +25,7 @@ public class User {
     }
 
     // constructor
-    public User(double savings, double current, double inerestRate,String time,String date){
+    public ExpenseModel(double savings, double current, double inerestRate, String time, String date){
         this._savings = savings;
         this._current = current;
         this._inerestRate = inerestRate;

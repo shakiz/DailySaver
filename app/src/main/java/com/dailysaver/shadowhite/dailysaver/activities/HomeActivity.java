@@ -18,7 +18,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.dailysaver.shadowhite.dailysaver.adapters.WalletDashboardAdapter;
-import com.dailysaver.shadowhite.dailysaver.models.CardItemModel;
+import com.dailysaver.shadowhite.dailysaver.models.dashboard.WalletDashboardItemModel;
 import com.dailysaver.shadowhite.dailysaver.models.IconPowerMenuItem;
 import com.dailysaver.shadowhite.dailysaver.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -31,7 +31,7 @@ import java.util.ArrayList;
 
 public class HomeActivity extends AppCompatActivity {
 
-    private ArrayList<CardItemModel> cardItemList;
+    private ArrayList<WalletDashboardItemModel> cardItemList;
     private WalletDashboardAdapter walletDashboardAdapter;
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
@@ -104,10 +104,10 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void getData() {
-        cardItemList.add(new CardItemModel("Expense Wallet",150,2550,2400));
-        cardItemList.add(new CardItemModel("Expense Wallet",150,2550,2400));
-        cardItemList.add(new CardItemModel("Expense Wallet",150,2550,2400));
-        cardItemList.add(new CardItemModel("Expense Wallet",150,2550,2400));
+        cardItemList.add(new WalletDashboardItemModel("Expense Wallet",150,2550,2400));
+        cardItemList.add(new WalletDashboardItemModel("Expense Wallet",150,2550,2400));
+        cardItemList.add(new WalletDashboardItemModel("Expense Wallet",150,2550,2400));
+        cardItemList.add(new WalletDashboardItemModel("Expense Wallet",150,2550,2400));
     }
 
     private void init() {

@@ -26,4 +26,6 @@
     <string name="select_wallet_type">Select Wallet Type</string>
     <string name="expense">Expense</string>
     <string name="income">Income</string>
+    <string name="title">Title</string>
+    <string name="type">Type</string>
 </resources>
