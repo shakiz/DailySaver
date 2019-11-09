@@ -29,14 +29,6 @@ public class Invoice_generate extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            //for item menu generate invoice
-            case R.id.action_generate_invoice:
-                startActivity(new Intent(Invoice_generate.this,Invoice_generate.class));
-                return true;
-            //for item menu about us
-            case R.id.action_about_us:
-                Toast.makeText(getApplicationContext(),"About US",Toast.LENGTH_SHORT).show();
-                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

@@ -5,12 +5,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import com.dailysaver.shadowhite.dailysaver.R;
 import com.dailysaver.shadowhite.dailysaver.models.dashboard.WalletDashboardItemModel;
 import com.github.lzyzsd.circleprogress.ArcProgress;
 import com.smarteist.autoimageslider.SliderViewAdapter;
-
 import java.util.ArrayList;
 
 public class HomeDashboardSliderAdapter extends SliderViewAdapter<HomeDashboardSliderAdapter.SliderAdapterVH> {
@@ -22,7 +20,6 @@ public class HomeDashboardSliderAdapter extends SliderViewAdapter<HomeDashboardS
         this.cardItemList = cardItemList;
         this.context = context;
     }
-
 
     @Override
     public SliderAdapterVH onCreateViewHolder(ViewGroup parent) {
@@ -39,22 +36,24 @@ public class HomeDashboardSliderAdapter extends SliderViewAdapter<HomeDashboardS
         viewHolder.TodayCost.setText(""+itemModel.getTodayCost());
         viewHolder.Type.setText(itemModel.getType());
         viewHolder.ExpiresOn.setText(itemModel.getExpiresOn());
-        viewHolder.RemainingBalance.setMax(itemModel.getTotalCost());
-        viewHolder.RemainingBalance.setSuffixText("");
-        viewHolder.RemainingBalance.setFinishedStrokeColor(context.getResources().getColor(R.color.md_red_400));
-        viewHolder.RemainingBalance.setUnfinishedStrokeColor(context.getResources().getColor(R.color.md_green_400));
-        viewHolder.RemainingBalance.setTextSize(40);
-        viewHolder.RemainingBalance.setBottomText(null);
-        viewHolder.RemainingBalance.setTextColor(context.getResources().getColor(R.color.md_grey_600));
-        viewHolder.RemainingBalance.setProgress(itemModel.getRemainingBalance());
+        setProgressData(itemModel.getTotalCost(),itemModel.getRemainingBalance(),viewHolder.RemainingBalance);
         viewHolder.TotalCost.setText(""+itemModel.getTotalCost());
+    }
 
+    private void setProgressData(int balanceRemaining, int totalCost, ArcProgress RemainingBalanceArc) {
+        RemainingBalanceArc.setMax(totalCost);
+        RemainingBalanceArc.setSuffixText("");
+        RemainingBalanceArc.setFinishedStrokeColor(context.getResources().getColor(R.color.md_red_400));
+        RemainingBalanceArc.setUnfinishedStrokeColor(context.getResources().getColor(R.color.md_green_400));
+        RemainingBalanceArc.setTextSize(40);
+        RemainingBalanceArc.setBottomText(null);
+        RemainingBalanceArc.setTextColor(context.getResources().getColor(R.color.md_grey_600));
+        RemainingBalanceArc.setProgress(balanceRemaining);
     }
 
     @Override
     public int getCount() {
-        //slider view count could be dynamic size
-        return 4;
+        return cardItemList.size();
     }
 
     class SliderAdapterVH extends SliderViewAdapter.ViewHolder {
