@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -15,7 +14,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.dailysaver.shadowhite.dailysaver.DbConnector;
 import com.dailysaver.shadowhite.dailysaver.R;
-import com.dailysaver.shadowhite.dailysaver.adapters.DailyExpenseDashboardAdapter;
+import com.dailysaver.shadowhite.dailysaver.adapters.MonthlyExpenseDashboardAdapter;
 import com.dailysaver.shadowhite.dailysaver.models.expense.ExpenseDashboardModel;
 
 import java.util.ArrayList;
@@ -28,7 +27,7 @@ public class Fragment_Expense_Dashboard extends Fragment {
     private RecyclerView recyclerView;
     private ArrayList<ExpenseDashboardModel> dashboardDataList;
     private RecyclerView.LayoutManager layoutManager;
-    private DailyExpenseDashboardAdapter dashboardAdapter;
+    private MonthlyExpenseDashboardAdapter dashboardAdapter;
     private SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
@@ -84,28 +83,22 @@ public class Fragment_Expense_Dashboard extends Fragment {
     }
 
     private void bindUIWithComponents() {
-        setAdapter();
+        //setAdapter();
     }
 
-    private void setAdapter() {
-        dashboardAdapter = new DailyExpenseDashboardAdapter(context,setData());
-        layoutManager = new LinearLayoutManager(context);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(dashboardAdapter);
-        dashboardAdapter.notifyDataSetChanged();
-    }
+//    private void setAdapter() {
+//        dashboardAdapter = new MonthlyExpenseDashboardAdapter(context,setData());
+//        layoutManager = new LinearLayoutManager(context);
+//        recyclerView.setLayoutManager(layoutManager);
+//        recyclerView.setAdapter(dashboardAdapter);
+//        dashboardAdapter.notifyDataSetChanged();
+//    }
 
-    private ArrayList<ExpenseDashboardModel> setData() {
-        dashboardDataList.add(new ExpenseDashboardModel("Office transport expense","Transport",50));
-        dashboardDataList.add(new ExpenseDashboardModel("Eat kolkata kacchi with friends","Food",260));
-        dashboardDataList.add(new ExpenseDashboardModel("Family outing","Family",2000));
-        return dashboardDataList;
-    }
 
     //this methos will be used to populate the listview
 //    public void populateListView(){
 //        final ArrayList<ExpenseModel> expenseModels = new ArrayList<>(dbConnector.getAllContacts());
-//        data=new DailyExpenseDashboardAdapter(context, expenseModels);
+//        data=new MonthlyExpenseDashboardAdapter(context, expenseModels);
 //        datalistView.setAdapter(data);
 //    }
 

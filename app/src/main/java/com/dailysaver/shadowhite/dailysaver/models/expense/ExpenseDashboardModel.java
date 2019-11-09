@@ -1,15 +1,16 @@
 package com.dailysaver.shadowhite.dailysaver.models.expense;
 
 public class ExpenseDashboardModel {
-    private String Title;
-    private String Type;
+    private String Title,Type,ExpenseDate;
     private int Amount;
 
-    public ExpenseDashboardModel(String title, String type,  int amount) {
+    public ExpenseDashboardModel(String title, String type, int amount, String expenseDate) {
         Title = title;
         Type = type;
         Amount = amount;
+        ExpenseDate = expenseDate;
     }
+
 
     public String getTitle() {
         return Title;
@@ -34,5 +35,13 @@ public class ExpenseDashboardModel {
 
     public void setAmount(int amount) {
         Amount = amount;
+    }
+
+    public String getExpenseDate() {
+        return ExpenseDate;
+    }
+
+    public void setExpenseDate(String expenseDate) {
+        ExpenseDate = expenseDate;
     }
 }

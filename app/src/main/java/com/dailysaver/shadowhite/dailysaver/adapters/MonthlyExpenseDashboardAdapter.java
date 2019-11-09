@@ -17,12 +17,12 @@ import java.util.ArrayList;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 
-public class DailyExpenseDashboardAdapter extends RecyclerView.Adapter<DailyExpenseDashboardAdapter.ViewHolder>{
+public class MonthlyExpenseDashboardAdapter extends RecyclerView.Adapter<MonthlyExpenseDashboardAdapter.ViewHolder>{
 
     private Context context;
     private ArrayList<ExpenseDashboardModel> expenseDashboardModelData;
 
-    public DailyExpenseDashboardAdapter(Context context, ArrayList<ExpenseDashboardModel> expenseDashboardModelData) {
+    public MonthlyExpenseDashboardAdapter(Context context, ArrayList<ExpenseDashboardModel> expenseDashboardModelData) {
         this.context = context;
         this.expenseDashboardModelData = expenseDashboardModelData;
     }
@@ -30,7 +30,7 @@ public class DailyExpenseDashboardAdapter extends RecyclerView.Adapter<DailyExpe
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.adapter_layout_daily_expense_dashboard,parent,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.adapter_layout_monthly_expense_dashboard,parent,false);
         return new ViewHolder(view);
     }
 
@@ -40,6 +40,7 @@ public class DailyExpenseDashboardAdapter extends RecyclerView.Adapter<DailyExpe
         holder.Title.setText(dashboardModel.getTitle());
         holder.Type.setText(dashboardModel.getType());
         holder.Amount.setText(""+dashboardModel.getAmount());
+        holder.ExpenseDate.setText(dashboardModel.getExpenseDate());
         setTypeIcon(holder.Icon,dashboardModel.getType());
     }
 
@@ -63,7 +64,7 @@ public class DailyExpenseDashboardAdapter extends RecyclerView.Adapter<DailyExpe
 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView Title,Type,Amount;
+        TextView Title,Type,Amount,ExpenseDate;
         CircleImageView Icon;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -71,6 +72,7 @@ public class DailyExpenseDashboardAdapter extends RecyclerView.Adapter<DailyExpe
             Type = itemView.findViewById(R.id.Type);
             Amount = itemView.findViewById(R.id.Amount);
             Icon = itemView.findViewById(R.id.Icon);
+            ExpenseDate = itemView.findViewById(R.id.ExpenseDate);
         }
     }
 }
