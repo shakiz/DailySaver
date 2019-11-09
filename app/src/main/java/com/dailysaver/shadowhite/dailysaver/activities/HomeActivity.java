@@ -3,7 +3,6 @@ package com.dailysaver.shadowhite.dailysaver.activities;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
 import android.content.Intent;
@@ -16,7 +15,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
+import com.dailysaver.shadowhite.dailysaver.adapters.HomeDashboardSliderAdapter;
 import com.dailysaver.shadowhite.dailysaver.adapters.WalletDashboardAdapter;
 import com.dailysaver.shadowhite.dailysaver.models.dashboard.WalletDashboardItemModel;
 import com.dailysaver.shadowhite.dailysaver.models.IconPowerMenuItem;
@@ -27,6 +26,10 @@ import com.skydoves.powermenu.CustomPowerMenu;
 import com.skydoves.powermenu.MenuAnimation;
 import com.skydoves.powermenu.MenuBaseAdapter;
 import com.skydoves.powermenu.OnMenuItemClickListener;
+import com.smarteist.autoimageslider.IndicatorAnimations;
+import com.smarteist.autoimageslider.SliderAnimations;
+import com.smarteist.autoimageslider.SliderView;
+
 import java.util.ArrayList;
 
 public class HomeActivity extends AppCompatActivity {
@@ -39,6 +42,7 @@ public class HomeActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private FloatingActionButton addButton;
     private CustomPowerMenu powerMenu;
+    private SliderView sliderView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +67,6 @@ public class HomeActivity extends AppCompatActivity {
 
     private void bindUiWithComponents() {
         setAdapter();
-
         powerMenu =new CustomPowerMenu.Builder<>(this, new IconMenuAdapter())
                 .addItem(new IconPowerMenuItem(ContextCompat.getDrawable(this, R.drawable.ic_expense), getResources().getString(R.string.add_new_expense)))
                 .addItem(new IconPowerMenuItem(ContextCompat.getDrawable(this, R.drawable.ic_wallet), getResources().getString(R.string.add_new_wallet)))
@@ -96,23 +99,30 @@ public class HomeActivity extends AppCompatActivity {
 
     private void setAdapter() {
         getData();
-        walletDashboardAdapter = new WalletDashboardAdapter(cardItemList,this);
-        layoutManager = new GridLayoutManager(this,2);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(walletDashboardAdapter);
-        walletDashboardAdapter.notifyDataSetChanged();
+
+        sliderView.setSliderAdapter(new HomeDashboardSliderAdapter(cardItemList,this));
+        sliderView.setIndicatorAnimation(IndicatorAnimations.WORM);
+        sliderView.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
+        sliderView.setIndicatorPadding(8);
+
+//        walletDashboardAdapter = new WalletDashboardAdapter(cardItemList,this);
+//        layoutManager = new GridLayoutManager(this,2);
+//        recyclerView.setLayoutManager(layoutManager);
+//        recyclerView.setAdapter(walletDashboardAdapter);
+//        walletDashboardAdapter.notifyDataSetChanged();
     }
 
     private void getData() {
-        cardItemList.add(new WalletDashboardItemModel("Expense Wallet",150,2550,2400));
-        cardItemList.add(new WalletDashboardItemModel("Expense Wallet",150,2550,2400));
-        cardItemList.add(new WalletDashboardItemModel("Expense Wallet",150,2550,2400));
-        cardItemList.add(new WalletDashboardItemModel("Expense Wallet",150,2550,2400));
+        cardItemList.add(new WalletDashboardItemModel("Earned Wallet","21-Oct-19","Income",150,2550,2400));
+        cardItemList.add(new WalletDashboardItemModel("Expense Wallet","21-Oct-19","Expense",250,2550,2300));
+        cardItemList.add(new WalletDashboardItemModel("Earned Wallet2 ","21-Oct-19","Income",350,2550,2200));
+        cardItemList.add(new WalletDashboardItemModel("Expense Wallet2","21-Oct-19","Expense",450,2550,2100));
     }
 
     private void init() {
         toolbar = findViewById(R.id.tool_bar);
-        recyclerView = findViewById(R.id.dashboardRecyclerView);
+        //recyclerView = findViewById(R.id.dashboardRecyclerView);
+        sliderView = findViewById(R.id.Slider);
         mainLayout = findViewById(R.id.home_layout);
         addButton = findViewById(R.id.add);
         cardItemList = new ArrayList<>();

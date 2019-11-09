@@ -28,4 +28,7 @@
     <string name="income">Income</string>
     <string name="title">Title</string>
     <string name="type">Type</string>
+    <string name="expire">Expires On</string>
+    <string name="wallet_type">Wallet Type</string>
+    <string name="currency">Currency</string>
 </resources>

@@ -27,7 +27,7 @@ public class WalletDashboardAdapter extends RecyclerView.Adapter<WalletDashboard
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.card_items,parent,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.adapter_layout_home_dashboard_old,parent,false);
         return new ViewHolder(view);
     }
 

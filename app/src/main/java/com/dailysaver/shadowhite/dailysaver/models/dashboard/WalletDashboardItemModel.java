@@ -1,15 +1,18 @@
 package com.dailysaver.shadowhite.dailysaver.models.dashboard;
 
 public class WalletDashboardItemModel {
-    private String Title;
+    private String Title,ExpiresOn,Type;
     private int TodayCost,TotalCost,RemainingBalance;
 
-    public WalletDashboardItemModel(String title, int todayCost, int totalCost, int remainingBalance) {
-        this.Title = title;
-        this.TodayCost = todayCost;
-        this.TotalCost = totalCost;
-        this.RemainingBalance = remainingBalance;
+    public WalletDashboardItemModel(String title, String expiresOn, String type, int todayCost, int totalCost, int remainingBalance) {
+        Title = title;
+        ExpiresOn = expiresOn;
+        Type = type;
+        TodayCost = todayCost;
+        TotalCost = totalCost;
+        RemainingBalance = remainingBalance;
     }
+
 
     public String getTitle() {
         return Title;
@@ -41,5 +44,21 @@ public class WalletDashboardItemModel {
 
     public void setRemainingBalance(int remainingBalance) {
         this.RemainingBalance = remainingBalance;
+    }
+
+    public String getExpiresOn() {
+        return ExpiresOn;
+    }
+
+    public void setExpiresOn(String expiresOn) {
+        ExpiresOn = expiresOn;
+    }
+
+    public String getType() {
+        return Type;
+    }
+
+    public void setType(String type) {
+        Type = type;
     }
 }

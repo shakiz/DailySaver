@@ -77,8 +77,8 @@ public class AddNewWalletActivity extends AppCompatActivity implements View.OnCl
     private void init() {
         toolbar = findViewById(R.id.tool_bar);
         mainLayout = findViewById(R.id.home_layout);
-        currencySpinner = findViewById(R.id.CurrencySpinner);
-        expiryDate = findViewById(R.id.ExpiryDate);
+        currencySpinner = findViewById(R.id.Currency);
+        expiryDate = findViewById(R.id.ExpiresOn);
         expense = findViewById(R.id.expense);
         income = findViewById(R.id.income);
         //datePickerTimeline = findViewById(R.id.ExpiryDate);
@@ -114,8 +114,8 @@ public class AddNewWalletActivity extends AppCompatActivity implements View.OnCl
     @Override
     public void onClick(View view) {
         switch (view.getId()){
-            case R.id.ExpiryDate:
-                getAndSetDate(R.id.ExpiryDate);
+            case R.id.ExpiresOn:
+                getAndSetDate(R.id.ExpiresOn);
                 break;
         }
     }

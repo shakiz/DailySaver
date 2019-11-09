@@ -91,7 +91,7 @@
                             android:layout_height="40dp"
                             android:layout_margin="8dp"
                             android:background="@drawable/rectangle_background_without_border"
-                            android:id="@+id/CurrencySpinner"/>
+                            android:id="@+id/Currency"/>
 
 
                     </LinearLayout>
@@ -108,7 +108,7 @@
                         android:layout_marginTop="16dp">
 
                         <LinearLayout
-                            android:layout_below="@+id/emailAddress"
+                            android:layout_below="@+id/walletName"
                             android:layout_width="match_parent"
                             android:layout_height="46dp"
                             android:padding="4dp"
@@ -116,6 +116,7 @@
                             android:orientation="horizontal">
 
                             <EditText
+                                android:id="@+id/WalletName"
                                 android:layout_width="match_parent"
                                 android:layout_height="40dp"
                                 android:layout_gravity="center_vertical"
@@ -131,7 +132,7 @@
                         </LinearLayout>
 
                         <TextView
-                            android:id="@+id/emailAddress"
+                            android:id="@+id/walletName"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="32dp"
@@ -170,6 +171,7 @@
                             android:background="@color/md_grey_400"/>
 
                         <LinearLayout
+                            android:id="@+id/Type"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="4dp"
@@ -208,7 +210,7 @@
                         android:hint="@string/expiry_date"
                         android:inputType="numberDecimal"
                         android:textSize="14sp"
-                        android:id="@+id/ExpiryDate"
+                        android:id="@+id/ExpiresOn"
                         android:focusable="false"
                         android:background="@drawable/rectangle_background"
                         android:layout_gravity="center"
