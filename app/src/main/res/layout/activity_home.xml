@@ -58,11 +58,13 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/Slider"
         android:layout_marginTop="4dp"
+        android:layout_marginRight="8dp"
         android:orientation="vertical">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/rounded_layout_with_corner"
             android:paddingBottom="4dp"
             android:paddingTop="4dp">
 

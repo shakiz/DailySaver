@@ -1,10 +1,10 @@
-package com.dailysaver.shadowhite.dailysaver.models.dashboard;
+package com.dailysaver.shadowhite.dailysaver.models.wallet;
 
-public class WalletDashboardItemModel {
+public class WalletModel {
     private String Title,ExpiresOn,Type;
     private int TodayCost,TotalCost,RemainingBalance;
 
-    public WalletDashboardItemModel(String title, String expiresOn, String type, int todayCost, int totalCost, int remainingBalance) {
+    public WalletModel(String title, String expiresOn, String type, int todayCost, int totalCost, int remainingBalance) {
         Title = title;
         ExpiresOn = expiresOn;
         Type = type;

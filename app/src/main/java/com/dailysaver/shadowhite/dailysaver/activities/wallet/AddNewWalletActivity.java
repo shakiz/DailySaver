@@ -1,4 +1,4 @@
-package com.dailysaver.shadowhite.dailysaver.activities;
+package com.dailysaver.shadowhite.dailysaver.activities.wallet;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -18,6 +18,8 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import com.dailysaver.shadowhite.dailysaver.R;
+import com.dailysaver.shadowhite.dailysaver.onboard.HomeActivity;
+
 import java.util.Calendar;
 import java.util.Locale;
 
@@ -42,7 +44,7 @@ public class AddNewWalletActivity extends AppCompatActivity implements View.OnCl
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(AddNewWalletActivity.this,HomeActivity.class));
+                startActivity(new Intent(AddNewWalletActivity.this, HomeActivity.class));
             }
         });
         Animation a = AnimationUtils.loadAnimation(this, R.anim.fadein);

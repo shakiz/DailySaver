@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dailysaver.shadowhite.dailysaver.R;
-import com.dailysaver.shadowhite.dailysaver.models.expense.ExpenseDashboardModel;
+import com.dailysaver.shadowhite.dailysaver.models.expense.ExpenseModel;
 
 import java.util.ArrayList;
 
@@ -20,11 +20,11 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class MonthlyExpenseDashboardAdapter extends RecyclerView.Adapter<MonthlyExpenseDashboardAdapter.ViewHolder>{
 
     private Context context;
-    private ArrayList<ExpenseDashboardModel> expenseDashboardModelData;
+    private ArrayList<ExpenseModel> expenseModelData;
 
-    public MonthlyExpenseDashboardAdapter(Context context, ArrayList<ExpenseDashboardModel> expenseDashboardModelData) {
+    public MonthlyExpenseDashboardAdapter(Context context, ArrayList<ExpenseModel> expenseModelData) {
         this.context = context;
-        this.expenseDashboardModelData = expenseDashboardModelData;
+        this.expenseModelData = expenseModelData;
     }
 
     @NonNull
@@ -36,7 +36,7 @@ public class MonthlyExpenseDashboardAdapter extends RecyclerView.Adapter<Monthly
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        ExpenseDashboardModel dashboardModel = expenseDashboardModelData.get(position);
+        ExpenseModel dashboardModel = expenseModelData.get(position);
         holder.Title.setText(dashboardModel.getTitle());
         holder.Type.setText(dashboardModel.getType());
         holder.Amount.setText(""+dashboardModel.getAmount());
@@ -59,7 +59,7 @@ public class MonthlyExpenseDashboardAdapter extends RecyclerView.Adapter<Monthly
 
     @Override
     public int getItemCount() {
-        return expenseDashboardModelData.size();
+        return expenseModelData.size();
     }
 
 

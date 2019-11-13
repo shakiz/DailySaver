@@ -1,4 +1,4 @@
-package com.dailysaver.shadowhite.dailysaver.activities;
+package com.dailysaver.shadowhite.dailysaver.onboard;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -15,13 +15,15 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
+import com.dailysaver.shadowhite.dailysaver.activities.expense.AddNewExpenseActivity;
+import com.dailysaver.shadowhite.dailysaver.activities.wallet.AddNewWalletActivity;
 import com.dailysaver.shadowhite.dailysaver.adapters.HomeDashboardSliderAdapter;
 import com.dailysaver.shadowhite.dailysaver.adapters.IconMenuAdapter;
 import com.dailysaver.shadowhite.dailysaver.adapters.MonthlyExpenseDashboardAdapter;
-import com.dailysaver.shadowhite.dailysaver.models.dashboard.WalletDashboardItemModel;
+import com.dailysaver.shadowhite.dailysaver.models.wallet.WalletModel;
 import com.dailysaver.shadowhite.dailysaver.models.IconPowerMenuItem;
 import com.dailysaver.shadowhite.dailysaver.R;
-import com.dailysaver.shadowhite.dailysaver.models.expense.ExpenseDashboardModel;
+import com.dailysaver.shadowhite.dailysaver.models.expense.ExpenseModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.skydoves.powermenu.CircularEffect;
 import com.skydoves.powermenu.CustomPowerMenu;
@@ -34,8 +36,8 @@ import java.util.ArrayList;
 
 public class HomeActivity extends AppCompatActivity {
 
-    private ArrayList<WalletDashboardItemModel> cardItemList;
-    private ArrayList<ExpenseDashboardModel> monthlyExpenseList;
+    private ArrayList<WalletModel> cardItemList;
+    private ArrayList<ExpenseModel> monthlyExpenseList;
     private MonthlyExpenseDashboardAdapter monthlyExpenseDashboardAdapter;
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
@@ -103,7 +105,7 @@ public class HomeActivity extends AppCompatActivity {
         @Override
         public void onItemClick(int position, IconPowerMenuItem item) {
             if (position==0)startActivity(new Intent(HomeActivity.this, AddNewExpenseActivity.class));
-            else if (position==1) startActivity(new Intent(HomeActivity.this,AddNewWalletActivity.class));
+            else if (position==1) startActivity(new Intent(HomeActivity.this, AddNewWalletActivity.class));
             powerMenu.dismiss();
         }
     };
@@ -117,16 +119,16 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void getData() {
-        cardItemList.add(new WalletDashboardItemModel("Earned Wallet","21-Oct-19","Income",150,2550,2400));
-        cardItemList.add(new WalletDashboardItemModel("Expense Wallet","21-Oct-19","Expense",250,2550,2300));
-        cardItemList.add(new WalletDashboardItemModel("Earned Wallet2 ","21-Oct-19","Income",350,2550,2200));
-        cardItemList.add(new WalletDashboardItemModel("Expense Wallet2","21-Oct-19","Expense",450,2550,2100));
+        cardItemList.add(new WalletModel("Earned Wallet","21-Oct-19","Income",150,2550,2400));
+        cardItemList.add(new WalletModel("Expense Wallet","21-Oct-19","Expense",250,2550,2300));
+        cardItemList.add(new WalletModel("Earned Wallet2 ","21-Oct-19","Income",350,2550,2200));
+        cardItemList.add(new WalletModel("Expense Wallet2","21-Oct-19","Expense",450,2550,2100));
 
-        monthlyExpenseList.add(new ExpenseDashboardModel("Office transport expense","Transport",50,"22-Jun-2019"));
-        monthlyExpenseList.add(new ExpenseDashboardModel("Eat kolkata kacchi with friends","Food",260,"02-Jun-2019"));
-        monthlyExpenseList.add(new ExpenseDashboardModel("Evening snacks","Food",20,"22-July-2019"));
-        monthlyExpenseList.add(new ExpenseDashboardModel("Provide electricity bill for home","Electricity",2000,"28-Aug-2019"));
-        monthlyExpenseList.add(new ExpenseDashboardModel("Bought gift for a friend","Gift",2000,"04-Nov-2019"));
+        monthlyExpenseList.add(new ExpenseModel("Office transport expense","Transport",50,"22-Jun-2019"));
+        monthlyExpenseList.add(new ExpenseModel("Eat kolkata kacchi with friends","Food",260,"02-Jun-2019"));
+        monthlyExpenseList.add(new ExpenseModel("Evening snacks","Food",20,"22-July-2019"));
+        monthlyExpenseList.add(new ExpenseModel("Provide electricity bill for home","Electricity",2000,"28-Aug-2019"));
+        monthlyExpenseList.add(new ExpenseModel("Bought gift for a friend","Gift",2000,"04-Nov-2019"));
     }
 
     private void init() {

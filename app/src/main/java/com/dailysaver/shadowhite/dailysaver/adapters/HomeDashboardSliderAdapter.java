@@ -6,17 +6,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import com.dailysaver.shadowhite.dailysaver.R;
-import com.dailysaver.shadowhite.dailysaver.models.dashboard.WalletDashboardItemModel;
+import com.dailysaver.shadowhite.dailysaver.models.wallet.WalletModel;
 import com.github.lzyzsd.circleprogress.ArcProgress;
 import com.smarteist.autoimageslider.SliderViewAdapter;
 import java.util.ArrayList;
 
 public class HomeDashboardSliderAdapter extends SliderViewAdapter<HomeDashboardSliderAdapter.SliderAdapterVH> {
 
-    private ArrayList<WalletDashboardItemModel> cardItemList;
+    private ArrayList<WalletModel> cardItemList;
     private Context context;
 
-    public HomeDashboardSliderAdapter(ArrayList<WalletDashboardItemModel> cardItemList, Context context) {
+    public HomeDashboardSliderAdapter(ArrayList<WalletModel> cardItemList, Context context) {
         this.cardItemList = cardItemList;
         this.context = context;
     }
@@ -30,7 +30,7 @@ public class HomeDashboardSliderAdapter extends SliderViewAdapter<HomeDashboardS
 
     @Override
     public void onBindViewHolder(SliderAdapterVH viewHolder, int position) {
-        WalletDashboardItemModel itemModel = cardItemList.get(position);
+        WalletModel itemModel = cardItemList.get(position);
         viewHolder.Position.setText(""+(++position));
         viewHolder.Title.setText(itemModel.getTitle());
         viewHolder.TodayCost.setText(""+itemModel.getTodayCost());

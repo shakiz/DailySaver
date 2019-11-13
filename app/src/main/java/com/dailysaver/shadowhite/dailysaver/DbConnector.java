@@ -7,8 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.dailysaver.shadowhite.dailysaver.models.expense.ExpenseModel;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -79,34 +77,6 @@ public class DbConnector extends SQLiteOpenHelper {
         }
         db.close();
         return true;
-    }
-    //for getting the data to populate the listview
-    public List<ExpenseModel> getAllContacts() {
-        List<ExpenseModel> expenseModelList = new ArrayList<ExpenseModel>();
-        // Select All Query
-        String selectQuery = "SELECT  * FROM " + TABLE_USER;
-
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery(selectQuery, null);
-
-        // looping through all rows and adding to list
-        if (cursor.moveToFirst()) {
-            do {
-                ExpenseModel expenseModel = new ExpenseModel();
-                expenseModel.set_id(Integer.parseInt(cursor.getString(0)));
-                expenseModel.set_savings(cursor.getDouble(1));
-                expenseModel.set_current(cursor.getDouble(2));
-                expenseModel.set_inerestRate(cursor.getDouble(3));
-                expenseModel.setTime(cursor.getString(4));
-                expenseModel.setDate(cursor.getString(5));
-
-                // Adding expenseModel to list
-                expenseModelList.add(expenseModel);
-            } while (cursor.moveToNext());
-        }
-
-        // return contact list
-        return expenseModelList;
     }
 
 
