@@ -1,4 +1,4 @@
-package com.dailysaver.shadowhite.dailysaver.models.wallet;
+package com.dailysaver.shadowhite.dailysaver.models.savingswallet;
 
 public class WalletModel {
     private String Title,ExpiresOn,Type;

@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dailysaver.shadowhite.dailysaver.R;
-import com.dailysaver.shadowhite.dailysaver.models.expense.ExpenseModel;
+import com.dailysaver.shadowhite.dailysaver.models.expensewallet.ExpenseModel;
 
 import java.util.ArrayList;
 

@@ -1,12 +1,14 @@
 package com.dailysaver.shadowhite.dailysaver.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import com.dailysaver.shadowhite.dailysaver.R;
-import com.dailysaver.shadowhite.dailysaver.models.wallet.WalletModel;
+import com.dailysaver.shadowhite.dailysaver.activities.WalletDetailsActivity;
+import com.dailysaver.shadowhite.dailysaver.models.savingswallet.WalletModel;
 import com.github.lzyzsd.circleprogress.ArcProgress;
 import com.smarteist.autoimageslider.SliderViewAdapter;
 import java.util.ArrayList;
@@ -38,6 +40,13 @@ public class HomeDashboardSliderAdapter extends SliderViewAdapter<HomeDashboardS
         viewHolder.ExpiresOn.setText(itemModel.getExpiresOn());
         setProgressData(itemModel.getTotalCost(),itemModel.getRemainingBalance(),viewHolder.RemainingBalance);
         viewHolder.TotalCost.setText(""+itemModel.getTotalCost());
+
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                context.startActivity(new Intent(context, WalletDetailsActivity.class));
+            }
+        });
     }
 
     private void setProgressData(int balanceRemaining, int totalCost, ArcProgress RemainingBalanceArc) {

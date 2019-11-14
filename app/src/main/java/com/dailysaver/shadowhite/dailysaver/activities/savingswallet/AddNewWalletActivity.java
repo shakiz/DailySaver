@@ -1,4 +1,4 @@
-package com.dailysaver.shadowhite.dailysaver.activities.wallet;
+package com.dailysaver.shadowhite.dailysaver.activities.savingswallet;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;

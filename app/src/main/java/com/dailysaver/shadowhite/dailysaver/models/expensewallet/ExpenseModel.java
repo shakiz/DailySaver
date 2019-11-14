@@ -1,4 +1,4 @@
-package com.dailysaver.shadowhite.dailysaver.models.expense;
+package com.dailysaver.shadowhite.dailysaver.models.expensewallet;
 
 public class ExpenseModel {
     private String Title,Type,ExpenseDate;

@@ -1,4 +1,4 @@
-package com.dailysaver.shadowhite.dailysaver.activities.expense;
+package com.dailysaver.shadowhite.dailysaver.activities.expensewallet;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
