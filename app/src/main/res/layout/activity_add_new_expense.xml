@@ -131,7 +131,7 @@
                             android:hint="@string/amount_hint"
                             android:inputType="numberDecimal"
                             android:textSize="14sp"
-                            android:id="@+id/amountOfEarning"
+                            android:id="@+id/Amount"
                             android:background="@drawable/rectangle_background"
                             android:layout_margin="8dp"
                             android:padding="10dp"/>
@@ -205,7 +205,7 @@
                             android:textSize="16sp"
                             android:textColor="@color/md_grey_600"
                             android:inputType="numberDecimal"
-                            android:id="@+id/Date"/>
+                            android:id="@+id/ExpenseDate"/>
 
                     </LinearLayout>
 
@@ -216,7 +216,7 @@
     </androidx.core.widget.NestedScrollView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/button_generate_savings"
+        android:id="@+id/add"
         android:clickable="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

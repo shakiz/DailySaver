@@ -3,6 +3,8 @@ package com.dailysaver.shadowhite.dailysaver.onboard;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
@@ -15,6 +17,8 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
+import com.dailysaver.shadowhite.dailysaver.MvvmDs.ExpenseModelMvvm;
+import com.dailysaver.shadowhite.dailysaver.MvvmDs.TheViewModel;
 import com.dailysaver.shadowhite.dailysaver.activities.expensewallet.AddNewExpenseActivity;
 import com.dailysaver.shadowhite.dailysaver.activities.savingswallet.AddNewWalletActivity;
 import com.dailysaver.shadowhite.dailysaver.adapters.HomeDashboardSliderAdapter;
@@ -23,7 +27,6 @@ import com.dailysaver.shadowhite.dailysaver.adapters.MonthlyExpenseDashboardAdap
 import com.dailysaver.shadowhite.dailysaver.models.savingswallet.WalletModel;
 import com.dailysaver.shadowhite.dailysaver.models.IconPowerMenuItem;
 import com.dailysaver.shadowhite.dailysaver.R;
-import com.dailysaver.shadowhite.dailysaver.models.expensewallet.ExpenseModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.skydoves.powermenu.CircularEffect;
 import com.skydoves.powermenu.CustomPowerMenu;
@@ -33,19 +36,20 @@ import com.smarteist.autoimageslider.IndicatorAnimations;
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
 import java.util.ArrayList;
+import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
 
     private ArrayList<WalletModel> cardItemList;
-    private ArrayList<ExpenseModel> monthlyExpenseList;
+    //private ArrayList<ExpenseModel> monthlyExpenseList;
     private MonthlyExpenseDashboardAdapter monthlyExpenseDashboardAdapter;
     private RecyclerView recyclerView;
-    private RecyclerView.LayoutManager layoutManager;
     private RelativeLayout mainLayout;
     private Toolbar toolbar;
     private FloatingActionButton addButton;
     private CustomPowerMenu powerMenu;
     private SliderView sliderView;
+    private TheViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +65,8 @@ public class HomeActivity extends AppCompatActivity {
                 exitApp();
             }
         });
+
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_left_arrow);
 
         Animation a = AnimationUtils.loadAnimation(this, R.anim.fadein);
         mainLayout.startAnimation(a);
@@ -94,11 +100,18 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void setAdapter() {
-        monthlyExpenseDashboardAdapter = new MonthlyExpenseDashboardAdapter(this,monthlyExpenseList);
-        layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(monthlyExpenseDashboardAdapter);
-        monthlyExpenseDashboardAdapter.notifyDataSetChanged();
+        monthlyExpenseDashboardAdapter = new MonthlyExpenseDashboardAdapter();
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        viewModel = ViewModelProviders.of(this).get(TheViewModel.class);
+        viewModel.getAllExpenses().observe(this, new Observer<List<ExpenseModelMvvm>>() {
+            @Override
+            public void onChanged(List<ExpenseModelMvvm> expenseModelMvvms) {
+                //Toast.makeText(getApplicationContext(),"Observed",Toast.LENGTH_LONG).show();
+                monthlyExpenseDashboardAdapter.setExpenseModelData(expenseModelMvvms);
+                recyclerView.setAdapter(monthlyExpenseDashboardAdapter);
+            }
+        });
     }
 
     private OnMenuItemClickListener<IconPowerMenuItem> onMenuItemClickListener = new OnMenuItemClickListener<IconPowerMenuItem>() {
@@ -123,12 +136,6 @@ public class HomeActivity extends AppCompatActivity {
         cardItemList.add(new WalletModel("Expense Wallet","21-Oct-19","Expense",250,2550,2300));
         cardItemList.add(new WalletModel("Earned Wallet2 ","21-Oct-19","Income",350,2550,2200));
         cardItemList.add(new WalletModel("Expense Wallet2","21-Oct-19","Expense",450,2550,2100));
-
-        monthlyExpenseList.add(new ExpenseModel("Office transport expense","Transport",50,"22-Jun-2019"));
-        monthlyExpenseList.add(new ExpenseModel("Eat kolkata kacchi with friends","Food",260,"02-Jun-2019"));
-        monthlyExpenseList.add(new ExpenseModel("Evening snacks","Food",20,"22-July-2019"));
-        monthlyExpenseList.add(new ExpenseModel("Provide electricity bill for home","Electricity",2000,"28-Aug-2019"));
-        monthlyExpenseList.add(new ExpenseModel("Bought gift for a friend","Gift",2000,"04-Nov-2019"));
     }
 
     private void init() {
@@ -138,7 +145,6 @@ public class HomeActivity extends AppCompatActivity {
         mainLayout = findViewById(R.id.home_layout);
         addButton = findViewById(R.id.add);
         cardItemList = new ArrayList<>();
-        monthlyExpenseList = new ArrayList<>();
     }
 
     @Override

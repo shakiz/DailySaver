@@ -1,42 +1,44 @@
 package com.dailysaver.shadowhite.dailysaver.adapters;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
+import com.dailysaver.shadowhite.dailysaver.MvvmDs.ExpenseModelMvvm;
 import com.dailysaver.shadowhite.dailysaver.R;
-import com.dailysaver.shadowhite.dailysaver.models.expensewallet.ExpenseModel;
-
-import java.util.ArrayList;
-
+import java.util.List;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class MonthlyExpenseDashboardAdapter extends RecyclerView.Adapter<MonthlyExpenseDashboardAdapter.ViewHolder>{
+    //private ArrayList<ExpenseModel> expenseModelData;
+    private List<ExpenseModelMvvm> expenseModelData;
 
-    private Context context;
-    private ArrayList<ExpenseModel> expenseModelData;
-
-    public MonthlyExpenseDashboardAdapter(Context context, ArrayList<ExpenseModel> expenseModelData) {
-        this.context = context;
+    public MonthlyExpenseDashboardAdapter(List<ExpenseModelMvvm> expenseModelData) {
         this.expenseModelData = expenseModelData;
+    }
+
+    public MonthlyExpenseDashboardAdapter() {
+
+    }
+
+    public void setExpenseModelData(List<ExpenseModelMvvm> expenseModelData){
+        this.expenseModelData = expenseModelData;
+        notifyDataSetChanged();
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.adapter_layout_monthly_expense_dashboard,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_layout_monthly_expense_dashboard,parent,false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        ExpenseModel dashboardModel = expenseModelData.get(position);
+        ExpenseModelMvvm dashboardModel = expenseModelData.get(position);
         holder.Title.setText(dashboardModel.getTitle());
         holder.Type.setText(dashboardModel.getType());
         holder.Amount.setText(""+dashboardModel.getAmount());

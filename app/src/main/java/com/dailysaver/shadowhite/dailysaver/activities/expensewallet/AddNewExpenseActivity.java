@@ -19,13 +19,19 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.dailysaver.shadowhite.dailysaver.MvvmDs.ExpenseModelMvvm;
+import com.dailysaver.shadowhite.dailysaver.MvvmDs.TheViewModel;
 import com.dailysaver.shadowhite.dailysaver.onboard.HomeActivity;
 import com.dailysaver.shadowhite.dailysaver.adapters.CategoryRecyclerAdapter;
 import com.dailysaver.shadowhite.dailysaver.R;
 import com.dailysaver.shadowhite.dailysaver.models.Category;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
@@ -33,6 +39,9 @@ import java.util.Locale;
 public class AddNewExpenseActivity extends AppCompatActivity implements View.OnClickListener {
 
     private RelativeLayout mainLayout;
+    private FloatingActionButton add;
+    private TextView Title;
+    private EditText Amount,ExpenseDate;
     private Toolbar toolbar;
     private Spinner currencySpinner;
     private ArrayAdapter<String> spinnerAdapter;
@@ -46,6 +55,7 @@ public class AddNewExpenseActivity extends AppCompatActivity implements View.OnC
     private ArrayList<Category> categoryList;
     private EditText dateView;
     private SimpleDateFormat dateFormatter;
+    private TheViewModel viewModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,10 +82,15 @@ public class AddNewExpenseActivity extends AppCompatActivity implements View.OnC
         mainLayout = findViewById(R.id.main_layout);
         mainLayout = findViewById(R.id.parent_container);
         currencySpinner = findViewById(R.id.CurrencySpinner);
-        dateView = findViewById(R.id.Date);
+        dateView = findViewById(R.id.ExpenseDate);
         categorySelection = findViewById(R.id.CategorySelector);
         categoryTitle = findViewById(R.id.Title);
         categoryIcon = findViewById(R.id.IconRes);
+        Title = findViewById(R.id.Title);
+        Amount = findViewById(R.id.Amount);
+        ExpenseDate = findViewById(R.id.ExpenseDate);
+        add = findViewById(R.id.add);
+        viewModel = ViewModelProviders.of(this).get(TheViewModel.class);
         bindUIWIthComponents();
     }
 
@@ -83,6 +98,19 @@ public class AddNewExpenseActivity extends AppCompatActivity implements View.OnC
         setSpinnerAdapter();
         dateView.setOnClickListener(this);
         categorySelection.setOnClickListener(this);
+
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                saveExpense();
+            }
+        });
+    }
+
+    private void saveExpense(){
+        ExpenseModelMvvm expenseModelMvvm = new ExpenseModelMvvm(Title.getText().toString(),"",Integer.valueOf(Amount.getText().toString()),ExpenseDate.getText().toString());
+        viewModel.insert(expenseModelMvvm);
+        startActivity(new Intent(AddNewExpenseActivity.this,HomeActivity.class));
     }
 
     private void setSpinnerAdapter() {
@@ -153,7 +181,7 @@ public class AddNewExpenseActivity extends AppCompatActivity implements View.OnC
     @Override
     public void onClick(View view) {
         switch (view.getId()){
-            case R.id.Date:
+            case R.id.ExpenseDate:
                 getAndSetDate(dateView);
                 break;
             case R.id.CategorySelector:
