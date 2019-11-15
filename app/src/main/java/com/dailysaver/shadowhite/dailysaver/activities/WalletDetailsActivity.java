@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
@@ -49,35 +50,28 @@ public class WalletDetailsActivity extends AppCompatActivity {
 
     private void bindUIWithComponents() {
         PieChart pieChart = findViewById(R.id.piechart);
-        ArrayList NoOfEmp = new ArrayList();
 
-        NoOfEmp.add(new PieEntry(945f, 0));
-        NoOfEmp.add(new PieEntry(1040f, 1));
-        NoOfEmp.add(new PieEntry(1133f, 2));
-        NoOfEmp.add(new PieEntry(1240f, 3));
-        NoOfEmp.add(new PieEntry(1369f, 4));
-        NoOfEmp.add(new PieEntry(1487f, 5));
-        NoOfEmp.add(new PieEntry(1501f, 6));
-        NoOfEmp.add(new PieEntry(1645f, 7));
-        NoOfEmp.add(new PieEntry(1578f, 8));
-        NoOfEmp.add(new PieEntry(1695f, 9));
-        PieDataSet dataSet = new PieDataSet(NoOfEmp, "Number Of Employees");
+        PieDataSet pieDataSet = new PieDataSet(getEntries(), "");
+        PieData pieData = new PieData(pieDataSet);
+        pieChart.setData(pieData);
+        pieDataSet.setColors(ColorTemplate.JOYFUL_COLORS);
+        pieDataSet.setSliceSpace(2f);
+        pieDataSet.setValueTextColor(Color.WHITE);
+        pieDataSet.setValueTextSize(10f);
+        pieDataSet.setSliceSpace(5f);
 
-        ArrayList year = new ArrayList();
-        year.add("2008");
-        year.add("2009");
-        year.add("2010");
-        year.add("2011");
-        year.add("2012");
-        year.add("2013");
-        year.add("2014");
-        year.add("2015");
-        year.add("2016");
-        year.add("2017");
-        PieData data = new PieData(dataSet);
-        pieChart.setData(data);
-        dataSet.setColors(ColorTemplate.COLORFUL_COLORS);
         pieChart.animateXY(2000, 2000);
+    }
+
+    private ArrayList<PieEntry> getEntries() {
+        ArrayList<PieEntry> pieEntries = new ArrayList<>();
+        pieEntries.add(new PieEntry(2f, 0));
+        pieEntries.add(new PieEntry(4f, 1));
+        pieEntries.add(new PieEntry(6f, 2));
+        pieEntries.add(new PieEntry(8f, 3));
+        pieEntries.add(new PieEntry(7f, 4));
+        pieEntries.add(new PieEntry(3f, 5));
+        return pieEntries;
     }
 
     private void init() {
