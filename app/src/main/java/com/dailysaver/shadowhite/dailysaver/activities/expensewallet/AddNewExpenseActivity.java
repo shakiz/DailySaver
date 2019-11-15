@@ -41,7 +41,7 @@ public class AddNewExpenseActivity extends AppCompatActivity implements View.OnC
     private RelativeLayout mainLayout;
     private FloatingActionButton add;
     private TextView Title;
-    private EditText Amount,ExpenseDate;
+    private EditText Amount,ExpenseDate,Note;
     private Toolbar toolbar;
     private Spinner currencySpinner;
     private ArrayAdapter<String> spinnerAdapter;
@@ -81,7 +81,7 @@ public class AddNewExpenseActivity extends AppCompatActivity implements View.OnC
         toolbar = findViewById(R.id.tool_bar);
         mainLayout = findViewById(R.id.main_layout);
         mainLayout = findViewById(R.id.parent_container);
-        currencySpinner = findViewById(R.id.CurrencySpinner);
+        currencySpinner = findViewById(R.id.Currency);
         dateView = findViewById(R.id.ExpenseDate);
         categorySelection = findViewById(R.id.CategorySelector);
         categoryTitle = findViewById(R.id.Title);
@@ -89,6 +89,7 @@ public class AddNewExpenseActivity extends AppCompatActivity implements View.OnC
         Title = findViewById(R.id.Title);
         Amount = findViewById(R.id.Amount);
         ExpenseDate = findViewById(R.id.ExpenseDate);
+        Note = findViewById(R.id.Note);
         add = findViewById(R.id.add);
         viewModel = ViewModelProviders.of(this).get(TheViewModel.class);
         bindUIWIthComponents();
@@ -108,7 +109,8 @@ public class AddNewExpenseActivity extends AppCompatActivity implements View.OnC
     }
 
     private void saveExpense(){
-        ExpenseModelMvvm expenseModelMvvm = new ExpenseModelMvvm(Title.getText().toString(),"",Integer.valueOf(Amount.getText().toString()),ExpenseDate.getText().toString());
+        ExpenseModelMvvm expenseModelMvvm = new ExpenseModelMvvm(Title.getText().toString(),currencySpinner.getSelectedItem().toString(),Note.getText().toString(),
+                ExpenseDate.getText().toString(),Integer.valueOf(Amount.getText().toString()));
         viewModel.insert(expenseModelMvvm);
         startActivity(new Intent(AddNewExpenseActivity.this,HomeActivity.class));
     }

@@ -39,11 +39,11 @@ public class MonthlyExpenseDashboardAdapter extends RecyclerView.Adapter<Monthly
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ExpenseModelMvvm dashboardModel = expenseModelData.get(position);
-        holder.Title.setText(dashboardModel.getTitle());
-        holder.Type.setText(dashboardModel.getType());
+        holder.Category.setText(dashboardModel.getCategory());
+        holder.Note.setText(dashboardModel.getNote());
         holder.Amount.setText(""+dashboardModel.getAmount());
         holder.ExpenseDate.setText(dashboardModel.getExpenseDate());
-        setTypeIcon(holder.Icon,dashboardModel.getType());
+        setTypeIcon(holder.Icon,dashboardModel.getCategory());
     }
 
     private void setTypeIcon(CircleImageView icon, String type) {
@@ -66,13 +66,13 @@ public class MonthlyExpenseDashboardAdapter extends RecyclerView.Adapter<Monthly
 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView Title,Type,Amount,ExpenseDate;
+        TextView Category,Note,Amount,ExpenseDate;
         CircleImageView Icon;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            Title = itemView.findViewById(R.id.Title);
-            Type = itemView.findViewById(R.id.Type);
-            Amount = itemView.findViewById(R.id.Amount);
+            Category = itemView.findViewById(R.id.Category);
+            Note = itemView.findViewById(R.id.Note);
+            Amount = itemView.findViewById(R.id.Note);
             Icon = itemView.findViewById(R.id.Icon);
             ExpenseDate = itemView.findViewById(R.id.ExpenseDate);
         }

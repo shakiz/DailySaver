@@ -8,7 +8,7 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-@Database(entities = {ExpenseModelMvvm.class},version = 1)
+@Database(entities = {ExpenseModelMvvm.class},version = 2)
 public abstract class TheDatabase extends RoomDatabase {
     private static TheDatabase instance;
     public abstract ThoseDAO expenseDAO();
@@ -43,11 +43,9 @@ public abstract class TheDatabase extends RoomDatabase {
         @Override
         protected Void doInBackground(Void... voids) {
             //TODO Dummy data
-            thoseDAO.insert(new ExpenseModelMvvm("Office transport expense","Transport",50,"22-Jun-2019"));
-            thoseDAO.insert(new ExpenseModelMvvm("Eat kolkata kacchi with friends","Food",260,"02-Jun-2019"));
-            thoseDAO.insert(new ExpenseModelMvvm("Evening snacks","Food",20,"22-July-2019"));
-            thoseDAO.insert(new ExpenseModelMvvm("Provide electricity bill for home","Electricity",2000,"28-Aug-2019"));
-            thoseDAO.insert(new ExpenseModelMvvm("Bought gift for a friend","Gift",2000,"04-Nov-2019"));
+            thoseDAO.insert(new ExpenseModelMvvm("Office transport expense","Transport","Nothing fancy","22-Jun-2019",50));
+            thoseDAO.insert(new ExpenseModelMvvm("Food expense","Food","Nothing fancy","21-July-2019",250));
+            thoseDAO.insert(new ExpenseModelMvvm("Office food expense","Food","Nothing fancy","22-Jun-2019",50));
             return null;
         }
     }

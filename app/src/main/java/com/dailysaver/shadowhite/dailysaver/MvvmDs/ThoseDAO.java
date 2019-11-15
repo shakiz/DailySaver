@@ -23,6 +23,6 @@ public interface ThoseDAO {
     @Query("DELETE FROM expense_table")
     void deleteAllExpenses();
 
-    @Query("SELECT * FROM expense_table ORDER BY Title asc")
+    @Query("SELECT * FROM expense_table ORDER BY Id desc")
     LiveData<List<ExpenseModelMvvm>> getAllExpenses();
 }

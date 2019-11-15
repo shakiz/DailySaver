@@ -7,19 +7,22 @@ import androidx.room.PrimaryKey;
 public class ExpenseModelMvvm {
     @PrimaryKey(autoGenerate = true)
     private int Id;
-    private String Title;
-    private String Type;
+    private String Category;
+    private String Currency;
+    private String Note;
     private String ExpenseDate;
     private int Amount;
 
-    public ExpenseModelMvvm(String title, String type, int amount, String expenseDate) {
-        Title = title;
-        Type = type;
-        Amount = amount;
-        ExpenseDate = expenseDate;
+    public ExpenseModelMvvm() {
     }
 
-    public ExpenseModelMvvm() {
+
+    public ExpenseModelMvvm(String category, String currency, String note, String expenseDate, int amount) {
+        Category = category;
+        Currency = currency;
+        Note = note;
+        ExpenseDate = expenseDate;
+        Amount = amount;
     }
 
     public int getId() {
@@ -30,36 +33,43 @@ public class ExpenseModelMvvm {
         Id = id;
     }
 
-    public String getTitle() {
-        return Title;
+    public String getCategory() {
+        return Category;
     }
 
-    public String getType() {
-        return Type;
+    public void setCategory(String category) {
+        Category = category;
+    }
+
+    public String getCurrency() {
+        return Currency;
+    }
+
+    public void setCurrency(String currency) {
+        Currency = currency;
+    }
+
+    public String getNote() {
+        return Note;
+    }
+
+    public void setNote(String note) {
+        Note = note;
     }
 
     public String getExpenseDate() {
         return ExpenseDate;
     }
 
-    public int getAmount() {
-        return Amount;
-    }
-
-    public void setTitle(String title) {
-        Title = title;
-    }
-
-    public void setType(String type) {
-        Type = type;
-    }
-
     public void setExpenseDate(String expenseDate) {
         ExpenseDate = expenseDate;
+    }
+
+    public int getAmount() {
+        return Amount;
     }
 
     public void setAmount(int amount) {
         Amount = amount;
     }
-
 }
