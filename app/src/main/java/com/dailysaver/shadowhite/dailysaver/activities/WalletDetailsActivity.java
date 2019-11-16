@@ -2,17 +2,16 @@ package com.dailysaver.shadowhite.dailysaver.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.RelativeLayout;
-
 import com.dailysaver.shadowhite.dailysaver.R;
 import com.dailysaver.shadowhite.dailysaver.activities.onboard.HomeActivity;
+import com.dailysaver.shadowhite.dailysaver.utills.Tools;
+import com.dailysaver.shadowhite.dailysaver.utills.UX;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
@@ -24,6 +23,8 @@ import java.util.ArrayList;
 public class WalletDetailsActivity extends AppCompatActivity {
     private RelativeLayout mainLayout;
     private Toolbar toolbar;
+    private UX ux;
+    private Tools tools;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,16 +33,8 @@ public class WalletDetailsActivity extends AppCompatActivity {
 
         init();
 
-        setSupportActionBar(toolbar);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(WalletDetailsActivity.this, HomeActivity.class));
-            }
-        });
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_left_arrow);
-        Animation a = AnimationUtils.loadAnimation(this, R.anim.fadein);
-        mainLayout.startAnimation(a);
+        ux.setToolbar(toolbar,this,HomeActivity.class);
+        tools.setAnimation(mainLayout);
 
         bindUIWithComponents();
     }
@@ -75,6 +68,8 @@ public class WalletDetailsActivity extends AppCompatActivity {
     private void init() {
         toolbar = findViewById(R.id.tool_bar);
         mainLayout = findViewById(R.id.home_layout);
+        ux = new UX(this);
+        tools = new Tools(this);
     }
 
     @Override

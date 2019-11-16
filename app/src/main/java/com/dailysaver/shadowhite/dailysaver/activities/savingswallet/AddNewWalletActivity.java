@@ -19,6 +19,8 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import com.dailysaver.shadowhite.dailysaver.R;
 import com.dailysaver.shadowhite.dailysaver.activities.onboard.HomeActivity;
+import com.dailysaver.shadowhite.dailysaver.utills.Tools;
+import com.dailysaver.shadowhite.dailysaver.utills.UX;
 
 import java.util.Calendar;
 import java.util.Locale;
@@ -32,23 +34,17 @@ public class AddNewWalletActivity extends AppCompatActivity implements View.OnCl
     private EditText expiryDate;
     private CheckBox expense,income;
     private SimpleDateFormat dateFormatter;
+    private UX ux;
+    private Tools tools;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new_savings_wallet);
 
         init();
-        setSupportActionBar(toolbar);
 
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(AddNewWalletActivity.this, HomeActivity.class));
-            }
-        });
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_left_arrow);
-        Animation a = AnimationUtils.loadAnimation(this, R.anim.fadein);
-        mainLayout.startAnimation(a);
+        ux.setToolbar(toolbar,this,HomeActivity.class);
+        tools.setAnimation(mainLayout);
         bindUiWithComponents();
     }
 
@@ -76,6 +72,8 @@ public class AddNewWalletActivity extends AppCompatActivity implements View.OnCl
     }
 
     private void init() {
+        ux = new UX(this);
+        tools = new Tools(this);
         toolbar = findViewById(R.id.tool_bar);
         mainLayout = findViewById(R.id.home_layout);
         currencySpinner = findViewById(R.id.Currency);

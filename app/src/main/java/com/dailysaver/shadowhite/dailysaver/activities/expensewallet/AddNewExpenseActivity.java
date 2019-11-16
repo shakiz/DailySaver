@@ -29,6 +29,8 @@ import com.dailysaver.shadowhite.dailysaver.activities.onboard.HomeActivity;
 import com.dailysaver.shadowhite.dailysaver.adapters.CategoryRecyclerAdapter;
 import com.dailysaver.shadowhite.dailysaver.R;
 import com.dailysaver.shadowhite.dailysaver.models.Category;
+import com.dailysaver.shadowhite.dailysaver.utills.Tools;
+import com.dailysaver.shadowhite.dailysaver.utills.UX;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -55,29 +57,22 @@ public class AddNewExpenseActivity extends AppCompatActivity implements View.OnC
     private EditText dateView;
     private SimpleDateFormat dateFormatter;
     private TheViewModel viewModel;
+    private UX ux;
+    private Tools tools;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new_expense_wallet);
 
         init();
-        setSupportActionBar(toolbar);
-
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(AddNewExpenseActivity.this, HomeActivity.class));
-            }
-        });
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_left_arrow);
-
-        Animation a = AnimationUtils.loadAnimation(this, R.anim.fadein);
-        mainLayout.startAnimation(a);
-
+        ux.setToolbar(toolbar,this,HomeActivity.class);
+        tools.setAnimation(mainLayout);
     }
 
 
     private void init() {
+        ux = new UX(this);
+        tools = new Tools(this);
         toolbar = findViewById(R.id.tool_bar);
         mainLayout = findViewById(R.id.main_layout);
         mainLayout = findViewById(R.id.parent_container);
@@ -99,7 +94,6 @@ public class AddNewExpenseActivity extends AppCompatActivity implements View.OnC
         setSpinnerAdapter();
         dateView.setOnClickListener(this);
         categorySelection.setOnClickListener(this);
-
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

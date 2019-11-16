@@ -28,7 +28,7 @@
             android:name=".activities.WalletDetailsActivity"
             android:theme="@style/AppThemeNoActionBar"
             android:label="@string/wallet_details"
-            android:windowSoftInputMode="adjustPan"
+            android:windowSoftInputMode="adjustNothing"
             android:screenOrientation="portrait"/>
 
         <activity
@@ -37,11 +37,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeNoActionBar"
             android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name=".fragments.Invoice_generate"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppThemeNoActionBar"
-            android:windowSoftInputMode="adjustPan" />
+
         <activity
             android:name=".activities.savingswallet.AddNewWalletActivity"
             android:screenOrientation="portrait"

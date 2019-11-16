@@ -13,11 +13,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
-
 import com.dailysaver.shadowhite.dailysaver.models.expensewallet.ExpenseModel;
 import com.dailysaver.shadowhite.dailysaver.MvvmDs.TheViewModel;
 import com.dailysaver.shadowhite.dailysaver.activities.expensewallet.AddNewExpenseActivity;
@@ -28,6 +25,8 @@ import com.dailysaver.shadowhite.dailysaver.adapters.MonthlyExpenseDashboardAdap
 import com.dailysaver.shadowhite.dailysaver.models.savingswallet.WalletModel;
 import com.dailysaver.shadowhite.dailysaver.models.IconPowerMenuItem;
 import com.dailysaver.shadowhite.dailysaver.R;
+import com.dailysaver.shadowhite.dailysaver.utills.Tools;
+import com.dailysaver.shadowhite.dailysaver.utills.UX;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.skydoves.powermenu.CircularEffect;
 import com.skydoves.powermenu.CustomPowerMenu;
@@ -51,6 +50,8 @@ public class HomeActivity extends AppCompatActivity {
     private CustomPowerMenu powerMenu;
     private SliderView sliderView;
     private TheViewModel viewModel;
+    private UX ux;
+    private Tools tools;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,8 +70,7 @@ public class HomeActivity extends AppCompatActivity {
 
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_left_arrow);
 
-        Animation a = AnimationUtils.loadAnimation(this, R.anim.fadein);
-        mainLayout.startAnimation(a);
+        tools.setAnimation(mainLayout);
         bindUiWithComponents();
     }
 
@@ -140,6 +140,8 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void init() {
+        ux = new UX(this);
+        tools = new Tools(this);
         toolbar = findViewById(R.id.tool_bar);
         recyclerView = findViewById(R.id.mRecyclerView);
         sliderView = findViewById(R.id.Slider);
