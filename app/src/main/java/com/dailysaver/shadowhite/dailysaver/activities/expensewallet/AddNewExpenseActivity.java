@@ -19,14 +19,13 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.dailysaver.shadowhite.dailysaver.MvvmDs.ExpenseModelMvvm;
+import com.dailysaver.shadowhite.dailysaver.models.expensewallet.ExpenseModel;
 import com.dailysaver.shadowhite.dailysaver.MvvmDs.TheViewModel;
-import com.dailysaver.shadowhite.dailysaver.onboard.HomeActivity;
+import com.dailysaver.shadowhite.dailysaver.activities.onboard.HomeActivity;
 import com.dailysaver.shadowhite.dailysaver.adapters.CategoryRecyclerAdapter;
 import com.dailysaver.shadowhite.dailysaver.R;
 import com.dailysaver.shadowhite.dailysaver.models.Category;
@@ -59,7 +58,7 @@ public class AddNewExpenseActivity extends AppCompatActivity implements View.OnC
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_new_expense);
+        setContentView(R.layout.activity_add_new_expense_wallet);
 
         init();
         setSupportActionBar(toolbar);
@@ -70,6 +69,7 @@ public class AddNewExpenseActivity extends AppCompatActivity implements View.OnC
                 startActivity(new Intent(AddNewExpenseActivity.this, HomeActivity.class));
             }
         });
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_left_arrow);
 
         Animation a = AnimationUtils.loadAnimation(this, R.anim.fadein);
         mainLayout.startAnimation(a);
@@ -109,9 +109,9 @@ public class AddNewExpenseActivity extends AppCompatActivity implements View.OnC
     }
 
     private void saveExpense(){
-        ExpenseModelMvvm expenseModelMvvm = new ExpenseModelMvvm(Title.getText().toString(),currencySpinner.getSelectedItem().toString(),Note.getText().toString(),
+        ExpenseModel expenseModel = new ExpenseModel(Title.getText().toString(),currencySpinner.getSelectedItem().toString(),Note.getText().toString(),
                 ExpenseDate.getText().toString(),Integer.valueOf(Amount.getText().toString()));
-        viewModel.insert(expenseModelMvvm);
+        viewModel.insert(expenseModel);
         startActivity(new Intent(AddNewExpenseActivity.this,HomeActivity.class));
     }
 

@@ -6,7 +6,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import com.dailysaver.shadowhite.dailysaver.MvvmDs.ExpenseModelMvvm;
+
+import com.dailysaver.shadowhite.dailysaver.models.expensewallet.ExpenseModel;
 import com.dailysaver.shadowhite.dailysaver.R;
 import java.util.List;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -14,9 +15,9 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MonthlyExpenseDashboardAdapter extends RecyclerView.Adapter<MonthlyExpenseDashboardAdapter.ViewHolder>{
     //private ArrayList<ExpenseModel> expenseModelData;
-    private List<ExpenseModelMvvm> expenseModelData;
+    private List<ExpenseModel> expenseModelData;
 
-    public MonthlyExpenseDashboardAdapter(List<ExpenseModelMvvm> expenseModelData) {
+    public MonthlyExpenseDashboardAdapter(List<ExpenseModel> expenseModelData) {
         this.expenseModelData = expenseModelData;
     }
 
@@ -24,7 +25,7 @@ public class MonthlyExpenseDashboardAdapter extends RecyclerView.Adapter<Monthly
 
     }
 
-    public void setExpenseModelData(List<ExpenseModelMvvm> expenseModelData){
+    public void setExpenseModelData(List<ExpenseModel> expenseModelData){
         this.expenseModelData = expenseModelData;
         notifyDataSetChanged();
     }
@@ -38,7 +39,7 @@ public class MonthlyExpenseDashboardAdapter extends RecyclerView.Adapter<Monthly
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        ExpenseModelMvvm dashboardModel = expenseModelData.get(position);
+        ExpenseModel dashboardModel = expenseModelData.get(position);
         holder.Category.setText(dashboardModel.getCategory());
         holder.Note.setText(dashboardModel.getNote());
         holder.Amount.setText(""+dashboardModel.getAmount());

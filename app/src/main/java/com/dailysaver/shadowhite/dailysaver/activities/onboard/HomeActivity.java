@@ -1,4 +1,4 @@
-package com.dailysaver.shadowhite.dailysaver.onboard;
+package com.dailysaver.shadowhite.dailysaver.activities.onboard;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -17,7 +17,8 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
-import com.dailysaver.shadowhite.dailysaver.MvvmDs.ExpenseModelMvvm;
+
+import com.dailysaver.shadowhite.dailysaver.models.expensewallet.ExpenseModel;
 import com.dailysaver.shadowhite.dailysaver.MvvmDs.TheViewModel;
 import com.dailysaver.shadowhite.dailysaver.activities.expensewallet.AddNewExpenseActivity;
 import com.dailysaver.shadowhite.dailysaver.activities.savingswallet.AddNewWalletActivity;
@@ -104,11 +105,11 @@ public class HomeActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         viewModel = ViewModelProviders.of(this).get(TheViewModel.class);
-        viewModel.getAllExpenses().observe(this, new Observer<List<ExpenseModelMvvm>>() {
+        viewModel.getAllExpenses().observe(this, new Observer<List<ExpenseModel>>() {
             @Override
-            public void onChanged(List<ExpenseModelMvvm> expenseModelMvvms) {
+            public void onChanged(List<ExpenseModel> expenseModels) {
                 //Toast.makeText(getApplicationContext(),"Observed",Toast.LENGTH_LONG).show();
-                monthlyExpenseDashboardAdapter.setExpenseModelData(expenseModelMvvms);
+                monthlyExpenseDashboardAdapter.setExpenseModelData(expenseModels);
                 recyclerView.setAdapter(monthlyExpenseDashboardAdapter);
             }
         });
@@ -132,10 +133,10 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void getData() {
-        cardItemList.add(new WalletModel("Earned Wallet","21-Oct-19","Income",150,2550,2400));
-        cardItemList.add(new WalletModel("Expense Wallet","21-Oct-19","Expense",250,2550,2300));
-        cardItemList.add(new WalletModel("Earned Wallet2 ","21-Oct-19","Income",350,2550,2200));
-        cardItemList.add(new WalletModel("Expense Wallet2","21-Oct-19","Expense",450,2550,2100));
+        cardItemList.add(new WalletModel("Earned Wallet",2500,"Tk.","21-Oct-19","Savings"));
+        cardItemList.add(new WalletModel("Expense Wallet",3200,"Tk.","22-Nov-19","Expense"));
+        cardItemList.add(new WalletModel("Earned Wallet",5000,"Tk.","21-Oct-19","Savings"));
+        cardItemList.add(new WalletModel("Expense Wallet",7500,"Tk.","10-Oct-19","Expense"));
     }
 
     private void init() {

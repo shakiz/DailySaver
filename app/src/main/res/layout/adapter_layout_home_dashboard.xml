@@ -119,10 +119,10 @@
                             android:textSize="12sp"
                             android:layout_gravity="center"
                             android:gravity="center"
-                            android:text="@string/todays_cost"/>
+                            android:text="@string/total_cost"/>
 
                         <TextView
-                            android:id="@+id/TodayCost"
+                            android:id="@+id/TotalCost"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="100"
@@ -158,10 +158,10 @@
                             android:textSize="12sp"
                             android:layout_gravity="center"
                             android:gravity="center"
-                            android:text="@string/total_cost"/>
+                            android:text="@string/amount"/>
 
                         <TextView
-                            android:id="@+id/TotalCost"
+                            android:id="@+id/Amount"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="200"

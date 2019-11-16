@@ -4,12 +4,13 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import com.dailysaver.shadowhite.dailysaver.models.expensewallet.ExpenseModel;
 import java.util.List;
 
 
 public class TheViewModel extends AndroidViewModel {
     private TheRepository repository;
-    private LiveData<List<ExpenseModelMvvm>> allExpenses;
+    private LiveData<List<ExpenseModel>> allExpenses;
 
     public TheViewModel(@NonNull Application application) {
         super(application);
@@ -17,15 +18,15 @@ public class TheViewModel extends AndroidViewModel {
         allExpenses = repository.getAllExpenses();
     }
 
-    public void insert(ExpenseModelMvvm expenseModel){
+    public void insert(ExpenseModel expenseModel){
         repository.insert(expenseModel);
     }
 
-    public void update(ExpenseModelMvvm expenseModel){
+    public void update(ExpenseModel expenseModel){
         repository.update(expenseModel);
     }
 
-    public void delete(ExpenseModelMvvm expenseModel){
+    public void delete(ExpenseModel expenseModel){
         repository.delete(expenseModel);
     }
 
@@ -33,7 +34,7 @@ public class TheViewModel extends AndroidViewModel {
         repository.deleteAll();
     }
 
-    public LiveData<List<ExpenseModelMvvm>> getAllExpenses(){
+    public LiveData<List<ExpenseModel>> getAllExpenses(){
         return allExpenses;
     }
 }

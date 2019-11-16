@@ -6,23 +6,23 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
-import java.util.ArrayList;
+import com.dailysaver.shadowhite.dailysaver.models.expensewallet.ExpenseModel;
 import java.util.List;
 
 @Dao
 public interface ThoseDAO {
     @Insert
-    void insert(ExpenseModelMvvm expenseModelMvvm);
+    void insert(ExpenseModel expenseModel);
 
     @Delete
-    void delete(ExpenseModelMvvm expenseModelMvvm);
+    void delete(ExpenseModel expenseModel);
 
     @Update
-    void update(ExpenseModelMvvm expenseModelMvvm);
+    void update(ExpenseModel expenseModel);
 
     @Query("DELETE FROM expense_table")
     void deleteAllExpenses();
 
     @Query("SELECT * FROM expense_table ORDER BY Id desc")
-    LiveData<List<ExpenseModelMvvm>> getAllExpenses();
+    LiveData<List<ExpenseModel>> getAllExpenses();
 }

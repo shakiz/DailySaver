@@ -171,7 +171,7 @@
                             android:background="@color/md_grey_400"/>
 
                         <LinearLayout
-                            android:id="@+id/Type"
+                            android:id="@+id/WalletType"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="4dp"
@@ -183,7 +183,7 @@
 
 
                             <androidx.appcompat.widget.AppCompatCheckBox
-                                android:id="@+id/expense"
+                                android:id="@+id/Expense"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -192,13 +192,13 @@
                                 android:text="@string/expense"/>
 
                             <androidx.appcompat.widget.AppCompatCheckBox
-                                android:id="@+id/income"
+                                android:id="@+id/Savings"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 app:buttonTint="@color/commonColor"
                                 android:textColor="@color/md_grey_600"
-                                android:text="@string/income"/>
+                                android:text="@string/savings"/>
 
                         </LinearLayout>
 

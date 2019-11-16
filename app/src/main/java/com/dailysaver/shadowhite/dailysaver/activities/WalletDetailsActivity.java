@@ -12,13 +12,11 @@ import android.view.animation.AnimationUtils;
 import android.widget.RelativeLayout;
 
 import com.dailysaver.shadowhite.dailysaver.R;
-import com.dailysaver.shadowhite.dailysaver.onboard.HomeActivity;
+import com.dailysaver.shadowhite.dailysaver.activities.onboard.HomeActivity;
 import com.github.mikephil.charting.charts.PieChart;
-import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
-import com.github.mikephil.charting.interfaces.datasets.IPieDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
@@ -41,7 +39,7 @@ public class WalletDetailsActivity extends AppCompatActivity {
                 startActivity(new Intent(WalletDetailsActivity.this, HomeActivity.class));
             }
         });
-
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_left_arrow);
         Animation a = AnimationUtils.loadAnimation(this, R.anim.fadein);
         mainLayout.startAnimation(a);
 

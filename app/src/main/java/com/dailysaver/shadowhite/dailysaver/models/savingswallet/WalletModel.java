@@ -1,49 +1,52 @@
 package com.dailysaver.shadowhite.dailysaver.models.savingswallet;
 
 public class WalletModel {
-    private String Title,ExpiresOn,Type;
-    private int TodayCost,TotalCost,RemainingBalance;
+    private int Id;
+    private String Title;
+    private int Amount;
+    private String Currency;
+    private String ExpiresOn;
+    private String WalletType;
 
-    public WalletModel(String title, String expiresOn, String type, int todayCost, int totalCost, int remainingBalance) {
+
+    public WalletModel(String title, int amount, String currency, String expiresOn, String walletType) {
         Title = title;
+        Amount = amount;
+        Currency = currency;
         ExpiresOn = expiresOn;
-        Type = type;
-        TodayCost = todayCost;
-        TotalCost = totalCost;
-        RemainingBalance = remainingBalance;
+        WalletType = walletType;
     }
 
+    public int getId() {
+        return Id;
+    }
+
+    public void setId(int id) {
+        Id = id;
+    }
 
     public String getTitle() {
         return Title;
     }
 
     public void setTitle(String title) {
-        this.Title = title;
+        Title = title;
     }
 
-    public int getTodayCost() {
-        return TodayCost;
+    public int getAmount() {
+        return Amount;
     }
 
-    public void setTodayCost(int todayCost) {
-        this.TodayCost = todayCost;
+    public void setAmount(int amount) {
+        Amount = amount;
     }
 
-    public int getTotalCost() {
-        return TotalCost;
+    public String getCurrency() {
+        return Currency;
     }
 
-    public void setTotalCost(int totalCost) {
-        this.TotalCost = totalCost;
-    }
-
-    public int getRemainingBalance() {
-        return RemainingBalance;
-    }
-
-    public void setRemainingBalance(int remainingBalance) {
-        this.RemainingBalance = remainingBalance;
+    public void setCurrency(String currency) {
+        Currency = currency;
     }
 
     public String getExpiresOn() {
@@ -54,11 +57,11 @@ public class WalletModel {
         ExpiresOn = expiresOn;
     }
 
-    public String getType() {
-        return Type;
+    public String getWalletType() {
+        return WalletType;
     }
 
-    public void setType(String type) {
-        Type = type;
+    public void setWalletType(String walletType) {
+        WalletType = walletType;
     }
 }

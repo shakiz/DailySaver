@@ -34,4 +34,6 @@
     <string name="this_months_activity">This months activity</string>
     <string name="wallet_details">Wallet Details</string>
     <string name="note_hint">Note</string>
+    <string name="recent_activities">Recent Activities</string>
+    <string name="savings">Savings</string>
 </resources>

@@ -8,7 +8,9 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-@Database(entities = {ExpenseModelMvvm.class},version = 2)
+import com.dailysaver.shadowhite.dailysaver.models.expensewallet.ExpenseModel;
+
+@Database(entities = {ExpenseModel.class},version = 2)
 public abstract class TheDatabase extends RoomDatabase {
     private static TheDatabase instance;
     public abstract ThoseDAO expenseDAO();
@@ -43,9 +45,9 @@ public abstract class TheDatabase extends RoomDatabase {
         @Override
         protected Void doInBackground(Void... voids) {
             //TODO Dummy data
-            thoseDAO.insert(new ExpenseModelMvvm("Office transport expense","Transport","Nothing fancy","22-Jun-2019",50));
-            thoseDAO.insert(new ExpenseModelMvvm("Food expense","Food","Nothing fancy","21-July-2019",250));
-            thoseDAO.insert(new ExpenseModelMvvm("Office food expense","Food","Nothing fancy","22-Jun-2019",50));
+            thoseDAO.insert(new ExpenseModel("Office transport expense","Transport","Nothing fancy","22-Jun-2019",50));
+            thoseDAO.insert(new ExpenseModel("Food expense","Food","Nothing fancy","21-July-2019",250));
+            thoseDAO.insert(new ExpenseModel("Office food expense","Food","Nothing fancy","22-Jun-2019",50));
             return null;
         }
     }

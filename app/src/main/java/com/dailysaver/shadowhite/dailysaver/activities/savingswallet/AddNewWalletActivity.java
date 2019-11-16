@@ -18,7 +18,7 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import com.dailysaver.shadowhite.dailysaver.R;
-import com.dailysaver.shadowhite.dailysaver.onboard.HomeActivity;
+import com.dailysaver.shadowhite.dailysaver.activities.onboard.HomeActivity;
 
 import java.util.Calendar;
 import java.util.Locale;
@@ -31,12 +31,11 @@ public class AddNewWalletActivity extends AppCompatActivity implements View.OnCl
     private ArrayAdapter<String> spinnerAdapter;
     private EditText expiryDate;
     private CheckBox expense,income;
-    //private DatePickerTimeline datePickerTimeline;
     private SimpleDateFormat dateFormatter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_new_wallet);
+        setContentView(R.layout.activity_add_new_savings_wallet);
 
         init();
         setSupportActionBar(toolbar);
@@ -47,6 +46,7 @@ public class AddNewWalletActivity extends AppCompatActivity implements View.OnCl
                 startActivity(new Intent(AddNewWalletActivity.this, HomeActivity.class));
             }
         });
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_left_arrow);
         Animation a = AnimationUtils.loadAnimation(this, R.anim.fadein);
         mainLayout.startAnimation(a);
         bindUiWithComponents();
@@ -55,7 +55,6 @@ public class AddNewWalletActivity extends AppCompatActivity implements View.OnCl
     private void bindUiWithComponents() {
         setSpinnerAdapter();
         expiryDate.setOnClickListener(this);
-        //datePickerTimeline.setOnClickListener(this);
 
         expense.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -81,9 +80,8 @@ public class AddNewWalletActivity extends AppCompatActivity implements View.OnCl
         mainLayout = findViewById(R.id.home_layout);
         currencySpinner = findViewById(R.id.Currency);
         expiryDate = findViewById(R.id.ExpiresOn);
-        expense = findViewById(R.id.expense);
-        income = findViewById(R.id.income);
-        //datePickerTimeline = findViewById(R.id.ExpiryDate);
+        expense = findViewById(R.id.Expense);
+        income = findViewById(R.id.Savings);
     }
 
     private void setSpinnerAdapter() {

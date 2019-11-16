@@ -35,11 +35,12 @@ public class HomeDashboardSliderAdapter extends SliderViewAdapter<HomeDashboardS
         WalletModel itemModel = cardItemList.get(position);
         viewHolder.Position.setText(""+(++position));
         viewHolder.Title.setText(itemModel.getTitle());
-        viewHolder.TodayCost.setText(""+itemModel.getTodayCost());
-        viewHolder.Type.setText(itemModel.getType());
+        viewHolder.Amount.setText(""+itemModel.getAmount());
+        viewHolder.Type.setText(itemModel.getWalletType());
         viewHolder.ExpiresOn.setText(itemModel.getExpiresOn());
-        setProgressData(itemModel.getTotalCost(),itemModel.getRemainingBalance(),viewHolder.RemainingBalance);
-        viewHolder.TotalCost.setText(""+itemModel.getTotalCost());
+        //TODO here totalCost is set to 100 by default , later we need to calculate total cost
+        setProgressData(itemModel.getAmount(),100,viewHolder.RemainingBalance);
+        viewHolder.TotalCost.setText(""+100);
 
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,15 +50,15 @@ public class HomeDashboardSliderAdapter extends SliderViewAdapter<HomeDashboardS
         });
     }
 
-    private void setProgressData(int balanceRemaining, int totalCost, ArcProgress RemainingBalanceArc) {
-        RemainingBalanceArc.setMax(totalCost);
+    private void setProgressData(int totalAmount, int totalCost, ArcProgress RemainingBalanceArc) {
+        RemainingBalanceArc.setMax(totalAmount);
         RemainingBalanceArc.setSuffixText("");
         RemainingBalanceArc.setFinishedStrokeColor(context.getResources().getColor(R.color.md_red_400));
         RemainingBalanceArc.setUnfinishedStrokeColor(context.getResources().getColor(R.color.md_green_400));
         RemainingBalanceArc.setTextSize(40);
         RemainingBalanceArc.setBottomText(null);
         RemainingBalanceArc.setTextColor(context.getResources().getColor(R.color.md_grey_600));
-        RemainingBalanceArc.setProgress(balanceRemaining);
+        RemainingBalanceArc.setProgress((totalAmount-totalCost));
     }
 
     @Override
@@ -68,14 +69,14 @@ public class HomeDashboardSliderAdapter extends SliderViewAdapter<HomeDashboardS
     class SliderAdapterVH extends SliderViewAdapter.ViewHolder {
 
         View itemView;
-        TextView Title,TodayCost,TotalCost,Position,Type,ExpiresOn;
+        TextView Title,Amount,TotalCost,Position,Type,ExpiresOn;
         ArcProgress RemainingBalance;
 
         public SliderAdapterVH(View itemView) {
             super(itemView);
             Title = itemView.findViewById(R.id.Title);
             Position = itemView.findViewById(R.id.Position);
-            TodayCost = itemView.findViewById(R.id.TodayCost);
+            Amount = itemView.findViewById(R.id.Amount);
             RemainingBalance = itemView.findViewById(R.id.RemainingBalance);
             TotalCost = itemView.findViewById(R.id.TotalCost);
             Type = itemView.findViewById(R.id.Type);
