@@ -5,36 +5,62 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import com.dailysaver.shadowhite.dailysaver.models.expensewallet.ExpenseModel;
+import com.dailysaver.shadowhite.dailysaver.models.savingswallet.WalletModel;
+
 import java.util.List;
 
 
 public class TheViewModel extends AndroidViewModel {
-    private TheRepository repository;
+    private ExpenseRepository expenseRepository;
+    private SavingsRepository savingsRepository;
     private LiveData<List<ExpenseModel>> allExpenses;
+    private LiveData<List<WalletModel>> allWallets;
 
     public TheViewModel(@NonNull Application application) {
         super(application);
-        repository = new TheRepository(application);
-        allExpenses = repository.getAllExpenses();
+        expenseRepository = new ExpenseRepository(application);
+        savingsRepository = new SavingsRepository(application);
+        allExpenses = expenseRepository.getAllExpenses();
+        allWallets = savingsRepository.getAllWallets();
     }
 
     public void insert(ExpenseModel expenseModel){
-        repository.insert(expenseModel);
+        expenseRepository.insert(expenseModel);
+    }
+
+    public void insert(WalletModel walletModel){
+        savingsRepository.insert(walletModel);
     }
 
     public void update(ExpenseModel expenseModel){
-        repository.update(expenseModel);
+        expenseRepository.update(expenseModel);
+    }
+
+    public void update(WalletModel walletModel){
+        savingsRepository.update(walletModel);
     }
 
     public void delete(ExpenseModel expenseModel){
-        repository.delete(expenseModel);
+        expenseRepository.delete(expenseModel);
+    }
+
+    public void delete(WalletModel walletModel){
+        savingsRepository.delete(walletModel);
     }
 
     public void deleteAll(){
-        repository.deleteAll();
+        expenseRepository.deleteAll();
+    }
+
+    public void deleteAllWallets(){
+        savingsRepository.deleteAllWallets();
     }
 
     public LiveData<List<ExpenseModel>> getAllExpenses(){
         return allExpenses;
+    }
+
+    public LiveData<List<WalletModel>> getAllWallets(){
+        return allWallets;
     }
 }

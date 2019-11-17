@@ -7,30 +7,30 @@ import com.dailysaver.shadowhite.dailysaver.models.expensewallet.ExpenseModel;
 import java.util.List;
 
 
-public class TheRepository {
-    private ThoseDAO thoseDAO;
+public class ExpenseRepository {
+    private ExpenseDAO expenseDAO;
     private LiveData<List<ExpenseModel>> allExpenses;
 
-    public TheRepository(Application application){
+    public ExpenseRepository(Application application){
         TheDatabase database = TheDatabase.getInstance(application);
-        thoseDAO = database.expenseDAO();
-        allExpenses = thoseDAO.getAllExpenses();
+        expenseDAO = database.expenseDAO();
+        allExpenses = expenseDAO.getAllExpenses();
     }
 
     public void insert(ExpenseModel expenseModel){
-        new InsertExpenseAsyncTask(thoseDAO).execute(expenseModel);
+        new InsertExpenseAsyncTask(expenseDAO).execute(expenseModel);
     }
 
     public void update(ExpenseModel expenseModel){
-        new UpdateExpenseAsyncTask(thoseDAO).execute(expenseModel);
+        new UpdateExpenseAsyncTask(expenseDAO).execute(expenseModel);
     }
 
     public void delete(ExpenseModel expenseModel){
-        new DeleteExpenseAsyncTask(thoseDAO).execute(expenseModel);
+        new DeleteExpenseAsyncTask(expenseDAO).execute(expenseModel);
     }
 
     public void deleteAll(){
-        new DeleteAllExpensesAsyncTask(thoseDAO).execute();
+        new DeleteAllExpensesAsyncTask(expenseDAO).execute();
     }
 
     public LiveData<List<ExpenseModel>> getAllExpenses(){
@@ -39,60 +39,60 @@ public class TheRepository {
 
     public static class InsertExpenseAsyncTask extends AsyncTask<ExpenseModel,Void,Void>{
 
-        private ThoseDAO thoseDAO;
+        private ExpenseDAO expenseDAO;
 
-        public InsertExpenseAsyncTask(ThoseDAO thoseDAO){
-            this.thoseDAO = thoseDAO;
+        public InsertExpenseAsyncTask(ExpenseDAO expenseDAO){
+            this.expenseDAO = expenseDAO;
         }
 
         @Override
         protected Void doInBackground(ExpenseModel... expenseModels) {
-            thoseDAO.insert(expenseModels[0]);
+            expenseDAO.insert(expenseModels[0]);
             return null;
         }
     }
 
     public static class UpdateExpenseAsyncTask extends AsyncTask<ExpenseModel,Void,Void>{
 
-        private ThoseDAO thoseDAO;
+        private ExpenseDAO expenseDAO;
 
-        public UpdateExpenseAsyncTask(ThoseDAO thoseDAO){
-            this.thoseDAO = thoseDAO;
+        public UpdateExpenseAsyncTask(ExpenseDAO expenseDAO){
+            this.expenseDAO = expenseDAO;
         }
 
         @Override
         protected Void doInBackground(ExpenseModel... expenseModels) {
-            thoseDAO.update(expenseModels[0]);
+            expenseDAO.update(expenseModels[0]);
             return null;
         }
     }
 
     public static class DeleteExpenseAsyncTask extends AsyncTask<ExpenseModel,Void,Void>{
 
-        private ThoseDAO thoseDAO;
+        private ExpenseDAO expenseDAO;
 
-        public DeleteExpenseAsyncTask(ThoseDAO thoseDAO){
-            this.thoseDAO = thoseDAO;
+        public DeleteExpenseAsyncTask(ExpenseDAO expenseDAO){
+            this.expenseDAO = expenseDAO;
         }
 
         @Override
         protected Void doInBackground(ExpenseModel... expenseModels) {
-            thoseDAO.delete(expenseModels[0]);
+            expenseDAO.delete(expenseModels[0]);
             return null;
         }
     }
 
     public static class DeleteAllExpensesAsyncTask extends AsyncTask<Void,Void,Void>{
 
-        private ThoseDAO thoseDAO;
+        private ExpenseDAO expenseDAO;
 
-        public DeleteAllExpensesAsyncTask(ThoseDAO thoseDAO){
-            this.thoseDAO = thoseDAO;
+        public DeleteAllExpensesAsyncTask(ExpenseDAO expenseDAO){
+            this.expenseDAO = expenseDAO;
         }
 
         @Override
         protected Void doInBackground(Void... voids) {
-            thoseDAO.deleteAllExpenses();
+            expenseDAO.deleteAllExpenses();
             return null;
         }
     }
