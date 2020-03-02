@@ -3,8 +3,6 @@ package com.dailysaver.shadowhite.dailysaver.activities.onboard;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
@@ -15,8 +13,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
-import com.dailysaver.shadowhite.dailysaver.models.expensewallet.ExpenseModel;
-import com.dailysaver.shadowhite.dailysaver.MvvmDs.TheViewModel;
 import com.dailysaver.shadowhite.dailysaver.activities.expensewallet.AddNewExpenseActivity;
 import com.dailysaver.shadowhite.dailysaver.activities.savingswallet.AddNewWalletActivity;
 import com.dailysaver.shadowhite.dailysaver.adapters.HomeDashboardSliderAdapter;
@@ -36,7 +32,6 @@ import com.smarteist.autoimageslider.IndicatorAnimations;
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
 import java.util.ArrayList;
-import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -49,7 +44,6 @@ public class HomeActivity extends AppCompatActivity {
     private FloatingActionButton addButton;
     private CustomPowerMenu powerMenu;
     private SliderView sliderView;
-    private TheViewModel viewModel;
     private UX ux;
     private Tools tools;
 
@@ -103,16 +97,6 @@ public class HomeActivity extends AppCompatActivity {
     private void setAdapter() {
         monthlyExpenseDashboardAdapter = new MonthlyExpenseDashboardAdapter();
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        viewModel = ViewModelProviders.of(this).get(TheViewModel.class);
-        viewModel.getAllExpenses().observe(this, new Observer<List<ExpenseModel>>() {
-            @Override
-            public void onChanged(List<ExpenseModel> expenseModels) {
-                //Toast.makeText(getApplicationContext(),"Observed",Toast.LENGTH_LONG).show();
-                monthlyExpenseDashboardAdapter.setExpenseModelData(expenseModels);
-                recyclerView.setAdapter(monthlyExpenseDashboardAdapter);
-            }
-        });
     }
 
     private OnMenuItemClickListener<IconPowerMenuItem> onMenuItemClickListener = new OnMenuItemClickListener<IconPowerMenuItem>() {

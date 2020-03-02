@@ -19,12 +19,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.dailysaver.shadowhite.dailysaver.models.expensewallet.ExpenseModel;
-import com.dailysaver.shadowhite.dailysaver.MvvmDs.TheViewModel;
 import com.dailysaver.shadowhite.dailysaver.activities.onboard.HomeActivity;
 import com.dailysaver.shadowhite.dailysaver.adapters.CategoryRecyclerAdapter;
 import com.dailysaver.shadowhite.dailysaver.R;
@@ -32,7 +29,6 @@ import com.dailysaver.shadowhite.dailysaver.models.Category;
 import com.dailysaver.shadowhite.dailysaver.utills.Tools;
 import com.dailysaver.shadowhite.dailysaver.utills.UX;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
@@ -56,7 +52,6 @@ public class AddNewExpenseActivity extends AppCompatActivity implements View.OnC
     private ArrayList<Category> categoryList;
     private EditText dateView;
     private SimpleDateFormat dateFormatter;
-    private TheViewModel viewModel;
     private UX ux;
     private Tools tools;
     @Override
@@ -86,7 +81,6 @@ public class AddNewExpenseActivity extends AppCompatActivity implements View.OnC
         ExpenseDate = findViewById(R.id.ExpenseDate);
         Note = findViewById(R.id.Note);
         add = findViewById(R.id.add);
-        viewModel = ViewModelProviders.of(this).get(TheViewModel.class);
         bindUIWIthComponents();
     }
 
@@ -105,7 +99,6 @@ public class AddNewExpenseActivity extends AppCompatActivity implements View.OnC
     private void saveExpense(){
         ExpenseModel expenseModel = new ExpenseModel(Title.getText().toString(),currencySpinner.getSelectedItem().toString(),Note.getText().toString(),
                 ExpenseDate.getText().toString(),Integer.valueOf(Amount.getText().toString()));
-        viewModel.insert(expenseModel);
         startActivity(new Intent(AddNewExpenseActivity.this,HomeActivity.class));
     }
 
