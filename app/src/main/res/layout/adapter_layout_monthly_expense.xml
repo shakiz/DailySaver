@@ -46,7 +46,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/category"
+                android:textColor="@color/md_grey_800"
                 android:ellipsize="end"
+                android:maxLines="1"
                 android:textSize="14sp"
                 android:layout_marginTop="2dp"
                 android:layout_marginBottom="2dp"
@@ -59,6 +61,9 @@
                 android:layout_marginTop="2dp"
                 android:layout_marginBottom="2dp"
                 android:text="@string/note_hint"
+                android:textColor="@color/md_grey_800"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:padding="2dp"/>
 
             <TextView
@@ -68,6 +73,9 @@
                 android:layout_marginTop="2dp"
                 android:layout_marginBottom="2dp"
                 android:padding="2dp"
+                android:textColor="@color/md_grey_800"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:text="@string/date_hint"/>
 
         </LinearLayout>
@@ -80,6 +88,9 @@
             android:text="10.0$"
             android:layout_marginLeft="4dp"
             android:layout_marginRight="8dp"
+            android:textColor="@color/md_grey_800"
+            android:ellipsize="end"
+            android:maxLines="1"
             android:padding="4dp"/>
 
     </LinearLayout>

@@ -6,6 +6,7 @@
     android:drawableRight="@drawable/ic_arrow_down"
     android:ellipsize="end"
     android:maxLines="1"
+    android:textSize="14sp"
     android:layout_marginLeft="0dp"
     android:textColor="@drawable/edit_text_color"
     android:minHeight="?attr/listPreferredItemHeight"

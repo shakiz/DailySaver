@@ -69,7 +69,6 @@ public class AddNewExpenseActivity extends AppCompatActivity implements View.OnC
         ux = new UX(this);
         tools = new Tools(this);
         toolbar = findViewById(R.id.tool_bar);
-        mainLayout = findViewById(R.id.main_layout);
         mainLayout = findViewById(R.id.parent_container);
         currencySpinner = findViewById(R.id.Currency);
         dateView = findViewById(R.id.ExpenseDate);

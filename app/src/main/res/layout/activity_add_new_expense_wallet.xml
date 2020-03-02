@@ -78,7 +78,8 @@
                             android:gravity="center"
                             android:clickable="true"
                             android:textSize="14sp"
-                            android:textColor="@color/md_green_400"
+                            android:textStyle="bold"
+                            android:textColor="@color/md_grey_800"
                             android:ellipsize="end"
                             android:layout_margin="8dp"/>
                         <LinearLayout
@@ -107,6 +108,7 @@
                                 android:layout_gravity="center"
                                 android:layout_margin="4dp"
                                 android:padding="4dp"
+                                android:textColor="@color/md_grey_800"
                                 android:text="@string/category_sample"/>
 
 
@@ -127,25 +129,25 @@
                         <EditText
                             android:layout_width="0dp"
                             android:layout_weight="1.4"
-                            android:layout_height="40dp"
+                            android:layout_height="42dp"
                             android:hint="@string/amount_hint"
                             android:inputType="numberDecimal"
                             android:textSize="14sp"
                             android:id="@+id/Amount"
                             android:background="@drawable/rectangle_background"
                             android:layout_margin="8dp"
+                            android:textColorHint="@color/md_grey_700"
+                            android:textColor="@color/md_grey_800"
                             android:padding="10dp"/>
 
                         <Spinner
                             style="@style/Base.TextAppearance.AppCompat.Medium"
                             android:layout_width="0dp"
                             android:layout_weight=".6"
-                            android:layout_height="40dp"
+                            android:layout_height="42dp"
                             android:layout_margin="8dp"
                             android:background="@drawable/rectangle_background"
                             android:id="@+id/Currency"/>
-
-
 
                     </LinearLayout>
 
@@ -185,25 +187,27 @@
 
                         <TextView
                             android:layout_width="0dp"
-                            android:layout_weight=".6"
+                            android:layout_weight=".8"
                             android:layout_height="wrap_content"
                             android:text="@string/date"
                             android:layout_margin="10dp"
                             android:ellipsize="end"
                             android:maxLines="1"
+                            android:textColor="@color/md_grey_800"
                             android:textSize="14sp"
                             android:padding="10dp"/>
                         <EditText
                             android:layout_width="0dp"
-                            android:layout_weight="1.4"
-                            android:layout_height="40dp"
+                            android:layout_weight="1.2"
+                            android:layout_height="42dp"
                             android:background="@drawable/rectangle_background"
                             android:hint="@string/date_hint"
                             android:layout_margin="8dp"
                             android:padding="10dp"
                             android:focusable="false"
-                            android:textSize="16sp"
-                            android:textColor="@color/md_grey_600"
+                            android:textSize="14sp"
+                            android:textColor="@color/md_grey_800"
+                            android:textColorHint="@color/md_grey_700"
                             android:inputType="numberDecimal"
                             android:id="@+id/ExpenseDate"/>
 
