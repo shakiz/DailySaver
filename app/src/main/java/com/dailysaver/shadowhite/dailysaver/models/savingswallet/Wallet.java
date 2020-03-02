@@ -1,11 +1,6 @@
 package com.dailysaver.shadowhite.dailysaver.models.savingswallet;
 
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
-
-@Entity(tableName = "wallet_table")
-public class WalletModel {
-    @PrimaryKey(autoGenerate = true)
+public class Wallet {
     private int Id;
     private String Title;
     private int Amount;
@@ -14,7 +9,7 @@ public class WalletModel {
     private String WalletType;
 
 
-    public WalletModel(String title, int amount, String currency, String expiresOn, String walletType) {
+    public Wallet(String title, int amount, String currency, String expiresOn, String walletType) {
         Title = title;
         Amount = amount;
         Currency = currency;

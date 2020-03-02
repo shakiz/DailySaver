@@ -1,11 +1,6 @@
 package com.dailysaver.shadowhite.dailysaver.models.expensewallet;
 
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
-
-@Entity(tableName = "expense_table")
-public class ExpenseModel {
-    @PrimaryKey(autoGenerate = true)
+public class Expense {
     private int Id;
     private String Category;
     private String Currency;
@@ -13,11 +8,11 @@ public class ExpenseModel {
     private String ExpenseDate;
     private int Amount;
 
-    public ExpenseModel() {
+    public Expense() {
     }
 
 
-    public ExpenseModel(String category, String currency, String note, String expenseDate, int amount) {
+    public Expense(String category, String currency, String note, String expenseDate, int amount) {
         Category = category;
         Currency = currency;
         Note = note;

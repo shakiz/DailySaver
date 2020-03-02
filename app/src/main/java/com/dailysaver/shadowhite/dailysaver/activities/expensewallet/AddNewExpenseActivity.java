@@ -21,11 +21,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import com.dailysaver.shadowhite.dailysaver.models.expensewallet.ExpenseModel;
+import com.dailysaver.shadowhite.dailysaver.models.expensewallet.Expense;
 import com.dailysaver.shadowhite.dailysaver.activities.onboard.HomeActivity;
 import com.dailysaver.shadowhite.dailysaver.adapters.CategoryRecyclerAdapter;
 import com.dailysaver.shadowhite.dailysaver.R;
-import com.dailysaver.shadowhite.dailysaver.models.Category;
+import com.dailysaver.shadowhite.dailysaver.models.category.Category;
 import com.dailysaver.shadowhite.dailysaver.utills.Tools;
 import com.dailysaver.shadowhite.dailysaver.utills.UX;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -97,7 +97,7 @@ public class AddNewExpenseActivity extends AppCompatActivity implements View.OnC
     }
 
     private void saveExpense(){
-        ExpenseModel expenseModel = new ExpenseModel(Title.getText().toString(),currencySpinner.getSelectedItem().toString(),Note.getText().toString(),
+        Expense expense = new Expense(Title.getText().toString(),currencySpinner.getSelectedItem().toString(),Note.getText().toString(),
                 ExpenseDate.getText().toString(),Integer.valueOf(Amount.getText().toString()));
         startActivity(new Intent(AddNewExpenseActivity.this,HomeActivity.class));
     }

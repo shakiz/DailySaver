@@ -18,8 +18,9 @@ import com.dailysaver.shadowhite.dailysaver.activities.savingswallet.AddNewWalle
 import com.dailysaver.shadowhite.dailysaver.adapters.HomeDashboardSliderAdapter;
 import com.dailysaver.shadowhite.dailysaver.adapters.IconMenuAdapter;
 import com.dailysaver.shadowhite.dailysaver.adapters.MonthlyExpenseDashboardAdapter;
-import com.dailysaver.shadowhite.dailysaver.models.savingswallet.WalletModel;
-import com.dailysaver.shadowhite.dailysaver.models.IconPowerMenuItem;
+import com.dailysaver.shadowhite.dailysaver.models.expensewallet.Expense;
+import com.dailysaver.shadowhite.dailysaver.models.savingswallet.Wallet;
+import com.dailysaver.shadowhite.dailysaver.models.menu.IconPowerMenuItem;
 import com.dailysaver.shadowhite.dailysaver.R;
 import com.dailysaver.shadowhite.dailysaver.utills.Tools;
 import com.dailysaver.shadowhite.dailysaver.utills.UX;
@@ -35,8 +36,8 @@ import java.util.ArrayList;
 
 public class HomeActivity extends AppCompatActivity {
 
-    private ArrayList<WalletModel> cardItemList;
-    //private ArrayList<ExpenseModel> monthlyExpenseList;
+    private ArrayList<Wallet> cardItemList;
+    private ArrayList<Expense> monthlyExpenseList;
     private MonthlyExpenseDashboardAdapter monthlyExpenseDashboardAdapter;
     private RecyclerView recyclerView;
     private RelativeLayout mainLayout;
@@ -117,10 +118,10 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void getData() {
-        cardItemList.add(new WalletModel("Earned Wallet",2500,"Tk.","21-Oct-19","Savings"));
-        cardItemList.add(new WalletModel("Expense Wallet",3200,"Tk.","22-Nov-19","Expense"));
-        cardItemList.add(new WalletModel("Earned Wallet",5000,"Tk.","21-Oct-19","Savings"));
-        cardItemList.add(new WalletModel("Expense Wallet",7500,"Tk.","10-Oct-19","Expense"));
+        cardItemList.add(new Wallet("Earned Wallet",2500,"Tk.","21-Oct-19","Savings"));
+        cardItemList.add(new Wallet("Expense Wallet",3200,"Tk.","22-Nov-19","Expense"));
+        cardItemList.add(new Wallet("Earned Wallet",5000,"Tk.","21-Oct-19","Savings"));
+        cardItemList.add(new Wallet("Expense Wallet",7500,"Tk.","10-Oct-19","Expense"));
     }
 
     private void init() {

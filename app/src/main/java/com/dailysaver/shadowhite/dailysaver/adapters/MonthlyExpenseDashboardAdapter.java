@@ -7,26 +7,26 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.dailysaver.shadowhite.dailysaver.models.expensewallet.ExpenseModel;
+import com.dailysaver.shadowhite.dailysaver.models.expensewallet.Expense;
 import com.dailysaver.shadowhite.dailysaver.R;
 import java.util.List;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class MonthlyExpenseDashboardAdapter extends RecyclerView.Adapter<MonthlyExpenseDashboardAdapter.ViewHolder>{
-    //private ArrayList<ExpenseModel> expenseModelData;
-    private List<ExpenseModel> expenseModelData;
+    //private ArrayList<Expense> expenseData;
+    private List<Expense> expenseData;
 
-    public MonthlyExpenseDashboardAdapter(List<ExpenseModel> expenseModelData) {
-        this.expenseModelData = expenseModelData;
+    public MonthlyExpenseDashboardAdapter(List<Expense> expenseData) {
+        this.expenseData = expenseData;
     }
 
     public MonthlyExpenseDashboardAdapter() {
 
     }
 
-    public void setExpenseModelData(List<ExpenseModel> expenseModelData){
-        this.expenseModelData = expenseModelData;
+    public void setExpenseData(List<Expense> expenseData){
+        this.expenseData = expenseData;
         notifyDataSetChanged();
     }
 
@@ -39,7 +39,7 @@ public class MonthlyExpenseDashboardAdapter extends RecyclerView.Adapter<Monthly
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        ExpenseModel dashboardModel = expenseModelData.get(position);
+        Expense dashboardModel = expenseData.get(position);
         holder.Category.setText(dashboardModel.getCategory());
         holder.Note.setText(dashboardModel.getNote());
         holder.Amount.setText(""+dashboardModel.getAmount());
@@ -62,7 +62,7 @@ public class MonthlyExpenseDashboardAdapter extends RecyclerView.Adapter<Monthly
 
     @Override
     public int getItemCount() {
-        return expenseModelData.size();
+        return expenseData.size();
     }
 
 

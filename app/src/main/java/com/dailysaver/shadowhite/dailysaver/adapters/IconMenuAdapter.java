@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.dailysaver.shadowhite.dailysaver.R;
-import com.dailysaver.shadowhite.dailysaver.models.IconPowerMenuItem;
+import com.dailysaver.shadowhite.dailysaver.models.menu.IconPowerMenuItem;
 import com.skydoves.powermenu.MenuBaseAdapter;
 
 public class IconMenuAdapter extends MenuBaseAdapter<IconPowerMenuItem> {

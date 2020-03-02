@@ -1,4 +1,4 @@
-package com.dailysaver.shadowhite.dailysaver.models;
+package com.dailysaver.shadowhite.dailysaver.models.menu;
 
 import android.graphics.drawable.Drawable;
 
