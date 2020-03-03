@@ -56,44 +56,88 @@
                     android:paddingBottom="8dp"
                     android:layout_margin="2dp">
 
-
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:gravity="center"
+                        android:gravity="center|left"
                         android:weightSum="2"
-                        android:layout_marginRight="4dp"
-                        android:layout_marginLeft="4dp"
                         android:layout_marginTop="8dp"
                         android:orientation="horizontal">
 
-                        <EditText
+                        <LinearLayout
                             android:layout_width="0dp"
-                            android:layout_weight="1.4"
-                            android:layout_height="40dp"
-                            android:hint="@string/amount_hint"
-                            android:inputType="numberDecimal"
-                            android:textSize="14sp"
-                            android:id="@+id/amountOfEarning"
-                            android:drawableLeft="@drawable/ic_money_sign"
-                            android:drawablePadding="4dp"
-                            android:background="@drawable/rectangle_background"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:textColor="@color/md_grey_800"
-                            android:textColorHint="@color/md_grey_700"
-                            android:gravity="bottom|left"
-                            android:padding="10dp"/>
+                            android:gravity="center"
+                            android:weightSum="2"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginRight="8dp"
+                            android:layout_marginTop="4dp"
+                            android:layout_marginBottom="4dp"
+                            android:orientation="vertical">
 
-                        <Spinner
-                            style="@style/Base.TextAppearance.AppCompat.Medium"
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_weight="1"
+                                android:layout_height="wrap_content"
+                                android:text="@string/amount"
+                                android:layout_gravity="center"
+                                android:gravity="center|left"
+                                android:clickable="true"
+                                android:textSize="14sp"
+                                android:textColor="@color/md_grey_800"
+                                android:ellipsize="end"
+                                android:padding="4dp"/>
+
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp"
+                                android:hint="@string/amount_hint"
+                                android:inputType="numberDecimal"
+                                android:textSize="14sp"
+                                android:layout_marginTop="4dp"
+                                android:id="@+id/Amount"
+                                android:background="@drawable/rectangle_background"
+                                android:textColorHint="@color/md_grey_700"
+                                android:textColor="@color/md_grey_800"
+                                android:padding="10dp"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
                             android:layout_width="0dp"
-                            android:layout_weight=".6"
-                            android:layout_height="40dp"
-                            android:layout_margin="8dp"
-                            android:background="@drawable/rectangle_background_without_border"
-                            android:id="@+id/Currency"/>
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginRight="8dp"
+                            android:layout_marginTop="4dp"
+                            android:layout_marginBottom="4dp"
+                            android:orientation="vertical">
 
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_weight="1"
+                                android:layout_height="wrap_content"
+                                android:text="@string/currency"
+                                android:layout_gravity="center"
+                                android:gravity="center|left"
+                                android:clickable="true"
+                                android:textSize="14sp"
+                                android:textColor="@color/md_grey_800"
+                                android:ellipsize="end"
+                                android:padding="4dp"/>
+
+                            <Spinner
+                                style="@style/Base.TextAppearance.AppCompat.Medium"
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp"
+                                android:layout_marginTop="4dp"
+                                android:background="@drawable/rectangle_background"
+                                android:id="@+id/Currency"/>
+
+                        </LinearLayout>
 
                     </LinearLayout>
 

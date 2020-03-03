@@ -57,7 +57,7 @@ public class AddNewExpenseActivity extends AppCompatActivity implements View.OnC
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_new_expense_wallet);
+        setContentView(R.layout.activity_add_new_expense);
 
         init();
         ux.setToolbar(toolbar,this,HomeActivity.class);
@@ -102,7 +102,7 @@ public class AddNewExpenseActivity extends AppCompatActivity implements View.OnC
     }
 
     private void setSpinnerAdapter() {
-        spinnerAdapter = new ArrayAdapter<String>(this,R.layout.spinner_drop,new String[]{"BDT Tk.","US Dollar"});
+        spinnerAdapter = new ArrayAdapter<String>(this,R.layout.spinner_drop,new String[]{getResources().getString(R.string.select_currency),"BDT Tk.","US Dollar"});
         currencySpinner.setAdapter(spinnerAdapter);
         spinnerAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
         spinnerAdapter.notifyDataSetChanged();

@@ -1,4 +1,4 @@
-package com.dailysaver.shadowhite.dailysaver.activities.savingswallet;
+package com.dailysaver.shadowhite.dailysaver.activities.wallet;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -35,7 +35,7 @@ public class AddNewWalletActivity extends AppCompatActivity implements View.OnCl
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_new_savings_wallet);
+        setContentView(R.layout.activity_add_new_wallet);
 
         init();
 

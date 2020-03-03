@@ -35,8 +35,8 @@
                           <map>
                             <entry key="assetSourceType" value="FILE" />
                             <entry key="color" value="3a587d" />
-                            <entry key="outputName" value="ic_left_arrow" />
-                            <entry key="sourceFile" value="C:\Users\sakha\Downloads\left-arrow.svg" />
+                            <entry key="outputName" value="ic_tap" />
+                            <entry key="sourceFile" value="C:\Users\sakha\Downloads\click.svg" />
                           </map>
                         </option>
                       </PersistentState>

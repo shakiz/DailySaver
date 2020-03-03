@@ -14,7 +14,7 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 import com.dailysaver.shadowhite.dailysaver.activities.expensewallet.AddNewExpenseActivity;
-import com.dailysaver.shadowhite.dailysaver.activities.savingswallet.AddNewWalletActivity;
+import com.dailysaver.shadowhite.dailysaver.activities.wallet.AddNewWalletActivity;
 import com.dailysaver.shadowhite.dailysaver.adapters.HomeDashboardSliderAdapter;
 import com.dailysaver.shadowhite.dailysaver.adapters.IconMenuAdapter;
 import com.dailysaver.shadowhite.dailysaver.adapters.MonthlyExpenseDashboardAdapter;
