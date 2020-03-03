@@ -7,7 +7,7 @@
         android:color="@color/md_white_1000"/>
 
     <stroke
-        android:color="@color/md_grey_600"
+        android:color="#616161"
         android:width="1dp" />
 
     <size

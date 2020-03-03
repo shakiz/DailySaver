@@ -71,7 +71,7 @@
                         <EditText
                             android:layout_width="0dp"
                             android:layout_weight="1.4"
-                            android:layout_height="42dp"
+                            android:layout_height="40dp"
                             android:hint="@string/amount_hint"
                             android:inputType="numberDecimal"
                             android:textSize="14sp"
@@ -111,7 +111,7 @@
                         <LinearLayout
                             android:layout_below="@+id/walletName"
                             android:layout_width="match_parent"
-                            android:layout_height="42dp"
+                            android:layout_height="40dp"
                             android:padding="4dp"
                             android:background="@drawable/rectangle_background"
                             android:orientation="horizontal">
@@ -145,7 +145,7 @@
                             android:text="@string/wallet_name"
                             android:background="@color/md_white_1000"
                             android:textColor="@color/md_grey_700"
-                            android:textSize="16sp" />
+                            android:textSize="14sp" />
 
                     </RelativeLayout>
 
@@ -175,7 +175,7 @@
                         <LinearLayout
                             android:id="@+id/WalletType"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="40dp"
                             android:layout_margin="4dp"
                             android:padding="4dp"
                             android:layout_gravity="center"
@@ -189,7 +189,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1.5"
-                                app:buttonTint="@color/commonColor"
+                                app:buttonTint="@color/colorPrimary"
                                 android:textColor="@color/md_grey_600"
                                 android:text="@string/expense"/>
 
@@ -198,7 +198,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1.5"
-                                app:buttonTint="@color/commonColor"
+                                app:buttonTint="@color/colorPrimary"
                                 android:textColor="@color/md_grey_600"
                                 android:text="@string/savings"/>
 
@@ -208,7 +208,7 @@
 
                     <EditText
                         android:layout_width="match_parent"
-                        android:layout_height="42dp"
+                        android:layout_height="40dp"
                         android:hint="@string/expiry_date"
                         android:inputType="numberDecimal"
                         android:textSize="14sp"
@@ -218,6 +218,8 @@
                         android:layout_gravity="center"
                         android:gravity="center|left"
                         android:layout_marginLeft="4dp"
+                        android:drawableLeft="@drawable/ic_expiry_date"
+                        android:drawablePadding="4dp"
                         android:textColor="@color/md_grey_800"
                         android:textColorHint="@color/md_grey_700"
                         android:layout_marginRight="4dp"
@@ -239,7 +241,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_margin="24dp"
-        android:src="@drawable/ic_add"
+        android:src="@drawable/ic_action_done"
         app:backgroundTint="@color/white_transparent"
         app:fabSize="normal" />
 

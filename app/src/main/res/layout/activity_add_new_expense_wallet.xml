@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:focusable="true"
-    android:background="@color/md_white_1000"
+    android:background="@color/md_grey_100"
     android:focusableInTouchMode="true">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -85,7 +85,7 @@
                         <LinearLayout
                             android:orientation="horizontal"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_height="40dp"
                             android:layout_margin="4dp"
                             android:padding="2dp"
                             android:clickable="true"
@@ -129,11 +129,13 @@
                         <EditText
                             android:layout_width="0dp"
                             android:layout_weight="1.4"
-                            android:layout_height="42dp"
+                            android:layout_height="40dp"
                             android:hint="@string/amount_hint"
                             android:inputType="numberDecimal"
                             android:textSize="14sp"
                             android:id="@+id/Amount"
+                            android:drawableLeft="@drawable/ic_money_sign"
+                            android:drawablePadding="4dp"
                             android:background="@drawable/rectangle_background"
                             android:layout_margin="8dp"
                             android:textColorHint="@color/md_grey_700"
@@ -144,7 +146,7 @@
                             style="@style/Base.TextAppearance.AppCompat.Medium"
                             android:layout_width="0dp"
                             android:layout_weight=".6"
-                            android:layout_height="42dp"
+                            android:layout_height="40dp"
                             android:layout_margin="8dp"
                             android:background="@drawable/rectangle_background"
                             android:id="@+id/Currency"/>
@@ -188,7 +190,7 @@
                         <TextView
                             android:layout_width="0dp"
                             android:layout_weight=".8"
-                            android:layout_height="wrap_content"
+                            android:layout_height="40dp"
                             android:text="@string/date"
                             android:layout_margin="10dp"
                             android:ellipsize="end"
@@ -199,13 +201,15 @@
                         <EditText
                             android:layout_width="0dp"
                             android:layout_weight="1.2"
-                            android:layout_height="42dp"
+                            android:layout_height="40dp"
                             android:background="@drawable/rectangle_background"
                             android:hint="@string/date_hint"
                             android:layout_margin="8dp"
                             android:padding="10dp"
                             android:focusable="false"
                             android:textSize="14sp"
+                            android:drawableLeft="@drawable/ic_expiry_date"
+                            android:drawablePadding="4dp"
                             android:textColor="@color/md_grey_800"
                             android:textColorHint="@color/md_grey_700"
                             android:inputType="numberDecimal"
