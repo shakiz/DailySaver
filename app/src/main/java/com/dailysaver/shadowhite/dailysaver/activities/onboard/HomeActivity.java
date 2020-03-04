@@ -15,9 +15,9 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 import com.dailysaver.shadowhite.dailysaver.activities.expensewallet.AddNewExpenseActivity;
 import com.dailysaver.shadowhite.dailysaver.activities.wallet.AddNewWalletActivity;
-import com.dailysaver.shadowhite.dailysaver.adapters.HomeDashboardSliderAdapter;
-import com.dailysaver.shadowhite.dailysaver.adapters.IconMenuAdapter;
-import com.dailysaver.shadowhite.dailysaver.adapters.MonthlyExpenseDashboardAdapter;
+import com.dailysaver.shadowhite.dailysaver.adapters.wallet.WalletDetailsSliderAdapter;
+import com.dailysaver.shadowhite.dailysaver.adapters.menu.IconMenuAdapter;
+import com.dailysaver.shadowhite.dailysaver.adapters.monthlyexpense.MonthlyExpenseAdapter;
 import com.dailysaver.shadowhite.dailysaver.models.expensewallet.Expense;
 import com.dailysaver.shadowhite.dailysaver.models.savingswallet.Wallet;
 import com.dailysaver.shadowhite.dailysaver.models.menu.IconPowerMenuItem;
@@ -38,7 +38,7 @@ public class HomeActivity extends AppCompatActivity {
 
     private ArrayList<Wallet> cardItemList;
     private ArrayList<Expense> monthlyExpenseList;
-    private MonthlyExpenseDashboardAdapter monthlyExpenseDashboardAdapter;
+    private MonthlyExpenseAdapter monthlyExpenseAdapter;
     private RecyclerView recyclerView;
     private RelativeLayout mainLayout;
     private Toolbar toolbar;
@@ -96,8 +96,10 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void setAdapter() {
-        monthlyExpenseDashboardAdapter = new MonthlyExpenseDashboardAdapter();
+        monthlyExpenseAdapter = new MonthlyExpenseAdapter(monthlyExpenseList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(monthlyExpenseAdapter);
+        monthlyExpenseAdapter.notifyDataSetChanged();
     }
 
     private OnMenuItemClickListener<IconPowerMenuItem> onMenuItemClickListener = new OnMenuItemClickListener<IconPowerMenuItem>() {
@@ -111,17 +113,17 @@ public class HomeActivity extends AppCompatActivity {
 
     private void setCardSlider() {
         getData();
-        sliderView.setSliderAdapter(new HomeDashboardSliderAdapter(cardItemList,this));
+        sliderView.setSliderAdapter(new WalletDetailsSliderAdapter(cardItemList,this));
         sliderView.setIndicatorAnimation(IndicatorAnimations.WORM);
         sliderView.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
         sliderView.setIndicatorPadding(8);
     }
 
     private void getData() {
-        cardItemList.add(new Wallet("Earned Wallet",2500,"Tk.","21-Oct-19","Savings"));
-        cardItemList.add(new Wallet("Expense Wallet",3200,"Tk.","22-Nov-19","Expense"));
-        cardItemList.add(new Wallet("Earned Wallet",5000,"Tk.","21-Oct-19","Savings"));
-        cardItemList.add(new Wallet("Expense Wallet",7500,"Tk.","10-Oct-19","Expense"));
+        cardItemList.add(new Wallet("April Wallet",2500,"Tk.","21-Apr-19","Savings"));
+        cardItemList.add(new Wallet("May Wallet",3200,"Tk.","22-May-19","Expense"));
+        cardItemList.add(new Wallet("September Wallet",5000,"Tk.","21-Sep-19","Savings"));
+        cardItemList.add(new Wallet("August Wallet",7500,"Tk.","10-Aug-19","Expense"));
     }
 
     private void init() {

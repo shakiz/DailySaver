@@ -1,4 +1,4 @@
-package com.dailysaver.shadowhite.dailysaver.adapters;
+package com.dailysaver.shadowhite.dailysaver.adapters.category;
 
 import android.app.Dialog;
 import android.content.Context;

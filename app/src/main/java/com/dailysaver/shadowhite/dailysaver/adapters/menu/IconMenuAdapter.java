@@ -1,4 +1,4 @@
-package com.dailysaver.shadowhite.dailysaver.adapters;
+package com.dailysaver.shadowhite.dailysaver.adapters.menu;
 
 import android.content.Context;
 import android.view.LayoutInflater;

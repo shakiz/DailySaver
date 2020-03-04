@@ -23,7 +23,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.dailysaver.shadowhite.dailysaver.models.expensewallet.Expense;
 import com.dailysaver.shadowhite.dailysaver.activities.onboard.HomeActivity;
-import com.dailysaver.shadowhite.dailysaver.adapters.CategoryRecyclerAdapter;
+import com.dailysaver.shadowhite.dailysaver.adapters.category.CategoryRecyclerAdapter;
 import com.dailysaver.shadowhite.dailysaver.R;
 import com.dailysaver.shadowhite.dailysaver.models.category.Category;
 import com.dailysaver.shadowhite.dailysaver.utills.Tools;
