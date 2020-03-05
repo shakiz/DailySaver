@@ -9,6 +9,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DB_NAME = "dailySaver.db";
     private static final int DB_VERSION = 1;
 
+    private static final String WALLET_TABLE = "Wallet";
+    private static final String SAVINGS_TABLE = "Savings";
+    private static final String EXPENSE_TABLE = "Expense";
+
+
+    private static String CREATE_WALLET_TABLE = " ";
+    private static String CREATE_SAVINGS_TABLE = " ";
+    private static String CREATE_EXPENSE_TABLE = " ";
+
+
     public DatabaseHelper(@Nullable Context context) {
         super(context, DB_NAME, null, DB_VERSION);
     }

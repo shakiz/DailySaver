@@ -21,7 +21,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import com.dailysaver.shadowhite.dailysaver.models.expensewallet.Expense;
 import com.dailysaver.shadowhite.dailysaver.activities.onboard.HomeActivity;
 import com.dailysaver.shadowhite.dailysaver.adapters.category.CategoryRecyclerAdapter;
 import com.dailysaver.shadowhite.dailysaver.R;
@@ -33,7 +32,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
-public class AddNewExpenseActivity extends AppCompatActivity implements View.OnClickListener {
+public class AddNewBudgetActivity extends AppCompatActivity implements View.OnClickListener {
 
     private RelativeLayout mainLayout;
     private FloatingActionButton add;
@@ -57,7 +56,7 @@ public class AddNewExpenseActivity extends AppCompatActivity implements View.OnC
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_new_expense);
+        setContentView(R.layout.activity_add_new_budget);
 
         init();
         ux.setToolbar(toolbar,this,HomeActivity.class);
@@ -96,9 +95,7 @@ public class AddNewExpenseActivity extends AppCompatActivity implements View.OnC
     }
 
     private void saveExpense(){
-        Expense expense = new Expense(Title.getText().toString(),currencySpinner.getSelectedItem().toString(),Note.getText().toString(),
-                ExpenseDate.getText().toString(),Integer.valueOf(Amount.getText().toString()));
-        startActivity(new Intent(AddNewExpenseActivity.this,HomeActivity.class));
+        startActivity(new Intent(AddNewBudgetActivity.this,HomeActivity.class));
     }
 
     private void setSpinnerAdapter() {
@@ -180,7 +177,7 @@ public class AddNewExpenseActivity extends AppCompatActivity implements View.OnC
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(AddNewExpenseActivity.this,HomeActivity.class));
+        startActivity(new Intent(AddNewBudgetActivity.this,HomeActivity.class));
         overridePendingTransition(R.anim.fadein,R.anim.push_up_out);
     }
 }

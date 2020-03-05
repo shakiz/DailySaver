@@ -1,4 +1,4 @@
-package com.dailysaver.shadowhite.dailysaver.models.savingswallet;
+package com.dailysaver.shadowhite.dailysaver.models.wallet;
 
 public class Wallet {
     private int Id;

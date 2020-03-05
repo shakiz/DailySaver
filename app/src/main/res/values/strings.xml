@@ -20,11 +20,12 @@
     <string name="new_wallet">Add New Wallet</string>
     <string name="add_new_expense">Add New Expense</string>
     <string name="add_new_wallet">Add New Wallet</string>
+    <string name="add_new_budget">Add New Budget</string>
     <string name="wallet_name_hint">Enter Wallet Name</string>
     <string name="wallet_name">Wallet Name</string>
     <string name="expiry_date">Expiry Date</string>
     <string name="select_wallet_type">Select Wallet Type</string>
-    <string name="expense">Expense</string>
+    <string name="budget">Expense</string>
     <string name="income">Income</string>
     <string name="title">Title</string>
     <string name="type">Type</string>

@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import com.dailysaver.shadowhite.dailysaver.R;
 import com.dailysaver.shadowhite.dailysaver.activities.WalletDetailsActivity;
-import com.dailysaver.shadowhite.dailysaver.models.savingswallet.Wallet;
+import com.dailysaver.shadowhite.dailysaver.models.wallet.Wallet;
 import com.github.lzyzsd.circleprogress.ArcProgress;
 import com.smarteist.autoimageslider.SliderViewAdapter;
 import java.util.ArrayList;

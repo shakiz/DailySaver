@@ -20,7 +20,7 @@
             android:id="@+id/tool_bar"
             app:navigationIcon="?attr/homeAsUpIndicator"
             style="@style/TextAppearance.Widget.Event.Toolbar.Title"
-            app:title="@string/add_new_expense"
+            app:title="@string/add_new_budget"
             app:titleTextColor="@color/md_white_1000">
 
         </androidx.appcompat.widget.Toolbar>
@@ -246,6 +246,39 @@
                                 android:background="@drawable/rectangle_background"/>
 
                         </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginBottom="4dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/wallet_type"
+                            android:layout_gravity="center"
+                            android:gravity="center|left"
+                            android:clickable="true"
+                            android:textSize="14sp"
+                            android:textColor="@color/md_grey_800"
+                            android:ellipsize="end"
+                            android:padding="4dp"/>
+
+                        <Spinner
+                            android:id="@+id/WalletType"
+                            style="@style/Base.TextAppearance.AppCompat.Medium"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:layout_marginTop="4dp"
+                            android:background="@drawable/rectangle_background"/>
 
                     </LinearLayout>
 

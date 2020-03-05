@@ -64,7 +64,8 @@
                         android:layout_marginTop="8dp"
                         android:layout_marginLeft="8dp"
                         android:layout_marginRight="8dp"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:baselineAligned="false">
 
                         <LinearLayout
                             android:layout_width="0dp"
@@ -195,6 +196,32 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:weightSum="2"
+                        android:orientation="horizontal">
+
+
+                        <EditText
+                            android:layout_width="0dp"
+                            android:layout_weight="2"
+                            android:maxLines="2"
+                            android:layout_height="80dp"
+                            android:background="@drawable/rounded_layout"
+                            android:hint="@string/note"
+                            android:layout_margin="8dp"
+                            android:textSize="16sp"
+                            android:padding="10dp"
+                            android:drawableLeft="@drawable/ic_writing"
+                            android:drawablePadding="8dp"
+                            android:inputType="text"
+                            android:id="@+id/Note"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:orientation="vertical"
                         android:layout_marginTop="16dp"
                         android:layout_marginLeft="8dp"
@@ -233,7 +260,7 @@
                                 android:layout_weight="1.5"
                                 app:buttonTint="@color/colorPrimary"
                                 android:textColor="@color/md_grey_600"
-                                android:text="@string/expense"/>
+                                android:text="@string/budget"/>
 
                             <androidx.appcompat.widget.AppCompatCheckBox
                                 android:id="@+id/Savings"

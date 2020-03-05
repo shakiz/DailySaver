@@ -6,16 +6,16 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import com.dailysaver.shadowhite.dailysaver.models.expensewallet.Expense;
+import com.dailysaver.shadowhite.dailysaver.models.budget.Budget;
 import com.dailysaver.shadowhite.dailysaver.R;
 import java.util.ArrayList;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MonthlyExpenseAdapter extends RecyclerView.Adapter<MonthlyExpenseAdapter.ViewHolder>{
-    private ArrayList<Expense> expenseData;
+    private ArrayList<Budget> budgetList;
 
-    public MonthlyExpenseAdapter(ArrayList<Expense> expenseData) {
-        this.expenseData = expenseData;
+    public MonthlyExpenseAdapter(ArrayList<Budget> budgetList) {
+        this.budgetList = budgetList;
     }
 
     @NonNull
@@ -27,12 +27,12 @@ public class MonthlyExpenseAdapter extends RecyclerView.Adapter<MonthlyExpenseAd
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Expense dashboardModel = expenseData.get(position);
-        holder.Category.setText(dashboardModel.getCategory());
-        holder.Note.setText(dashboardModel.getNote());
-        holder.Amount.setText(""+dashboardModel.getAmount());
-        holder.ExpenseDate.setText(dashboardModel.getExpenseDate());
-        setTypeIcon(holder.Icon,dashboardModel.getCategory());
+        Budget budget = budgetList.get(position);
+        holder.Category.setText(budget.getCategory());
+        holder.Note.setText(budget.getNote());
+        holder.Amount.setText(""+budget.getAmount());
+        holder.ExpenseDate.setText(budget.getExpenseDate());
+        setTypeIcon(holder.Icon,budget.getCategory());
     }
 
     private void setTypeIcon(CircleImageView icon, String type) {
@@ -50,7 +50,7 @@ public class MonthlyExpenseAdapter extends RecyclerView.Adapter<MonthlyExpenseAd
 
     @Override
     public int getItemCount() {
-        return expenseData.size();
+        return budgetList.size();
     }
 
 
