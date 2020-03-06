@@ -1,4 +1,4 @@
-package com.dailysaver.shadowhite.dailysaver.adapters;
+package com.dailysaver.shadowhite.dailysaver.adapters.category;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -11,7 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.dailysaver.shadowhite.dailysaver.models.Category;
+import com.dailysaver.shadowhite.dailysaver.models.category.Category;
 import com.dailysaver.shadowhite.dailysaver.R;
 
 import java.util.ArrayList;

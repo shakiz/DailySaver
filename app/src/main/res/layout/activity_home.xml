@@ -24,20 +24,15 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-
-<!--    <androidx.recyclerview.widget.RecyclerView-->
-<!--        android:layout_below="@id/app_bar"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:id="@+id/dashboardRecyclerView"-->
-<!--        android:layout_margin="8dp"/>-->
-
     <com.smarteist.autoimageslider.SliderView
         android:id="@+id/Slider"
         android:layout_below="@id/app_bar"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:layout_margin="4dp"
+        android:translationZ="4dp"
+        android:translationY="4dp"
+        android:elevation="8dp"
+        android:layout_margin="8dp"
         app:sliderAnimationDuration="500"
         app:sliderAutoCycleDirection="back_and_forth"
         app:sliderAutoCycleEnabled="false"
@@ -57,21 +52,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/Slider"
-        android:layout_marginTop="4dp"
-        android:layout_marginRight="8dp"
+        android:layout_margin="8dp"
         android:orientation="vertical">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/rounded_layout_with_corner"
             android:paddingBottom="4dp"
             android:paddingTop="4dp">
 
             <View
                 android:id="@+id/label1"
-                android:layout_width="8dp"
-                android:layout_height="40dp"
+                android:layout_width="16dp"
+                android:layout_height="24dp"
+                android:layout_centerVertical="true"
                 android:background="@drawable/rounded_layout_2" />
 
             <TextView
@@ -87,10 +81,9 @@
                 android:padding="4dp"
                 android:text="@string/recent_activities"
                 android:textColor="@color/md_grey_600"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
         </RelativeLayout>
-
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/mRecyclerView"
@@ -99,19 +92,6 @@
             android:layout_margin="4dp"/>
 
     </LinearLayout>
-
-
-<!--    <io.github.yavski.fabspeeddial.FabSpeedDial-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_gravity="bottom|end"-->
-<!--        app:fabGravity="bottom_end"-->
-<!--        android:layout_alignParentBottom="true"-->
-<!--        android:layout_alignParentRight="true"-->
-<!--        app:fabDrawable="@drawable/ic_add"-->
-<!--        app:fabBackgroundTint="@color/md_grey_400"-->
-<!--        app:fabMenu="@menu/add_menu"-->
-<!--        app:miniFabTitleTextColor="@color/md_grey_600" />-->
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/add"

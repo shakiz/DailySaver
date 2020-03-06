@@ -1,4 +1,4 @@
-package com.dailysaver.shadowhite.dailysaver.models;
+package com.dailysaver.shadowhite.dailysaver.models.category;
 
 public class Category {
     private String Title;

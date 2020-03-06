@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:layout_margin="4dp"
     app:cardCornerRadius="12dp"
-    android:elevation="12dp"
+    android:translationZ="4dp"
     android:clickable="true"
     app:cardBackgroundColor="@color/md_white_1000"
     android:foreground="?attr/selectableItemBackground"
@@ -28,10 +28,12 @@
                 android:id="@+id/Position"
                 android:layout_width="18dp"
                 android:layout_height="18dp"
+                android:background="@drawable/circle"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:textColor="@color/md_grey_600"
                 android:layout_marginLeft="8dp"
+                android:textSize="14sp"
+                android:textColor="@color/md_grey_800"
                 android:text="2"/>
 
             <TextView
@@ -40,8 +42,11 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="4dp"
                 android:layout_gravity="center"
-                android:textColor="@color/md_grey_600"
+                android:textColor="@color/md_grey_800"
                 android:textStyle="bold"
+                android:textSize="14sp"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:gravity="center"
                 android:text="@string/walletName"/>
 
@@ -83,6 +88,9 @@
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:text="Remaining"
+                    android:textColor="@color/md_grey_800"
+                    android:ellipsize="end"
+                    android:maxLines="1"
                     android:layout_marginBottom="8dp"/>
 
             </LinearLayout>
@@ -119,6 +127,9 @@
                             android:textSize="12sp"
                             android:layout_gravity="center"
                             android:gravity="center"
+                            android:textColor="@color/md_grey_800"
+                            android:ellipsize="end"
+                            android:maxLines="1"
                             android:text="@string/total_cost"/>
 
                         <TextView
@@ -128,6 +139,9 @@
                             android:text="100"
                             android:textSize="14sp"
                             android:textStyle="bold"
+                            android:textColor="@color/md_grey_800"
+                            android:ellipsize="end"
+                            android:maxLines="1"
                             android:layout_gravity="center"
                             android:gravity="center"
                             android:layout_margin="4dp"/>
@@ -157,6 +171,9 @@
                             android:layout_margin="4dp"
                             android:textSize="12sp"
                             android:layout_gravity="center"
+                            android:textColor="@color/md_grey_800"
+                            android:ellipsize="end"
+                            android:maxLines="1"
                             android:gravity="center"
                             android:text="@string/amount"/>
 
@@ -169,6 +186,9 @@
                             android:textStyle="bold"
                             android:layout_gravity="center"
                             android:gravity="center"
+                            android:textColor="@color/md_grey_800"
+                            android:ellipsize="end"
+                            android:maxLines="1"
                             android:layout_margin="4dp"/>
 
                     </LinearLayout>
@@ -182,10 +202,9 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="4dp"
-                android:layout_marginRight="8dp"
+                android:layout_marginRight="4dp"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:padding="4dp"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -205,8 +224,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/wallet_type"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginRight="8dp"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginRight="4dp"
+                        android:ellipsize="end"
+                        android:maxLines="1"
                         android:textColor="@color/md_grey_600"
                         android:textSize="14sp"/>
 
@@ -232,8 +253,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/expire"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginRight="8dp"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginRight="4dp"
+                        android:ellipsize="end"
+                        android:maxLines="1"
                         android:textColor="@color/md_grey_600"
                         android:textSize="14sp"/>
 

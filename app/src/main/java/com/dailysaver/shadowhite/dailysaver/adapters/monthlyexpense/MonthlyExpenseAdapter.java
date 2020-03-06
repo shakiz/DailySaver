@@ -1,50 +1,51 @@
-package com.dailysaver.shadowhite.dailysaver.adapters;
+package com.dailysaver.shadowhite.dailysaver.adapters.monthlyexpense;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.dailysaver.shadowhite.dailysaver.models.expensewallet.ExpenseModel;
+import com.dailysaver.shadowhite.dailysaver.models.budget.Budget;
 import com.dailysaver.shadowhite.dailysaver.R;
-import java.util.List;
+import java.util.ArrayList;
 import de.hdodenhof.circleimageview.CircleImageView;
 
+public class MonthlyExpenseAdapter extends RecyclerView.Adapter<MonthlyExpenseAdapter.ViewHolder>{
+    private ArrayList<Budget> budgetList;
+    private onItemClick onItemClick;
 
-public class MonthlyExpenseDashboardAdapter extends RecyclerView.Adapter<MonthlyExpenseDashboardAdapter.ViewHolder>{
-    //private ArrayList<ExpenseModel> expenseModelData;
-    private List<ExpenseModel> expenseModelData;
-
-    public MonthlyExpenseDashboardAdapter(List<ExpenseModel> expenseModelData) {
-        this.expenseModelData = expenseModelData;
+    public MonthlyExpenseAdapter(ArrayList<Budget> budgetList,onItemClick onItemClick) {
+        this.budgetList = budgetList;
+        this.onItemClick = onItemClick;
     }
 
-    public MonthlyExpenseDashboardAdapter() {
-
-    }
-
-    public void setExpenseModelData(List<ExpenseModel> expenseModelData){
-        this.expenseModelData = expenseModelData;
-        notifyDataSetChanged();
+    public interface onItemClick{
+        void itemClick(Budget budget);
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_layout_monthly_expense_dashboard,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_layout_monthly_expense,parent,false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        ExpenseModel dashboardModel = expenseModelData.get(position);
-        holder.Category.setText(dashboardModel.getCategory());
-        holder.Note.setText(dashboardModel.getNote());
-        holder.Amount.setText(""+dashboardModel.getAmount());
-        holder.ExpenseDate.setText(dashboardModel.getExpenseDate());
-        setTypeIcon(holder.Icon,dashboardModel.getCategory());
+        final Budget budget = budgetList.get(position);
+        holder.Category.setText(budget.getCategory());
+        holder.Note.setText(budget.getNote());
+        holder.Amount.setText(""+budget.getAmount());
+        holder.ExpenseDate.setText(budget.getExpenseDate());
+        setTypeIcon(holder.Icon,budget.getCategory());
+        holder.view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onItemClick.itemClick(budget);
+            }
+        });
     }
 
     private void setTypeIcon(CircleImageView icon, String type) {
@@ -62,20 +63,22 @@ public class MonthlyExpenseDashboardAdapter extends RecyclerView.Adapter<Monthly
 
     @Override
     public int getItemCount() {
-        return expenseModelData.size();
+        return budgetList.size();
     }
 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView Category,Note,Amount,ExpenseDate;
         CircleImageView Icon;
+        CardView view;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             Category = itemView.findViewById(R.id.Category);
             Note = itemView.findViewById(R.id.Note);
-            Amount = itemView.findViewById(R.id.Note);
+            Amount = itemView.findViewById(R.id.Amount);
             Icon = itemView.findViewById(R.id.Icon);
             ExpenseDate = itemView.findViewById(R.id.ExpenseDate);
+            view = itemView.findViewById(R.id.cardItemLayout);
         }
     }
 }

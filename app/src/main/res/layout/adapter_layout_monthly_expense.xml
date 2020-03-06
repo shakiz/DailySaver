@@ -1,17 +1,16 @@
 <androidx.cardview.widget.CardView
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/cardItemLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     app:cardCornerRadius="12dp"
     android:clickable="true"
     app:cardBackgroundColor="@color/md_white_1000"
     android:foreground="?attr/selectableItemBackground"
     app:cardUseCompatPadding="true"
-    app:cardElevation="4dp"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-
+    app:cardElevation="4dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -22,7 +21,6 @@
         android:orientation="horizontal">
 
         <de.hdodenhof.circleimageview.CircleImageView
-            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/Icon"
             android:layout_width="42dp"
             android:layout_height="42dp"
@@ -45,8 +43,12 @@
                 android:id="@+id/Category"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_category"
+                android:drawablePadding="4dp"
                 android:text="@string/category"
+                android:textColor="@color/md_grey_800"
                 android:ellipsize="end"
+                android:maxLines="1"
                 android:textSize="14sp"
                 android:layout_marginTop="2dp"
                 android:layout_marginBottom="2dp"
@@ -56,18 +58,28 @@
                 android:id="@+id/Note"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_writing"
+                android:drawablePadding="4dp"
                 android:layout_marginTop="2dp"
                 android:layout_marginBottom="2dp"
                 android:text="@string/note_hint"
+                android:textColor="@color/md_grey_800"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:padding="2dp"/>
 
             <TextView
                 android:id="@+id/ExpenseDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_expiry_date"
+                android:drawablePadding="4dp"
                 android:layout_marginTop="2dp"
                 android:layout_marginBottom="2dp"
                 android:padding="2dp"
+                android:textColor="@color/md_grey_800"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:text="@string/date_hint"/>
 
         </LinearLayout>
@@ -77,9 +89,14 @@
             android:textSize="16sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="10.0$"
+            android:drawableLeft="@drawable/ic_money_sign"
+            android:drawablePadding="4dp"
+            android:text="10.0"
             android:layout_marginLeft="4dp"
             android:layout_marginRight="8dp"
+            android:textColor="@color/md_grey_800"
+            android:ellipsize="end"
+            android:maxLines="1"
             android:padding="4dp"/>
 
     </LinearLayout>

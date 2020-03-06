@@ -37,7 +37,6 @@
             android:id="@+id/mainLayout"
             android:orientation="vertical">
 
-
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -56,43 +55,89 @@
                     android:paddingBottom="8dp"
                     android:layout_margin="2dp">
 
-
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:gravity="center"
+                        android:gravity="center|left"
                         android:weightSum="2"
-                        android:layout_marginLeft="4dp"
-                        android:layout_marginRight="4dp"
                         android:layout_marginTop="8dp"
-                        android:orientation="horizontal">
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:orientation="horizontal"
+                        android:baselineAligned="false">
 
-                        <EditText
+                        <LinearLayout
                             android:layout_width="0dp"
-                            android:layout_weight="1.4"
-                            android:layout_height="46dp"
-                            android:hint="@string/amount_hint"
-                            android:inputType="numberDecimal"
-                            android:textSize="14sp"
-                            android:id="@+id/amountOfEarning"
-                            android:drawableLeft="@drawable/ic_money_sign"
-                            android:drawablePadding="4dp"
-                            android:background="@color/md_white_1000"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:gravity="bottom|left"
-                            android:layout_margin="8dp"
-                            android:padding="10dp"/>
+                            android:gravity="center"
+                            android:weightSum="2"
+                            android:layout_marginRight="8dp"
+                            android:layout_marginTop="4dp"
+                            android:layout_marginBottom="4dp"
+                            android:orientation="vertical">
 
-                        <Spinner
-                            style="@style/Base.TextAppearance.AppCompat.Medium"
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_weight="1"
+                                android:layout_height="wrap_content"
+                                android:text="@string/amount"
+                                android:layout_gravity="center"
+                                android:gravity="center|left"
+                                android:clickable="true"
+                                android:textSize="14sp"
+                                android:textColor="@color/md_grey_800"
+                                android:ellipsize="end"
+                                android:padding="4dp"/>
+
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp"
+                                android:hint="@string/amount_hint"
+                                android:inputType="numberDecimal"
+                                android:textSize="14sp"
+                                android:layout_marginTop="4dp"
+                                android:id="@+id/Amount"
+                                android:background="@drawable/rectangle_background"
+                                android:textColorHint="@color/md_grey_700"
+                                android:textColor="@color/md_grey_800"
+                                android:padding="10dp"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
                             android:layout_width="0dp"
-                            android:layout_weight=".6"
-                            android:layout_height="40dp"
-                            android:layout_margin="8dp"
-                            android:background="@drawable/rectangle_background_without_border"
-                            android:id="@+id/Currency"/>
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginTop="4dp"
+                            android:layout_marginBottom="4dp"
+                            android:orientation="vertical">
 
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_weight="1"
+                                android:layout_height="wrap_content"
+                                android:text="@string/currency"
+                                android:layout_gravity="center"
+                                android:gravity="center|left"
+                                android:clickable="true"
+                                android:textSize="14sp"
+                                android:textColor="@color/md_grey_800"
+                                android:ellipsize="end"
+                                android:padding="4dp"/>
+
+                            <Spinner
+                                style="@style/Base.TextAppearance.AppCompat.Medium"
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp"
+                                android:layout_marginTop="4dp"
+                                android:background="@drawable/rectangle_background"
+                                android:id="@+id/Currency"/>
+
+                        </LinearLayout>
 
                     </LinearLayout>
 
@@ -102,15 +147,15 @@
                         android:clickable="false"
                         android:layout_gravity="center"
                         android:gravity="center"
-                        android:layout_marginLeft="4dp"
-                        android:layout_marginRight="4dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
                         android:id="@+id/emaiLAddressLayout"
                         android:layout_marginTop="16dp">
 
                         <LinearLayout
                             android:layout_below="@+id/walletName"
                             android:layout_width="match_parent"
-                            android:layout_height="46dp"
+                            android:layout_height="40dp"
                             android:padding="4dp"
                             android:background="@drawable/rectangle_background"
                             android:orientation="horizontal">
@@ -126,7 +171,8 @@
                                 android:inputType="textEmailAddress"
                                 android:hint="@string/wallet_name_hint"
                                 android:padding="4dp"
-                                android:textColor="@color/md_grey_600"
+                                android:textColor="@color/md_grey_800"
+                                android:textColorHint="@color/md_grey_700"
                                 android:textSize="14sp" />
 
                         </LinearLayout>
@@ -142,25 +188,51 @@
                             android:paddingRight="8dp"
                             android:text="@string/wallet_name"
                             android:background="@color/md_white_1000"
-                            android:textColor="@color/md_grey_600"
-                            android:textSize="16sp" />
+                            android:textColor="@color/md_grey_700"
+                            android:textSize="14sp" />
 
                     </RelativeLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:weightSum="2"
+                        android:orientation="horizontal">
+
+
+                        <EditText
+                            android:layout_width="0dp"
+                            android:layout_weight="2"
+                            android:maxLines="2"
+                            android:layout_height="80dp"
+                            android:background="@drawable/rounded_layout"
+                            android:hint="@string/note"
+                            android:layout_margin="8dp"
+                            android:textSize="16sp"
+                            android:padding="10dp"
+                            android:drawableLeft="@drawable/ic_writing"
+                            android:drawablePadding="8dp"
+                            android:inputType="text"
+                            android:id="@+id/Note"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:orientation="vertical"
                         android:layout_marginTop="16dp"
-                        android:layout_marginLeft="4dp"
-                        android:background="@drawable/rectangle_background"
-                        android:layout_marginRight="4dp">
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:background="@drawable/rectangle_background">
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/select_wallet_type"
-                            android:textColor="@color/md_grey_600"
+                            android:textColor="@color/md_grey_800"
                             android:textSize="14sp"
                             android:layout_margin="4dp"
                             android:padding="4dp"/>
@@ -173,7 +245,7 @@
                         <LinearLayout
                             android:id="@+id/WalletType"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="40dp"
                             android:layout_margin="4dp"
                             android:padding="4dp"
                             android:layout_gravity="center"
@@ -181,22 +253,21 @@
                             android:weightSum="4"
                             android:orientation="horizontal">
 
-
                             <androidx.appcompat.widget.AppCompatCheckBox
                                 android:id="@+id/Expense"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                app:buttonTint="@color/commonColor"
+                                android:layout_weight="1.5"
+                                app:buttonTint="@color/colorPrimary"
                                 android:textColor="@color/md_grey_600"
-                                android:text="@string/expense"/>
+                                android:text="@string/budget"/>
 
                             <androidx.appcompat.widget.AppCompatCheckBox
                                 android:id="@+id/Savings"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                app:buttonTint="@color/commonColor"
+                                android:layout_weight="1.5"
+                                app:buttonTint="@color/colorPrimary"
                                 android:textColor="@color/md_grey_600"
                                 android:text="@string/savings"/>
 
@@ -206,7 +277,7 @@
 
                     <EditText
                         android:layout_width="match_parent"
-                        android:layout_height="46dp"
+                        android:layout_height="40dp"
                         android:hint="@string/expiry_date"
                         android:inputType="numberDecimal"
                         android:textSize="14sp"
@@ -215,9 +286,12 @@
                         android:background="@drawable/rectangle_background"
                         android:layout_gravity="center"
                         android:gravity="center|left"
-                        android:layout_marginLeft="4dp"
-                        android:textColor="@color/md_grey_600"
-                        android:layout_marginRight="4dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:drawableLeft="@drawable/ic_expiry_date"
+                        android:drawablePadding="4dp"
+                        android:textColor="@color/md_grey_800"
+                        android:textColorHint="@color/md_grey_700"
                         android:layout_marginTop="16dp"
                         android:padding="10dp"/>
 
@@ -228,19 +302,6 @@
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
-
-    <!--    <io.github.yavski.fabspeeddial.FabSpeedDial-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_gravity="bottom|end"-->
-    <!--        app:fabGravity="bottom_end"-->
-    <!--        android:layout_alignParentBottom="true"-->
-    <!--        android:layout_alignParentRight="true"-->
-    <!--        app:fabDrawable="@drawable/ic_add"-->
-    <!--        app:fabBackgroundTint="@color/md_grey_400"-->
-    <!--        app:fabMenu="@menu/add_menu"-->
-    <!--        app:miniFabTitleTextColor="@color/md_grey_600" />-->
-
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/add"
         android:clickable="true"
@@ -249,7 +310,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_margin="24dp"
-        android:src="@drawable/ic_add"
+        android:src="@drawable/ic_action_done"
         app:backgroundTint="@color/white_transparent"
         app:fabSize="normal" />
 

@@ -32,14 +32,14 @@
             android:screenOrientation="portrait"/>
 
         <activity
-            android:name=".activities.expensewallet.AddNewExpenseActivity"
+            android:name=".activities.expensewallet.BudgetActivity"
             android:label="@string/new_expense"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeNoActionBar"
             android:windowSoftInputMode="adjustPan" />
 
         <activity
-            android:name=".activities.savingswallet.AddNewWalletActivity"
+            android:name=".activities.wallet.AddNewWalletActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeNoActionBar"
             android:windowSoftInputMode="adjustPan" />

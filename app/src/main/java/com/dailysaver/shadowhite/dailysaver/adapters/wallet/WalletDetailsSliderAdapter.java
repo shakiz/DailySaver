@@ -1,4 +1,4 @@
-package com.dailysaver.shadowhite.dailysaver.adapters;
+package com.dailysaver.shadowhite.dailysaver.adapters.wallet;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,19 +8,25 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import com.dailysaver.shadowhite.dailysaver.R;
 import com.dailysaver.shadowhite.dailysaver.activities.WalletDetailsActivity;
-import com.dailysaver.shadowhite.dailysaver.models.savingswallet.WalletModel;
+import com.dailysaver.shadowhite.dailysaver.models.wallet.Wallet;
 import com.github.lzyzsd.circleprogress.ArcProgress;
 import com.smarteist.autoimageslider.SliderViewAdapter;
 import java.util.ArrayList;
 
-public class HomeDashboardSliderAdapter extends SliderViewAdapter<HomeDashboardSliderAdapter.SliderAdapterVH> {
+public class WalletDetailsSliderAdapter extends SliderViewAdapter<WalletDetailsSliderAdapter.SliderAdapterVH> {
 
-    private ArrayList<WalletModel> cardItemList;
+    private ArrayList<Wallet> cardItemList;
     private Context context;
+    private onItemClick onItemClick;
 
-    public HomeDashboardSliderAdapter(ArrayList<WalletModel> cardItemList, Context context) {
+    public WalletDetailsSliderAdapter(ArrayList<Wallet> cardItemList, Context context,onItemClick onItemClick) {
         this.cardItemList = cardItemList;
         this.context = context;
+        this.onItemClick = onItemClick;
+    }
+
+    public interface onItemClick{
+        void itemClick(Wallet wallet);
     }
 
     @Override
@@ -32,7 +38,7 @@ public class HomeDashboardSliderAdapter extends SliderViewAdapter<HomeDashboardS
 
     @Override
     public void onBindViewHolder(SliderAdapterVH viewHolder, int position) {
-        WalletModel itemModel = cardItemList.get(position);
+        final Wallet itemModel = cardItemList.get(position);
         viewHolder.Position.setText(""+(++position));
         viewHolder.Title.setText(itemModel.getTitle());
         viewHolder.Amount.setText(""+itemModel.getAmount());
@@ -45,7 +51,7 @@ public class HomeDashboardSliderAdapter extends SliderViewAdapter<HomeDashboardS
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                context.startActivity(new Intent(context, WalletDetailsActivity.class));
+                onItemClick.itemClick(itemModel);
             }
         });
     }

@@ -19,33 +19,28 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.dailysaver.shadowhite.dailysaver.models.expensewallet.ExpenseModel;
-import com.dailysaver.shadowhite.dailysaver.MvvmDs.TheViewModel;
 import com.dailysaver.shadowhite.dailysaver.activities.onboard.HomeActivity;
-import com.dailysaver.shadowhite.dailysaver.adapters.CategoryRecyclerAdapter;
+import com.dailysaver.shadowhite.dailysaver.adapters.category.CategoryRecyclerAdapter;
 import com.dailysaver.shadowhite.dailysaver.R;
-import com.dailysaver.shadowhite.dailysaver.models.Category;
+import com.dailysaver.shadowhite.dailysaver.models.budget.Budget;
+import com.dailysaver.shadowhite.dailysaver.models.category.Category;
+import com.dailysaver.shadowhite.dailysaver.utills.DataLoader;
 import com.dailysaver.shadowhite.dailysaver.utills.Tools;
 import com.dailysaver.shadowhite.dailysaver.utills.UX;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
-public class AddNewExpenseActivity extends AppCompatActivity implements View.OnClickListener {
+public class BudgetActivity extends AppCompatActivity implements View.OnClickListener {
 
     private RelativeLayout mainLayout;
     private FloatingActionButton add;
-    private TextView Title;
     private EditText Amount,ExpenseDate,Note;
     private Toolbar toolbar;
-    private Spinner currencySpinner;
-    private ArrayAdapter<String> spinnerAdapter;
+    private Spinner currencySpinner, walletSpinner, walletTypeSpinner;
     private Dialog itemDialog;
     private LinearLayout dialogLinearLayout;
     private TextView categorySelection , categoryTitle;
@@ -56,42 +51,48 @@ public class AddNewExpenseActivity extends AppCompatActivity implements View.OnC
     private ArrayList<Category> categoryList;
     private EditText dateView;
     private SimpleDateFormat dateFormatter;
-    private TheViewModel viewModel;
     private UX ux;
     private Tools tools;
+    private DataLoader dataLoader;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_new_expense_wallet);
+        setContentView(R.layout.activity_add_new_budget);
 
         init();
+
+        if (getIntent().getSerializableExtra("budget") != null){
+            loadRecord();
+        }
+
         ux.setToolbar(toolbar,this,HomeActivity.class);
         tools.setAnimation(mainLayout);
     }
 
-
     private void init() {
-        ux = new UX(this);
-        tools = new Tools(this);
         toolbar = findViewById(R.id.tool_bar);
-        mainLayout = findViewById(R.id.main_layout);
         mainLayout = findViewById(R.id.parent_container);
         currencySpinner = findViewById(R.id.Currency);
+        walletSpinner = findViewById(R.id.Wallet);
+        walletTypeSpinner = findViewById(R.id.WalletType);
         dateView = findViewById(R.id.ExpenseDate);
         categorySelection = findViewById(R.id.CategorySelector);
         categoryTitle = findViewById(R.id.Title);
         categoryIcon = findViewById(R.id.IconRes);
-        Title = findViewById(R.id.Title);
         Amount = findViewById(R.id.Amount);
         ExpenseDate = findViewById(R.id.ExpenseDate);
         Note = findViewById(R.id.Note);
         add = findViewById(R.id.add);
-        viewModel = ViewModelProviders.of(this).get(TheViewModel.class);
+        ux = new UX(this);
+        tools = new Tools(this);
+        dataLoader = new DataLoader(this);
         bindUIWIthComponents();
     }
 
     private void bindUIWIthComponents() {
-        setSpinnerAdapter();
+        setCurrencySpinnerAdapter();
+        setBudgetTypeSpinnerAdapter();
+        setWalletSpinnerAdapter();
         dateView.setOnClickListener(this);
         categorySelection.setOnClickListener(this);
         add.setOnClickListener(new View.OnClickListener() {
@@ -102,16 +103,50 @@ public class AddNewExpenseActivity extends AppCompatActivity implements View.OnC
         });
     }
 
-    private void saveExpense(){
-        ExpenseModel expenseModel = new ExpenseModel(Title.getText().toString(),currencySpinner.getSelectedItem().toString(),Note.getText().toString(),
-                ExpenseDate.getText().toString(),Integer.valueOf(Amount.getText().toString()));
-        viewModel.insert(expenseModel);
-        startActivity(new Intent(AddNewExpenseActivity.this,HomeActivity.class));
+    private void loadRecord() {
+        Budget budget = (Budget) getIntent().getSerializableExtra("budget");
+        categoryTitle.setText(budget.getCategory());
+        setTypeIcon(categoryIcon,budget.getCategory());
+        Amount.setText(""+budget.getAmount());
+        Note.setText(budget.getNote());
+        ExpenseDate.setText(budget.getExpenseDate());
+        add.setImageResource(R.drawable.ic_action_done);
     }
 
-    private void setSpinnerAdapter() {
-        spinnerAdapter = new ArrayAdapter<String>(this,R.layout.spinner_drop,new String[]{"BDT Tk.","US Dollar"});
+    private void setTypeIcon(ImageView icon, String type) {
+        if (type.equals("Food")) icon.setImageResource(R.drawable.ic_food_icon);
+        else if (type.equals("Transport")) icon.setImageResource(R.drawable.ic_transport);
+        else if (type.equals("Electricity")) icon.setImageResource(R.drawable.ic_electricity);
+        else if (type.equals("Education")) icon.setImageResource(R.drawable.ic_education);
+        else if (type.equals("Shopping")) icon.setImageResource(R.drawable.ic_cshopping);
+        else if (type.equals("Entertainment")) icon.setImageResource(R.drawable.ic_entertainment);
+        else if (type.equals("Family")) icon.setImageResource(R.drawable.ic_family);
+        else if (type.equals("Friends")) icon.setImageResource(R.drawable.ic_friends);
+        else if (type.equals("Work")) icon.setImageResource(R.drawable.ic_work);
+        else if (type.equals("Gift")) icon.setImageResource(R.drawable.ic_gift);
+    }
+
+    private void saveExpense(){
+        startActivity(new Intent(BudgetActivity.this,HomeActivity.class));
+    }
+
+    private void setCurrencySpinnerAdapter() {
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(this,R.layout.spinner_drop,new String[]{getResources().getString(R.string.select_currency),"BDT Tk.","US Dollar"});
         currencySpinner.setAdapter(spinnerAdapter);
+        spinnerAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
+        spinnerAdapter.notifyDataSetChanged();
+    }
+
+    private void setBudgetTypeSpinnerAdapter() {
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(this,R.layout.spinner_drop,new String[]{getResources().getString(R.string.select_wallet_type),"Savings","Expense"});
+        walletTypeSpinner.setAdapter(spinnerAdapter);
+        spinnerAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
+        spinnerAdapter.notifyDataSetChanged();
+    }
+
+    private void setWalletSpinnerAdapter() {
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(this,R.layout.spinner_drop,dataLoader.getWalletTitle());
+        walletSpinner.setAdapter(spinnerAdapter);
         spinnerAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
         spinnerAdapter.notifyDataSetChanged();
     }
@@ -188,7 +223,7 @@ public class AddNewExpenseActivity extends AppCompatActivity implements View.OnC
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(AddNewExpenseActivity.this,HomeActivity.class));
+        startActivity(new Intent(BudgetActivity.this,HomeActivity.class));
         overridePendingTransition(R.anim.fadein,R.anim.push_up_out);
     }
 }
