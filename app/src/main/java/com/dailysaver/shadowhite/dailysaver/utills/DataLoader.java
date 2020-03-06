@@ -105,4 +105,9 @@ public class DataLoader {
         budgetList.add(new Budget(5,323,"Tk.","Family",1,1,context.getResources().getString(R.string.note_hint),"10-Nov-25"));
         return budgetList;
     }
+
+    public String[] getWalletTitle(){
+        String[] walletTitleList = new String[]{context.getResources().getString(R.string.select_wallet),"April Wallet","May Wallet","September Wallet","August Wallet"};
+        return walletTitleList;
+    }
 }

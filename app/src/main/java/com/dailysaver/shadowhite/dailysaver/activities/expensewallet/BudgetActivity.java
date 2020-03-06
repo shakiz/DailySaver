@@ -26,6 +26,7 @@ import com.dailysaver.shadowhite.dailysaver.adapters.category.CategoryRecyclerAd
 import com.dailysaver.shadowhite.dailysaver.R;
 import com.dailysaver.shadowhite.dailysaver.models.budget.Budget;
 import com.dailysaver.shadowhite.dailysaver.models.category.Category;
+import com.dailysaver.shadowhite.dailysaver.utills.DataLoader;
 import com.dailysaver.shadowhite.dailysaver.utills.Tools;
 import com.dailysaver.shadowhite.dailysaver.utills.UX;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -39,8 +40,7 @@ public class BudgetActivity extends AppCompatActivity implements View.OnClickLis
     private FloatingActionButton add;
     private EditText Amount,ExpenseDate,Note;
     private Toolbar toolbar;
-    private Spinner currencySpinner;
-    private ArrayAdapter<String> spinnerAdapter;
+    private Spinner currencySpinner, walletSpinner, walletTypeSpinner;
     private Dialog itemDialog;
     private LinearLayout dialogLinearLayout;
     private TextView categorySelection , categoryTitle;
@@ -53,6 +53,7 @@ public class BudgetActivity extends AppCompatActivity implements View.OnClickLis
     private SimpleDateFormat dateFormatter;
     private UX ux;
     private Tools tools;
+    private DataLoader dataLoader;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,11 +70,11 @@ public class BudgetActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     private void init() {
-        ux = new UX(this);
-        tools = new Tools(this);
         toolbar = findViewById(R.id.tool_bar);
         mainLayout = findViewById(R.id.parent_container);
         currencySpinner = findViewById(R.id.Currency);
+        walletSpinner = findViewById(R.id.Wallet);
+        walletTypeSpinner = findViewById(R.id.WalletType);
         dateView = findViewById(R.id.ExpenseDate);
         categorySelection = findViewById(R.id.CategorySelector);
         categoryTitle = findViewById(R.id.Title);
@@ -82,11 +83,16 @@ public class BudgetActivity extends AppCompatActivity implements View.OnClickLis
         ExpenseDate = findViewById(R.id.ExpenseDate);
         Note = findViewById(R.id.Note);
         add = findViewById(R.id.add);
+        ux = new UX(this);
+        tools = new Tools(this);
+        dataLoader = new DataLoader(this);
         bindUIWIthComponents();
     }
 
     private void bindUIWIthComponents() {
-        setSpinnerAdapter();
+        setCurrencySpinnerAdapter();
+        setBudgetTypeSpinnerAdapter();
+        setWalletSpinnerAdapter();
         dateView.setOnClickListener(this);
         categorySelection.setOnClickListener(this);
         add.setOnClickListener(new View.OnClickListener() {
@@ -124,9 +130,23 @@ public class BudgetActivity extends AppCompatActivity implements View.OnClickLis
         startActivity(new Intent(BudgetActivity.this,HomeActivity.class));
     }
 
-    private void setSpinnerAdapter() {
-        spinnerAdapter = new ArrayAdapter<String>(this,R.layout.spinner_drop,new String[]{getResources().getString(R.string.select_currency),"BDT Tk.","US Dollar"});
+    private void setCurrencySpinnerAdapter() {
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(this,R.layout.spinner_drop,new String[]{getResources().getString(R.string.select_currency),"BDT Tk.","US Dollar"});
         currencySpinner.setAdapter(spinnerAdapter);
+        spinnerAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
+        spinnerAdapter.notifyDataSetChanged();
+    }
+
+    private void setBudgetTypeSpinnerAdapter() {
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(this,R.layout.spinner_drop,new String[]{getResources().getString(R.string.select_wallet_type),"Savings","Expense"});
+        walletTypeSpinner.setAdapter(spinnerAdapter);
+        spinnerAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
+        spinnerAdapter.notifyDataSetChanged();
+    }
+
+    private void setWalletSpinnerAdapter() {
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(this,R.layout.spinner_drop,dataLoader.getWalletTitle());
+        walletSpinner.setAdapter(spinnerAdapter);
         spinnerAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
         spinnerAdapter.notifyDataSetChanged();
     }
