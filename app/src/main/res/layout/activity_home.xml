@@ -24,19 +24,14 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-
-<!--    <androidx.recyclerview.widget.RecyclerView-->
-<!--        android:layout_below="@id/app_bar"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:id="@+id/dashboardRecyclerView"-->
-<!--        android:layout_margin="8dp"/>-->
-
     <com.smarteist.autoimageslider.SliderView
         android:id="@+id/Slider"
         android:layout_below="@id/app_bar"
         android:layout_width="match_parent"
         android:layout_height="200dp"
+        android:translationZ="4dp"
+        android:translationY="4dp"
+        android:elevation="8dp"
         android:layout_margin="8dp"
         app:sliderAnimationDuration="500"
         app:sliderAutoCycleDirection="back_and_forth"
@@ -97,19 +92,6 @@
             android:layout_margin="4dp"/>
 
     </LinearLayout>
-
-
-<!--    <io.github.yavski.fabspeeddial.FabSpeedDial-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_gravity="bottom|end"-->
-<!--        app:fabGravity="bottom_end"-->
-<!--        android:layout_alignParentBottom="true"-->
-<!--        android:layout_alignParentRight="true"-->
-<!--        app:fabDrawable="@drawable/ic_add"-->
-<!--        app:fabBackgroundTint="@color/md_grey_400"-->
-<!--        app:fabMenu="@menu/add_menu"-->
-<!--        app:miniFabTitleTextColor="@color/md_grey_600" />-->
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/add"

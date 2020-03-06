@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 import com.dailysaver.shadowhite.dailysaver.models.budget.Budget;
 import com.dailysaver.shadowhite.dailysaver.R;
@@ -13,9 +14,15 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MonthlyExpenseAdapter extends RecyclerView.Adapter<MonthlyExpenseAdapter.ViewHolder>{
     private ArrayList<Budget> budgetList;
+    private onItemClick onItemClick;
 
-    public MonthlyExpenseAdapter(ArrayList<Budget> budgetList) {
+    public MonthlyExpenseAdapter(ArrayList<Budget> budgetList,onItemClick onItemClick) {
         this.budgetList = budgetList;
+        this.onItemClick = onItemClick;
+    }
+
+    public interface onItemClick{
+        void itemClick(Budget budget);
     }
 
     @NonNull
@@ -27,12 +34,18 @@ public class MonthlyExpenseAdapter extends RecyclerView.Adapter<MonthlyExpenseAd
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Budget budget = budgetList.get(position);
+        final Budget budget = budgetList.get(position);
         holder.Category.setText(budget.getCategory());
         holder.Note.setText(budget.getNote());
         holder.Amount.setText(""+budget.getAmount());
         holder.ExpenseDate.setText(budget.getExpenseDate());
         setTypeIcon(holder.Icon,budget.getCategory());
+        holder.view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onItemClick.itemClick(budget);
+            }
+        });
     }
 
     private void setTypeIcon(CircleImageView icon, String type) {
@@ -57,6 +70,7 @@ public class MonthlyExpenseAdapter extends RecyclerView.Adapter<MonthlyExpenseAd
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView Category,Note,Amount,ExpenseDate;
         CircleImageView Icon;
+        CardView view;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             Category = itemView.findViewById(R.id.Category);
@@ -64,6 +78,7 @@ public class MonthlyExpenseAdapter extends RecyclerView.Adapter<MonthlyExpenseAd
             Amount = itemView.findViewById(R.id.Amount);
             Icon = itemView.findViewById(R.id.Icon);
             ExpenseDate = itemView.findViewById(R.id.ExpenseDate);
+            view = itemView.findViewById(R.id.cardItemLayout);
         }
     }
 }

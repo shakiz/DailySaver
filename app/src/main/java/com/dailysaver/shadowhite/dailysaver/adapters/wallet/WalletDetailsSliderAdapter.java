@@ -17,10 +17,16 @@ public class WalletDetailsSliderAdapter extends SliderViewAdapter<WalletDetailsS
 
     private ArrayList<Wallet> cardItemList;
     private Context context;
+    private onItemClick onItemClick;
 
-    public WalletDetailsSliderAdapter(ArrayList<Wallet> cardItemList, Context context) {
+    public WalletDetailsSliderAdapter(ArrayList<Wallet> cardItemList, Context context,onItemClick onItemClick) {
         this.cardItemList = cardItemList;
         this.context = context;
+        this.onItemClick = onItemClick;
+    }
+
+    public interface onItemClick{
+        void itemClick(Wallet wallet);
     }
 
     @Override
@@ -32,7 +38,7 @@ public class WalletDetailsSliderAdapter extends SliderViewAdapter<WalletDetailsS
 
     @Override
     public void onBindViewHolder(SliderAdapterVH viewHolder, int position) {
-        Wallet itemModel = cardItemList.get(position);
+        final Wallet itemModel = cardItemList.get(position);
         viewHolder.Position.setText(""+(++position));
         viewHolder.Title.setText(itemModel.getTitle());
         viewHolder.Amount.setText(""+itemModel.getAmount());
@@ -45,7 +51,7 @@ public class WalletDetailsSliderAdapter extends SliderViewAdapter<WalletDetailsS
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                context.startActivity(new Intent(context, WalletDetailsActivity.class));
+                onItemClick.itemClick(itemModel);
             }
         });
     }

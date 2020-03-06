@@ -89,19 +89,20 @@ public class DataLoader {
 
     private ArrayList<Wallet> getWalletList(){
         ArrayList<Wallet> walletList = new ArrayList<>();
-        walletList.add(new Wallet("April Wallet",2500,"Tk.","21-Apr-19","Savings"));
-        walletList.add(new Wallet("May Wallet",3200,"Tk.","22-May-19","Expense"));
-        walletList.add(new Wallet("September Wallet",5000,"Tk.","21-Sep-19","Savings"));
-        walletList.add(new Wallet("August Wallet",7500,"Tk.","10-Aug-19","Expense"));
+        walletList.add(new Wallet("April Wallet",2500,"Tk.","21-Apr-19","Savings",context.getResources().getString(R.string.note_hint)));
+        walletList.add(new Wallet("May Wallet",3200,"Tk.","22-May-19","Expense",context.getResources().getString(R.string.note_hint)));
+        walletList.add(new Wallet("September Wallet",5000,"Tk.","21-Sep-19","Savings",context.getResources().getString(R.string.note_hint)));
+        walletList.add(new Wallet("August Wallet",7500,"Tk.","10-Aug-19","Expense",context.getResources().getString(R.string.note_hint)));
         return walletList;
     }
 
     private ArrayList<Budget> getBudgetWalletList(){
         ArrayList<Budget> budgetList = new ArrayList<>();
         budgetList.add(new Budget(1,250,"Tk.","Family",1,1,context.getResources().getString(R.string.note_hint),"21-Apr-19"));
-        budgetList.add(new Budget(1,2410,"Tk.","Friends",1,1,context.getResources().getString(R.string.note_hint),"22-May-19"));
-        budgetList.add(new Budget(1,2534,"Tk.","Gift",1,1,context.getResources().getString(R.string.note_hint),"21-Sep-19"));
-        budgetList.add(new Budget(1,454,"Tk.","Travel",1,1,context.getResources().getString(R.string.note_hint),"10-Aug-19"));
+        budgetList.add(new Budget(2,2410,"Tk.","Friends",1,1,context.getResources().getString(R.string.note_hint),"22-May-19"));
+        budgetList.add(new Budget(3,2534,"Tk.","Gift",1,1,context.getResources().getString(R.string.note_hint),"21-Sep-19"));
+        budgetList.add(new Budget(4,454,"Tk.","Travel",1,1,context.getResources().getString(R.string.note_hint),"10-Aug-19"));
+        budgetList.add(new Budget(5,323,"Tk.","Family",1,1,context.getResources().getString(R.string.note_hint),"10-Nov-25"));
         return budgetList;
     }
 }

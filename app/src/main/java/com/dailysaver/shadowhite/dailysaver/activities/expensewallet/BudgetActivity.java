@@ -24,6 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.dailysaver.shadowhite.dailysaver.activities.onboard.HomeActivity;
 import com.dailysaver.shadowhite.dailysaver.adapters.category.CategoryRecyclerAdapter;
 import com.dailysaver.shadowhite.dailysaver.R;
+import com.dailysaver.shadowhite.dailysaver.models.budget.Budget;
 import com.dailysaver.shadowhite.dailysaver.models.category.Category;
 import com.dailysaver.shadowhite.dailysaver.utills.Tools;
 import com.dailysaver.shadowhite.dailysaver.utills.UX;
@@ -32,11 +33,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
-public class AddNewBudgetActivity extends AppCompatActivity implements View.OnClickListener {
+public class BudgetActivity extends AppCompatActivity implements View.OnClickListener {
 
     private RelativeLayout mainLayout;
     private FloatingActionButton add;
-    private TextView Title;
     private EditText Amount,ExpenseDate,Note;
     private Toolbar toolbar;
     private Spinner currencySpinner;
@@ -59,10 +59,14 @@ public class AddNewBudgetActivity extends AppCompatActivity implements View.OnCl
         setContentView(R.layout.activity_add_new_budget);
 
         init();
+
+        if (getIntent().getSerializableExtra("budget") != null){
+            loadRecord();
+        }
+
         ux.setToolbar(toolbar,this,HomeActivity.class);
         tools.setAnimation(mainLayout);
     }
-
 
     private void init() {
         ux = new UX(this);
@@ -74,7 +78,6 @@ public class AddNewBudgetActivity extends AppCompatActivity implements View.OnCl
         categorySelection = findViewById(R.id.CategorySelector);
         categoryTitle = findViewById(R.id.Title);
         categoryIcon = findViewById(R.id.IconRes);
-        Title = findViewById(R.id.Title);
         Amount = findViewById(R.id.Amount);
         ExpenseDate = findViewById(R.id.ExpenseDate);
         Note = findViewById(R.id.Note);
@@ -94,8 +97,31 @@ public class AddNewBudgetActivity extends AppCompatActivity implements View.OnCl
         });
     }
 
+    private void loadRecord() {
+        Budget budget = (Budget) getIntent().getSerializableExtra("budget");
+        categoryTitle.setText(budget.getCategory());
+        setTypeIcon(categoryIcon,budget.getCategory());
+        Amount.setText(""+budget.getAmount());
+        Note.setText(budget.getNote());
+        ExpenseDate.setText(budget.getExpenseDate());
+        add.setImageResource(R.drawable.ic_action_done);
+    }
+
+    private void setTypeIcon(ImageView icon, String type) {
+        if (type.equals("Food")) icon.setImageResource(R.drawable.ic_food_icon);
+        else if (type.equals("Transport")) icon.setImageResource(R.drawable.ic_transport);
+        else if (type.equals("Electricity")) icon.setImageResource(R.drawable.ic_electricity);
+        else if (type.equals("Education")) icon.setImageResource(R.drawable.ic_education);
+        else if (type.equals("Shopping")) icon.setImageResource(R.drawable.ic_cshopping);
+        else if (type.equals("Entertainment")) icon.setImageResource(R.drawable.ic_entertainment);
+        else if (type.equals("Family")) icon.setImageResource(R.drawable.ic_family);
+        else if (type.equals("Friends")) icon.setImageResource(R.drawable.ic_friends);
+        else if (type.equals("Work")) icon.setImageResource(R.drawable.ic_work);
+        else if (type.equals("Gift")) icon.setImageResource(R.drawable.ic_gift);
+    }
+
     private void saveExpense(){
-        startActivity(new Intent(AddNewBudgetActivity.this,HomeActivity.class));
+        startActivity(new Intent(BudgetActivity.this,HomeActivity.class));
     }
 
     private void setSpinnerAdapter() {
@@ -177,7 +203,7 @@ public class AddNewBudgetActivity extends AppCompatActivity implements View.OnCl
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(AddNewBudgetActivity.this,HomeActivity.class));
+        startActivity(new Intent(BudgetActivity.this,HomeActivity.class));
         overridePendingTransition(R.anim.fadein,R.anim.push_up_out);
     }
 }

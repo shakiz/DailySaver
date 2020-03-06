@@ -1,6 +1,8 @@
 package com.dailysaver.shadowhite.dailysaver.models.budget;
 
-public class Budget {
+import java.io.Serializable;
+
+public class Budget implements Serializable {
     private int Id;
     private int Amount;
     private String Currency;

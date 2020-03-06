@@ -13,7 +13,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
-import com.dailysaver.shadowhite.dailysaver.activities.expensewallet.AddNewBudgetActivity;
+
+import com.dailysaver.shadowhite.dailysaver.activities.WalletDetailsActivity;
+import com.dailysaver.shadowhite.dailysaver.activities.expensewallet.BudgetActivity;
 import com.dailysaver.shadowhite.dailysaver.activities.wallet.AddNewWalletActivity;
 import com.dailysaver.shadowhite.dailysaver.adapters.wallet.WalletDetailsSliderAdapter;
 import com.dailysaver.shadowhite.dailysaver.adapters.menu.IconMenuAdapter;
@@ -107,7 +109,7 @@ public class HomeActivity extends AppCompatActivity {
     private OnMenuItemClickListener<IconPowerMenuItem> onMenuItemClickListener = new OnMenuItemClickListener<IconPowerMenuItem>() {
         @Override
         public void onItemClick(int position, IconPowerMenuItem item) {
-            if (position==0)startActivity(new Intent(HomeActivity.this, AddNewBudgetActivity.class));
+            if (position==0)startActivity(new Intent(HomeActivity.this, BudgetActivity.class));
             else if (position==1) startActivity(new Intent(HomeActivity.this, AddNewWalletActivity.class));
             powerMenu.dismiss();
         }
@@ -140,14 +142,24 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void setWalletAdapter(ArrayList<Wallet> walletList) {
-        sliderView.setSliderAdapter(new WalletDetailsSliderAdapter(walletList,this));
+        sliderView.setSliderAdapter(new WalletDetailsSliderAdapter(walletList, this, new WalletDetailsSliderAdapter.onItemClick() {
+            @Override
+            public void itemClick(Wallet wallet) {
+                startActivity(new Intent(HomeActivity.this, WalletDetailsActivity.class));
+            }
+        }));
         sliderView.setIndicatorAnimation(IndicatorAnimations.WORM);
         sliderView.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
         sliderView.setIndicatorPadding(8);
     }
 
     private void setBudgetAdapter(ArrayList<Budget> budgetList) {
-        monthlyExpenseAdapter = new MonthlyExpenseAdapter(budgetList);
+        monthlyExpenseAdapter = new MonthlyExpenseAdapter(budgetList, new MonthlyExpenseAdapter.onItemClick() {
+            @Override
+            public void itemClick(Budget budget) {
+                startActivity(new Intent(HomeActivity.this, BudgetActivity.class).putExtra("budget",budget));
+            }
+        });
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(monthlyExpenseAdapter);
         monthlyExpenseAdapter.notifyDataSetChanged();
