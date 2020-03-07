@@ -36,7 +36,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + COLUMN_BUDGET_WALLET + " TEXT," + COLUMN_BUDGET_WALLET_TYPE + " TEXT,"
             + COLUMN_BUDGET_EXPENSE_DATE + " TEXT" + ")";
 
-    private static String CREATE_WALLET_TABLE = "CREATE TABLE " + BUDGET_TABLE + "("
+    private static String CREATE_WALLET_TABLE = "CREATE TABLE " + WALLET_TABLE + "("
             + COLUMN_WALLET_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + COLUMN_WALLET_AMOUNT + " REAL,"
             + COLUMN_WALLET_CURRENCY + " TEXT," + COLUMN_WALLET_TITLE + " TEXT," + COLUMN_WALLET_NOTE + " TEXT,"
             + COLUMN_WALLET_TYPE + " TEXT," + COLUMN_WALLET_EXPIRES_ON + " TEXT" + ")";

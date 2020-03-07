@@ -6,6 +6,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import com.dailysaver.shadowhite.dailysaver.R;
@@ -39,6 +42,29 @@ public class UX {
 
     public void removeLoadingView(){
         if (loadingDialog.isShowing()) loadingDialog.cancel();
+    }
+
+    public boolean validation(int[] resIds,View view){
+        boolean valid = false;
+        for (int resId : resIds){
+            EditText editText = view.findViewById(resId);
+            if (editText.getText().toString().isEmpty()){
+                editText.setError(context.getResources().getString(R.string.invalid_input));
+                editText.requestFocus();
+                valid = false;
+            }
+            else{
+                valid = true;
+            }
+        }
+        return valid;
+    }
+
+    public void clearDetailsUI(int[] resIds,View view){
+        for (int resId : resIds){
+            TextView textView = view.findViewById(resId);
+            textView.setText("");
+        }
     }
 
 }

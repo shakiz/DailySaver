@@ -3,6 +3,7 @@ package com.dailysaver.shadowhite.dailysaver.activities.wallet;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.icu.text.SimpleDateFormat;
 import android.os.Build;
 import android.os.Bundle;
@@ -14,17 +15,23 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.Toast;
 import com.dailysaver.shadowhite.dailysaver.R;
 import com.dailysaver.shadowhite.dailysaver.activities.onboard.HomeActivity;
+import com.dailysaver.shadowhite.dailysaver.models.wallet.Wallet;
 import com.dailysaver.shadowhite.dailysaver.utills.Tools;
 import com.dailysaver.shadowhite.dailysaver.utills.UX;
+import com.dailysaver.shadowhite.dailysaver.utills.dbhelper.DatabaseHelper;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.Calendar;
 import java.util.Locale;
 
-public class AddNewWalletActivity extends AppCompatActivity implements View.OnClickListener {
+public class WalletActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Toolbar toolbar;
     private RelativeLayout mainLayout;
+    private EditText Amount,WalletName,Note,ExpiresOn;
+    private FloatingActionButton add;
     private Spinner currencySpinner;
     private ArrayAdapter<String> spinnerAdapter;
     private EditText expiryDate;
@@ -32,6 +39,7 @@ public class AddNewWalletActivity extends AppCompatActivity implements View.OnCl
     private SimpleDateFormat dateFormatter;
     private UX ux;
     private Tools tools;
+    private DatabaseHelper databaseHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +50,23 @@ public class AddNewWalletActivity extends AppCompatActivity implements View.OnCl
         ux.setToolbar(toolbar,this,HomeActivity.class);
         tools.setAnimation(mainLayout);
         bindUiWithComponents();
+    }
+
+    private void init() {
+        toolbar = findViewById(R.id.tool_bar);
+        mainLayout = findViewById(R.id.home_layout);
+        Amount = findViewById(R.id.Amount);
+        WalletName = findViewById(R.id.WalletName);
+        Note = findViewById(R.id.Note);
+        ExpiresOn = findViewById(R.id.ExpiresOn);
+        currencySpinner = findViewById(R.id.Currency);
+        expiryDate = findViewById(R.id.ExpiresOn);
+        expense = findViewById(R.id.Expense);
+        income = findViewById(R.id.Savings);
+        add = findViewById(R.id.add);
+        ux = new UX(this);
+        tools = new Tools(this);
+        databaseHelper = new DatabaseHelper(this);
     }
 
     private void bindUiWithComponents() {
@@ -60,22 +85,27 @@ public class AddNewWalletActivity extends AppCompatActivity implements View.OnCl
                 setVisibility(expense,isChecked);
             }
         });
+
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveWallet();
+            }
+        });
+    }
+
+    private void saveWallet() {
+        if (ux.validation(new int[]{R.id.Amount,R.id.Note,R.id.ExpiresOn},mainLayout)){
+            databaseHelper.addNewWallet(new Wallet(WalletName.getText().toString(),Integer.parseInt(Amount.getText().toString()),
+                    "",ExpiresOn.getText().toString(),"",Note.getText().toString()));
+            Toast.makeText(this,getResources().getString(R.string.data_saved_successfully),Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(WalletActivity.this,HomeActivity.class));
+        }
     }
 
     private void setVisibility(CheckBox checkBox, boolean isChecked) {
         if (isChecked) checkBox.setEnabled(false);
         else checkBox.setEnabled(true);
-    }
-
-    private void init() {
-        ux = new UX(this);
-        tools = new Tools(this);
-        toolbar = findViewById(R.id.tool_bar);
-        mainLayout = findViewById(R.id.home_layout);
-        currencySpinner = findViewById(R.id.Currency);
-        expiryDate = findViewById(R.id.ExpiresOn);
-        expense = findViewById(R.id.Expense);
-        income = findViewById(R.id.Savings);
     }
 
     private void setSpinnerAdapter() {
