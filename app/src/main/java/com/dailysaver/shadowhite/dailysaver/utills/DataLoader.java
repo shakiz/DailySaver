@@ -2,10 +2,10 @@ package com.dailysaver.shadowhite.dailysaver.utills;
 
 import android.content.Context;
 import android.os.AsyncTask;
-
 import com.dailysaver.shadowhite.dailysaver.R;
 import com.dailysaver.shadowhite.dailysaver.models.budget.Budget;
 import com.dailysaver.shadowhite.dailysaver.models.wallet.Wallet;
+import com.dailysaver.shadowhite.dailysaver.utills.dbhelper.DatabaseHelper;
 import java.util.ArrayList;
 
 public class DataLoader {
@@ -13,10 +13,12 @@ public class DataLoader {
     private UX ux;
     private onWalletItemsCompleted onWalletItemsCompleted;
     private onBudgetItemsCompleted onBudgetItemsCompleted;
+    private DatabaseHelper databaseHelper;
 
     public DataLoader(Context context) {
         this.context = context;
         ux = new UX(context);
+        databaseHelper = new DatabaseHelper(context);
     }
 
     public interface onWalletItemsCompleted{
@@ -71,7 +73,7 @@ public class DataLoader {
 
         @Override
         protected ArrayList<Budget> doInBackground(String... strings) {
-            return getBudgetWalletList();
+            return databaseHelper.getAllBudgetItems();
         }
 
         @Override
@@ -98,11 +100,11 @@ public class DataLoader {
 
     private ArrayList<Budget> getBudgetWalletList(){
         ArrayList<Budget> budgetList = new ArrayList<>();
-        budgetList.add(new Budget(1,250,"Tk.","Family",1,1,context.getResources().getString(R.string.note_hint),"21-Apr-19"));
-        budgetList.add(new Budget(2,2410,"Tk.","Friends",1,1,context.getResources().getString(R.string.note_hint),"22-May-19"));
-        budgetList.add(new Budget(3,2534,"Tk.","Gift",1,1,context.getResources().getString(R.string.note_hint),"21-Sep-19"));
-        budgetList.add(new Budget(4,454,"Tk.","Travel",1,1,context.getResources().getString(R.string.note_hint),"10-Aug-19"));
-        budgetList.add(new Budget(5,323,"Tk.","Family",1,1,context.getResources().getString(R.string.note_hint),"10-Nov-25"));
+        budgetList.add(new Budget(1,250,"Tk.","Family","1","1",context.getResources().getString(R.string.note_hint),"21-Apr-19"));
+        budgetList.add(new Budget(2,2410,"Tk.","Friends","1","1",context.getResources().getString(R.string.note_hint),"22-May-19"));
+        budgetList.add(new Budget(3,2534,"Tk.","Gift","1","1",context.getResources().getString(R.string.note_hint),"21-Sep-19"));
+        budgetList.add(new Budget(4,454,"Tk.","Travel","1","1",context.getResources().getString(R.string.note_hint),"10-Aug-19"));
+        budgetList.add(new Budget(5,323,"Tk.","Family","1","1",context.getResources().getString(R.string.note_hint),"10-Nov-25"));
         return budgetList;
     }
 

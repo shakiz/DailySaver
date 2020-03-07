@@ -39,7 +39,7 @@
             android:windowSoftInputMode="adjustPan" />
 
         <activity
-            android:name=".activities.wallet.AddNewWalletActivity"
+            android:name=".activities.wallet.WalletActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeNoActionBar"
             android:windowSoftInputMode="adjustPan" />

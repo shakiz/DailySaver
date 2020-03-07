@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -17,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -29,6 +29,7 @@ import com.dailysaver.shadowhite.dailysaver.models.category.Category;
 import com.dailysaver.shadowhite.dailysaver.utills.DataLoader;
 import com.dailysaver.shadowhite.dailysaver.utills.Tools;
 import com.dailysaver.shadowhite.dailysaver.utills.UX;
+import com.dailysaver.shadowhite.dailysaver.utills.dbhelper.DatabaseHelper;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -50,10 +51,13 @@ public class BudgetActivity extends AppCompatActivity implements View.OnClickLis
     private RecyclerView.LayoutManager layoutManager;
     private ArrayList<Category> categoryList;
     private EditText dateView;
+    private String currencyStr, walletStr, walletTypeStr;
     private SimpleDateFormat dateFormatter;
     private UX ux;
     private Tools tools;
     private DataLoader dataLoader;
+    private DatabaseHelper databaseHelper;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,13 +90,19 @@ public class BudgetActivity extends AppCompatActivity implements View.OnClickLis
         ux = new UX(this);
         tools = new Tools(this);
         dataLoader = new DataLoader(this);
+        databaseHelper = new DatabaseHelper(this);
         bindUIWIthComponents();
     }
 
     private void bindUIWIthComponents() {
-        setCurrencySpinnerAdapter();
-        setBudgetTypeSpinnerAdapter();
-        setWalletSpinnerAdapter();
+        ux.setSpinnerAdapter(new String[]{getResources().getString(R.string.select_currency),"BDT Tk.","US Dollar"},currencySpinner);
+        ux.setSpinnerAdapter(new String[]{getResources().getString(R.string.select_wallet_type),"Savings","Expense"},walletTypeSpinner);
+        ux.setSpinnerAdapter(dataLoader.getWalletTitle(),walletSpinner);
+
+        currencyStr = ux.onSpinnerItem(currencySpinner);
+        walletStr = ux.onSpinnerItem(currencySpinner);
+        walletTypeStr = ux.onSpinnerItem(currencySpinner);
+
         dateView.setOnClickListener(this);
         categorySelection.setOnClickListener(this);
         add.setOnClickListener(new View.OnClickListener() {
@@ -101,6 +111,15 @@ public class BudgetActivity extends AppCompatActivity implements View.OnClickLis
                 saveExpense();
             }
         });
+    }
+
+    private void saveExpense(){
+        if (ux.validation(new int[]{R.id.Amount,R.id.Note,R.id.ExpenseDate},mainLayout)){
+            databaseHelper.addNewBudget(new Budget(1,Integer.parseInt(Amount.getText().toString()),
+                    currencyStr,categoryTitle.getText().toString(),walletStr,walletTypeStr,Note.getText().toString(),ExpenseDate.getText().toString()));
+            Toast.makeText(this,getResources().getString(R.string.data_saved_successfully),Toast.LENGTH_LONG).show();
+            startActivity(new Intent(BudgetActivity.this,HomeActivity.class));
+        }
     }
 
     private void loadRecord() {
@@ -124,31 +143,6 @@ public class BudgetActivity extends AppCompatActivity implements View.OnClickLis
         else if (type.equals("Friends")) icon.setImageResource(R.drawable.ic_friends);
         else if (type.equals("Work")) icon.setImageResource(R.drawable.ic_work);
         else if (type.equals("Gift")) icon.setImageResource(R.drawable.ic_gift);
-    }
-
-    private void saveExpense(){
-        startActivity(new Intent(BudgetActivity.this,HomeActivity.class));
-    }
-
-    private void setCurrencySpinnerAdapter() {
-        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(this,R.layout.spinner_drop,new String[]{getResources().getString(R.string.select_currency),"BDT Tk.","US Dollar"});
-        currencySpinner.setAdapter(spinnerAdapter);
-        spinnerAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
-        spinnerAdapter.notifyDataSetChanged();
-    }
-
-    private void setBudgetTypeSpinnerAdapter() {
-        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(this,R.layout.spinner_drop,new String[]{getResources().getString(R.string.select_wallet_type),"Savings","Expense"});
-        walletTypeSpinner.setAdapter(spinnerAdapter);
-        spinnerAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
-        spinnerAdapter.notifyDataSetChanged();
-    }
-
-    private void setWalletSpinnerAdapter() {
-        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(this,R.layout.spinner_drop,dataLoader.getWalletTitle());
-        walletSpinner.setAdapter(spinnerAdapter);
-        spinnerAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
-        spinnerAdapter.notifyDataSetChanged();
     }
 
     private void getAndSetDate(final EditText editText){

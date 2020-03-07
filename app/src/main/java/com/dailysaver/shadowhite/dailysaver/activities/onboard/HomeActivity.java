@@ -7,16 +7,17 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
-
+import com.amitshekhar.DebugDB;
 import com.dailysaver.shadowhite.dailysaver.activities.WalletDetailsActivity;
 import com.dailysaver.shadowhite.dailysaver.activities.expensewallet.BudgetActivity;
-import com.dailysaver.shadowhite.dailysaver.activities.wallet.AddNewWalletActivity;
+import com.dailysaver.shadowhite.dailysaver.activities.wallet.WalletActivity;
 import com.dailysaver.shadowhite.dailysaver.adapters.wallet.WalletDetailsSliderAdapter;
 import com.dailysaver.shadowhite.dailysaver.adapters.menu.IconMenuAdapter;
 import com.dailysaver.shadowhite.dailysaver.adapters.monthlyexpense.MonthlyExpenseAdapter;
@@ -26,7 +27,6 @@ import com.dailysaver.shadowhite.dailysaver.models.menu.IconPowerMenuItem;
 import com.dailysaver.shadowhite.dailysaver.R;
 import com.dailysaver.shadowhite.dailysaver.utills.DataLoader;
 import com.dailysaver.shadowhite.dailysaver.utills.Tools;
-import com.dailysaver.shadowhite.dailysaver.utills.UX;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.skydoves.powermenu.CircularEffect;
 import com.skydoves.powermenu.CustomPowerMenu;
@@ -45,7 +45,6 @@ public class HomeActivity extends AppCompatActivity {
     private FloatingActionButton addButton;
     private CustomPowerMenu powerMenu;
     private SliderView sliderView;
-    private UX ux;
     private DataLoader dataLoader;
     private Tools tools;
 
@@ -55,6 +54,9 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         init();
+
+        //db log
+        Log.v("db",DebugDB.getAddressLog());
 
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -101,7 +103,6 @@ public class HomeActivity extends AppCompatActivity {
         sliderView = findViewById(R.id.Slider);
         mainLayout = findViewById(R.id.home_layout);
         addButton = findViewById(R.id.add);
-        ux = new UX(this);
         tools = new Tools(this);
         dataLoader = new DataLoader(this);
     }
@@ -110,7 +111,7 @@ public class HomeActivity extends AppCompatActivity {
         @Override
         public void onItemClick(int position, IconPowerMenuItem item) {
             if (position==0)startActivity(new Intent(HomeActivity.this, BudgetActivity.class));
-            else if (position==1) startActivity(new Intent(HomeActivity.this, AddNewWalletActivity.class));
+            else if (position==1) startActivity(new Intent(HomeActivity.this, WalletActivity.class));
             powerMenu.dismiss();
         }
     };
