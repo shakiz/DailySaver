@@ -8,7 +8,6 @@ import android.icu.text.SimpleDateFormat;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
@@ -33,7 +32,6 @@ public class WalletActivity extends AppCompatActivity implements View.OnClickLis
     private EditText Amount,WalletName,Note,ExpiresOn;
     private FloatingActionButton add;
     private Spinner currencySpinner;
-    private ArrayAdapter<String> spinnerAdapter;
     private EditText expiryDate;
     private CheckBox expense,income;
     private SimpleDateFormat dateFormatter;
@@ -70,7 +68,7 @@ public class WalletActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     private void bindUiWithComponents() {
-        setSpinnerAdapter();
+        ux.setSpinnerAdapter(new String[]{getResources().getString(R.string.select_currency),"BDT Tk.","USD"},currencySpinner);
         expiryDate.setOnClickListener(this);
 
         expense.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -106,13 +104,6 @@ public class WalletActivity extends AppCompatActivity implements View.OnClickLis
     private void setVisibility(CheckBox checkBox, boolean isChecked) {
         if (isChecked) checkBox.setEnabled(false);
         else checkBox.setEnabled(true);
-    }
-
-    private void setSpinnerAdapter() {
-        spinnerAdapter = new ArrayAdapter<String>(this,R.layout.spinner_drop,new String[]{"BDT Tk.","US Dollar"});
-        currencySpinner.setAdapter(spinnerAdapter);
-        spinnerAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
-        spinnerAdapter.notifyDataSetChanged();
     }
 
     private void getAndSetDate(final int resId){

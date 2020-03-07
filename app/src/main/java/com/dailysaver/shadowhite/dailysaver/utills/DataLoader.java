@@ -2,10 +2,10 @@ package com.dailysaver.shadowhite.dailysaver.utills;
 
 import android.content.Context;
 import android.os.AsyncTask;
-
 import com.dailysaver.shadowhite.dailysaver.R;
 import com.dailysaver.shadowhite.dailysaver.models.budget.Budget;
 import com.dailysaver.shadowhite.dailysaver.models.wallet.Wallet;
+import com.dailysaver.shadowhite.dailysaver.utills.dbhelper.DatabaseHelper;
 import java.util.ArrayList;
 
 public class DataLoader {
@@ -13,10 +13,12 @@ public class DataLoader {
     private UX ux;
     private onWalletItemsCompleted onWalletItemsCompleted;
     private onBudgetItemsCompleted onBudgetItemsCompleted;
+    private DatabaseHelper databaseHelper;
 
     public DataLoader(Context context) {
         this.context = context;
         ux = new UX(context);
+        databaseHelper = new DatabaseHelper(context);
     }
 
     public interface onWalletItemsCompleted{
@@ -71,7 +73,7 @@ public class DataLoader {
 
         @Override
         protected ArrayList<Budget> doInBackground(String... strings) {
-            return getBudgetWalletList();
+            return databaseHelper.getAllBudgetItems();
         }
 
         @Override
