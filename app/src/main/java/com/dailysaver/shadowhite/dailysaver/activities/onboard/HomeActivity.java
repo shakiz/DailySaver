@@ -7,14 +7,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
-import com.amitshekhar.DebugDB;
 import com.dailysaver.shadowhite.dailysaver.activities.WalletDetailsActivity;
 import com.dailysaver.shadowhite.dailysaver.activities.expensewallet.BudgetActivity;
 import com.dailysaver.shadowhite.dailysaver.activities.wallet.WalletActivity;
@@ -38,7 +37,9 @@ import com.smarteist.autoimageslider.SliderView;
 import java.util.ArrayList;
 
 public class HomeActivity extends AppCompatActivity {
+
     private MonthlyExpenseAdapter monthlyExpenseAdapter;
+    private TextView noWalletData , noBudgetData;
     private RecyclerView recyclerView;
     private RelativeLayout mainLayout;
     private Toolbar toolbar;
@@ -54,9 +55,6 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         init();
-
-        //db log
-        Log.v("db",DebugDB.getAddressLog());
 
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -103,6 +101,8 @@ public class HomeActivity extends AppCompatActivity {
         sliderView = findViewById(R.id.Slider);
         mainLayout = findViewById(R.id.home_layout);
         addButton = findViewById(R.id.add);
+        noWalletData = findViewById(R.id.NoDataWallet);
+        noBudgetData = findViewById(R.id.NoDataBudget);
         tools = new Tools(this);
         dataLoader = new DataLoader(this);
     }
@@ -121,9 +121,13 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onComplete(ArrayList<Budget> budgetList) {
                 if (budgetList != null){
+                    noBudgetData.setVisibility(View.GONE);
                     if (budgetList.size() != 0){
                         setBudgetAdapter(budgetList);
                     }
+                }
+                else {
+                    noBudgetData.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -134,9 +138,14 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onComplete(ArrayList<Wallet> walletList) {
                 if (walletList != null){
+                    noWalletData.setVisibility(View.GONE);
                     if (walletList.size() != 0){
                         setWalletAdapter(walletList);
                     }
+                }
+                else {
+                    sliderView.setVisibility(View.INVISIBLE);
+                    noWalletData.setVisibility(View.VISIBLE);
                 }
             }
         });

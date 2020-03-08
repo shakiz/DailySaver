@@ -2,8 +2,8 @@ package com.dailysaver.shadowhite.dailysaver.models.wallet;
 
 public class Wallet {
     private int Id;
-    private String Title;
     private int Amount;
+    private String Title;
     private String Currency;
     private String Note;
     private String ExpiresOn;
@@ -17,6 +17,9 @@ public class Wallet {
         ExpiresOn = expiresOn;
         WalletType = walletType;
         Note = note;
+    }
+
+    public Wallet() {
     }
 
     public int getId() {

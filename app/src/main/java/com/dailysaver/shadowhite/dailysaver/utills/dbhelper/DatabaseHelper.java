@@ -5,14 +5,10 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
-
 import androidx.annotation.Nullable;
 import com.dailysaver.shadowhite.dailysaver.models.budget.Budget;
 import com.dailysaver.shadowhite.dailysaver.models.wallet.Wallet;
-
 import java.util.ArrayList;
-
 import static com.dailysaver.shadowhite.dailysaver.utills.dbhelper.DBColumns.COLUMN_BUDGET_AMOUNT;
 import static com.dailysaver.shadowhite.dailysaver.utills.dbhelper.DBColumns.COLUMN_BUDGET_CATEGORY;
 import static com.dailysaver.shadowhite.dailysaver.utills.dbhelper.DBColumns.COLUMN_BUDGET_CURRENCY;
@@ -106,11 +102,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 COLUMN_BUDGET_ID + " DESC";
         ArrayList<Budget> budgetList = new ArrayList<Budget>();
         SQLiteDatabase db = this.getReadableDatabase();
-        // query the fooditem table
-        /**
-         * Here query function is used to fetch records from user table this function works like we use sql query.
-         * SQL query equivalent to this is query function
-         */
+
         Cursor cursor = db.query(BUDGET_TABLE, //Table to query
                 columns,    //columns to return
                 null,        //columns for the WHERE clause
@@ -118,8 +110,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 null,       //group the rows
                 null,       //filter by row groups
                 sortOrder); //The sort order
-        // Traversing through all rows and adding to list
-        if (cursor != null){
+
+         if (cursor != null){
             if (cursor.moveToFirst()) {
                 do {
                     Budget budget = new Budget();
@@ -160,8 +152,55 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_WALLET_EXPIRES_ON,wallet.getExpiresOn());
 
         // Inserting Row
-        db.insert(BUDGET_TABLE, null, values);
+        db.insert(WALLET_TABLE, null, values);
         db.close();
+    }
+
+    public ArrayList<Wallet> getAllWalletItems() {
+        // array of columns to fetch
+        String[] columns = {
+                COLUMN_WALLET_ID,
+                COLUMN_WALLET_AMOUNT,
+                COLUMN_WALLET_TITLE,
+                COLUMN_WALLET_CURRENCY,
+                COLUMN_WALLET_NOTE,
+                COLUMN_WALLET_EXPIRES_ON,
+                COLUMN_WALLET_TYPE
+        };
+        // sorting orders
+        String sortOrder =
+                COLUMN_WALLET_ID + " DESC";
+        ArrayList<Wallet> walletList = new ArrayList<Wallet>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.query(WALLET_TABLE, //Table to query
+                columns,    //columns to return
+                null,        //columns for the WHERE clause
+                null,        //The values for the WHERE clause
+                null,       //group the rows
+                null,       //filter by row groups
+                sortOrder); //The sort order
+
+        if (cursor != null){
+            if (cursor.moveToFirst()) {
+                do {
+                    Wallet wallet = new Wallet();
+
+                    wallet.setId(cursor.getInt(cursor.getColumnIndex(COLUMN_WALLET_ID)));
+                    wallet.setAmount(cursor.getInt(cursor.getColumnIndex(COLUMN_WALLET_AMOUNT)));
+                    wallet.setTitle((cursor.getString(cursor.getColumnIndex(COLUMN_WALLET_TITLE))));
+                    wallet.setNote((cursor.getString(cursor.getColumnIndex(COLUMN_WALLET_NOTE))));
+                    wallet.setCurrency(cursor.getString(cursor.getColumnIndex(COLUMN_WALLET_CURRENCY)));
+                    wallet.setExpiresOn(cursor.getString(cursor.getColumnIndex(COLUMN_WALLET_EXPIRES_ON)));
+                    wallet.setWalletType(cursor.getString(cursor.getColumnIndex(COLUMN_WALLET_TYPE)));
+
+                    walletList.add(wallet);
+                } while (cursor.moveToNext());
+            }
+        }
+        cursor.close();
+        db.close();
+        return walletList;
     }
 
 }

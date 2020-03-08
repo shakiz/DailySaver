@@ -39,4 +39,7 @@
     <string name="select_currency">Select Currency</string>
     <string name="invalid_input">Invalid Input</string>
     <string name="data_saved_successfully">Data Saved Successfully</string>
+    <string name="no_data">No Data</string>
+    <string name="no_wallet_data">No wallet data available</string>
+    <string name="no_budget_data">No budget data available</string>
 </resources>

@@ -34,8 +34,9 @@ public class DataLoader {
         new LoadWalletsInBackground().execute();
     }
 
-    public void setOnBudgetItemsCompleted(DataLoader.onBudgetItemsCompleted onBudgetItemsCompleted) {
+    public void setOnBudgetItemsCompleted(onBudgetItemsCompleted onBudgetItemsCompleted) {
         this.onBudgetItemsCompleted = onBudgetItemsCompleted;
+        new LoadBudgetsInBackground().execute();
     }
 
     private class LoadWalletsInBackground extends AsyncTask<String,Void, ArrayList<Wallet>>{
@@ -47,7 +48,7 @@ public class DataLoader {
 
         @Override
         protected ArrayList<Wallet> doInBackground(String... strings) {
-            return getWalletList();
+            return databaseHelper.getAllWalletItems();
         }
 
         @Override
@@ -57,7 +58,6 @@ public class DataLoader {
                     if (ux.loadingDialog.isShowing()){
                         onWalletItemsCompleted.onComplete(wallets);
                         ux.removeLoadingView();
-                        new LoadBudgetsInBackground().execute();
                     }
                 }
             }
