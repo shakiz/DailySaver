@@ -168,7 +168,7 @@
                                 android:gravity="center_vertical"
                                 android:background="@null"
                                 android:layout_marginLeft="16dp"
-                                android:inputType="textEmailAddress"
+                                android:inputType="text"
                                 android:hint="@string/wallet_name_hint"
                                 android:padding="4dp"
                                 android:textColor="@color/md_grey_800"

@@ -26,6 +26,7 @@ import com.dailysaver.shadowhite.dailysaver.models.menu.IconPowerMenuItem;
 import com.dailysaver.shadowhite.dailysaver.R;
 import com.dailysaver.shadowhite.dailysaver.utills.DataLoader;
 import com.dailysaver.shadowhite.dailysaver.utills.Tools;
+import com.dailysaver.shadowhite.dailysaver.utills.dbhelper.DatabaseHelper;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.skydoves.powermenu.CircularEffect;
 import com.skydoves.powermenu.CustomPowerMenu;
@@ -48,6 +49,7 @@ public class HomeActivity extends AppCompatActivity {
     private SliderView sliderView;
     private DataLoader dataLoader;
     private Tools tools;
+    DatabaseHelper databaseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,6 +107,7 @@ public class HomeActivity extends AppCompatActivity {
         noBudgetData = findViewById(R.id.NoDataBudget);
         tools = new Tools(this);
         dataLoader = new DataLoader(this);
+        databaseHelper = new DatabaseHelper(this);
     }
 
     private OnMenuItemClickListener<IconPowerMenuItem> onMenuItemClickListener = new OnMenuItemClickListener<IconPowerMenuItem>() {
@@ -117,62 +120,68 @@ public class HomeActivity extends AppCompatActivity {
     };
 
     private void getBudgetData(){
-        dataLoader.setOnBudgetItemsCompleted(new DataLoader.onBudgetItemsCompleted() {
-            @Override
-            public void onComplete(ArrayList<Budget> budgetList) {
-                if (budgetList != null){
-                    noBudgetData.setVisibility(View.GONE);
-                    if (budgetList.size() != 0){
-                        setBudgetAdapter(budgetList);
-                    }
-                }
-                else {
-                    noBudgetData.setVisibility(View.VISIBLE);
-                }
-            }
-        });
+
+//        dataLoader.setOnBudgetItemsCompleted(new DataLoader.onBudgetItemsCompleted() {
+//            @Override
+//            public void onComplete(ArrayList<Budget> budgetList) {
+//                if (budgetList != null){
+//                    if (budgetList.size() != 0){
+//                        setBudgetAdapter(budgetList);
+//                    }
+//                }
+//            }
+//        });
+        setBudgetAdapter(databaseHelper.getAllBudgetItems());
     }
 
     private void setCardSlider() {
-        dataLoader.setOnWalletItemsCompleted(new DataLoader.onWalletItemsCompleted() {
-            @Override
-            public void onComplete(ArrayList<Wallet> walletList) {
-                if (walletList != null){
-                    noWalletData.setVisibility(View.GONE);
-                    if (walletList.size() != 0){
-                        setWalletAdapter(walletList);
-                    }
-                }
-                else {
-                    sliderView.setVisibility(View.INVISIBLE);
-                    noWalletData.setVisibility(View.VISIBLE);
-                }
-            }
-        });
+//        dataLoader.setOnWalletItemsCompleted(new DataLoader.onWalletItemsCompleted() {
+//            @Override
+//            public void onComplete(ArrayList<Wallet> walletList) {
+//                if (walletList != null){
+//                    if (walletList.size() != 0){
+//                        setWalletAdapter(walletList);
+//                    }
+//                }
+//            }
+//        });
+        setWalletAdapter(databaseHelper.getAllWalletItems());
     }
 
     private void setWalletAdapter(ArrayList<Wallet> walletList) {
-        sliderView.setSliderAdapter(new WalletDetailsSliderAdapter(walletList, this, new WalletDetailsSliderAdapter.onItemClick() {
-            @Override
-            public void itemClick(Wallet wallet) {
-                startActivity(new Intent(HomeActivity.this, WalletDetailsActivity.class));
-            }
-        }));
-        sliderView.setIndicatorAnimation(IndicatorAnimations.WORM);
-        sliderView.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
-        sliderView.setIndicatorPadding(8);
+        if (walletList.size() <= 0){
+            sliderView.setVisibility(View.GONE);
+            noWalletData.setVisibility(View.VISIBLE);
+        }
+        else {
+            sliderView.setSliderAdapter(new WalletDetailsSliderAdapter(walletList, this, new WalletDetailsSliderAdapter.onItemClick() {
+                @Override
+                public void itemClick(Wallet wallet) {
+                    startActivity(new Intent(HomeActivity.this, WalletDetailsActivity.class));
+                }
+            }));
+            sliderView.setIndicatorAnimation(IndicatorAnimations.WORM);
+            sliderView.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
+            sliderView.setIndicatorPadding(8);
+        }
     }
 
     private void setBudgetAdapter(ArrayList<Budget> budgetList) {
-        monthlyExpenseAdapter = new MonthlyExpenseAdapter(budgetList, new MonthlyExpenseAdapter.onItemClick() {
-            @Override
-            public void itemClick(Budget budget) {
-                startActivity(new Intent(HomeActivity.this, BudgetActivity.class).putExtra("budget",budget));
-            }
-        });
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(monthlyExpenseAdapter);
-        monthlyExpenseAdapter.notifyDataSetChanged();
+        if (budgetList.size() <=0 ){
+            noBudgetData.setVisibility(View.VISIBLE);
+        }
+        else {
+            monthlyExpenseAdapter = new MonthlyExpenseAdapter(budgetList, new MonthlyExpenseAdapter.onItemClick() {
+                @Override
+                public void itemClick(Budget budget) {
+                    startActivity(new Intent(HomeActivity.this, BudgetActivity.class).putExtra("budget",budget));
+                }
+            });
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+            recyclerView.setAdapter(monthlyExpenseAdapter);
+            monthlyExpenseAdapter.notifyDataSetChanged();
+        }
+
     }
 
     @Override

@@ -2,6 +2,8 @@ package com.dailysaver.shadowhite.dailysaver.utills;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.widget.Toast;
+
 import com.dailysaver.shadowhite.dailysaver.R;
 import com.dailysaver.shadowhite.dailysaver.models.budget.Budget;
 import com.dailysaver.shadowhite.dailysaver.models.wallet.Wallet;
@@ -53,14 +55,11 @@ public class DataLoader {
 
         @Override
         protected void onPostExecute(ArrayList<Wallet> wallets) {
-            if (wallets != null){
-                if (wallets.size() != 0){
+                    onWalletItemsCompleted.onComplete(wallets);
                     if (ux.loadingDialog.isShowing()){
-                        onWalletItemsCompleted.onComplete(wallets);
                         ux.removeLoadingView();
                     }
-                }
-            }
+
         }
     }
 
@@ -78,14 +77,11 @@ public class DataLoader {
 
         @Override
         protected void onPostExecute(ArrayList<Budget> budgets) {
-            if (budgets != null){
-                if (budgets.size() != 0){
-                    if (ux.loadingDialog.isShowing()){
-                        onBudgetItemsCompleted.onComplete(budgets);
+
+                    onBudgetItemsCompleted.onComplete(budgets);
+                    if (ux.loadingDialog.isShowing()) {
                         ux.removeLoadingView();
                     }
-                }
-            }
         }
     }
 
