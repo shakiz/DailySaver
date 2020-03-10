@@ -1,13 +1,11 @@
 package com.dailysaver.shadowhite.dailysaver.adapters.wallet;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import com.dailysaver.shadowhite.dailysaver.R;
-import com.dailysaver.shadowhite.dailysaver.activities.WalletDetailsActivity;
 import com.dailysaver.shadowhite.dailysaver.models.wallet.Wallet;
 import com.github.lzyzsd.circleprogress.ArcProgress;
 import com.smarteist.autoimageslider.SliderViewAdapter;
@@ -31,7 +29,7 @@ public class WalletDetailsSliderAdapter extends SliderViewAdapter<WalletDetailsS
 
     @Override
     public SliderAdapterVH onCreateViewHolder(ViewGroup parent) {
-        View inflate = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_layout_home_dashboard
+        View inflate = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_layout_wallet_dashboard
                 , null);
         return new SliderAdapterVH(inflate);
     }
@@ -42,7 +40,7 @@ public class WalletDetailsSliderAdapter extends SliderViewAdapter<WalletDetailsS
         viewHolder.Position.setText(""+(++position));
         viewHolder.Title.setText(itemModel.getTitle());
         viewHolder.Amount.setText(""+itemModel.getAmount());
-        viewHolder.Type.setText(itemModel.getWalletType());
+        viewHolder.Type.setText(""+itemModel.getWalletType());
         viewHolder.ExpiresOn.setText(itemModel.getExpiresOn());
         //TODO here totalCost is set to 100 by default , later we need to calculate total cost
         setProgressData(itemModel.getAmount(),100,viewHolder.RemainingBalance);

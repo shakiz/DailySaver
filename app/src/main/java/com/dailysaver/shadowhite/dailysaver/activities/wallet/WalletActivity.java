@@ -8,8 +8,8 @@ import android.icu.text.SimpleDateFormat;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.dailysaver.shadowhite.dailysaver.R;
 import com.dailysaver.shadowhite.dailysaver.activities.onboard.HomeActivity;
 import com.dailysaver.shadowhite.dailysaver.models.wallet.Wallet;
+import com.dailysaver.shadowhite.dailysaver.utills.SpinnerData;
 import com.dailysaver.shadowhite.dailysaver.utills.Tools;
 import com.dailysaver.shadowhite.dailysaver.utills.UX;
 import com.dailysaver.shadowhite.dailysaver.utills.dbhelper.DatabaseHelper;
@@ -29,14 +30,17 @@ public class WalletActivity extends AppCompatActivity implements View.OnClickLis
 
     private Toolbar toolbar;
     private RelativeLayout mainLayout;
+    private int currencyValue;
+    private String budgetTypeStr;
     private EditText Amount,WalletName,Note,ExpiresOn;
     private FloatingActionButton add;
     private Spinner currencySpinner;
     private EditText expiryDate;
-    private CheckBox expense,income;
+    private CheckBox expense,savings;
     private SimpleDateFormat dateFormatter;
     private UX ux;
     private Tools tools;
+    private SpinnerData spinnerData;
     private DatabaseHelper databaseHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,27 +64,51 @@ public class WalletActivity extends AppCompatActivity implements View.OnClickLis
         currencySpinner = findViewById(R.id.Currency);
         expiryDate = findViewById(R.id.ExpiresOn);
         expense = findViewById(R.id.Expense);
-        income = findViewById(R.id.Savings);
+        savings = findViewById(R.id.Savings);
         add = findViewById(R.id.add);
         ux = new UX(this);
         tools = new Tools(this);
         databaseHelper = new DatabaseHelper(this);
+        spinnerData = new SpinnerData(this);
     }
 
     private void bindUiWithComponents() {
-        ux.setSpinnerAdapter(new String[]{getResources().getString(R.string.select_currency),"BDT Tk.","USD"},currencySpinner);
+        ux.setSpinnerAdapter(spinnerData.currencyData(),currencySpinner);
+
         expiryDate.setOnClickListener(this);
 
-        expense.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        ux.onSpinnerChange(currencySpinner, new UX.onSpinnerChangeListener() {
             @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                setVisibility(income,isChecked);
+            public void onChange(AdapterView<?> parent, View view, int position, long id) {
+                currencyValue = position;
             }
         });
-        income.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+        ux.onChange(expense, new UX.onChangeListener() {
             @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                setVisibility(expense,isChecked);
+            public void onChange(boolean isChecked) {
+                if (isChecked){
+                    savings.setEnabled(false);
+                    budgetTypeStr = "Expense";
+                }
+                else{
+                    savings.setEnabled(true);
+                    budgetTypeStr = "";
+                }
+            }
+        });
+
+        ux.onChange(savings, new UX.onChangeListener() {
+            @Override
+            public void onChange(boolean isChecked) {
+                if (isChecked){
+                    expense.setEnabled(false);
+                    budgetTypeStr = "Savings";
+                }
+                else{
+                    expense.setEnabled(false);
+                    budgetTypeStr = "";
+                }
             }
         });
 
@@ -95,7 +123,7 @@ public class WalletActivity extends AppCompatActivity implements View.OnClickLis
     private void saveWallet() {
         if (ux.validation(new int[]{R.id.Amount,R.id.Note,R.id.ExpiresOn},mainLayout)){
             databaseHelper.addNewWallet(new Wallet(WalletName.getText().toString(),Integer.parseInt(Amount.getText().toString()),
-                    "",ExpiresOn.getText().toString(),"",Note.getText().toString()));
+                    currencyValue,ExpiresOn.getText().toString(),budgetTypeStr,Note.getText().toString()));
             Toast.makeText(this,getResources().getString(R.string.data_saved_successfully),Toast.LENGTH_SHORT).show();
             startActivity(new Intent(WalletActivity.this,HomeActivity.class));
         }
@@ -118,7 +146,7 @@ public class WalletActivity extends AppCompatActivity implements View.OnClickLis
                 Calendar newDate = Calendar.getInstance();
                 newDate.set(year, monthOfYear, dayOfMonth);
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    dateView.setText("Expiry Date : "+dateFormatter.format(newDate.getTime()));
+                    dateView.setText(""+dateFormatter.format(newDate.getTime()));
                 }
             }
 

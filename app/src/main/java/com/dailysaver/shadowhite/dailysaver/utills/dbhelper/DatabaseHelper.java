@@ -33,15 +33,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String BUDGET_TABLE = "Budget";
 
     private static String CREATE_BUDGET_TABLE = "CREATE TABLE " + BUDGET_TABLE + "("
-            + COLUMN_BUDGET_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + COLUMN_BUDGET_AMOUNT + " REAL,"
-            + COLUMN_BUDGET_CURRENCY + " TEXT," + COLUMN_BUDGET_CATEGORY + " TEXT," + COLUMN_BUDGET_NOTE + " TEXT,"
-            + COLUMN_BUDGET_WALLET + " TEXT," + COLUMN_BUDGET_WALLET_TYPE + " TEXT,"
+            + COLUMN_BUDGET_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + COLUMN_BUDGET_AMOUNT + " INTEGER,"
+            + COLUMN_BUDGET_CURRENCY + " INTEGER," + COLUMN_BUDGET_CATEGORY + " TEXT," + COLUMN_BUDGET_NOTE + " TEXT,"
+            + COLUMN_BUDGET_WALLET + " INTEGER," + COLUMN_BUDGET_WALLET_TYPE + " INTEGER,"
             + COLUMN_BUDGET_EXPENSE_DATE + " TEXT" + ")";
 
     private static String CREATE_WALLET_TABLE = "CREATE TABLE " + WALLET_TABLE + "("
             + COLUMN_WALLET_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + COLUMN_WALLET_AMOUNT + " REAL,"
-            + COLUMN_WALLET_CURRENCY + " TEXT," + COLUMN_WALLET_TITLE + " TEXT," + COLUMN_WALLET_NOTE + " TEXT,"
-            + COLUMN_WALLET_TYPE + " TEXT," + COLUMN_WALLET_EXPIRES_ON + " TEXT" + ")";
+            + COLUMN_WALLET_CURRENCY + " INTEGER," + COLUMN_WALLET_TITLE + " TEXT," + COLUMN_WALLET_NOTE + " TEXT,"
+            + COLUMN_WALLET_TYPE + " INTEGER," + COLUMN_WALLET_EXPIRES_ON + " TEXT" + ")";
 
     private static String DROP_WALLET_TABLE = "DROP TABLE IF EXISTS "+WALLET_TABLE;
     private static String DROP_BUDGET_TABLE = "DROP TABLE IF EXISTS "+BUDGET_TABLE;
@@ -120,10 +120,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     budget.setAmount(cursor.getInt(cursor.getColumnIndex(COLUMN_BUDGET_AMOUNT)));
                     budget.setCategory((cursor.getString(cursor.getColumnIndex(COLUMN_BUDGET_CATEGORY))));
                     budget.setExpenseDate((cursor.getString(cursor.getColumnIndex(COLUMN_BUDGET_EXPENSE_DATE))));
-                    budget.setCurrency(cursor.getString(cursor.getColumnIndex(COLUMN_BUDGET_CURRENCY)));
+                    budget.setCurrency(cursor.getInt(cursor.getColumnIndex(COLUMN_BUDGET_CURRENCY)));
                     budget.setNote(cursor.getString(cursor.getColumnIndex(COLUMN_BUDGET_NOTE)));
-                    budget.setWalletId(cursor.getString(cursor.getColumnIndex(COLUMN_BUDGET_WALLET)));
-                    budget.setWalletTypeId(cursor.getString(cursor.getColumnIndex(COLUMN_BUDGET_WALLET_TYPE)));
+                    budget.setWalletId(cursor.getInt(cursor.getColumnIndex(COLUMN_BUDGET_WALLET)));
+                    budget.setWalletTypeId(cursor.getInt(cursor.getColumnIndex(COLUMN_BUDGET_WALLET_TYPE)));
 
                     // Adding food item record to list
                     budgetList.add(budget);
@@ -190,7 +190,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     wallet.setAmount(cursor.getInt(cursor.getColumnIndex(COLUMN_WALLET_AMOUNT)));
                     wallet.setTitle((cursor.getString(cursor.getColumnIndex(COLUMN_WALLET_TITLE))));
                     wallet.setNote((cursor.getString(cursor.getColumnIndex(COLUMN_WALLET_NOTE))));
-                    wallet.setCurrency(cursor.getString(cursor.getColumnIndex(COLUMN_WALLET_CURRENCY)));
+                    wallet.setCurrency(cursor.getInt(cursor.getColumnIndex(COLUMN_WALLET_CURRENCY)));
                     wallet.setExpiresOn(cursor.getString(cursor.getColumnIndex(COLUMN_WALLET_EXPIRES_ON)));
                     wallet.setWalletType(cursor.getString(cursor.getColumnIndex(COLUMN_WALLET_TYPE)));
 

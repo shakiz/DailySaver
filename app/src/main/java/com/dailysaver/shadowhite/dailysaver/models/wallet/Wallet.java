@@ -4,13 +4,13 @@ public class Wallet {
     private int Id;
     private int Amount;
     private String Title;
-    private String Currency;
+    private int Currency;
+    private String WalletType;
     private String Note;
     private String ExpiresOn;
-    private String WalletType;
 
 
-    public Wallet(String title, int amount, String currency, String expiresOn, String walletType,String note) {
+    public Wallet(String title, int amount, int currency, String expiresOn, String walletType,String note) {
         Title = title;
         Amount = amount;
         Currency = currency;
@@ -46,11 +46,11 @@ public class Wallet {
         Amount = amount;
     }
 
-    public String getCurrency() {
+    public int getCurrency() {
         return Currency;
     }
 
-    public void setCurrency(String currency) {
+    public void setCurrency(int currency) {
         Currency = currency;
     }
 

@@ -5,17 +5,17 @@ import java.io.Serializable;
 public class Budget implements Serializable {
     private int Id;
     private int Amount;
-    private String Currency;
+    private int Currency;
     private String Category;
-    private String Wallet;
-    private String WalletType;
+    private int Wallet;
+    private int WalletType;
     private String Note;
     private String ExpenseDate;
 
     public Budget() {
     }
 
-    public Budget(int id, int amount, String currency, String category, String walletId, String walletTypeId, String note, String expenseDate) {
+    public Budget(int id, int amount, int currency, String category, int walletId, int walletTypeId, String note, String expenseDate) {
         Id = id;
         Amount = amount;
         Currency = currency;
@@ -42,11 +42,11 @@ public class Budget implements Serializable {
         Amount = amount;
     }
 
-    public String getCurrency() {
+    public int getCurrency() {
         return Currency;
     }
 
-    public void setCurrency(String currency) {
+    public void setCurrency(int currency) {
         Currency = currency;
     }
 
@@ -58,19 +58,19 @@ public class Budget implements Serializable {
         Category = category;
     }
 
-    public String getWallet() {
+    public int getWallet() {
         return Wallet;
     }
 
-    public void setWalletId(String wallet) {
+    public void setWalletId(int wallet) {
         Wallet = wallet;
     }
 
-    public String getWalletTypeId() {
+    public int getWalletTypeId() {
         return WalletType;
     }
 
-    public void setWalletTypeId(String walletType) {
+    public void setWalletTypeId(int walletType) {
         WalletType = walletType;
     }
 

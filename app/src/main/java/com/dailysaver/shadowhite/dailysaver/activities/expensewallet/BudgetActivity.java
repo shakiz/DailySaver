@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -27,6 +28,7 @@ import com.dailysaver.shadowhite.dailysaver.R;
 import com.dailysaver.shadowhite.dailysaver.models.budget.Budget;
 import com.dailysaver.shadowhite.dailysaver.models.category.Category;
 import com.dailysaver.shadowhite.dailysaver.utills.DataLoader;
+import com.dailysaver.shadowhite.dailysaver.utills.SpinnerData;
 import com.dailysaver.shadowhite.dailysaver.utills.Tools;
 import com.dailysaver.shadowhite.dailysaver.utills.UX;
 import com.dailysaver.shadowhite.dailysaver.utills.dbhelper.DatabaseHelper;
@@ -51,12 +53,13 @@ public class BudgetActivity extends AppCompatActivity implements View.OnClickLis
     private RecyclerView.LayoutManager layoutManager;
     private ArrayList<Category> categoryList;
     private EditText dateView;
-    private String currencyStr, walletStr, walletTypeStr;
+    private int currencyValue, walletValue, walletTypeValue;
     private SimpleDateFormat dateFormatter;
     private UX ux;
     private Tools tools;
     private DataLoader dataLoader;
     private DatabaseHelper databaseHelper;
+    private SpinnerData spinnerData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,17 +94,35 @@ public class BudgetActivity extends AppCompatActivity implements View.OnClickLis
         tools = new Tools(this);
         dataLoader = new DataLoader(this);
         databaseHelper = new DatabaseHelper(this);
+        spinnerData = new SpinnerData(this);
         bindUIWIthComponents();
     }
 
     private void bindUIWIthComponents() {
-        ux.setSpinnerAdapter(new String[]{getResources().getString(R.string.select_currency),"BDT Tk.","US Dollar"},currencySpinner);
-        ux.setSpinnerAdapter(new String[]{getResources().getString(R.string.select_wallet_type),"Savings","Expense"},walletTypeSpinner);
-        ux.setSpinnerAdapter(dataLoader.getWalletTitle(),walletSpinner);
+        ux.setSpinnerAdapter(spinnerData.currencyData(),currencySpinner);
+        ux.setSpinnerAdapter(spinnerData.walletTypeData(),walletTypeSpinner);
+        ux.setSpinnerAdapter(spinnerData.getWalletTitle(),walletSpinner);
 
-        currencyStr = ux.onSpinnerItem(currencySpinner);
-        walletStr = ux.onSpinnerItem(currencySpinner);
-        walletTypeStr = ux.onSpinnerItem(currencySpinner);
+        ux.onSpinnerChange(currencySpinner, new UX.onSpinnerChangeListener() {
+            @Override
+            public void onChange(AdapterView<?> parent, View view, int position, long id) {
+                currencyValue = position;
+            }
+        });
+
+        ux.onSpinnerChange(walletSpinner, new UX.onSpinnerChangeListener() {
+            @Override
+            public void onChange(AdapterView<?> parent, View view, int position, long id) {
+                walletValue = position;
+            }
+        });
+
+        ux.onSpinnerChange(walletTypeSpinner, new UX.onSpinnerChangeListener() {
+            @Override
+            public void onChange(AdapterView<?> parent, View view, int position, long id) {
+                walletTypeValue = position;
+            }
+        });
 
         dateView.setOnClickListener(this);
         categorySelection.setOnClickListener(this);
@@ -111,12 +132,13 @@ public class BudgetActivity extends AppCompatActivity implements View.OnClickLis
                 saveExpense();
             }
         });
+
     }
 
     private void saveExpense(){
         if (ux.validation(new int[]{R.id.Amount,R.id.Note,R.id.ExpenseDate},mainLayout)){
             databaseHelper.addNewBudget(new Budget(1,Integer.parseInt(Amount.getText().toString()),
-                    currencyStr,categoryTitle.getText().toString(),walletStr,walletTypeStr,Note.getText().toString(),ExpenseDate.getText().toString()));
+                    currencyValue,categoryTitle.getText().toString(),walletValue,walletTypeValue,Note.getText().toString(),ExpenseDate.getText().toString()));
             Toast.makeText(this,getResources().getString(R.string.data_saved_successfully),Toast.LENGTH_LONG).show();
             startActivity(new Intent(BudgetActivity.this,HomeActivity.class));
         }
@@ -129,6 +151,9 @@ public class BudgetActivity extends AppCompatActivity implements View.OnClickLis
         Amount.setText(""+budget.getAmount());
         Note.setText(budget.getNote());
         ExpenseDate.setText(budget.getExpenseDate());
+        currencySpinner.setSelection(budget.getCurrency());
+        walletSpinner.setSelection(budget.getWallet());
+        walletTypeSpinner.setSelection(budget.getWalletTypeId());
         add.setImageResource(R.drawable.ic_action_done);
     }
 

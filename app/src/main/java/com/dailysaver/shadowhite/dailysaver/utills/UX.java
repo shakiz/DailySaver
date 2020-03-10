@@ -8,6 +8,8 @@ import android.graphics.drawable.ColorDrawable;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -77,12 +79,12 @@ public class UX {
         spinnerAdapter.notifyDataSetChanged();
     }
 
-    public String onSpinnerItem(final Spinner spinner){
-        final String[] spinnerData = {""};
+    public void onSpinnerChange(Spinner spinner, onSpinnerChangeListener listener) {
+        final onSpinnerChangeListener customListener = listener;
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                spinnerData[0] = parent.getItemAtPosition(position).toString();
+                customListener.onChange(parent, view, position, id);
             }
 
             @Override
@@ -90,7 +92,25 @@ public class UX {
 
             }
         });
-        return spinnerData[0];
+    }
+
+    public interface onSpinnerChangeListener {
+        void onChange(AdapterView<?> parent, View view, int position, long id);
+    }
+
+    public void onChange(CheckBox checkBox, final onChangeListener listener) {
+        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (listener != null) {
+                    listener.onChange(isChecked);
+                }
+            }
+        });
+    }
+
+    public interface onChangeListener {
+        void onChange(boolean isChecked);
     }
 
 }
