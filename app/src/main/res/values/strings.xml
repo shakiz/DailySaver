@@ -23,7 +23,7 @@
     <string name="wallet_name">Wallet Name</string>
     <string name="expiry_date">Expiry Date</string>
     <string name="select_wallet_type">Select Wallet Type</string>
-    <string name="budget">Expense</string>
+    <string name="expense">Expense</string>
     <string name="income">Income</string>
     <string name="title">Title</string>
     <string name="type">Type</string>
@@ -41,5 +41,5 @@
     <string name="data_saved_successfully">Data Saved Successfully</string>
     <string name="no_data">No Data</string>
     <string name="no_wallet_data">No wallet data available</string>
-    <string name="no_budget_data">No budget data available</string>
+    <string name="no_budget_data">No expense data available</string>
 </resources>

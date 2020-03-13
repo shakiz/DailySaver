@@ -260,7 +260,7 @@
                                 android:layout_weight="1.5"
                                 app:buttonTint="@color/colorPrimary"
                                 android:textColor="@color/md_grey_600"
-                                android:text="@string/budget"/>
+                                android:text="@string/expense"/>
 
                             <androidx.appcompat.widget.AppCompatCheckBox
                                 android:id="@+id/Savings"

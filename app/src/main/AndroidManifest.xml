@@ -33,7 +33,7 @@
             android:screenOrientation="portrait"/>
 
         <activity
-            android:name=".activities.expensewallet.BudgetActivity"
+            android:name=".activities.expensewallet.ExpenseActivity"
             android:label="@string/new_expense"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeNoActionBar"

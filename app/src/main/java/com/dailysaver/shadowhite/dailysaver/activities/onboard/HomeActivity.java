@@ -15,12 +15,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.dailysaver.shadowhite.dailysaver.activities.WalletDetailsActivity;
-import com.dailysaver.shadowhite.dailysaver.activities.expensewallet.BudgetActivity;
+import com.dailysaver.shadowhite.dailysaver.activities.expensewallet.ExpenseActivity;
 import com.dailysaver.shadowhite.dailysaver.activities.wallet.WalletActivity;
 import com.dailysaver.shadowhite.dailysaver.adapters.wallet.WalletDetailsSliderAdapter;
 import com.dailysaver.shadowhite.dailysaver.adapters.menu.IconMenuAdapter;
 import com.dailysaver.shadowhite.dailysaver.adapters.monthlyexpense.MonthlyExpenseAdapter;
-import com.dailysaver.shadowhite.dailysaver.models.budget.Budget;
+import com.dailysaver.shadowhite.dailysaver.models.expense.Expense;
 import com.dailysaver.shadowhite.dailysaver.models.wallet.Wallet;
 import com.dailysaver.shadowhite.dailysaver.models.menu.IconPowerMenuItem;
 import com.dailysaver.shadowhite.dailysaver.R;
@@ -79,7 +79,7 @@ public class HomeActivity extends AppCompatActivity {
 
     private void setMenu() {
         powerMenu =new CustomPowerMenu.Builder<>(this, new IconMenuAdapter())
-                .addItem(new IconPowerMenuItem(ContextCompat.getDrawable(this, R.drawable.ic_expense), getResources().getString(R.string.add_new_budget)))
+                .addItem(new IconPowerMenuItem(ContextCompat.getDrawable(this, R.drawable.ic_expense), getResources().getString(R.string.add_new_expense)))
                 .addItem(new IconPowerMenuItem(ContextCompat.getDrawable(this, R.drawable.ic_wallet), getResources().getString(R.string.add_new_wallet)))
                 .setAnimation(MenuAnimation.SHOW_UP_CENTER) // Animation start point (TOP | LEFT).
                 .setMenuRadius(15f) // sets the corner radius.
@@ -113,7 +113,7 @@ public class HomeActivity extends AppCompatActivity {
     private OnMenuItemClickListener<IconPowerMenuItem> onMenuItemClickListener = new OnMenuItemClickListener<IconPowerMenuItem>() {
         @Override
         public void onItemClick(int position, IconPowerMenuItem item) {
-            if (position==0)startActivity(new Intent(HomeActivity.this, BudgetActivity.class));
+            if (position==0)startActivity(new Intent(HomeActivity.this, ExpenseActivity.class));
             else if (position==1) startActivity(new Intent(HomeActivity.this, WalletActivity.class));
             powerMenu.dismiss();
         }
@@ -131,7 +131,7 @@ public class HomeActivity extends AppCompatActivity {
 //                }
 //            }
 //        });
-        setBudgetAdapter(databaseHelper.getAllBudgetItems());
+        setBudgetAdapter(databaseHelper.getAllExpenseItems());
     }
 
     private void setCardSlider() {
@@ -166,15 +166,15 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
-    private void setBudgetAdapter(ArrayList<Budget> budgetList) {
-        if (budgetList.size() <=0 ){
+    private void setBudgetAdapter(ArrayList<Expense> expenseList) {
+        if (expenseList.size() <=0 ){
             noBudgetData.setVisibility(View.VISIBLE);
         }
         else {
-            monthlyExpenseAdapter = new MonthlyExpenseAdapter(budgetList, new MonthlyExpenseAdapter.onItemClick() {
+            monthlyExpenseAdapter = new MonthlyExpenseAdapter(expenseList, new MonthlyExpenseAdapter.onItemClick() {
                 @Override
-                public void itemClick(Budget budget) {
-                    startActivity(new Intent(HomeActivity.this, BudgetActivity.class).putExtra("budget",budget));
+                public void itemClick(Expense expense) {
+                    startActivity(new Intent(HomeActivity.this, ExpenseActivity.class).putExtra("expense", expense));
                 }
             });
             recyclerView.setLayoutManager(new LinearLayoutManager(this));

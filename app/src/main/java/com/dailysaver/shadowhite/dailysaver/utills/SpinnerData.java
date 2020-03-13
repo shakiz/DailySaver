@@ -2,12 +2,15 @@ package com.dailysaver.shadowhite.dailysaver.utills;
 
 import android.content.Context;
 import com.dailysaver.shadowhite.dailysaver.R;
+import com.dailysaver.shadowhite.dailysaver.utills.dbhelper.DatabaseHelper;
 
 public class SpinnerData {
     private Context context;
+    private DatabaseHelper databaseHelper;
 
     public SpinnerData(Context context) {
         this.context = context;
+        databaseHelper = new DatabaseHelper(context);
     }
 
     public String[] currencyData(){
@@ -20,7 +23,7 @@ public class SpinnerData {
 
 
     public String[] getWalletTitle(){
-        String[] walletTitleList = new String[]{context.getResources().getString(R.string.select_wallet),"April Wallet","May Wallet","September Wallet","August Wallet"};
+        String[] walletTitleList = databaseHelper.getWalletTitle();;
         return walletTitleList;
     }
 }

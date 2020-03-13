@@ -2,7 +2,7 @@ package com.dailysaver.shadowhite.dailysaver.utills;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import com.dailysaver.shadowhite.dailysaver.models.budget.Budget;
+import com.dailysaver.shadowhite.dailysaver.models.expense.Expense;
 import com.dailysaver.shadowhite.dailysaver.models.wallet.Wallet;
 import com.dailysaver.shadowhite.dailysaver.utills.dbhelper.DatabaseHelper;
 import java.util.ArrayList;
@@ -25,7 +25,7 @@ public class DataLoader {
     }
 
     public interface onBudgetItemsCompleted{
-        void onComplete(ArrayList<Budget> budgetList);
+        void onComplete(ArrayList<Expense> expenseList);
     }
 
     public void setOnWalletItemsCompleted(onWalletItemsCompleted onWalletItemsCompleted) {
@@ -60,7 +60,7 @@ public class DataLoader {
         }
     }
 
-    private class LoadBudgetsInBackground extends AsyncTask<String,Void, ArrayList<Budget>>{
+    private class LoadBudgetsInBackground extends AsyncTask<String,Void, ArrayList<Expense>>{
 
         @Override
         protected void onPreExecute() {
@@ -68,14 +68,14 @@ public class DataLoader {
         }
 
         @Override
-        protected ArrayList<Budget> doInBackground(String... strings) {
-            return databaseHelper.getAllBudgetItems();
+        protected ArrayList<Expense> doInBackground(String... strings) {
+            return databaseHelper.getAllExpenseItems();
         }
 
         @Override
-        protected void onPostExecute(ArrayList<Budget> budgets) {
+        protected void onPostExecute(ArrayList<Expense> expenses) {
 
-                    onBudgetItemsCompleted.onComplete(budgets);
+                    onBudgetItemsCompleted.onComplete(expenses);
                     if (ux.loadingDialog.isShowing()) {
                         ux.removeLoadingView();
                     }

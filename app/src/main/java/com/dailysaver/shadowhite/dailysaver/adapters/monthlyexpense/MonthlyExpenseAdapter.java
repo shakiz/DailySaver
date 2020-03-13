@@ -7,22 +7,22 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
-import com.dailysaver.shadowhite.dailysaver.models.budget.Budget;
+import com.dailysaver.shadowhite.dailysaver.models.expense.Expense;
 import com.dailysaver.shadowhite.dailysaver.R;
 import java.util.ArrayList;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MonthlyExpenseAdapter extends RecyclerView.Adapter<MonthlyExpenseAdapter.ViewHolder>{
-    private ArrayList<Budget> budgetList;
+    private ArrayList<Expense> expenseList;
     private onItemClick onItemClick;
 
-    public MonthlyExpenseAdapter(ArrayList<Budget> budgetList,onItemClick onItemClick) {
-        this.budgetList = budgetList;
+    public MonthlyExpenseAdapter(ArrayList<Expense> expenseList, onItemClick onItemClick) {
+        this.expenseList = expenseList;
         this.onItemClick = onItemClick;
     }
 
     public interface onItemClick{
-        void itemClick(Budget budget);
+        void itemClick(Expense expense);
     }
 
     @NonNull
@@ -34,16 +34,16 @@ public class MonthlyExpenseAdapter extends RecyclerView.Adapter<MonthlyExpenseAd
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        final Budget budget = budgetList.get(position);
-        holder.Category.setText(budget.getCategory());
-        holder.Note.setText(budget.getNote());
-        holder.Amount.setText(""+budget.getAmount());
-        holder.ExpenseDate.setText(budget.getExpenseDate());
-        setTypeIcon(holder.Icon,budget.getCategory());
+        final Expense expense = expenseList.get(position);
+        holder.Category.setText(expense.getCategory());
+        holder.Note.setText(expense.getNote());
+        holder.Amount.setText(""+ expense.getAmount());
+        holder.ExpenseDate.setText(expense.getExpenseDate());
+        setTypeIcon(holder.Icon, expense.getCategory());
         holder.view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onItemClick.itemClick(budget);
+                onItemClick.itemClick(expense);
             }
         });
     }
@@ -63,7 +63,7 @@ public class MonthlyExpenseAdapter extends RecyclerView.Adapter<MonthlyExpenseAd
 
     @Override
     public int getItemCount() {
-        return budgetList.size();
+        return expenseList.size();
     }
 
 

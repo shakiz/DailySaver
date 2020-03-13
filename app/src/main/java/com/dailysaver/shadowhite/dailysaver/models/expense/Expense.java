@@ -1,27 +1,25 @@
-package com.dailysaver.shadowhite.dailysaver.models.budget;
+package com.dailysaver.shadowhite.dailysaver.models.expense;
 
 import java.io.Serializable;
 
-public class Budget implements Serializable {
+public class Expense implements Serializable {
     private int Id;
     private int Amount;
     private int Currency;
     private String Category;
     private int Wallet;
-    private int WalletType;
     private String Note;
     private String ExpenseDate;
 
-    public Budget() {
+    public Expense() {
     }
 
-    public Budget(int id, int amount, int currency, String category, int walletId, int walletTypeId, String note, String expenseDate) {
+    public Expense(int id, int amount, int currency, String category, int walletId, String note, String expenseDate) {
         Id = id;
         Amount = amount;
         Currency = currency;
         Category = category;
         Wallet = walletId;
-        WalletType = walletTypeId;
         Note = note;
         ExpenseDate = expenseDate;
     }
@@ -64,14 +62,6 @@ public class Budget implements Serializable {
 
     public void setWalletId(int wallet) {
         Wallet = wallet;
-    }
-
-    public int getWalletTypeId() {
-        return WalletType;
-    }
-
-    public void setWalletTypeId(int walletType) {
-        WalletType = walletType;
     }
 
     public String getNote() {
