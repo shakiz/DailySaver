@@ -18,7 +18,7 @@ import android.widget.Toast;
 import com.dailysaver.shadowhite.dailysaver.R;
 import com.dailysaver.shadowhite.dailysaver.activities.onboard.HomeActivity;
 import com.dailysaver.shadowhite.dailysaver.models.wallet.Wallet;
-import com.dailysaver.shadowhite.dailysaver.utills.SpinnerData;
+import com.dailysaver.shadowhite.dailysaver.utills.DataManager;
 import com.dailysaver.shadowhite.dailysaver.utills.Tools;
 import com.dailysaver.shadowhite.dailysaver.utills.UX;
 import com.dailysaver.shadowhite.dailysaver.utills.dbhelper.DatabaseHelper;
@@ -40,7 +40,7 @@ public class WalletActivity extends AppCompatActivity implements View.OnClickLis
     private SimpleDateFormat dateFormatter;
     private UX ux;
     private Tools tools;
-    private SpinnerData spinnerData;
+    private DataManager spinnerData;
     private DatabaseHelper databaseHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +69,7 @@ public class WalletActivity extends AppCompatActivity implements View.OnClickLis
         ux = new UX(this);
         tools = new Tools(this);
         databaseHelper = new DatabaseHelper(this);
-        spinnerData = new SpinnerData(this);
+        spinnerData = new DataManager(this);
     }
 
     private void bindUiWithComponents() {

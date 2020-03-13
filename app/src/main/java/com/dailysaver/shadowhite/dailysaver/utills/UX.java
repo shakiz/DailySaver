@@ -1,21 +1,29 @@
 package com.dailysaver.shadowhite.dailysaver.utills;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
+import android.icu.text.DateFormat;
+import android.icu.text.SimpleDateFormat;
+import android.os.Build;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import com.dailysaver.shadowhite.dailysaver.R;
+
+import java.util.Calendar;
+import java.util.Locale;
 
 public class UX {
     private Context context;
@@ -111,6 +119,28 @@ public class UX {
 
     public interface onChangeListener {
         void onChange(boolean isChecked);
+    }
+
+    //Date on click operation
+    public void getAndSetDate(final EditText editText){
+        DateFormat dateFormatter = null;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            dateFormatter = new SimpleDateFormat("dd-MMM-yyyy", Locale.US);
+        }
+        Calendar newCalendar = Calendar.getInstance();
+        final DateFormat finalDateFormatter = dateFormatter;
+        DatePickerDialog datePickerDialog = new DatePickerDialog(context, new DatePickerDialog.OnDateSetListener() {
+
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                Calendar newDate = Calendar.getInstance();
+                newDate.set(year, monthOfYear, dayOfMonth);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    editText.setText(finalDateFormatter.format(newDate.getTime()));
+                }
+            }
+
+        },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
+        datePickerDialog.show();
     }
 
 }

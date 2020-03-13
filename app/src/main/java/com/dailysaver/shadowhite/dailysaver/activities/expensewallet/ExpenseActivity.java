@@ -26,16 +26,15 @@ import com.dailysaver.shadowhite.dailysaver.activities.onboard.HomeActivity;
 import com.dailysaver.shadowhite.dailysaver.adapters.category.CategoryRecyclerAdapter;
 import com.dailysaver.shadowhite.dailysaver.R;
 import com.dailysaver.shadowhite.dailysaver.models.expense.Expense;
-import com.dailysaver.shadowhite.dailysaver.models.category.Category;
 import com.dailysaver.shadowhite.dailysaver.utills.DataLoader;
-import com.dailysaver.shadowhite.dailysaver.utills.SpinnerData;
+import com.dailysaver.shadowhite.dailysaver.utills.DataManager;
 import com.dailysaver.shadowhite.dailysaver.utills.Tools;
 import com.dailysaver.shadowhite.dailysaver.utills.UX;
 import com.dailysaver.shadowhite.dailysaver.utills.dbhelper.DatabaseHelper;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
+import es.dmoral.toasty.Toasty;
 
 public class ExpenseActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -51,7 +50,6 @@ public class ExpenseActivity extends AppCompatActivity implements View.OnClickLi
     private RecyclerView categoryRecyclerView;
     private CategoryRecyclerAdapter categoryRecyclerAdapter;
     private RecyclerView.LayoutManager layoutManager;
-    private ArrayList<Category> categoryList;
     private EditText dateView;
     private int currencyValue, walletValue;
     private String walletTitleStr;
@@ -60,7 +58,7 @@ public class ExpenseActivity extends AppCompatActivity implements View.OnClickLi
     private Tools tools;
     private DataLoader dataLoader;
     private DatabaseHelper databaseHelper;
-    private SpinnerData spinnerData;
+    private DataManager dataManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,12 +67,19 @@ public class ExpenseActivity extends AppCompatActivity implements View.OnClickLi
 
         init();
 
+        //Check for pref data
         if (getIntent().getSerializableExtra("expense") != null){
             loadRecord();
         }
 
+        //Set toolbar
         ux.setToolbar(toolbar,this,HomeActivity.class);
         tools.setAnimation(mainLayout);
+
+        //check for any wallet exist or not
+        if (databaseHelper.getAllWalletItems().size() < 0){
+            Toasty.info(this,getResources().getString(R.string.please_add_wallet));
+        }
     }
 
     private void init() {
@@ -94,13 +99,14 @@ public class ExpenseActivity extends AppCompatActivity implements View.OnClickLi
         tools = new Tools(this);
         dataLoader = new DataLoader(this);
         databaseHelper = new DatabaseHelper(this);
-        spinnerData = new SpinnerData(this);
+        dataManager = new DataManager(this);
         bindUIWIthComponents();
     }
 
     private void bindUIWIthComponents() {
-        ux.setSpinnerAdapter(spinnerData.currencyData(),currencySpinner);
-        ux.setSpinnerAdapter(spinnerData.getWalletTitle(),walletSpinner);
+        //set spinner data
+        ux.setSpinnerAdapter(dataManager.currencyData(),currencySpinner);
+        ux.setSpinnerAdapter(dataManager.getWalletTitle(),walletSpinner);
 
         ux.onSpinnerChange(currencySpinner, new UX.onSpinnerChangeListener() {
             @Override
@@ -118,7 +124,10 @@ public class ExpenseActivity extends AppCompatActivity implements View.OnClickLi
         });
 
         dateView.setOnClickListener(this);
+
+        //Category on click for selecting on click
         categorySelection.setOnClickListener(this);
+
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -128,6 +137,7 @@ public class ExpenseActivity extends AppCompatActivity implements View.OnClickLi
 
     }
 
+    //Save expense into DB
     private void saveExpense(){
         if (ux.validation(new int[]{R.id.Amount,R.id.Note,R.id.ExpenseDate},mainLayout)){
             databaseHelper.addNewExpense(new Expense(1,Integer.parseInt(Amount.getText().toString()),
@@ -137,6 +147,7 @@ public class ExpenseActivity extends AppCompatActivity implements View.OnClickLi
         }
     }
 
+    //Load pref data
     private void loadRecord() {
         Expense expense = (Expense) getIntent().getSerializableExtra("expense");
         categoryTitle.setText(expense.getCategory());
@@ -149,6 +160,7 @@ public class ExpenseActivity extends AppCompatActivity implements View.OnClickLi
         add.setImageResource(R.drawable.ic_action_done);
     }
 
+    //Set category icon
     private void setTypeIcon(ImageView icon, String type) {
         if (type.equals("Food")) icon.setImageResource(R.drawable.ic_food_icon);
         else if (type.equals("Transport")) icon.setImageResource(R.drawable.ic_transport);
@@ -162,25 +174,7 @@ public class ExpenseActivity extends AppCompatActivity implements View.OnClickLi
         else if (type.equals("Gift")) icon.setImageResource(R.drawable.ic_gift);
     }
 
-    private void getAndSetDate(final EditText editText){
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            dateFormatter = new SimpleDateFormat("dd-MMM-yyyy", Locale.US);
-        }
-        Calendar newCalendar = Calendar.getInstance();
-        DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
-
-            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                Calendar newDate = Calendar.getInstance();
-                newDate.set(year, monthOfYear, dayOfMonth);
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    editText.setText(dateFormatter.format(newDate.getTime()));
-                }
-            }
-
-        },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
-        datePickerDialog.show();
-    }
-
+    //Show dialog
     private void showDialog() {
         itemDialog = new Dialog(this);
         itemDialog.setContentView(R.layout.category_list_layout);
@@ -192,39 +186,25 @@ public class ExpenseActivity extends AppCompatActivity implements View.OnClickLi
         itemDialog.show();
     }
 
+    //Category adapter
     private void setCategoryAdapter() {
-        categoryRecyclerAdapter = new CategoryRecyclerAdapter(this,setData(),itemDialog,categoryTitle,categoryIcon);
+        categoryRecyclerAdapter = new CategoryRecyclerAdapter(this, dataManager.setCategoryDataData(),itemDialog,categoryTitle,categoryIcon);
         layoutManager = new GridLayoutManager(this,2);
         categoryRecyclerView.setLayoutManager(layoutManager);
         categoryRecyclerView.setAdapter(categoryRecyclerAdapter);
         categoryRecyclerAdapter.notifyDataSetChanged();
     }
 
-    private ArrayList<Category> setData() {
-        categoryList.add(new Category("Food",R.drawable.ic_food_icon));
-        categoryList.add(new Category("Transport",R.drawable.ic_transport));
-        categoryList.add(new Category("Electricity",R.drawable.ic_electricity));
-        categoryList.add(new Category("Education",R.drawable.ic_education));
-        categoryList.add(new Category("Shopping",R.drawable.ic_cshopping));
-        categoryList.add(new Category("Entertainment",R.drawable.ic_entertainment));
-        categoryList.add(new Category("Family",R.drawable.ic_family));
-        categoryList.add(new Category("Friends",R.drawable.ic_friends));
-        categoryList.add(new Category("Work",R.drawable.ic_work));
-        categoryList.add(new Category("Gift",R.drawable.ic_gift));
-        return categoryList;
-    }
-
     private void customViewInit(Dialog itemDialog) {
         dialogLinearLayout = itemDialog.findViewById(R.id.dialogLinearLayout);
         categoryRecyclerView = itemDialog.findViewById(R.id.categoryRecyclerView);
-        categoryList = new ArrayList<>();
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.ExpenseDate:
-                getAndSetDate(dateView);
+                ux.getAndSetDate(dateView);
                 break;
             case R.id.CategorySelector:
                 showDialog();
