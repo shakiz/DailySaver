@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import com.dailysaver.shadowhite.dailysaver.R;
 import com.dailysaver.shadowhite.dailysaver.models.wallet.Wallet;
+import com.dailysaver.shadowhite.dailysaver.utills.dbhelper.DatabaseHelper;
 import com.github.lzyzsd.circleprogress.ArcProgress;
 import com.smarteist.autoimageslider.SliderViewAdapter;
 import java.util.ArrayList;
@@ -16,11 +17,13 @@ public class WalletDetailsSliderAdapter extends SliderViewAdapter<WalletDetailsS
     private ArrayList<Wallet> cardItemList;
     private Context context;
     private onItemClick onItemClick;
+    private DatabaseHelper databaseHelper;
 
     public WalletDetailsSliderAdapter(ArrayList<Wallet> cardItemList, Context context,onItemClick onItemClick) {
         this.cardItemList = cardItemList;
         this.context = context;
         this.onItemClick = onItemClick;
+        databaseHelper = new DatabaseHelper(context);
     }
 
     public interface onItemClick{
@@ -42,9 +45,9 @@ public class WalletDetailsSliderAdapter extends SliderViewAdapter<WalletDetailsS
         viewHolder.Amount.setText(""+itemModel.getAmount());
         viewHolder.Type.setText(""+itemModel.getWalletType());
         viewHolder.ExpiresOn.setText(itemModel.getExpiresOn());
-        //TODO here totalCost is set to 100 by default , later we need to calculate total cost
-        setProgressData(itemModel.getAmount(),100,viewHolder.RemainingBalance);
-        viewHolder.TotalCost.setText(""+100);
+        int walletId = databaseHelper.getWalletId(itemModel.getTitle());
+        setProgressData(itemModel.getAmount(),databaseHelper.singleWalletTotalCost(walletId),viewHolder.RemainingBalance);
+        viewHolder.TotalCost.setText(""+databaseHelper.singleWalletTotalCost(walletId));
 
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

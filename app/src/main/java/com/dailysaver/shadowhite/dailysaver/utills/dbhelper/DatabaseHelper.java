@@ -16,6 +16,7 @@ import static com.dailysaver.shadowhite.dailysaver.utills.dbhelper.DBColumns.COL
 import static com.dailysaver.shadowhite.dailysaver.utills.dbhelper.DBColumns.COLUMN_EXPENSE_ID;
 import static com.dailysaver.shadowhite.dailysaver.utills.dbhelper.DBColumns.COLUMN_EXPENSE_NOTE;
 import static com.dailysaver.shadowhite.dailysaver.utills.dbhelper.DBColumns.COLUMN_EXPENSE_WALLET;
+import static com.dailysaver.shadowhite.dailysaver.utills.dbhelper.DBColumns.COLUMN_EXPENSE_WALLET_ID;
 import static com.dailysaver.shadowhite.dailysaver.utills.dbhelper.DBColumns.COLUMN_WALLET_AMOUNT;
 import static com.dailysaver.shadowhite.dailysaver.utills.dbhelper.DBColumns.COLUMN_WALLET_CURRENCY;
 import static com.dailysaver.shadowhite.dailysaver.utills.dbhelper.DBColumns.COLUMN_WALLET_EXPIRES_ON;
@@ -33,8 +34,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static String CREATE_EXPENSE_TABLE = "CREATE TABLE " + EXPENSE_TABLE + "("
             + COLUMN_EXPENSE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + COLUMN_EXPENSE_AMOUNT + " INTEGER,"
-            + COLUMN_EXPENSE_CURRENCY + " INTEGER," + COLUMN_EXPENSE_CATEGORY + " TEXT," + COLUMN_EXPENSE_NOTE + " TEXT,"
-            + COLUMN_EXPENSE_WALLET + " INTEGER," + COLUMN_EXPENSE_EXPENSE_DATE + " TEXT" + ")";
+            + COLUMN_EXPENSE_CURRENCY + " INTEGER," + COLUMN_EXPENSE_CATEGORY + " TEXT," + COLUMN_EXPENSE_NOTE + " TEXT,"+ COLUMN_EXPENSE_WALLET_ID + " INTEGER,"
+            + COLUMN_EXPENSE_WALLET + " TEXT," + COLUMN_EXPENSE_EXPENSE_DATE + " TEXT" + ")";
 
     private static String CREATE_WALLET_TABLE = "CREATE TABLE " + WALLET_TABLE + "("
             + COLUMN_WALLET_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + COLUMN_WALLET_AMOUNT + " REAL,"
@@ -73,7 +74,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_EXPENSE_AMOUNT, expense.getAmount());
         values.put(COLUMN_EXPENSE_CURRENCY, expense.getCurrency());
         values.put(COLUMN_EXPENSE_CATEGORY, expense.getCategory());
-        values.put(COLUMN_EXPENSE_WALLET, expense.getWallet());
+        values.put(COLUMN_EXPENSE_WALLET, expense.getWalletTitle());
+        values.put(COLUMN_EXPENSE_WALLET_ID, expense.getWalletId());
         values.put(COLUMN_EXPENSE_NOTE, expense.getNote());
         values.put(COLUMN_EXPENSE_EXPENSE_DATE, expense.getExpenseDate());
 
@@ -92,6 +94,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 COLUMN_EXPENSE_CURRENCY,
                 COLUMN_EXPENSE_NOTE,
                 COLUMN_EXPENSE_WALLET,
+                COLUMN_EXPENSE_WALLET_ID
         };
         // sorting orders
         String sortOrder =
@@ -118,7 +121,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     expense.setExpenseDate((cursor.getString(cursor.getColumnIndex(COLUMN_EXPENSE_EXPENSE_DATE))));
                     expense.setCurrency(cursor.getInt(cursor.getColumnIndex(COLUMN_EXPENSE_CURRENCY)));
                     expense.setNote(cursor.getString(cursor.getColumnIndex(COLUMN_EXPENSE_NOTE)));
-                    expense.setWalletId(cursor.getInt(cursor.getColumnIndex(COLUMN_EXPENSE_WALLET)));
+                    expense.setWalletTitle(cursor.getString(cursor.getColumnIndex(COLUMN_EXPENSE_WALLET)));
+                    expense.setWalletId(cursor.getInt(cursor.getColumnIndex(COLUMN_EXPENSE_WALLET_ID)));
                     expenseList.add(expense);
                 } while (cursor.moveToNext());
             }
@@ -201,15 +205,74 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Cursor cursor = sqLiteDatabase.query(WALLET_TABLE, columns ,null , null , null , null , null);
         int counter = 0;
         if (cursor != null){
-            walletTitle = new String[cursor.getCount()];
+            if (cursor.getCount() > 0){
+                walletTitle = new String[cursor.getCount()+1];
+                if (cursor.moveToFirst()){
+                    walletTitle[0] = "Select Wallet";
+                    do{
+                        counter++;
+                        walletTitle[counter] = cursor.getString(0);
+                    }while (cursor.moveToNext());
+                }
+            }
+            else{
+                walletTitle = new String[1];
+                walletTitle[0] = "No Data";
+            }
+        }
+        cursor.close();
+        sqLiteDatabase.close();
+        return walletTitle;
+    }
+
+    public int singleWalletTotalCost(int walletId){
+        int totalCost = 0;
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        String columns[] = {
+                COLUMN_EXPENSE_ID,
+                COLUMN_EXPENSE_AMOUNT
+        };
+        String where = "" + COLUMN_EXPENSE_WALLET_ID + " = "+ walletId +"";
+        Cursor cursor = sqLiteDatabase.query(EXPENSE_TABLE, columns, where, null, null, null, null);
+
+        if (cursor != null){
             if (cursor.moveToFirst()){
-                do{
-                    walletTitle[counter] = cursor.getString(0);
-                    counter++;
+                do {
+                    totalCost += cursor.getInt(1);
                 }while (cursor.moveToNext());
             }
         }
+        else{
+            totalCost = 0;
+        }
 
-        return walletTitle;
+        cursor.close();
+        sqLiteDatabase.close();
+        return totalCost;
+    }
+
+    public int getWalletId(String title) {
+        int walletId = 0;
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+
+        String columns[] = {
+                COLUMN_EXPENSE_WALLET_ID
+        };
+        String where = "" + COLUMN_EXPENSE_WALLET + " = '"+ title +"'";
+        Cursor cursor = sqLiteDatabase.query(EXPENSE_TABLE, columns, where, null, null, null, null);
+
+        if (cursor != null){
+            if (cursor.moveToFirst()){
+                do {
+                    walletId = cursor.getInt(0);
+                }while (cursor.moveToNext());
+            }
+        }
+        else{
+            walletId = 0;
+        }
+
+        sqLiteDatabase.close();
+        return walletId;
     }
 }

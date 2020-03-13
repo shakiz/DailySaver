@@ -7,21 +7,23 @@ public class Expense implements Serializable {
     private int Amount;
     private int Currency;
     private String Category;
-    private int Wallet;
+    private String WalletTitle;
+    private int WalletId;
     private String Note;
     private String ExpenseDate;
 
     public Expense() {
     }
 
-    public Expense(int id, int amount, int currency, String category, int walletId, String note, String expenseDate) {
-        Id = id;
-        Amount = amount;
-        Currency = currency;
-        Category = category;
-        Wallet = walletId;
-        Note = note;
-        ExpenseDate = expenseDate;
+    public Expense(int id, int amount, int currency, String category, String walletTitle,int walletId, String note, String expenseDate) {
+        this.Id = id;
+        this.Amount = amount;
+        this.Currency = currency;
+        this.Category = category;
+        this.WalletTitle = walletTitle;
+        this.WalletId = walletId;
+        this.Note = note;
+        this.ExpenseDate = expenseDate;
     }
 
     public int getId() {
@@ -56,12 +58,20 @@ public class Expense implements Serializable {
         Category = category;
     }
 
-    public int getWallet() {
-        return Wallet;
+    public String getWalletTitle() {
+        return WalletTitle;
     }
 
-    public void setWalletId(int wallet) {
-        Wallet = wallet;
+    public void setWalletTitle(String walletTitle) {
+        WalletTitle = walletTitle;
+    }
+
+    public int getWalletId() {
+        return WalletId;
+    }
+
+    public void setWalletId(int walletId) {
+        WalletId = walletId;
     }
 
     public String getNote() {

@@ -53,7 +53,8 @@ public class ExpenseActivity extends AppCompatActivity implements View.OnClickLi
     private RecyclerView.LayoutManager layoutManager;
     private ArrayList<Category> categoryList;
     private EditText dateView;
-    private int currencyValue, walletValue, walletTypeValue;
+    private int currencyValue, walletValue;
+    private String walletTitleStr;
     private SimpleDateFormat dateFormatter;
     private UX ux;
     private Tools tools;
@@ -112,6 +113,7 @@ public class ExpenseActivity extends AppCompatActivity implements View.OnClickLi
             @Override
             public void onChange(AdapterView<?> parent, View view, int position, long id) {
                 walletValue = position;
+                walletTitleStr = parent.getAdapter().getItem(position).toString();
             }
         });
 
@@ -129,7 +131,7 @@ public class ExpenseActivity extends AppCompatActivity implements View.OnClickLi
     private void saveExpense(){
         if (ux.validation(new int[]{R.id.Amount,R.id.Note,R.id.ExpenseDate},mainLayout)){
             databaseHelper.addNewExpense(new Expense(1,Integer.parseInt(Amount.getText().toString()),
-                    currencyValue,categoryTitle.getText().toString(),walletTypeValue,Note.getText().toString(),ExpenseDate.getText().toString()));
+                    currencyValue,categoryTitle.getText().toString(), walletTitleStr, walletValue,Note.getText().toString(),ExpenseDate.getText().toString()));
             Toast.makeText(this,getResources().getString(R.string.data_saved_successfully),Toast.LENGTH_LONG).show();
             startActivity(new Intent(ExpenseActivity.this,HomeActivity.class));
         }
@@ -143,7 +145,7 @@ public class ExpenseActivity extends AppCompatActivity implements View.OnClickLi
         Note.setText(expense.getNote());
         ExpenseDate.setText(expense.getExpenseDate());
         currencySpinner.setSelection(expense.getCurrency());
-        walletSpinner.setSelection(expense.getWallet());
+        walletSpinner.setSelection(expense.getWalletId());
         add.setImageResource(R.drawable.ic_action_done);
     }
 
