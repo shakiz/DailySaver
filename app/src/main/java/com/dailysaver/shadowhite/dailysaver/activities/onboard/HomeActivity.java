@@ -156,8 +156,8 @@ public class HomeActivity extends AppCompatActivity {
         else {
             sliderView.setSliderAdapter(new WalletDetailsSliderAdapter(walletList, this, new WalletDetailsSliderAdapter.onItemClick() {
                 @Override
-                public void itemClick(Wallet wallet) {
-                    startActivity(new Intent(HomeActivity.this, WalletDetailsActivity.class));
+                public void itemClick(Wallet wallet, int id) {
+                    startActivity(new Intent(HomeActivity.this, WalletDetailsActivity.class).putExtra("id",id));
                 }
             }));
             sliderView.setIndicatorAnimation(IndicatorAnimations.WORM);

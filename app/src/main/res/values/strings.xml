@@ -43,4 +43,12 @@
     <string name="no_wallet_data">No wallet data available</string>
     <string name="no_budget_data">No expense data available</string>
     <string name="please_add_wallet">Please add wallet first /n You dont have any wallet</string>
+    <string name="hello">Hello!!</string>
+    <string name="current_balance">Current Balance</string>
+    <string name="amount_dummy">18000</string>
+    <string name="cost">Cost</string>
+    <string name="cost_hint">2000</string>
+    <string name="balance">Balance</string>
+    <string name="balance_hint">20000</string>
+    <string name="expiry_date_hint">Expires on Sep 2020</string>
 </resources>

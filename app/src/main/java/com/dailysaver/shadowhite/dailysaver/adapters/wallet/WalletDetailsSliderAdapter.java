@@ -27,7 +27,7 @@ public class WalletDetailsSliderAdapter extends SliderViewAdapter<WalletDetailsS
     }
 
     public interface onItemClick{
-        void itemClick(Wallet wallet);
+        void itemClick(Wallet wallet, int id);
     }
 
     @Override
@@ -45,14 +45,14 @@ public class WalletDetailsSliderAdapter extends SliderViewAdapter<WalletDetailsS
         viewHolder.Amount.setText(""+itemModel.getAmount());
         viewHolder.Type.setText(""+itemModel.getWalletType());
         viewHolder.ExpiresOn.setText(itemModel.getExpiresOn());
-        int walletId = databaseHelper.getWalletId(itemModel.getTitle());
+        final int walletId = databaseHelper.getWalletId(itemModel.getTitle());
         setProgressData(itemModel.getAmount(),databaseHelper.singleWalletTotalCost(walletId),viewHolder.RemainingBalance);
         viewHolder.TotalCost.setText(""+databaseHelper.singleWalletTotalCost(walletId));
 
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onItemClick.itemClick(itemModel);
+                onItemClick.itemClick(itemModel, walletId);
             }
         });
     }
