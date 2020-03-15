@@ -131,7 +131,7 @@ public class HomeActivity extends AppCompatActivity {
 //                }
 //            }
 //        });
-        setBudgetAdapter(databaseHelper.getAllExpenseItems());
+        setBudgetAdapter(databaseHelper.getAllExpenseItems(0));
     }
 
     private void setCardSlider() {

@@ -69,7 +69,7 @@ public class DataLoader {
 
         @Override
         protected ArrayList<Expense> doInBackground(String... strings) {
-            return databaseHelper.getAllExpenseItems();
+            return databaseHelper.getAllExpenseItems(0);
         }
 
         @Override

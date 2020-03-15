@@ -84,7 +84,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-    public ArrayList<Expense> getAllExpenseItems() {
+    public ArrayList<Expense> getAllExpenseItems(int walletId) {
         // array of columns to fetch
         String[] columns = {
                 COLUMN_EXPENSE_ID,
@@ -102,15 +102,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ArrayList<Expense> expenseList = new ArrayList<Expense>();
         SQLiteDatabase db = this.getReadableDatabase();
 
-        Cursor cursor = db.query(EXPENSE_TABLE, //Table to query
-                columns,    //columns to return
-                null,        //columns for the WHERE clause
-                null,        //The values for the WHERE clause
-                null,       //group the rows
-                null,       //filter by row groups
-                sortOrder); //The sort order
+        Cursor cursor = null;
 
-         if (cursor != null){
+        if (walletId == 0) {
+            cursor = db.query(EXPENSE_TABLE, columns, null, null, null, null, sortOrder);
+        }
+        else {
+            String where = "" + COLUMN_EXPENSE_WALLET_ID + " = "+ walletId +"";
+            cursor = db.query(EXPENSE_TABLE, columns, where, null, null, null, sortOrder);
+        }
+
+        if (cursor != null){
             if (cursor.moveToFirst()) {
                 do {
                     Expense expense = new Expense();

@@ -32,6 +32,7 @@ public class WalletDetailsActivity extends AppCompatActivity {
     private RelativeLayout mainLayout;
     private Toolbar toolbar;
     private UX ux;
+    private int walletId = 0;
     private Tools tools;
     private RecyclerView recyclerView;
     private MonthlyExpenseAdapter monthlyExpenseAdapter;
@@ -45,11 +46,19 @@ public class WalletDetailsActivity extends AppCompatActivity {
 
         init();
 
+        getId();
+
         ux.setToolbar(toolbar,this,HomeActivity.class);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_left_arrow_white);
         tools.setAnimation(mainLayout);
 
         bindUIWithComponents();
+    }
+
+    private void getId() {
+        if (getIntent().getIntExtra("id",0) != 0){
+            walletId = getIntent().getIntExtra("id",0);
+        }
     }
 
     private void init() {
@@ -69,7 +78,7 @@ public class WalletDetailsActivity extends AppCompatActivity {
         typeWriterView.animateText("18000");
         typeWriterView.setDelay(0);
 
-        setAdapter(databaseHelper.getAllExpenseItems());
+        setAdapter(databaseHelper.getAllExpenseItems(walletId));
     }
 
     private void setAdapter(ArrayList<Expense> allExpenseItems) {
