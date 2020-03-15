@@ -50,7 +50,9 @@ public class WalletActivity extends AppCompatActivity implements View.OnClickLis
         init();
 
         ux.setToolbar(toolbar,this,HomeActivity.class);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_left_arrow_grey);
         tools.setAnimation(mainLayout);
+
         bindUiWithComponents();
     }
 

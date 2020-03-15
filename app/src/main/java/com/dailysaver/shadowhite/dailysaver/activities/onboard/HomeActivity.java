@@ -59,13 +59,13 @@ public class HomeActivity extends AppCompatActivity {
         init();
 
         setSupportActionBar(toolbar);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_left_arrow_grey);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 exitApp();
             }
         });
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_left_arrow);
 
         tools.setAnimation(mainLayout);
         bindUiWithComponents();

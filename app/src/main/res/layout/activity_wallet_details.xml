@@ -10,16 +10,19 @@
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="48dp"
+        android:elevation="0dp"
+        app:elevation="0dp"
         android:id="@+id/app_bar">
 
         <androidx.appcompat.widget.Toolbar
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/tool_bar"
+            android:background="@color/colorPrimary"
             app:navigationIcon="?attr/homeAsUpIndicator"
             style="@style/TextAppearance.Widget.Event.Toolbar.Title"
             app:title="@string/wallet_details"
-            app:titleTextColor="@color/md_white_1000">
+            app:titleTextColor="@color/md_grey_800">
 
         </androidx.appcompat.widget.Toolbar>
 
@@ -43,7 +46,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:paddingTop="8dp"
-                android:background="@color/md_grey_500"
+                android:background="@color/colorPrimary"
                 android:paddingBottom="48dp">
 
                 <com.github.mikephil.charting.charts.PieChart
@@ -57,7 +60,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/current_balance"
                     android:textColor="@color/md_white_1000"
-                    android:textSize="24sp"
+                    android:textSize="20sp"
                     android:gravity="center"
                     android:layout_marginLeft="8dp"
                     android:layout_marginRight="8dp"/>
@@ -67,7 +70,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/md_white_1000"
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     android:layout_marginTop="8dp"
                     android:layout_marginLeft="8dp"
                     android:layout_marginRight="8dp"
@@ -141,7 +144,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/expiry_date_hint"
                     android:textColor="@color/md_white_1000"
-                    android:textSize="24sp"
+                    android:textSize="20sp"
                     android:gravity="center"
                     android:layout_marginLeft="8dp"
                     android:layout_marginTop="8dp"

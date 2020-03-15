@@ -43,7 +43,7 @@ public class UX {
                 context.startActivity(new Intent(from, to));
             }
         });
-        ((AppCompatActivity) context).getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_left_arrow);
+//        ((AppCompatActivity) context).getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_left_arrow);
     }
 
     public void getLoadingView(){

@@ -74,6 +74,7 @@ public class ExpenseActivity extends AppCompatActivity implements View.OnClickLi
 
         //Set toolbar
         ux.setToolbar(toolbar,this,HomeActivity.class);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_left_arrow_grey);
         tools.setAnimation(mainLayout);
 
         //check for any wallet exist or not
