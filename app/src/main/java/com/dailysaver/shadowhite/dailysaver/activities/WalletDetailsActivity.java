@@ -4,19 +4,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import com.dailysaver.shadowhite.dailysaver.R;
 import com.dailysaver.shadowhite.dailysaver.activities.expensewallet.ExpenseActivity;
 import com.dailysaver.shadowhite.dailysaver.activities.onboard.HomeActivity;
 import com.dailysaver.shadowhite.dailysaver.adapters.monthlyexpense.MonthlyExpenseAdapter;
 import com.dailysaver.shadowhite.dailysaver.models.expense.Expense;
+import com.dailysaver.shadowhite.dailysaver.models.wallet.Wallet;
 import com.dailysaver.shadowhite.dailysaver.utills.Tools;
 import com.dailysaver.shadowhite.dailysaver.utills.UX;
 import com.dailysaver.shadowhite.dailysaver.utills.dbhelper.DatabaseHelper;
@@ -30,6 +29,8 @@ import in.codeshuffle.typewriterview.TypeWriterView;
 
 public class WalletDetailsActivity extends AppCompatActivity {
     private RelativeLayout mainLayout;
+    private TextView TotalCost, Amount, ExpiresOn;
+    private TypeWriterView CurrentBalance;
     private Toolbar toolbar;
     private UX ux;
     private int walletId = 0;
@@ -48,11 +49,25 @@ public class WalletDetailsActivity extends AppCompatActivity {
 
         getId();
 
+        if (getIntent().getSerializableExtra("wallet") != null){
+            loadRecord();
+        }
+
         ux.setToolbar(toolbar,this,HomeActivity.class);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_left_arrow_white);
         tools.setAnimation(mainLayout);
 
         bindUIWithComponents();
+    }
+
+    private void loadRecord() {
+        Wallet wallet = (Wallet) getIntent().getSerializableExtra("wallet");
+        Amount.setText(""+wallet.getAmount());
+        TotalCost.setText(""+databaseHelper.singleWalletTotalCost(walletId));
+        CurrentBalance = findViewById(R.id.CurrentBalance);
+        CurrentBalance.animateText(""+(wallet.getAmount()-databaseHelper.singleWalletTotalCost(walletId)));
+        CurrentBalance.setDelay(0);
+        ExpiresOn.setText(wallet.getExpiresOn());
     }
 
     private void getId() {
@@ -64,6 +79,9 @@ public class WalletDetailsActivity extends AppCompatActivity {
     private void init() {
         recyclerView = findViewById(R.id.mRecyclerView);
         noBudgetData = findViewById(R.id.NoDataBudget);
+        Amount = findViewById(R.id.Amount);
+        TotalCost = findViewById(R.id.TotalCost);
+        ExpiresOn = findViewById(R.id.ExpiresOn);
         toolbar = findViewById(R.id.tool_bar);
         mainLayout = findViewById(R.id.home_layout);
         ux = new UX(this);
@@ -73,11 +91,6 @@ public class WalletDetailsActivity extends AppCompatActivity {
 
     private void bindUIWithComponents() {
         //getPieChart();
-
-        final TypeWriterView typeWriterView = findViewById(R.id.Amount);
-        typeWriterView.animateText("18000");
-        typeWriterView.setDelay(0);
-
         setAdapter(databaseHelper.getAllExpenseItems(walletId));
     }
 

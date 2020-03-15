@@ -51,7 +51,7 @@ public class ExpenseActivity extends AppCompatActivity implements View.OnClickLi
     private CategoryRecyclerAdapter categoryRecyclerAdapter;
     private RecyclerView.LayoutManager layoutManager;
     private EditText dateView;
-    private int currencyValue, walletValue;
+    private int currencyValue = 0, walletValue = 0;
     private String walletTitleStr;
     private SimpleDateFormat dateFormatter;
     private UX ux;
@@ -140,11 +140,21 @@ public class ExpenseActivity extends AppCompatActivity implements View.OnClickLi
 
     //Save expense into DB
     private void saveExpense(){
-        if (ux.validation(new int[]{R.id.Amount,R.id.Note,R.id.ExpenseDate},mainLayout)){
-            databaseHelper.addNewExpense(new Expense(1,Integer.parseInt(Amount.getText().toString()),
-                    currencyValue,categoryTitle.getText().toString(), walletTitleStr, walletValue,Note.getText().toString(),ExpenseDate.getText().toString()));
-            Toast.makeText(this,getResources().getString(R.string.data_saved_successfully),Toast.LENGTH_LONG).show();
-            startActivity(new Intent(ExpenseActivity.this,HomeActivity.class));
+        if (ux.validation(new int[]{R.id.Amount,R.id.Note},mainLayout)){
+            if (currencyValue!=0) {
+                if (walletValue !=0) {
+                    databaseHelper.addNewExpense(new Expense(1,Integer.parseInt(Amount.getText().toString()),
+                            currencyValue,categoryTitle.getText().toString(), walletTitleStr, walletValue,Note.getText().toString(),ExpenseDate.getText().toString()));
+                    Toast.makeText(this,getResources().getString(R.string.data_saved_successfully),Toast.LENGTH_LONG).show();
+                    startActivity(new Intent(ExpenseActivity.this,HomeActivity.class));
+                }
+                else {
+                    Toasty.info(this,getResources().getString(R.string.check_wallet));
+                }
+            }
+            else {
+                Toasty.info(this,getResources().getString(R.string.check_currency));
+            }
         }
     }
 

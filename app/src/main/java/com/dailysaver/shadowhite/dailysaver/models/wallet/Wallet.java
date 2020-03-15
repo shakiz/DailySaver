@@ -1,6 +1,8 @@
 package com.dailysaver.shadowhite.dailysaver.models.wallet;
 
-public class Wallet {
+import java.io.Serializable;
+
+public class Wallet implements Serializable {
     private int Id;
     private int Amount;
     private String Title;

@@ -32,8 +32,7 @@ public class WalletDetailsSliderAdapter extends SliderViewAdapter<WalletDetailsS
 
     @Override
     public SliderAdapterVH onCreateViewHolder(ViewGroup parent) {
-        View inflate = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_layout_wallet_dashboard
-                , null);
+        View inflate = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_layout_wallet_dashboard, null);
         return new SliderAdapterVH(inflate);
     }
 
@@ -60,8 +59,8 @@ public class WalletDetailsSliderAdapter extends SliderViewAdapter<WalletDetailsS
     private void setProgressData(int totalAmount, int totalCost, ArcProgress RemainingBalanceArc) {
         RemainingBalanceArc.setMax(totalAmount);
         RemainingBalanceArc.setSuffixText("");
-        RemainingBalanceArc.setFinishedStrokeColor(context.getResources().getColor(R.color.md_red_400));
-        RemainingBalanceArc.setUnfinishedStrokeColor(context.getResources().getColor(R.color.md_green_400));
+        RemainingBalanceArc.setFinishedStrokeColor(context.getResources().getColor(R.color.md_green_400));
+        RemainingBalanceArc.setUnfinishedStrokeColor(context.getResources().getColor(R.color.md_red_400));
         RemainingBalanceArc.setTextSize(40);
         RemainingBalanceArc.setBottomText(null);
         RemainingBalanceArc.setTextColor(context.getResources().getColor(R.color.md_grey_600));

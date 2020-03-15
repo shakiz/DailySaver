@@ -51,4 +51,6 @@
     <string name="balance">Balance</string>
     <string name="balance_hint">20000</string>
     <string name="expiry_date_hint">Expires on Sep 2020</string>
+    <string name="check_currency">Please select currency</string>
+    <string name="check_wallet">Please select wallet</string>
 </resources>
