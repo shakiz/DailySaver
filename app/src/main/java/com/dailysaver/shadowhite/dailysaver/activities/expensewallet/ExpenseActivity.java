@@ -1,16 +1,12 @@
 package com.dailysaver.shadowhite.dailysaver.activities.expensewallet;
 
-import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
-import android.icu.text.SimpleDateFormat;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -32,8 +28,6 @@ import com.dailysaver.shadowhite.dailysaver.utills.Tools;
 import com.dailysaver.shadowhite.dailysaver.utills.UX;
 import com.dailysaver.shadowhite.dailysaver.utills.dbhelper.DatabaseHelper;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import java.util.Calendar;
-import java.util.Locale;
 import es.dmoral.toasty.Toasty;
 
 public class ExpenseActivity extends AppCompatActivity implements View.OnClickListener {
@@ -53,7 +47,6 @@ public class ExpenseActivity extends AppCompatActivity implements View.OnClickLi
     private EditText dateView;
     private int currencyValue = 0, walletValue = 0;
     private String walletTitleStr;
-    private SimpleDateFormat dateFormatter;
     private UX ux;
     private Tools tools;
     private DataLoader dataLoader;
@@ -138,23 +131,16 @@ public class ExpenseActivity extends AppCompatActivity implements View.OnClickLi
 
     }
 
-    //Save expense into DB
+    //Save expense into DB with validation
     private void saveExpense(){
-        if (ux.validation(new int[]{R.id.Amount,R.id.Note},mainLayout)){
-            if (currencyValue!=0) {
-                if (walletValue !=0) {
-                    databaseHelper.addNewExpense(new Expense(1,Integer.parseInt(Amount.getText().toString()),
-                            currencyValue,categoryTitle.getText().toString(), walletTitleStr, walletValue,Note.getText().toString(),ExpenseDate.getText().toString()));
-                    Toast.makeText(this,getResources().getString(R.string.data_saved_successfully),Toast.LENGTH_LONG).show();
-                    startActivity(new Intent(ExpenseActivity.this,HomeActivity.class));
-                }
-                else {
-                    Toasty.info(this,getResources().getString(R.string.check_wallet));
-                }
-            }
-            else {
-                Toasty.info(this,getResources().getString(R.string.check_currency));
-            }
+        if (ux.validation(new int[]{R.id.Amount, R.id.Note, R.id.ExpenseDate, R.id.Currency, R.id.Wallet},mainLayout)){
+            databaseHelper.addNewExpense(new Expense(1,Integer.parseInt(Amount.getText().toString()),
+                    currencyValue,categoryTitle.getText().toString(), walletTitleStr, walletValue,Note.getText().toString(),ExpenseDate.getText().toString()));
+            Toast.makeText(this,getResources().getString(R.string.data_saved_successfully),Toast.LENGTH_LONG).show();
+            startActivity(new Intent(ExpenseActivity.this,HomeActivity.class));
+        }
+        else {
+            Toasty.info(this, getResources().getString(R.string.check_your_data));
         }
     }
 

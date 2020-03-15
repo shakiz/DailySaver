@@ -60,14 +60,27 @@ public class UX {
     public boolean validation(int[] resIds,View view){
         boolean valid = false;
         for (int resId : resIds){
-            EditText editText = view.findViewById(resId);
-            if (editText.getText().toString().isEmpty()){
-                editText.setError(context.getResources().getString(R.string.invalid_input));
-                editText.requestFocus();
-                valid = false;
+            View child = view.findViewById(resId);
+
+            if (child instanceof EditText){
+                EditText editText = (EditText) child;
+                if (editText.getText().toString().isEmpty()){
+                    editText.setError(context.getResources().getString(R.string.invalid_input));
+                    editText.requestFocus();
+                    valid = false;
+                }
+                else{
+                    valid = true;
+                }
             }
-            else{
-                valid = true;
+            else if (child instanceof Spinner){
+                Spinner spinner = (Spinner) child;
+                if (spinner.getSelectedItemPosition() == 0) {
+                    valid = false;
+                }
+                else {
+                    valid = true;
+                }
             }
         }
         return valid;
