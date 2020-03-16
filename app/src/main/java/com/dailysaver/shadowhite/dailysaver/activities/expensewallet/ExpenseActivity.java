@@ -19,6 +19,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.dailysaver.shadowhite.dailysaver.activities.onboard.HomeActivity;
+import com.dailysaver.shadowhite.dailysaver.activities.wallet.WalletActivity;
 import com.dailysaver.shadowhite.dailysaver.adapters.category.CategoryRecyclerAdapter;
 import com.dailysaver.shadowhite.dailysaver.R;
 import com.dailysaver.shadowhite.dailysaver.models.expense.Expense;
@@ -28,7 +29,6 @@ import com.dailysaver.shadowhite.dailysaver.utills.Tools;
 import com.dailysaver.shadowhite.dailysaver.utills.UX;
 import com.dailysaver.shadowhite.dailysaver.utills.dbhelper.DatabaseHelper;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import es.dmoral.toasty.Toasty;
 
 public class ExpenseActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -72,8 +72,9 @@ public class ExpenseActivity extends AppCompatActivity implements View.OnClickLi
         tools.setAnimation(mainLayout);
 
         //check for any wallet exist or not
-        if (databaseHelper.getAllWalletItems().size() < 0){
-            Toasty.info(this,getResources().getString(R.string.please_add_wallet));
+        if (databaseHelper.getAllWalletItems().size() == 0){
+            Toast.makeText(this,getResources().getString(R.string.please_add_wallet),Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(ExpenseActivity.this, WalletActivity.class));
         }
     }
 
@@ -140,7 +141,7 @@ public class ExpenseActivity extends AppCompatActivity implements View.OnClickLi
     //Save expense into DB with validation
     private void saveExpense(){
         if (ux.validation(new int[]{R.id.Amount, R.id.Note, R.id.ExpenseDate, R.id.Currency, R.id.Wallet},mainLayout)){
-            databaseHelper.addNewExpense(new Expense(1,Integer.parseInt(Amount.getText().toString()),
+            databaseHelper.addNewExpense(new Expense(Integer.parseInt(Amount.getText().toString()),
                     currencyValue,categoryTitle.getText().toString(), walletTitleStr, walletValue,Note.getText().toString(),ExpenseDate.getText().toString()));
             Toast.makeText(this,getResources().getString(R.string.data_saved_successfully),Toast.LENGTH_LONG).show();
             startActivity(new Intent(ExpenseActivity.this,HomeActivity.class));
@@ -150,7 +151,7 @@ public class ExpenseActivity extends AppCompatActivity implements View.OnClickLi
 
     //Update expense
     private void updateExpense() {
-        databaseHelper.updateExpense(new Expense(1,Integer.parseInt(Amount.getText().toString()),
+        databaseHelper.updateExpense(new Expense(Integer.parseInt(Amount.getText().toString()),
                 currencyValue,categoryTitle.getText().toString(), walletTitleStr, walletValue,Note.getText().toString(),ExpenseDate.getText().toString())
             , expense.getId());
         Toast.makeText(this,getResources().getString(R.string.data_updated_successfully),Toast.LENGTH_LONG).show();

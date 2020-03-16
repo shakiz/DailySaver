@@ -84,6 +84,28 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+    /**
+     * This method is to update EXPENSE record
+     *
+     * @param expense
+     */
+    public void updateExpense(Expense expense, int expenseId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_EXPENSE_AMOUNT, expense.getAmount());
+        values.put(COLUMN_EXPENSE_CURRENCY, expense.getCurrency());
+        values.put(COLUMN_EXPENSE_CATEGORY, expense.getCategory());
+        values.put(COLUMN_EXPENSE_WALLET, expense.getWalletTitle());
+        values.put(COLUMN_EXPENSE_WALLET_ID, expense.getWalletId());
+        values.put(COLUMN_EXPENSE_NOTE, expense.getNote());
+        values.put(COLUMN_EXPENSE_EXPENSE_DATE, expense.getExpenseDate());
+
+        // Inserting Row
+        db.update(EXPENSE_TABLE, values, COLUMN_EXPENSE_ID+" = "+expenseId, null);
+        db.close();
+    }
+
     public ArrayList<Expense> getAllExpenseItems(int walletId) {
         // array of columns to fetch
         String[] columns = {

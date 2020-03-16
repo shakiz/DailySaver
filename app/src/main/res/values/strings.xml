@@ -42,7 +42,7 @@
     <string name="no_data">No Data</string>
     <string name="no_wallet_data">No wallet data available</string>
     <string name="no_budget_data">No expense data available</string>
-    <string name="please_add_wallet">Please add wallet first /n You dont have any wallet</string>
+    <string name="please_add_wallet">Please add wallet first \n You dont have any wallet</string>
     <string name="hello">Hello!!</string>
     <string name="current_balance">Current Balance</string>
     <string name="amount_dummy">18000</string>
@@ -55,4 +55,5 @@
     <string name="check_wallet">Please select wallet</string>
     <string name="check_your_data">Please check your data</string>
     <string name="data_updated_successfully">Data Updated Successfully</string>
+    <string name="select_correct_data">Select Correct Data</string>
 </resources>

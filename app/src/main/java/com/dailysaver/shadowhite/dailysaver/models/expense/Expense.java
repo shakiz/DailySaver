@@ -15,8 +15,7 @@ public class Expense implements Serializable {
     public Expense() {
     }
 
-    public Expense(int id, int amount, int currency, String category, String walletTitle,int walletId, String note, String expenseDate) {
-        this.Id = id;
+    public Expense(int amount, int currency, String category, String walletTitle,int walletId, String note, String expenseDate) {
         this.Amount = amount;
         this.Currency = currency;
         this.Category = category;

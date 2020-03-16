@@ -5,6 +5,7 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.icu.text.DateFormat;
 import android.icu.text.SimpleDateFormat;
@@ -21,11 +22,8 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import com.dailysaver.shadowhite.dailysaver.R;
-
 import java.util.Calendar;
 import java.util.Locale;
-
-import es.dmoral.toasty.Toasty;
 
 public class UX {
     private Context context;
@@ -78,7 +76,9 @@ public class UX {
             else if (child instanceof Spinner){
                 Spinner spinner = (Spinner) child;
                 if (spinner.getSelectedItemPosition() == 0) {
-                    Toasty.error(context,context.getResources().getString(R.string.check_your_data));
+                    TextView errorText = (TextView)spinner.getSelectedView();
+                    errorText.setError(context.getResources().getString(R.string.select_correct_data));
+                    errorText.setTextColor(context.getResources().getColor(R.color.md_red_400));
                     valid = false;
                 }
                 else {
