@@ -33,7 +33,7 @@ import es.dmoral.toasty.Toasty;
 public class ExpenseActivity extends AppCompatActivity implements View.OnClickListener {
 
     private RelativeLayout mainLayout;
-    private FloatingActionButton add;
+    private FloatingActionButton addOrUpdate;
     private EditText Amount,ExpenseDate,Note;
     private Toolbar toolbar;
     private Spinner currencySpinner, walletSpinner;
@@ -52,6 +52,7 @@ public class ExpenseActivity extends AppCompatActivity implements View.OnClickLi
     private DataLoader dataLoader;
     private DatabaseHelper databaseHelper;
     private DataManager dataManager;
+    private Expense expense;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,7 +89,7 @@ public class ExpenseActivity extends AppCompatActivity implements View.OnClickLi
         Amount = findViewById(R.id.Amount);
         ExpenseDate = findViewById(R.id.ExpenseDate);
         Note = findViewById(R.id.Note);
-        add = findViewById(R.id.add);
+        addOrUpdate = findViewById(R.id.add);
         ux = new UX(this);
         tools = new Tools(this);
         dataLoader = new DataLoader(this);
@@ -122,10 +123,15 @@ public class ExpenseActivity extends AppCompatActivity implements View.OnClickLi
         //Category on click for selecting on click
         categorySelection.setOnClickListener(this);
 
-        add.setOnClickListener(new View.OnClickListener() {
+        addOrUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                saveExpense();
+                if (getIntent().getSerializableExtra("expense") != null) {
+                    updateExpense();
+                }
+                else {
+                    saveExpense();
+                }
             }
         });
 
@@ -139,14 +145,22 @@ public class ExpenseActivity extends AppCompatActivity implements View.OnClickLi
             Toast.makeText(this,getResources().getString(R.string.data_saved_successfully),Toast.LENGTH_LONG).show();
             startActivity(new Intent(ExpenseActivity.this,HomeActivity.class));
         }
-        else {
-            Toasty.info(this, getResources().getString(R.string.check_your_data));
-        }
     }
+    //end
+
+    //Update expense
+    private void updateExpense() {
+        databaseHelper.updateExpense(new Expense(1,Integer.parseInt(Amount.getText().toString()),
+                currencyValue,categoryTitle.getText().toString(), walletTitleStr, walletValue,Note.getText().toString(),ExpenseDate.getText().toString())
+            , expense.getId());
+        Toast.makeText(this,getResources().getString(R.string.data_updated_successfully),Toast.LENGTH_LONG).show();
+        startActivity(new Intent(ExpenseActivity.this,HomeActivity.class));
+    }
+    //end
 
     //Load pref data
     private void loadRecord() {
-        Expense expense = (Expense) getIntent().getSerializableExtra("expense");
+        expense = (Expense) getIntent().getSerializableExtra("expense");
         categoryTitle.setText(expense.getCategory());
         setTypeIcon(categoryIcon, expense.getCategory());
         Amount.setText(""+ expense.getAmount());
@@ -154,7 +168,7 @@ public class ExpenseActivity extends AppCompatActivity implements View.OnClickLi
         ExpenseDate.setText(expense.getExpenseDate());
         currencySpinner.setSelection(expense.getCurrency());
         walletSpinner.setSelection(expense.getWalletId());
-        add.setImageResource(R.drawable.ic_action_done);
+        addOrUpdate.setImageResource(R.drawable.ic_action_done);
     }
 
     //Set category icon

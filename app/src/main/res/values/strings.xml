@@ -54,4 +54,5 @@
     <string name="check_currency">Please select currency</string>
     <string name="check_wallet">Please select wallet</string>
     <string name="check_your_data">Please check your data</string>
+    <string name="data_updated_successfully">Data Updated Successfully</string>
 </resources>

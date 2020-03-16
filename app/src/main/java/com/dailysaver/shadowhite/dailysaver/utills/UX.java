@@ -25,6 +25,8 @@ import com.dailysaver.shadowhite.dailysaver.R;
 import java.util.Calendar;
 import java.util.Locale;
 
+import es.dmoral.toasty.Toasty;
+
 public class UX {
     private Context context;
     public Dialog loadingDialog;
@@ -76,6 +78,7 @@ public class UX {
             else if (child instanceof Spinner){
                 Spinner spinner = (Spinner) child;
                 if (spinner.getSelectedItemPosition() == 0) {
+                    Toasty.error(context,context.getResources().getString(R.string.check_your_data));
                     valid = false;
                 }
                 else {
