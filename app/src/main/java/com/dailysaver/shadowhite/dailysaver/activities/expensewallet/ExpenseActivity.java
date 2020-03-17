@@ -34,7 +34,8 @@ public class ExpenseActivity extends AppCompatActivity implements View.OnClickLi
 
     private RelativeLayout mainLayout;
     private FloatingActionButton addOrUpdate;
-    private EditText Amount,ExpenseDate,Note;
+    private EditText Amount,Note;
+    private TextView ExpenseDate;
     private Toolbar toolbar;
     private Spinner currencySpinner, walletSpinner;
     private Dialog itemDialog;

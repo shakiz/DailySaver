@@ -92,7 +92,7 @@
                                 android:drawableLeft="@drawable/ic_tap"
                                 android:drawablePadding="4dp"
                                 android:textSize="14sp"
-                                android:textColor="@color/md_grey_800"
+                                android:textColor="@color/md_green_600"
                                 android:ellipsize="end"
                                 android:padding="4dp"/>
 
@@ -321,7 +321,7 @@
 
                         <TextView
                             android:layout_width="0dp"
-                            android:layout_weight=".8"
+                            android:layout_weight="1"
                             android:layout_height="wrap_content"
                             android:text="@string/date"
                             android:layout_margin="10dp"
@@ -330,22 +330,20 @@
                             android:textColor="@color/md_grey_800"
                             android:textSize="14sp"
                             android:padding="4dp"/>
-                        <EditText
+                        <TextView
+                            android:id="@+id/ExpenseDate"
                             android:layout_width="0dp"
-                            android:layout_weight="1.2"
+                            android:layout_weight="1"
                             android:layout_height="40dp"
                             android:background="@drawable/rectangle_background"
-                            android:hint="@string/date_hint"
+                            android:text="@string/date_hint"
                             android:layout_margin="8dp"
                             android:padding="10dp"
-                            android:focusable="false"
                             android:textSize="14sp"
+                            android:clickable="true"
                             android:drawableLeft="@drawable/ic_expiry_date"
                             android:drawablePadding="4dp"
-                            android:textColor="@color/md_grey_800"
-                            android:textColorHint="@color/md_grey_700"
-                            android:inputType="numberDecimal"
-                            android:id="@+id/ExpenseDate"/>
+                            android:textColor="@color/md_grey_800"/>
 
                     </LinearLayout>
 

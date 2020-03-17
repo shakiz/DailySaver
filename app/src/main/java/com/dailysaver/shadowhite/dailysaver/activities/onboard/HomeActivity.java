@@ -14,7 +14,7 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.dailysaver.shadowhite.dailysaver.activities.WalletDetailsActivity;
+import com.dailysaver.shadowhite.dailysaver.activities.wallet.WalletDetailsActivity;
 import com.dailysaver.shadowhite.dailysaver.activities.expensewallet.ExpenseActivity;
 import com.dailysaver.shadowhite.dailysaver.activities.wallet.WalletActivity;
 import com.dailysaver.shadowhite.dailysaver.adapters.wallet.WalletDetailsSliderAdapter;

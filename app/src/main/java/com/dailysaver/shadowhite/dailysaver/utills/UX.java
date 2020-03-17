@@ -35,6 +35,7 @@ public class UX {
         loadingDialog = new Dialog(context);
     }
 
+    //Toolbar
     public void setToolbar(Toolbar toolbar, final Activity from, final Class to){
         ((AppCompatActivity) context).setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -45,7 +46,9 @@ public class UX {
         });
 //        ((AppCompatActivity) context).getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_left_arrow);
     }
+    //End toolbar
 
+    //Loading view creator and cancel
     public void getLoadingView(){
         loadingDialog.setContentView(R.layout.loading_layout);
         loadingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
@@ -56,53 +59,34 @@ public class UX {
     public void removeLoadingView(){
         if (loadingDialog.isShowing()) loadingDialog.cancel();
     }
+    //End loading view
 
-    public boolean validation(int[] resIds,View view){
-        boolean valid = false;
-        for (int resId : resIds){
-            View child = view.findViewById(resId);
-
-            if (child instanceof EditText){
-                EditText editText = (EditText) child;
-                if (editText.getText().toString().isEmpty()){
-                    editText.setError(context.getResources().getString(R.string.invalid_input));
-                    editText.requestFocus();
-                    valid = false;
-                }
-                else{
-                    valid = true;
-                }
-            }
-            else if (child instanceof Spinner){
-                Spinner spinner = (Spinner) child;
-                if (spinner.getSelectedItemPosition() == 0) {
-                    TextView errorText = (TextView)spinner.getSelectedView();
-                    errorText.setError(context.getResources().getString(R.string.select_correct_data));
-                    errorText.setTextColor(context.getResources().getColor(R.color.md_red_400));
-                    valid = false;
-                }
-                else {
-                    valid = true;
-                }
-            }
-        }
-        return valid;
-    }
-
+    //Clear UI components
     public void clearDetailsUI(int[] resIds,View view){
         for (int resId : resIds){
-            TextView textView = view.findViewById(resId);
-            textView.setText("");
+            View child = view.findViewById(resId);
+            if (child instanceof TextView){
+                TextView textView = (TextView) child;
+                textView.setText("");
+            }
+            else if(child instanceof EditText){
+                EditText editText = (EditText) child;
+                editText.setText("");
+            }
         }
     }
+    //End
 
+    //Set spinner adapter
     public void setSpinnerAdapter(String[] dataSet, Spinner spinner) {
         spinnerAdapter = new ArrayAdapter<String>(context,R.layout.spinner_drop,dataSet);
         spinner.setAdapter(spinnerAdapter);
         spinnerAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
         spinnerAdapter.notifyDataSetChanged();
     }
+    //End spinner adapter
 
+    //Spinner on change
     public void onSpinnerChange(Spinner spinner, onSpinnerChangeListener listener) {
         final onSpinnerChangeListener customListener = listener;
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -121,6 +105,7 @@ public class UX {
     public interface onSpinnerChangeListener {
         void onChange(AdapterView<?> parent, View view, int position, long id);
     }
+    //End spinner
 
     public void onChange(CheckBox checkBox, final onChangeListener listener) {
         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -158,5 +143,51 @@ public class UX {
         },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
         datePickerDialog.show();
     }
+    //End
+
+    //Validation of all view
+    public boolean validation(int[] resIds,View view){
+        boolean valid = false;
+        for (int resId : resIds){
+            View child = view.findViewById(resId);
+
+            if (child instanceof EditText){
+                EditText editText = (EditText) child;
+                if (editText.getText().toString().isEmpty()){
+                    editText.setError(context.getResources().getString(R.string.invalid_input));
+                    editText.requestFocus();
+                    valid = false;
+                }
+                else{
+                    valid = true;
+                }
+            }
+            else if (child instanceof TextView){
+                TextView textView = (TextView) child;
+                if (textView.getText().toString().isEmpty()){
+                    textView.setError(context.getResources().getString(R.string.invalid_input));
+                    textView.requestFocus();
+                    valid = false;
+                }
+                else{
+                    valid = true;
+                }
+            }
+            else if (child instanceof Spinner){
+                Spinner spinner = (Spinner) child;
+                if (spinner.getSelectedItemPosition() == 0) {
+                    TextView errorText = (TextView)spinner.getSelectedView();
+                    errorText.setError(context.getResources().getString(R.string.select_correct_data));
+                    errorText.setTextColor(context.getResources().getColor(R.color.md_red_400));
+                    valid = false;
+                }
+                else {
+                    valid = true;
+                }
+            }
+        }
+        return valid;
+    }
+    //Validation End
 
 }
