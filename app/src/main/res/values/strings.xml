@@ -56,4 +56,5 @@
     <string name="check_your_data">Please check your data</string>
     <string name="data_updated_successfully">Data Updated Successfully</string>
     <string name="select_correct_data">Select Correct Data</string>
+    <string name="month_name_sample">January</string>
 </resources>
