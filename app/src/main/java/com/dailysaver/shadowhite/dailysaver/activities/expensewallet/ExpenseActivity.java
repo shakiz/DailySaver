@@ -35,7 +35,7 @@ public class ExpenseActivity extends AppCompatActivity implements View.OnClickLi
     private RelativeLayout mainLayout;
     private FloatingActionButton addOrUpdate;
     private EditText Amount,Note;
-    private TextView ExpenseDate;
+    private TextView ExpenseDate, dateView;
     private Toolbar toolbar;
     private Spinner currencySpinner, walletSpinner;
     private Dialog itemDialog;
@@ -44,8 +44,6 @@ public class ExpenseActivity extends AppCompatActivity implements View.OnClickLi
     private ImageView categoryIcon;
     private RecyclerView categoryRecyclerView;
     private CategoryRecyclerAdapter categoryRecyclerAdapter;
-    private RecyclerView.LayoutManager layoutManager;
-    private EditText dateView;
     private int currencyValue = 0, walletValue = 0;
     private String walletTitleStr;
     private UX ux;
@@ -202,8 +200,7 @@ public class ExpenseActivity extends AppCompatActivity implements View.OnClickLi
     //Category adapter
     private void setCategoryAdapter() {
         categoryRecyclerAdapter = new CategoryRecyclerAdapter(this, dataManager.setCategoryDataData(),itemDialog,categoryTitle,categoryIcon);
-        layoutManager = new GridLayoutManager(this,2);
-        categoryRecyclerView.setLayoutManager(layoutManager);
+        categoryRecyclerView.setLayoutManager(new GridLayoutManager(this,2));
         categoryRecyclerView.setAdapter(categoryRecyclerAdapter);
         categoryRecyclerAdapter.notifyDataSetChanged();
     }
@@ -229,5 +226,10 @@ public class ExpenseActivity extends AppCompatActivity implements View.OnClickLi
     public void onBackPressed() {
         startActivity(new Intent(ExpenseActivity.this,HomeActivity.class));
         overridePendingTransition(R.anim.fadein,R.anim.push_up_out);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }

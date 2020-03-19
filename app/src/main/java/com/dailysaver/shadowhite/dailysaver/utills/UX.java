@@ -123,7 +123,7 @@ public class UX {
     }
 
     //Date on click operation
-    public void getAndSetDate(final EditText editText){
+    public void getAndSetDate(final TextView dateViewTXT){
         DateFormat dateFormatter = null;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             dateFormatter = new SimpleDateFormat("dd-MMM-yyyy", Locale.US);
@@ -136,7 +136,7 @@ public class UX {
                 Calendar newDate = Calendar.getInstance();
                 newDate.set(year, monthOfYear, dayOfMonth);
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    editText.setText(finalDateFormatter.format(newDate.getTime()));
+                    dateViewTXT.setText(finalDateFormatter.format(newDate.getTime()));
                 }
             }
 
