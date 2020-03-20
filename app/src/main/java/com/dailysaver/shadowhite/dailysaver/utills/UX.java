@@ -165,12 +165,20 @@ public class UX {
             else if (child instanceof TextView){
                 TextView textView = (TextView) child;
                 if (textView.getText().toString().isEmpty()){
-                    textView.setError(context.getResources().getString(R.string.invalid_input));
+                    textView.setError(context.getResources().getString(R.string.check_your_data));
                     textView.requestFocus();
                     valid = false;
                 }
                 else{
-                    valid = true;
+                    if (textView.getText().toString().equals(context.getResources().getString(R.string.expiry_date))
+                     || textView.getText().toString().equals(context.getResources().getString(R.string.date_hint))){
+                        textView.setError(context.getResources().getString(R.string.select_valid_date));
+                        textView.requestFocus();
+                        valid = false;
+                    }
+                    else{
+                        valid = true;
+                    }
                 }
             }
             else if (child instanceof Spinner){
@@ -179,6 +187,16 @@ public class UX {
                     TextView errorText = (TextView)spinner.getSelectedView();
                     errorText.setError(context.getResources().getString(R.string.select_correct_data));
                     errorText.setTextColor(context.getResources().getColor(R.color.md_red_400));
+                    valid = false;
+                }
+                else {
+                    valid = true;
+                }
+            }
+            else if (child instanceof CheckBox){
+                CheckBox checkBox = (CheckBox) child;
+                if (!checkBox.isSelected()) {
+                    checkBox.setError(context.getResources().getString(R.string.select_your_option));
                     valid = false;
                 }
                 else {

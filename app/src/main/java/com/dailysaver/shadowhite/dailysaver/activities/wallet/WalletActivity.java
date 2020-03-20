@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -20,22 +22,24 @@ import com.dailysaver.shadowhite.dailysaver.utills.Tools;
 import com.dailysaver.shadowhite.dailysaver.utills.UX;
 import com.dailysaver.shadowhite.dailysaver.utills.dbhelper.DatabaseHelper;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 
 public class WalletActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Toolbar toolbar;
     private RelativeLayout mainLayout;
     private int currencyValue;
-    private String budgetTypeStr;
+    private String budgetTypeStr = "";
     private EditText Amount,WalletName,Note;
     private TextView ExpiresOn;
     private FloatingActionButton add;
     private Spinner currencySpinner;
-    private CheckBox expense,savings;
     private UX ux;
     private Tools tools;
     private DataManager spinnerData;
     private DatabaseHelper databaseHelper;
+    private RadioGroup WalletType;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,12 +59,11 @@ public class WalletActivity extends AppCompatActivity implements View.OnClickLis
         mainLayout = findViewById(R.id.home_layout);
         Amount = findViewById(R.id.Amount);
         WalletName = findViewById(R.id.WalletName);
+        WalletType = findViewById(R.id.WalletType);
         Note = findViewById(R.id.Note);
         ExpiresOn = findViewById(R.id.ExpiresOn);
         currencySpinner = findViewById(R.id.Currency);
         ExpiresOn = findViewById(R.id.ExpiresOn);
-        expense = findViewById(R.id.Expense);
-        savings = findViewById(R.id.Savings);
         add = findViewById(R.id.add);
         ux = new UX(this);
         tools = new Tools(this);
@@ -80,33 +83,6 @@ public class WalletActivity extends AppCompatActivity implements View.OnClickLis
             }
         });
 
-        ux.onChange(expense, new UX.onChangeListener() {
-            @Override
-            public void onChange(boolean isChecked) {
-                if (isChecked){
-                    savings.setEnabled(false);
-                    budgetTypeStr = "Expense";
-                }
-                else{
-                    savings.setEnabled(true);
-                    budgetTypeStr = "";
-                }
-            }
-        });
-
-        ux.onChange(savings, new UX.onChangeListener() {
-            @Override
-            public void onChange(boolean isChecked) {
-                if (isChecked){
-                    expense.setEnabled(false);
-                    budgetTypeStr = "Savings";
-                }
-                else{
-                    expense.setEnabled(false);
-                    budgetTypeStr = "";
-                }
-            }
-        });
 
         add.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,14 +90,31 @@ public class WalletActivity extends AppCompatActivity implements View.OnClickLis
                 saveWallet();
             }
         });
+
+        WalletType.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                int selectedRadio = group.getCheckedRadioButtonId();
+                View viewRadioButton = findViewById(selectedRadio);
+                RadioButton radioButton = (RadioButton) viewRadioButton;
+                if (radioButton.isChecked()){
+                    budgetTypeStr = radioButton.getTag().toString();
+                }
+            }
+        });
     }
 
     private void saveWallet() {
-        if (ux.validation(new int[]{R.id.Amount,R.id.Note,R.id.ExpiresOn, R.id.Currency, R.id.WalletName, },mainLayout)){
-            databaseHelper.addNewWallet(new Wallet(WalletName.getText().toString(),Integer.parseInt(Amount.getText().toString()),
-                    currencyValue,ExpiresOn.getText().toString(),budgetTypeStr,Note.getText().toString()));
-            Toast.makeText(this,getResources().getString(R.string.data_saved_successfully),Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(WalletActivity.this,HomeActivity.class));
+        if (ux.validation(new int[]{R.id.Amount, R.id.Currency, R.id.WalletName, R.id.Note, R.id.ExpiresOn},mainLayout)){
+            if (!budgetTypeStr.isEmpty()){
+                databaseHelper.addNewWallet(new Wallet(WalletName.getText().toString(),Integer.parseInt(Amount.getText().toString()),
+                        currencyValue,ExpiresOn.getText().toString(),budgetTypeStr,Note.getText().toString()));
+                Toast.makeText(this,getResources().getString(R.string.data_saved_successfully),Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(WalletActivity.this,HomeActivity.class));
+            }
+            else {
+                Snackbar.make(mainLayout,getResources().getString(R.string.select_wallet_type),Snackbar.LENGTH_SHORT).show();
+            }
         }
     }
 

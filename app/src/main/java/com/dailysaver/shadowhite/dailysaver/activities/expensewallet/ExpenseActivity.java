@@ -139,7 +139,7 @@ public class ExpenseActivity extends AppCompatActivity implements View.OnClickLi
 
     //Save expense into DB with validation
     private void saveExpense(){
-        if (ux.validation(new int[]{R.id.Amount, R.id.Note, R.id.ExpenseDate, R.id.Currency, R.id.Wallet},mainLayout)){
+        if (ux.validation(new int[]{R.id.Amount, R.id.Currency, R.id.Wallet, R.id.Note, R.id.ExpenseDate},mainLayout)){
             databaseHelper.addNewExpense(new Expense(Integer.parseInt(Amount.getText().toString()),
                     currencyValue,categoryTitle.getText().toString(), walletTitleStr, walletValue,Note.getText().toString(),ExpenseDate.getText().toString()));
             Toast.makeText(this,getResources().getString(R.string.data_saved_successfully),Toast.LENGTH_LONG).show();

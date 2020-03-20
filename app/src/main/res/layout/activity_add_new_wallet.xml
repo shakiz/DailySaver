@@ -237,20 +237,51 @@
                             android:text="@string/select_wallet_type"
                             android:textColor="@color/md_grey_800"
                             android:textSize="14sp"
-                            android:layout_margin="4dp"
+                            android:layout_marginLeft="4dp"
+                            android:layout_marginRight="4dp"
+                            android:layout_marginTop="4dp"
                             android:padding="4dp"/>
 
-                        <View
+                        <RadioGroup
+                            android:id="@+id/WalletType"
                             android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:background="@color/md_grey_400"/>
+                            android:layout_height="wrap_content"
+                            android:tag="@string/select_wallet_type"
+                            android:weightSum="2"
+                            android:orientation="horizontal">
+
+                            <RadioButton
+                                android:id="@+id/WalletTypeExpense"
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:layout_margin="4dp"
+                                android:padding="4dp"
+                                android:tag="@string/expense"
+                                android:text="@string/expense"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/md_grey_800"
+                                android:buttonTint="@color/colorPrimary"/>
+
+                            <RadioButton
+                                android:id="@+id/WalletTypeSavings"
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:layout_margin="4dp"
+                                android:padding="4dp"
+                                android:text="@string/savings"
+                                android:tag="@string/savings"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/md_grey_800"
+                                android:buttonTint="@color/colorPrimary"/>
+
+                        </RadioGroup>
 
                         <LinearLayout
-                            android:id="@+id/WalletType"
                             android:layout_width="match_parent"
                             android:layout_height="40dp"
                             android:layout_margin="4dp"
                             android:padding="4dp"
+                            android:visibility="gone"
                             android:layout_gravity="center"
                             android:gravity="center"
                             android:weightSum="4"

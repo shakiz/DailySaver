@@ -4,12 +4,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -18,7 +16,6 @@ import android.widget.TextView;
 import com.dailysaver.shadowhite.dailysaver.R;
 import com.dailysaver.shadowhite.dailysaver.activities.expensewallet.ExpenseActivity;
 import com.dailysaver.shadowhite.dailysaver.activities.onboard.HomeActivity;
-import com.dailysaver.shadowhite.dailysaver.adapters.filter.MonthAdapter;
 import com.dailysaver.shadowhite.dailysaver.adapters.monthlyexpense.MonthlyExpenseAdapter;
 import com.dailysaver.shadowhite.dailysaver.adapters.pager.ViewPagerAdapter;
 import com.dailysaver.shadowhite.dailysaver.models.expense.Expense;
@@ -26,11 +23,6 @@ import com.dailysaver.shadowhite.dailysaver.models.wallet.Wallet;
 import com.dailysaver.shadowhite.dailysaver.utills.Tools;
 import com.dailysaver.shadowhite.dailysaver.utills.UX;
 import com.dailysaver.shadowhite.dailysaver.utills.dbhelper.DatabaseHelper;
-import com.github.mikephil.charting.charts.PieChart;
-import com.github.mikephil.charting.data.PieData;
-import com.github.mikephil.charting.data.PieDataSet;
-import com.github.mikephil.charting.data.PieEntry;
-import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.tabs.TabLayout;
 import java.util.ArrayList;
@@ -45,7 +37,7 @@ public class WalletDetailsActivity extends AppCompatActivity {
     private UX ux;
     private int walletId = 0;
     private Tools tools;
-    private RecyclerView recyclerView, monthRecyclerView;
+    private RecyclerView recyclerView;
     private MonthlyExpenseAdapter monthlyExpenseAdapter;
     private DatabaseHelper databaseHelper;
     private TextView noBudgetData;
@@ -56,6 +48,7 @@ public class WalletDetailsActivity extends AppCompatActivity {
     private ViewPagerAdapter adapter;
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    private ArrayList<Expense> expenseList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,7 +88,6 @@ public class WalletDetailsActivity extends AppCompatActivity {
 
     private void init() {
         recyclerView = findViewById(R.id.mRecyclerView);
-        monthRecyclerView = findViewById(R.id.mRecyclerView);
         viewPager = findViewById(R.id.swipePager);
         indicator = findViewById(R.id.indicator);
         tabLayout = findViewById(R.id.sliding_tabs);
@@ -110,6 +102,7 @@ public class WalletDetailsActivity extends AppCompatActivity {
         ux = new UX(this);
         tools = new Tools(this);
         databaseHelper = new DatabaseHelper(this);
+        expenseList = new ArrayList<>();
     }
 
     private void bindUIWithComponents() {
@@ -158,7 +151,7 @@ public class WalletDetailsActivity extends AppCompatActivity {
 
     private void setViewpager() {
         String[] tabTitles = new String[]{"Monthly","Weekly","Daily"};
-        adapter = new ViewPagerAdapter(getSupportFragmentManager(),tabTitles);
+        adapter = new ViewPagerAdapter(getSupportFragmentManager(),tabTitles, expenseList);
         viewPager.setAdapter(adapter);
         viewPager.setOffscreenPageLimit(0);
         tabLayout.setupWithViewPager(viewPager);
@@ -192,59 +185,6 @@ public class WalletDetailsActivity extends AppCompatActivity {
             recyclerView.setAdapter(monthlyExpenseAdapter);
             monthlyExpenseAdapter.notifyDataSetChanged();
         }
-    }
-
-    private void setMonthAdapter(){
-        MonthAdapter monthAdapter = new MonthAdapter(getMonthList(), this, new MonthAdapter.onItemClickListener() {
-            @Override
-            public void onItemClick(String month) {
-
-            }
-        });
-        monthRecyclerView.setLayoutManager(new GridLayoutManager(this,3));
-        monthRecyclerView.setAdapter(monthAdapter);
-        monthAdapter.notifyDataSetChanged();
-    }
-
-    private void getPieChart() {
-        PieChart pieChart = findViewById(R.id.piechart);
-        PieDataSet pieDataSet = new PieDataSet(getEntries(), "");
-        PieData pieData = new PieData(pieDataSet);
-        pieChart.setData(pieData);
-        pieDataSet.setColors(ColorTemplate.JOYFUL_COLORS);
-        pieDataSet.setSliceSpace(2f);
-        pieDataSet.setValueTextColor(Color.WHITE);
-        pieDataSet.setValueTextSize(10f);
-        pieDataSet.setSliceSpace(5f);
-        pieChart.animateXY(2000, 2000);
-    }
-
-    private ArrayList<PieEntry> getEntries() {
-        ArrayList<PieEntry> pieEntries = new ArrayList<>();
-        pieEntries.add(new PieEntry(2f, 0));
-        pieEntries.add(new PieEntry(4f, 1));
-        pieEntries.add(new PieEntry(6f, 2));
-        pieEntries.add(new PieEntry(8f, 3));
-        pieEntries.add(new PieEntry(7f, 4));
-        pieEntries.add(new PieEntry(3f, 5));
-        return pieEntries;
-    }
-
-    private ArrayList<String> getMonthList(){
-        ArrayList<String> monthList = new ArrayList<>();
-        monthList.add("January");
-        monthList.add("February");
-        monthList.add("March");
-        monthList.add("April");
-        monthList.add("May");
-        monthList.add("June");
-        monthList.add("July");
-        monthList.add("August");
-        monthList.add("September");
-        monthList.add("October");
-        monthList.add("November");
-        monthList.add("December");
-        return monthList;
     }
 
     @Override
