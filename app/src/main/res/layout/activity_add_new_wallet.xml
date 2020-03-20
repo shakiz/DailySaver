@@ -278,23 +278,20 @@
 
                     </LinearLayout>
 
-                    <EditText
+                    <TextView
                         android:id="@+id/ExpiresOn"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
-                        android:hint="@string/expiry_date"
-                        android:inputType="numberDecimal"
+                        android:text="@string/expiry_date"
                         android:textSize="14sp"
-                        android:focusable="false"
                         android:background="@drawable/rectangle_background"
                         android:layout_gravity="center"
                         android:gravity="center|left"
                         android:layout_marginLeft="8dp"
                         android:layout_marginRight="8dp"
                         android:drawableLeft="@drawable/ic_expiry_date"
-                        android:drawablePadding="4dp"
+                        android:drawablePadding="8dp"
                         android:textColor="@color/md_grey_800"
-                        android:textColorHint="@color/md_grey_700"
                         android:layout_marginTop="16dp"
                         android:padding="10dp"/>
 
