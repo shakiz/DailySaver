@@ -33,10 +33,10 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 public class ExpenseActivity extends AppCompatActivity implements View.OnClickListener {
 
     private RelativeLayout mainLayout;
+    private Toolbar toolbar;
     private FloatingActionButton addOrUpdate;
     private EditText Amount,Note;
     private TextView ExpenseDate, dateView;
-    private Toolbar toolbar;
     private Spinner currencySpinner, walletSpinner;
     private Dialog itemDialog;
     private LinearLayout dialogLinearLayout;
@@ -72,7 +72,7 @@ public class ExpenseActivity extends AppCompatActivity implements View.OnClickLi
 
         //check for any wallet exist or not
         if (databaseHelper.getAllWalletItems().size() == 0){
-            Toast.makeText(this,getResources().getString(R.string.please_add_wallet),Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,getResources().getString(R.string.please_add_wallet),Toast.LENGTH_LONG).show();
             startActivity(new Intent(ExpenseActivity.this, WalletActivity.class));
         }
     }

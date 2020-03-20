@@ -13,7 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
+import com.dailysaver.shadowhite.dailysaver.activities.report.ReportActivity;
 import com.dailysaver.shadowhite.dailysaver.activities.wallet.WalletDetailsActivity;
 import com.dailysaver.shadowhite.dailysaver.activities.expensewallet.ExpenseActivity;
 import com.dailysaver.shadowhite.dailysaver.activities.wallet.WalletActivity;
@@ -196,7 +196,7 @@ public class HomeActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             //for item menu generate invoice
             case R.id.report:
-                Toast.makeText(getApplicationContext(),"Coming soon",Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(HomeActivity.this, ReportActivity.class));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

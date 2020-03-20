@@ -1,33 +1,29 @@
 package com.dailysaver.shadowhite.dailysaver.activities.wallet;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.ViewPager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import com.dailysaver.shadowhite.dailysaver.R;
 import com.dailysaver.shadowhite.dailysaver.activities.expensewallet.ExpenseActivity;
 import com.dailysaver.shadowhite.dailysaver.activities.onboard.HomeActivity;
 import com.dailysaver.shadowhite.dailysaver.adapters.monthlyexpense.MonthlyExpenseAdapter;
-import com.dailysaver.shadowhite.dailysaver.adapters.pager.ViewPagerAdapter;
 import com.dailysaver.shadowhite.dailysaver.models.expense.Expense;
 import com.dailysaver.shadowhite.dailysaver.models.wallet.Wallet;
 import com.dailysaver.shadowhite.dailysaver.utills.Tools;
 import com.dailysaver.shadowhite.dailysaver.utills.UX;
 import com.dailysaver.shadowhite.dailysaver.utills.dbhelper.DatabaseHelper;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
-import com.google.android.material.tabs.TabLayout;
 import java.util.ArrayList;
 import in.codeshuffle.typewriterview.TypeWriterView;
-import me.relex.circleindicator.CircleIndicator;
 
 public class WalletDetailsActivity extends AppCompatActivity {
     private CoordinatorLayout mainLayout;
@@ -44,11 +40,6 @@ public class WalletDetailsActivity extends AppCompatActivity {
     private ImageView filter;
     private BottomSheetBehavior bottomSheetBehavior;
     private LinearLayout layoutBottomSheet;
-    private CircleIndicator indicator;
-    private ViewPagerAdapter adapter;
-    private TabLayout tabLayout;
-    private ViewPager viewPager;
-    private ArrayList<Expense> expenseList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,9 +79,6 @@ public class WalletDetailsActivity extends AppCompatActivity {
 
     private void init() {
         recyclerView = findViewById(R.id.mRecyclerView);
-        viewPager = findViewById(R.id.swipePager);
-        indicator = findViewById(R.id.indicator);
-        tabLayout = findViewById(R.id.sliding_tabs);
         noBudgetData = findViewById(R.id.NoDataBudget);
         Amount = findViewById(R.id.Amount);
         TotalCost = findViewById(R.id.TotalCost);
@@ -102,7 +90,6 @@ public class WalletDetailsActivity extends AppCompatActivity {
         ux = new UX(this);
         tools = new Tools(this);
         databaseHelper = new DatabaseHelper(this);
-        expenseList = new ArrayList<>();
     }
 
     private void bindUIWithComponents() {
@@ -146,28 +133,6 @@ public class WalletDetailsActivity extends AppCompatActivity {
             }
         });
 
-        setViewpager();
-    }
-
-    private void setViewpager() {
-        String[] tabTitles = new String[]{"Monthly","Weekly","Daily"};
-        adapter = new ViewPagerAdapter(getSupportFragmentManager(),tabTitles, expenseList);
-        viewPager.setAdapter(adapter);
-        viewPager.setOffscreenPageLimit(0);
-        tabLayout.setupWithViewPager(viewPager);
-        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-            }
-            @Override
-            public void onPageSelected(int position) {
-
-            }
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
     }
 
     private void setAdapter(ArrayList<Expense> allExpenseItems) {
