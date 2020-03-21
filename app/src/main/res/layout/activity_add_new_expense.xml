@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:focusable="true"
-    android:background="@color/md_grey_100"
+    android:background="@color/md_white_1000"
     android:focusableInTouchMode="true">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -46,12 +46,12 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:cardCornerRadius="12dp"
-                android:elevation="8dp"
-                app:cardElevation="4dp"
+                app:cardCornerRadius="0dp"
+                android:elevation="0dp"
+                app:cardElevation="0dp"
                 app:cardBackgroundColor="@color/md_white_1000"
                 android:layout_margin="12dp"
-                android:translationZ="4dp">
+                android:translationZ="0dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"

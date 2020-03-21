@@ -75,6 +75,8 @@ public class ExpenseActivity extends AppCompatActivity implements View.OnClickLi
             Toast.makeText(this,getResources().getString(R.string.please_add_wallet),Toast.LENGTH_LONG).show();
             startActivity(new Intent(ExpenseActivity.this, WalletActivity.class));
         }
+
+        bindUIWIthComponents();
     }
 
     private void init() {
@@ -95,7 +97,6 @@ public class ExpenseActivity extends AppCompatActivity implements View.OnClickLi
         dataLoader = new DataLoader(this);
         databaseHelper = new DatabaseHelper(this);
         dataManager = new DataManager(this);
-        bindUIWIthComponents();
     }
 
     private void bindUIWIthComponents() {

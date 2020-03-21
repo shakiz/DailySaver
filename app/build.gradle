@@ -53,14 +53,14 @@ dependencies {
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.6'
 
     //memory leak tracker
-    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5.1'
-    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.1'
-    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.1'
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5.1'
+    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.1'
+    testImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.1'
 
     // Custom toast library
     implementation 'com.github.GrenderG:Toasty:1.4.2'
 
-    //loading library for ne ui
+    //loading library for new ui
     implementation 'in.codeshuffle:typewriterview:1.1.0'
     implementation 'com.airbnb.android:lottie:2.5.0-rc1'
 
