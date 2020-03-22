@@ -10,10 +10,12 @@ import com.dailysaver.shadowhite.dailysaver.activities.onboard.HomeActivity;
 import com.dailysaver.shadowhite.dailysaver.utills.Tools;
 import com.dailysaver.shadowhite.dailysaver.utills.UX;
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
+import com.github.mikephil.charting.formatter.LargeValueFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +25,8 @@ public class ReportActivity extends AppCompatActivity {
     private UX ux;
     private Tools tools;
     private BarChart barChart;
+    private float barWidth = 0.8f;
+    private BarData mData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,47 +52,77 @@ public class ReportActivity extends AppCompatActivity {
     }
 
     private void bindUIWithComponents() {
+
+
         setBarChart();
     }
 
-    private void setBarChart() {
-        BarDataSet dataSet = new BarDataSet(dataSet(), "Cost per month");
-        dataSet.setColor(Color.GRAY);
-        dataSet.setDrawValues(true);
-        BarData barData = new BarData();
-        barData.addDataSet(dataSet);
-
-        barChart.setData(barData);
-        barChart.setVisibleXRangeMaximum(6);
-        barChart.resetViewPortOffsets();
-        barChart.moveViewToX(7);
-        barChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(getXLabels()));
-        barChart.getXAxis().setCenterAxisLabels(true);
-        barChart.animateY(500);
+    private void chartPostSettings() {
+        barChart.animateXY(1000, 1000);
+        barChart.setData(mData);
+        barChart.getBarData().setBarWidth(barWidth);
+        barChart.getData().setHighlightEnabled(true);
         barChart.setFitBars(true);
+        barChart.setVisibleXRangeMaximum(15);
+        barChart.invalidate();
+    }
+
+    // chart pre-settings
+    private void chartPreSettings() {
+        barChart.setTouchEnabled(false);
+        barChart.setDragEnabled(false);
+        barChart.setScaleEnabled(false);
+        barChart.setScaleXEnabled(false);
+        barChart.setScaleYEnabled(false);
+        barChart.setPinchZoom(false);
         barChart.setDoubleTapToZoomEnabled(false);
-        barChart.getDescription().setEnabled(false);
+        barChart.setDescription(null);
+        barChart.setDrawBarShadow(false);
+        barChart.getLegend().setEnabled(false);
+        barChart.setDrawGridBackground(false);
+        barChart.getAxisRight().setEnabled(false);
+        barChart.getAxisLeft().setEnabled(false);
+        barChart.getXAxis().setDrawLabels(true);
     }
 
-    private List<BarEntry> dataSet() {
-        ArrayList<BarEntry> yValues = new ArrayList<>();
-        //TODO add data of cost per day from database
-        yValues.add(new BarEntry(1,1800));
-        yValues.add(new BarEntry(2,2800));
-        yValues.add(new BarEntry(3,3800));
-        yValues.add(new BarEntry(4,1500));
-        yValues.add(new BarEntry(5,1600));
-        yValues.add(new BarEntry(6,1300));
-        yValues.add(new BarEntry(7,2300));
-        yValues.add(new BarEntry(8,2600));
-        yValues.add(new BarEntry(9,3200));
-        yValues.add(new BarEntry(10,2200));
-        yValues.add(new BarEntry(11,1900));
-        yValues.add(new BarEntry(12,600));
-        return yValues;
+    // bind bar chart data bind
+    private void setData() {
+        BarDataSet set = new BarDataSet(getEntries(), "Cost per month");
+        set.setColor(Color.GRAY);
+        mData = new BarData(set);
+        mData.setValueFormatter(new LargeValueFormatter());
     }
 
-    private ArrayList<String> getXLabels() {
+    // bind up X-axis properties
+    private void setXAxis() {
+        XAxis xAxis = barChart.getXAxis();
+        xAxis.setGranularity(1f);
+        xAxis.setGranularityEnabled(true);
+        xAxis.setCenterAxisLabels(false);
+        xAxis.setDrawGridLines(false);
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setValueFormatter(new IndexAxisValueFormatter(getXAxisValues()));
+        xAxis.setLabelCount(30);
+    }
+
+    private List<BarEntry> getEntries() {
+        List<BarEntry> entries = new ArrayList<>();
+        entries.add(new BarEntry(0, 1100));
+        entries.add(new BarEntry(1, 1200));
+        entries.add(new BarEntry(2, 1300));
+        entries.add(new BarEntry(3, 700));
+        entries.add(new BarEntry(4, 470));
+        entries.add(new BarEntry(5, 900));
+        entries.add(new BarEntry(6, 400));
+        entries.add(new BarEntry(7, 1000));
+        entries.add(new BarEntry(8, 1400));
+        entries.add(new BarEntry(9, 2000));
+        entries.add(new BarEntry(10, 900));
+        entries.add(new BarEntry(11, 1100));
+        return entries;
+    }
+
+    private ArrayList getXAxisValues() {
         ArrayList<String> xLabels = new ArrayList<>();
         xLabels.add("Jan");
         xLabels.add("Feb");
@@ -105,4 +139,25 @@ public class ReportActivity extends AppCompatActivity {
 
         return xLabels;
     }
+
+    private void setBarChart() {
+        barChart.getDescription().setEnabled(false);
+        barChart.setData(mData);
+        barChart.setVisibleXRangeMaximum(6);
+        barChart.resetViewPortOffsets();
+        barChart.moveViewToX(7);
+
+        // chart pre-settings
+        chartPreSettings();
+
+        // bind up X-axis properties
+        setXAxis();
+
+        // bind bar chart data bind
+        setData();
+
+        // chart  post-settings
+        chartPostSettings();
+    }
+
 }
