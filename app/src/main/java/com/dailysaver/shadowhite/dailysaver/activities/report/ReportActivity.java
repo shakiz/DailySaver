@@ -2,13 +2,13 @@ package com.dailysaver.shadowhite.dailysaver.activities.report;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.RelativeLayout;
 import com.dailysaver.shadowhite.dailysaver.R;
 import com.dailysaver.shadowhite.dailysaver.activities.onboard.HomeActivity;
 import com.dailysaver.shadowhite.dailysaver.utills.Tools;
 import com.dailysaver.shadowhite.dailysaver.utills.UX;
+import com.dailysaver.shadowhite.dailysaver.utills.bar_chart.CustomBarChartRenderer;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
@@ -16,6 +16,8 @@ import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.formatter.LargeValueFormatter;
+import com.github.mikephil.charting.renderer.DataRenderer;
+import com.github.mikephil.charting.utils.ColorTemplate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,43 +54,43 @@ public class ReportActivity extends AppCompatActivity {
     }
 
     private void bindUIWithComponents() {
-
-
         setBarChart();
     }
 
-    private void chartPostSettings() {
+    private void setBarChart() {
+
+        // bind up X-axis properties
+        setXAxis();
+
+        // bind bar chart data bind
+        setData();
+
+        barChart.getDescription().setEnabled(false);
+        barChart.getDescription().setPosition(10f,10f);
+        barChart.setData(mData);barChart.getBarData().setBarWidth(barWidth);
+        barChart.setVisibleXRangeMaximum(6);
+        barChart.resetViewPortOffsets();
         barChart.animateXY(1000, 1000);
         barChart.setData(mData);
-        barChart.getBarData().setBarWidth(barWidth);
         barChart.getData().setHighlightEnabled(true);
+        barChart.setDoubleTapToZoomEnabled(false);
+        barChart.setRenderer(getRenderer());
         barChart.setFitBars(true);
-        barChart.setVisibleXRangeMaximum(15);
         barChart.invalidate();
     }
 
-    // chart pre-settings
-    private void chartPreSettings() {
-        barChart.setTouchEnabled(false);
-        barChart.setDragEnabled(false);
-        barChart.setScaleEnabled(false);
-        barChart.setScaleXEnabled(false);
-        barChart.setScaleYEnabled(false);
-        barChart.setPinchZoom(false);
-        barChart.setDoubleTapToZoomEnabled(false);
-        barChart.setDescription(null);
-        barChart.setDrawBarShadow(false);
-        barChart.getLegend().setEnabled(false);
-        barChart.setDrawGridBackground(false);
-        barChart.getAxisRight().setEnabled(false);
-        barChart.getAxisLeft().setEnabled(false);
-        barChart.getXAxis().setDrawLabels(true);
+    //region data render
+    private DataRenderer getRenderer() {
+        CustomBarChartRenderer customBarChartRenderer = new CustomBarChartRenderer(barChart, barChart.getAnimator(), barChart.getViewPortHandler());
+        customBarChartRenderer.setRadius(48);
+        return customBarChartRenderer;
     }
+    //endregion
 
     // bind bar chart data bind
     private void setData() {
         BarDataSet set = new BarDataSet(getEntries(), "Cost per month");
-        set.setColor(Color.GRAY);
+        set.setColors(ColorTemplate.MATERIAL_COLORS);
         mData = new BarData(set);
         mData.setValueFormatter(new LargeValueFormatter());
     }
@@ -97,12 +99,14 @@ public class ReportActivity extends AppCompatActivity {
     private void setXAxis() {
         XAxis xAxis = barChart.getXAxis();
         xAxis.setGranularity(1f);
+        xAxis.setSpaceMax(0.5f);
+        xAxis.setSpaceMin(0.5f);
         xAxis.setGranularityEnabled(true);
         xAxis.setCenterAxisLabels(false);
         xAxis.setDrawGridLines(false);
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setValueFormatter(new IndexAxisValueFormatter(getXAxisValues()));
-        xAxis.setLabelCount(30);
+        xAxis.setLabelCount(12);
     }
 
     private List<BarEntry> getEntries() {
@@ -139,25 +143,4 @@ public class ReportActivity extends AppCompatActivity {
 
         return xLabels;
     }
-
-    private void setBarChart() {
-        barChart.getDescription().setEnabled(false);
-        barChart.setData(mData);
-        barChart.setVisibleXRangeMaximum(6);
-        barChart.resetViewPortOffsets();
-        barChart.moveViewToX(7);
-
-        // chart pre-settings
-        chartPreSettings();
-
-        // bind up X-axis properties
-        setXAxis();
-
-        // bind bar chart data bind
-        setData();
-
-        // chart  post-settings
-        chartPostSettings();
-    }
-
 }
