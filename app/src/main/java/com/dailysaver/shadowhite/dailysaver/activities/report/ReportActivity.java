@@ -9,6 +9,7 @@ import com.dailysaver.shadowhite.dailysaver.activities.onboard.HomeActivity;
 import com.dailysaver.shadowhite.dailysaver.utills.Tools;
 import com.dailysaver.shadowhite.dailysaver.utills.UX;
 import com.dailysaver.shadowhite.dailysaver.utills.bar_chart.CustomBarChartRenderer;
+import com.dailysaver.shadowhite.dailysaver.utills.dbhelper.DatabaseHelper;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
@@ -29,6 +30,7 @@ public class ReportActivity extends AppCompatActivity {
     private BarChart barChart;
     private float barWidth = 0.8f;
     private BarData mData;
+    private DatabaseHelper databaseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +53,7 @@ public class ReportActivity extends AppCompatActivity {
         barChart = findViewById(R.id.barChart);
         ux = new UX(this);
         tools = new Tools(this);
+        databaseHelper = new DatabaseHelper(this);
     }
 
     private void bindUIWithComponents() {
@@ -65,18 +68,8 @@ public class ReportActivity extends AppCompatActivity {
         // bind bar chart data bind
         setData();
 
-        barChart.getDescription().setEnabled(false);
-        barChart.getDescription().setPosition(10f,10f);
-        barChart.setData(mData);barChart.getBarData().setBarWidth(barWidth);
-        barChart.setVisibleXRangeMaximum(6);
-        barChart.resetViewPortOffsets();
-        barChart.animateXY(1000, 1000);
-        barChart.setData(mData);
-        barChart.getData().setHighlightEnabled(true);
-        barChart.setDoubleTapToZoomEnabled(false);
-        barChart.setRenderer(getRenderer());
-        barChart.setFitBars(true);
-        barChart.invalidate();
+        //region make barChart
+        makeBarChart();
     }
 
     //region data render
@@ -94,8 +87,9 @@ public class ReportActivity extends AppCompatActivity {
         mData = new BarData(set);
         mData.setValueFormatter(new LargeValueFormatter());
     }
+    //endregion
 
-    // bind up X-axis properties
+    //region set xAxis properties
     private void setXAxis() {
         XAxis xAxis = barChart.getXAxis();
         xAxis.setGranularity(1f);
@@ -108,7 +102,9 @@ public class ReportActivity extends AppCompatActivity {
         xAxis.setValueFormatter(new IndexAxisValueFormatter(getXAxisValues()));
         xAxis.setLabelCount(12);
     }
+    //endregion
 
+    //region data for barChart
     private List<BarEntry> getEntries() {
         List<BarEntry> entries = new ArrayList<>();
         entries.add(new BarEntry(0, 1100));
@@ -125,7 +121,9 @@ public class ReportActivity extends AppCompatActivity {
         entries.add(new BarEntry(11, 1100));
         return entries;
     }
+    //endregion
 
+    //region xAxis labels
     private ArrayList getXAxisValues() {
         ArrayList<String> xLabels = new ArrayList<>();
         xLabels.add("Jan");
@@ -143,4 +141,22 @@ public class ReportActivity extends AppCompatActivity {
 
         return xLabels;
     }
+    //end region
+
+    //region make barChart
+    private void makeBarChart(){
+        barChart.getDescription().setEnabled(false);
+        barChart.getDescription().setPosition(10f,10f);
+        barChart.setData(mData);barChart.getBarData().setBarWidth(barWidth);
+        barChart.setVisibleXRangeMaximum(6);
+        barChart.resetViewPortOffsets();
+        barChart.animateXY(1000, 1000);
+        barChart.setData(mData);
+        barChart.getData().setHighlightEnabled(true);
+        barChart.setDoubleTapToZoomEnabled(false);
+        barChart.setRenderer(getRenderer());
+        barChart.setFitBars(true);
+        barChart.invalidate();
+    }
+    //endregion
 }

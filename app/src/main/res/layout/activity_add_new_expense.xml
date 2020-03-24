@@ -23,7 +23,7 @@
             android:background="@color/md_white_1000"
             app:navigationIcon="?attr/homeAsUpIndicator"
             style="@style/TextAppearance.Widget.Event.Toolbar.Title"
-            app:title="@string/add_new_budget"
+            app:title="@string/add_new_expense"
             app:titleTextColor="@color/md_grey_800">
 
         </androidx.appcompat.widget.Toolbar>

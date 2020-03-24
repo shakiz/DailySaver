@@ -106,6 +106,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+    /**
+     * This method is to get all expense record
+     *
+     * @param walletId
+     */
     public ArrayList<Expense> getAllExpenseItems(int walletId) {
         // array of columns to fetch
         String[] columns = {
@@ -178,7 +183,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     /**
-     * This method is to update EXPENSE record
+     * This method is to update wallet record
      *
      * @param wallet
      */
@@ -198,6 +203,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+    /**
+     * This method is to get all wallet record
+     *
+     */
     public ArrayList<Wallet> getAllWalletItems() {
         // array of columns to fetch
         String[] columns = {
@@ -239,6 +248,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return walletList;
     }
 
+    /**
+     * This method is to get wallet title
+     *
+     */
     public String[] getWalletTitle() {
         String[] walletTitle = null;
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
@@ -270,6 +283,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return walletTitle;
     }
 
+    /**
+     * This method is to get wallet cost of total
+     *
+     * @param walletId
+     */
     public int singleWalletTotalCost(int walletId){
         int totalCost = 0;
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
@@ -296,6 +314,42 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return totalCost;
     }
 
+    /**
+     * This method is to get the wallet main balance
+     *
+     * @param walletId
+     */
+    public int getWalletBalance(int walletId){
+        int balance = 0;
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        String columns[] = {
+                COLUMN_WALLET_ID,
+                COLUMN_WALLET_AMOUNT
+        };
+        String where = "" + COLUMN_WALLET_ID + " = "+ walletId +"";
+        Cursor cursor = sqLiteDatabase.query(WALLET_TABLE, columns, where, null, null, null, null);
+
+        if (cursor != null){
+            if (cursor.moveToFirst()){
+                do {
+                    balance += cursor.getInt(1);
+                }while (cursor.moveToNext());
+            }
+        }
+        else{
+            balance = 0;
+        }
+
+        cursor.close();
+        sqLiteDatabase.close();
+        return balance;
+    }
+
+    /**
+     * This method is to get id of a wallet
+     *
+     * @param title
+     */
     public int getWalletId(String title) {
         int walletId = 0;
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();

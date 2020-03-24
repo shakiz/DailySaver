@@ -36,7 +36,7 @@ public class MonthlyExpenseAdapter extends RecyclerView.Adapter<MonthlyExpenseAd
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         final Expense expense = expenseList.get(position);
         holder.Category.setText(expense.getCategory());
-        holder.Note.setText(expense.getNote());
+        holder.WalletName.setText(expense.getWalletTitle());
         holder.Amount.setText(""+ expense.getAmount());
         holder.ExpenseDate.setText(expense.getExpenseDate());
         setTypeIcon(holder.Icon, expense.getCategory());
@@ -68,13 +68,13 @@ public class MonthlyExpenseAdapter extends RecyclerView.Adapter<MonthlyExpenseAd
 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView Category,Note,Amount,ExpenseDate;
+        TextView Category,WalletName,Amount,ExpenseDate;
         CircleImageView Icon;
         CardView view;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             Category = itemView.findViewById(R.id.Category);
-            Note = itemView.findViewById(R.id.Note);
+            WalletName = itemView.findViewById(R.id.WalletName);
             Amount = itemView.findViewById(R.id.Amount);
             Icon = itemView.findViewById(R.id.Icon);
             ExpenseDate = itemView.findViewById(R.id.ExpenseDate);

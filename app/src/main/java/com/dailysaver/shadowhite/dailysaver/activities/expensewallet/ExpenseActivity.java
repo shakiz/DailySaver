@@ -29,6 +29,7 @@ import com.dailysaver.shadowhite.dailysaver.utills.Tools;
 import com.dailysaver.shadowhite.dailysaver.utills.UX;
 import com.dailysaver.shadowhite.dailysaver.utills.dbhelper.DatabaseHelper;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 
 public class ExpenseActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -141,13 +142,30 @@ public class ExpenseActivity extends AppCompatActivity implements View.OnClickLi
     //Save expense into DB with validation
     private void saveExpense(){
         if (ux.validation(new int[]{R.id.Amount, R.id.Currency, R.id.Wallet, R.id.Note, R.id.ExpenseDate},mainLayout)){
-            databaseHelper.addNewExpense(new Expense(Integer.parseInt(Amount.getText().toString()),
-                    currencyValue,categoryTitle.getText().toString(), walletTitleStr, walletValue,Note.getText().toString(),ExpenseDate.getText().toString()));
-            Toast.makeText(this,getResources().getString(R.string.data_saved_successfully),Toast.LENGTH_LONG).show();
-            startActivity(new Intent(ExpenseActivity.this,HomeActivity.class));
+            if (getRemainingBalance()){
+                databaseHelper.addNewExpense(new Expense(Integer.parseInt(Amount.getText().toString()),
+                        currencyValue,categoryTitle.getText().toString(), walletTitleStr, walletValue,Note.getText().toString(),ExpenseDate.getText().toString()));
+                Toast.makeText(this,getResources().getString(R.string.data_saved_successfully),Toast.LENGTH_LONG).show();
+                startActivity(new Intent(ExpenseActivity.this,HomeActivity.class));
+            }
+            else{
+                Snackbar.make(mainLayout,getResources().getString(R.string.wallet_amount_exceeds), Snackbar.LENGTH_LONG).show();
+            }
         }
     }
     //end
+
+    //region get selected wallet remaining balance
+    private boolean getRemainingBalance(){
+        int remaining = databaseHelper.getWalletBalance(walletValue) - databaseHelper.singleWalletTotalCost(walletValue);
+        if (Integer.parseInt(Amount.getText().toString()) < remaining){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    //endregion
 
     //Update expense
     private void updateExpense() {

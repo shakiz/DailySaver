@@ -55,14 +55,14 @@
                 android:padding="2dp"/>
 
             <TextView
-                android:id="@+id/Note"
+                android:id="@+id/WalletName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/ic_writing"
                 android:drawablePadding="4dp"
                 android:layout_marginTop="2dp"
                 android:layout_marginBottom="2dp"
-                android:text="@string/note_hint"
+                android:text="@string/wallet_name"
                 android:textColor="@color/md_grey_800"
                 android:ellipsize="end"
                 android:maxLines="1"

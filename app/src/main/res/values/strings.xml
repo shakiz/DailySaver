@@ -72,4 +72,5 @@
     <string name="select_your_option">Please select your chocie</string>
     <string name="select_valid_date">Select valid date</string>
     <string name="expense_report">Expense Report</string>
+    <string name="wallet_amount_exceeds">Wallet Amount Exceeds</string>
 </resources>
