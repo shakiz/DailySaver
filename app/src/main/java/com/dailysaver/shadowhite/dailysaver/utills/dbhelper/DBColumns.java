@@ -8,7 +8,7 @@ public class DBColumns {
     public static final String COLUMN_EXPENSE_WALLET = "expense_wallet";
     public static final String COLUMN_EXPENSE_WALLET_ID = "expense_wallet_id";
     public static final String COLUMN_EXPENSE_NOTE = "expense_note";
-    public static final String COLUMN_EXPENSE_EXPENSE_DATE = "expense_expense_date";
+    public static final String COLUMN_EXPENSE_DATE = "expense_date";
 
 
     public static final String COLUMN_WALLET_ID = "wallet_id";

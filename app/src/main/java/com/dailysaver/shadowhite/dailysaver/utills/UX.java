@@ -22,8 +22,11 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import com.dailysaver.shadowhite.dailysaver.R;
+import com.google.android.material.snackbar.Snackbar;
 import java.util.Calendar;
 import java.util.Locale;
+import greco.lorenzo.com.lgsnackbar.style.LGSnackBarStyle;
+import greco.lorenzo.com.lgsnackbar.style.LGSnackBarTheme;
 
 public class UX {
     private Context context;
@@ -207,5 +210,31 @@ public class UX {
         return valid;
     }
     //Validation End
+
+    //region custom toast bar styling
+    LGSnackBarTheme customTheme() {
+        LGSnackBarStyle successStyle = new LGSnackBarStyle(context.getResources().getColor(R.color.md_green_400),
+                Color.WHITE,
+                context.getResources().getColor(R.color.md_green_400),
+                R.drawable.ic_action_done);
+
+        LGSnackBarStyle warningStyle = new LGSnackBarStyle(context.getResources().getColor(R.color.md_red_400),
+                Color.WHITE,
+                context.getResources().getColor(R.color.md_red_400),
+                R.drawable.ic_warning);
+
+        LGSnackBarStyle errorStyle = new LGSnackBarStyle(context.getResources().getColor(R.color.md_red_800),
+                Color.WHITE,
+                context.getResources().getColor(R.color.md_red_800),
+                R.drawable.ic_error);
+
+        LGSnackBarStyle infoStyle = new LGSnackBarStyle(context.getResources().getColor(R.color.md_grey_400),
+                Color.WHITE,
+                context.getResources().getColor(R.color.md_grey_400),
+                R.drawable.ic_information);
+
+        return new LGSnackBarTheme(successStyle, warningStyle, errorStyle, infoStyle, 60, Snackbar.LENGTH_LONG);
+    }
+    //endregion
 
 }

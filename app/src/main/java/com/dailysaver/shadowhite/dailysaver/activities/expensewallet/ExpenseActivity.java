@@ -149,6 +149,7 @@ public class ExpenseActivity extends AppCompatActivity implements View.OnClickLi
                 startActivity(new Intent(ExpenseActivity.this,HomeActivity.class));
             }
             else{
+                //LGSnackbarManager.show(LGSnackBarTheme.SnackbarStyle.INFO, getResources().getString(R.string.wallet_amount_exceeds));
                 Snackbar.make(mainLayout,getResources().getString(R.string.wallet_amount_exceeds), Snackbar.LENGTH_LONG).show();
             }
         }

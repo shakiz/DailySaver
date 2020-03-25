@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/md_white_1000"
     android:id="@+id/home_layout">
 
@@ -27,129 +28,140 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/SliderContainer"
-        android:layout_below="@id/app_bar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_margin="4dp"
-        app:cardCornerRadius="12dp"
-        android:translationZ="4dp"
-        android:clickable="true"
-        app:cardBackgroundColor="@color/md_white_1000"
-        android:foreground="?attr/selectableItemBackground"
-        app:cardUseCompatPadding="true">
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:layout_below="@id/app_bar"
+       android:weightSum="2"
+       android:orientation="vertical">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="200dp">
+       <androidx.cardview.widget.CardView
+           android:id="@+id/SliderContainer"
+           android:layout_below="@id/app_bar"
+           android:layout_width="match_parent"
+           android:layout_height="0dp"
+           android:layout_weight=".55"
+           android:orientation="vertical"
+           android:layout_margin="16dp"
+           app:cardCornerRadius="12dp"
+           android:translationZ="4dp"
+           android:clickable="true"
+           app:cardBackgroundColor="@color/md_white_1000"
+           android:foreground="?attr/selectableItemBackground"
+           app:cardUseCompatPadding="true">
 
-            <com.smarteist.autoimageslider.SliderView
-                android:id="@+id/Slider"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:translationZ="4dp"
-                android:translationY="4dp"
-                android:elevation="8dp"
-                android:layout_margin="8dp"
-                app:sliderAnimationDuration="500"
-                app:sliderAutoCycleDirection="back_and_forth"
-                app:sliderAutoCycleEnabled="false"
-                app:sliderCircularHandlerEnabled="true"
-                app:sliderIndicatorAnimationDuration="500"
-                app:sliderIndicatorGravity="center_horizontal|bottom"
-                app:sliderIndicatorMargin="16dp"
-                app:sliderIndicatorOrientation="horizontal"
-                app:sliderIndicatorPadding="4dp"
-                app:sliderIndicatorRadius="1dp"
-                app:sliderIndicatorSelectedColor="@color/md_grey_600"
-                app:sliderIndicatorUnselectedColor="@color/md_blue_grey_400"
-                app:sliderScrollTimeInSec="1"
-                app:sliderStartAutoCycle="false" />
+           <RelativeLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/NoDataWallet"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:gravity="center"
-                android:layout_centerInParent="true"
-                android:textSize="20sp"
-                android:textColor="@color/md_red_400"
-                android:textStyle="bold"
-                android:padding="8dp"
-                android:layout_margin="8dp"
-                android:text="@string/no_wallet_data"/>
+               <com.smarteist.autoimageslider.SliderView
+                   android:id="@+id/Slider"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:translationZ="4dp"
+                   android:translationY="4dp"
+                   android:elevation="8dp"
+                   app:sliderAnimationDuration="500"
+                   app:sliderAutoCycleDirection="back_and_forth"
+                   app:sliderAutoCycleEnabled="false"
+                   app:sliderCircularHandlerEnabled="true"
+                   app:sliderIndicatorAnimationDuration="500"
+                   app:sliderIndicatorGravity="center_horizontal|bottom"
+                   app:sliderIndicatorMargin="16dp"
+                   app:sliderIndicatorOrientation="horizontal"
+                   app:sliderIndicatorPadding="4dp"
+                   app:sliderIndicatorRadius="1dp"
+                   app:sliderIndicatorSelectedColor="@color/md_grey_600"
+                   app:sliderIndicatorUnselectedColor="@color/md_blue_grey_400"
+                   app:sliderScrollTimeInSec="1"
+                   app:sliderStartAutoCycle="false" />
 
-        </RelativeLayout>
+               <TextView
+                   android:id="@+id/NoDataWallet"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:visibility="gone"
+                   android:gravity="center"
+                   android:layout_centerInParent="true"
+                   android:textSize="20sp"
+                   android:textColor="@color/md_red_400"
+                   android:textStyle="bold"
+                   android:padding="8dp"
+                   android:layout_margin="8dp"
+                   android:text="@string/no_wallet_data"/>
 
-    </androidx.cardview.widget.CardView>
+           </RelativeLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/SliderContainer"
-        android:layout_margin="8dp"
-        android:orientation="vertical">
+       </androidx.cardview.widget.CardView>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="4dp"
-            android:paddingTop="4dp">
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="0dp"
+           android:layout_weight="1.45"
+           android:layout_margin="8dp"
+           android:orientation="vertical">
 
-            <View
-                android:id="@+id/label1"
-                android:layout_width="16dp"
-                android:layout_height="24dp"
-                android:layout_centerVertical="true"
-                android:background="@drawable/rounded_layout_2" />
+           <RelativeLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:paddingTop="4dp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/label1"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="5dp"
-                android:gravity="center"
-                android:layout_centerInParent="true"
-                android:layout_toEndOf="@+id/label1"
-                android:layout_toRightOf="@+id/label1"
-                android:padding="4dp"
-                android:text="@string/recent_activities"
-                android:textColor="@color/md_grey_600"
-                android:textSize="14sp" />
+               <View
+                   android:id="@+id/label1"
+                   android:layout_width="16dp"
+                   android:layout_height="24dp"
+                   android:layout_centerVertical="true"
+                   android:background="@drawable/rounded_layout_2" />
 
-        </RelativeLayout>
+               <TextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_alignTop="@+id/label1"
+                   android:layout_marginLeft="8dp"
+                   android:layout_marginTop="5dp"
+                   android:gravity="center"
+                   android:layout_centerInParent="true"
+                   android:layout_toEndOf="@+id/label1"
+                   android:layout_toRightOf="@+id/label1"
+                   android:padding="4dp"
+                   android:text="@string/recent_activities"
+                   android:textColor="@color/md_grey_600"
+                   android:textSize="14sp" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+           </RelativeLayout>
 
-            <TextView
-                android:id="@+id/NoDataBudget"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:gravity="center"
-                android:layout_centerInParent="true"
-                android:textSize="20sp"
-                android:textColor="@color/md_red_400"
-                android:textStyle="bold"
-                android:padding="8dp"
-                android:layout_margin="8dp"
-                android:text="@string/no_budget_data"/>
+           <RelativeLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/mRecyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="4dp"/>
+               <TextView
+                   android:id="@+id/NoDataBudget"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:visibility="gone"
+                   android:gravity="center"
+                   android:layout_centerInParent="true"
+                   android:textSize="20sp"
+                   android:textColor="@color/md_red_400"
+                   android:textStyle="bold"
+                   android:padding="8dp"
+                   android:layout_margin="8dp"
+                   android:text="@string/no_budget_data"/>
 
-        </RelativeLayout>
+               <androidx.recyclerview.widget.RecyclerView
+                   android:id="@+id/mRecyclerView"
+                   android:layout_width="match_parent"
+                   android:layout_height="match_parent"
+                   android:layout_marginLeft="4dp"
+                   tools:listitem="@layout/adapter_layout_generic_expense"
+                   android:layout_marginRight="4dp"
+                   android:layout_marginBottom="4dp"/>
 
-    </LinearLayout>
+           </RelativeLayout>
+
+       </LinearLayout>
+
+   </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/add"

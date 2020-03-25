@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import static com.dailysaver.shadowhite.dailysaver.utills.dbhelper.DBColumns.COLUMN_EXPENSE_AMOUNT;
 import static com.dailysaver.shadowhite.dailysaver.utills.dbhelper.DBColumns.COLUMN_EXPENSE_CATEGORY;
 import static com.dailysaver.shadowhite.dailysaver.utills.dbhelper.DBColumns.COLUMN_EXPENSE_CURRENCY;
-import static com.dailysaver.shadowhite.dailysaver.utills.dbhelper.DBColumns.COLUMN_EXPENSE_EXPENSE_DATE;
+import static com.dailysaver.shadowhite.dailysaver.utills.dbhelper.DBColumns.COLUMN_EXPENSE_DATE;
 import static com.dailysaver.shadowhite.dailysaver.utills.dbhelper.DBColumns.COLUMN_EXPENSE_ID;
 import static com.dailysaver.shadowhite.dailysaver.utills.dbhelper.DBColumns.COLUMN_EXPENSE_NOTE;
 import static com.dailysaver.shadowhite.dailysaver.utills.dbhelper.DBColumns.COLUMN_EXPENSE_WALLET;
@@ -35,7 +35,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static String CREATE_EXPENSE_TABLE = "CREATE TABLE " + EXPENSE_TABLE + "("
             + COLUMN_EXPENSE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + COLUMN_EXPENSE_AMOUNT + " INTEGER,"
             + COLUMN_EXPENSE_CURRENCY + " INTEGER," + COLUMN_EXPENSE_CATEGORY + " TEXT," + COLUMN_EXPENSE_NOTE + " TEXT,"+ COLUMN_EXPENSE_WALLET_ID + " INTEGER,"
-            + COLUMN_EXPENSE_WALLET + " TEXT," + COLUMN_EXPENSE_EXPENSE_DATE + " TEXT" + ")";
+            + COLUMN_EXPENSE_WALLET + " TEXT," + COLUMN_EXPENSE_DATE + " TEXT" + ")";
 
     private static String CREATE_WALLET_TABLE = "CREATE TABLE " + WALLET_TABLE + "("
             + COLUMN_WALLET_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + COLUMN_WALLET_AMOUNT + " REAL,"
@@ -77,7 +77,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_EXPENSE_WALLET, expense.getWalletTitle());
         values.put(COLUMN_EXPENSE_WALLET_ID, expense.getWalletId());
         values.put(COLUMN_EXPENSE_NOTE, expense.getNote());
-        values.put(COLUMN_EXPENSE_EXPENSE_DATE, expense.getExpenseDate());
+        values.put(COLUMN_EXPENSE_DATE, expense.getExpenseDate());
 
         // Inserting Row
         db.insert(EXPENSE_TABLE, null, values);
@@ -99,7 +99,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_EXPENSE_WALLET, expense.getWalletTitle());
         values.put(COLUMN_EXPENSE_WALLET_ID, expense.getWalletId());
         values.put(COLUMN_EXPENSE_NOTE, expense.getNote());
-        values.put(COLUMN_EXPENSE_EXPENSE_DATE, expense.getExpenseDate());
+        values.put(COLUMN_EXPENSE_DATE, expense.getExpenseDate());
 
         // Inserting Row
         db.update(EXPENSE_TABLE, values, COLUMN_EXPENSE_ID+" = "+expenseId, null);
@@ -117,7 +117,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 COLUMN_EXPENSE_ID,
                 COLUMN_EXPENSE_AMOUNT,
                 COLUMN_EXPENSE_CATEGORY,
-                COLUMN_EXPENSE_EXPENSE_DATE,
+                COLUMN_EXPENSE_DATE,
                 COLUMN_EXPENSE_CURRENCY,
                 COLUMN_EXPENSE_NOTE,
                 COLUMN_EXPENSE_WALLET,
@@ -147,7 +147,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     expense.setId(cursor.getInt(cursor.getColumnIndex(COLUMN_EXPENSE_ID)));
                     expense.setAmount(cursor.getInt(cursor.getColumnIndex(COLUMN_EXPENSE_AMOUNT)));
                     expense.setCategory((cursor.getString(cursor.getColumnIndex(COLUMN_EXPENSE_CATEGORY))));
-                    expense.setExpenseDate((cursor.getString(cursor.getColumnIndex(COLUMN_EXPENSE_EXPENSE_DATE))));
+                    expense.setExpenseDate((cursor.getString(cursor.getColumnIndex(COLUMN_EXPENSE_DATE))));
                     expense.setCurrency(cursor.getInt(cursor.getColumnIndex(COLUMN_EXPENSE_CURRENCY)));
                     expense.setNote(cursor.getString(cursor.getColumnIndex(COLUMN_EXPENSE_NOTE)));
                     expense.setWalletTitle(cursor.getString(cursor.getColumnIndex(COLUMN_EXPENSE_WALLET)));

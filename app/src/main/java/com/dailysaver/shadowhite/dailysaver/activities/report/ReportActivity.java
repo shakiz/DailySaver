@@ -75,7 +75,7 @@ public class ReportActivity extends AppCompatActivity {
     //region data render
     private DataRenderer getRenderer() {
         CustomBarChartRenderer customBarChartRenderer = new CustomBarChartRenderer(barChart, barChart.getAnimator(), barChart.getViewPortHandler());
-        customBarChartRenderer.setRadius(48);
+        customBarChartRenderer.setRadius(40);
         return customBarChartRenderer;
     }
     //endregion

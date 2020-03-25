@@ -3,6 +3,7 @@ package com.dailysaver.shadowhite.dailysaver.adapters.monthlyexpense;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -10,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.dailysaver.shadowhite.dailysaver.models.expense.Expense;
 import com.dailysaver.shadowhite.dailysaver.R;
 import java.util.ArrayList;
-import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MonthlyExpenseAdapter extends RecyclerView.Adapter<MonthlyExpenseAdapter.ViewHolder>{
     private ArrayList<Expense> expenseList;
@@ -48,7 +48,7 @@ public class MonthlyExpenseAdapter extends RecyclerView.Adapter<MonthlyExpenseAd
         });
     }
 
-    private void setTypeIcon(CircleImageView icon, String type) {
+    private void setTypeIcon(ImageView icon, String type) {
         if (type.equals("Food")) icon.setImageResource(R.drawable.ic_food_icon);
         else if (type.equals("Transport")) icon.setImageResource(R.drawable.ic_transport);
         else if (type.equals("Electricity")) icon.setImageResource(R.drawable.ic_electricity);
@@ -69,7 +69,7 @@ public class MonthlyExpenseAdapter extends RecyclerView.Adapter<MonthlyExpenseAd
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView Category,WalletName,Amount,ExpenseDate;
-        CircleImageView Icon;
+        ImageView Icon;
         CardView view;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
