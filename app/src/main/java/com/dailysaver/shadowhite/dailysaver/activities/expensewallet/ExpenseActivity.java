@@ -61,6 +61,10 @@ public class ExpenseActivity extends AppCompatActivity implements View.OnClickLi
 
         init();
 
+        //set spinner data
+        ux.setSpinnerAdapter(dataManager.currencyData(),currencySpinner);
+        ux.setSpinnerAdapter(dataManager.getWalletTitle(),walletSpinner);
+
         //Check for pref data
         if (getIntent().getSerializableExtra("expense") != null){
             loadRecord();
@@ -101,9 +105,6 @@ public class ExpenseActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void bindUIWIthComponents() {
-        //set spinner data
-        ux.setSpinnerAdapter(dataManager.currencyData(),currencySpinner);
-        ux.setSpinnerAdapter(dataManager.getWalletTitle(),walletSpinner);
 
         ux.onSpinnerChange(currencySpinner, new UX.onSpinnerChangeListener() {
             @Override
@@ -186,8 +187,8 @@ public class ExpenseActivity extends AppCompatActivity implements View.OnClickLi
         Amount.setText(""+ expense.getAmount());
         Note.setText(expense.getNote());
         ExpenseDate.setText(expense.getExpenseDate());
-        currencySpinner.setSelection(expense.getCurrency());
-        walletSpinner.setSelection(expense.getWalletId());
+        currencySpinner.setSelection(expense.getWalletId(), true);
+        walletSpinner.setSelection(expense.getWalletId(), true);
         addOrUpdate.setImageResource(R.drawable.ic_action_done);
     }
 

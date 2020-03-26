@@ -15,8 +15,12 @@ public class DataManager {
         databaseHelper = new DatabaseHelper(context);
     }
 
-    public String[] currencyData(){
-        return new String[]{context.getResources().getString(R.string.select_currency),"BDT Tk.","US Dollar"};
+    public ArrayList<String> currencyData(){
+        ArrayList<String> currencyList = new ArrayList<>();
+        currencyList.add(context.getResources().getString(R.string.select_currency));
+        currencyList.add("BDT Tk.");
+        currencyList.add("US Dollar");
+        return currencyList;
     }
 
     public String[] walletTypeData(){
@@ -24,8 +28,8 @@ public class DataManager {
     }
 
 
-    public String[] getWalletTitle(){
-        String[] walletTitleList = databaseHelper.getWalletTitle();;
+    public ArrayList<String> getWalletTitle(){
+        ArrayList<String> walletTitleList = databaseHelper.getWalletTitle();;
         return walletTitleList;
     }
 

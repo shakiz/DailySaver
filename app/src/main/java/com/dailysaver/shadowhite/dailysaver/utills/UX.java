@@ -23,6 +23,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import com.dailysaver.shadowhite.dailysaver.R;
 import com.google.android.material.snackbar.Snackbar;
+
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 import greco.lorenzo.com.lgsnackbar.style.LGSnackBarStyle;
@@ -81,7 +83,7 @@ public class UX {
     //End
 
     //Set spinner adapter
-    public void setSpinnerAdapter(String[] dataSet, Spinner spinner) {
+    public void setSpinnerAdapter(ArrayList<String> dataSet, Spinner spinner) {
         spinnerAdapter = new ArrayAdapter<String>(context,R.layout.spinner_drop,dataSet);
         spinner.setAdapter(spinnerAdapter);
         spinnerAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);

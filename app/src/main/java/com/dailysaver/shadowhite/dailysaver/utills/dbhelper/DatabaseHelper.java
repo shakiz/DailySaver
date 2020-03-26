@@ -252,8 +252,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      * This method is to get wallet title
      *
      */
-    public String[] getWalletTitle() {
-        String[] walletTitle = null;
+    public ArrayList<String> getWalletTitle() {
+        ArrayList<String> walletTitle = new ArrayList<>();
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
 
         String[] columns = {
@@ -264,18 +264,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         int counter = 0;
         if (cursor != null){
             if (cursor.getCount() > 0){
-                walletTitle = new String[cursor.getCount()+1];
                 if (cursor.moveToFirst()){
-                    walletTitle[0] = "Select Wallet";
+                    walletTitle.add(0,"Select Wallet");
                     do{
                         counter++;
-                        walletTitle[counter] = cursor.getString(0);
+                        walletTitle.add(counter,cursor.getString(0));
                     }while (cursor.moveToNext());
                 }
             }
             else{
-                walletTitle = new String[1];
-                walletTitle[0] = "No Data";
+                walletTitle.add("No Data");
             }
         }
         cursor.close();
