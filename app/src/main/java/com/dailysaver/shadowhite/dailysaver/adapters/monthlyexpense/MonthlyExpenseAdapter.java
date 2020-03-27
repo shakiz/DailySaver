@@ -1,5 +1,6 @@
 package com.dailysaver.shadowhite.dailysaver.adapters.monthlyexpense;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,15 +11,19 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 import com.dailysaver.shadowhite.dailysaver.models.expense.Expense;
 import com.dailysaver.shadowhite.dailysaver.R;
+import com.dailysaver.shadowhite.dailysaver.utills.Tools;
 import java.util.ArrayList;
 
 public class MonthlyExpenseAdapter extends RecyclerView.Adapter<MonthlyExpenseAdapter.ViewHolder>{
     private ArrayList<Expense> expenseList;
     private onItemClick onItemClick;
+    private Tools tools;
+    private Context context;
 
-    public MonthlyExpenseAdapter(ArrayList<Expense> expenseList, onItemClick onItemClick) {
+    public MonthlyExpenseAdapter(ArrayList<Expense> expenseList, Context context, onItemClick onItemClick) {
         this.expenseList = expenseList;
         this.onItemClick = onItemClick;
+        tools = new Tools(context);
     }
 
     public interface onItemClick{
@@ -38,7 +43,7 @@ public class MonthlyExpenseAdapter extends RecyclerView.Adapter<MonthlyExpenseAd
         holder.Category.setText(expense.getCategory());
         holder.WalletName.setText(expense.getWalletTitle());
         holder.Amount.setText(""+ expense.getAmount());
-        holder.ExpenseDate.setText(expense.getExpenseDate());
+        holder.ExpenseDate.setText(tools.longToDateString(expense.getExpenseDate()));
         setTypeIcon(holder.Icon, expense.getCategory());
         holder.view.setOnClickListener(new View.OnClickListener() {
             @Override

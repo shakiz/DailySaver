@@ -35,12 +35,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static String CREATE_EXPENSE_TABLE = "CREATE TABLE " + EXPENSE_TABLE + "("
             + COLUMN_EXPENSE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + COLUMN_EXPENSE_AMOUNT + " INTEGER,"
             + COLUMN_EXPENSE_CURRENCY + " INTEGER," + COLUMN_EXPENSE_CATEGORY + " TEXT," + COLUMN_EXPENSE_NOTE + " TEXT,"+ COLUMN_EXPENSE_WALLET_ID + " INTEGER,"
-            + COLUMN_EXPENSE_WALLET + " TEXT," + COLUMN_EXPENSE_DATE + " TEXT" + ")";
+            + COLUMN_EXPENSE_WALLET + " TEXT," + COLUMN_EXPENSE_DATE + " INTEGER" + ")";
 
     private static String CREATE_WALLET_TABLE = "CREATE TABLE " + WALLET_TABLE + "("
             + COLUMN_WALLET_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + COLUMN_WALLET_AMOUNT + " REAL,"
             + COLUMN_WALLET_CURRENCY + " INTEGER," + COLUMN_WALLET_TITLE + " TEXT," + COLUMN_WALLET_NOTE + " TEXT,"
-            + COLUMN_WALLET_TYPE + " INTEGER," + COLUMN_WALLET_EXPIRES_ON + " TEXT" + ")";
+            + COLUMN_WALLET_TYPE + " INTEGER," + COLUMN_WALLET_EXPIRES_ON + " INTEGER" + ")";
 
     private static String DROP_WALLET_TABLE = "DROP TABLE IF EXISTS "+WALLET_TABLE;
     private static String DROP_EXPENSE_TABLE = "DROP TABLE IF EXISTS "+EXPENSE_TABLE;
@@ -147,7 +147,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     expense.setId(cursor.getInt(cursor.getColumnIndex(COLUMN_EXPENSE_ID)));
                     expense.setAmount(cursor.getInt(cursor.getColumnIndex(COLUMN_EXPENSE_AMOUNT)));
                     expense.setCategory((cursor.getString(cursor.getColumnIndex(COLUMN_EXPENSE_CATEGORY))));
-                    expense.setExpenseDate((cursor.getString(cursor.getColumnIndex(COLUMN_EXPENSE_DATE))));
+                    expense.setExpenseDate((cursor.getLong(cursor.getColumnIndex(COLUMN_EXPENSE_DATE))));
                     expense.setCurrency(cursor.getInt(cursor.getColumnIndex(COLUMN_EXPENSE_CURRENCY)));
                     expense.setNote(cursor.getString(cursor.getColumnIndex(COLUMN_EXPENSE_NOTE)));
                     expense.setWalletTitle(cursor.getString(cursor.getColumnIndex(COLUMN_EXPENSE_WALLET)));
@@ -236,7 +236,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     wallet.setTitle((cursor.getString(cursor.getColumnIndex(COLUMN_WALLET_TITLE))));
                     wallet.setNote((cursor.getString(cursor.getColumnIndex(COLUMN_WALLET_NOTE))));
                     wallet.setCurrency(cursor.getInt(cursor.getColumnIndex(COLUMN_WALLET_CURRENCY)));
-                    wallet.setExpiresOn(cursor.getString(cursor.getColumnIndex(COLUMN_WALLET_EXPIRES_ON)));
+                    wallet.setExpiresOn(cursor.getLong(cursor.getColumnIndex(COLUMN_WALLET_EXPIRES_ON)));
                     wallet.setWalletType(cursor.getString(cursor.getColumnIndex(COLUMN_WALLET_TYPE)));
 
                     walletList.add(wallet);

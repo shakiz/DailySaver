@@ -68,7 +68,7 @@ public class WalletDetailsActivity extends AppCompatActivity {
         CurrentBalance = findViewById(R.id.CurrentBalance);
         CurrentBalance.animateText(""+(wallet.getAmount()-databaseHelper.singleWalletTotalCost(walletId)));
         CurrentBalance.setDelay(0);
-        ExpiresOn.setText(wallet.getExpiresOn());
+        ExpiresOn.setText(tools.longToDateString(wallet.getExpiresOn()));
     }
 
     private void getId() {
@@ -140,7 +140,7 @@ public class WalletDetailsActivity extends AppCompatActivity {
             noBudgetData.setVisibility(View.VISIBLE);
         }
         else {
-            monthlyExpenseAdapter = new MonthlyExpenseAdapter(allExpenseItems, new MonthlyExpenseAdapter.onItemClick() {
+            monthlyExpenseAdapter = new MonthlyExpenseAdapter(allExpenseItems, this,new MonthlyExpenseAdapter.onItemClick() {
                 @Override
                 public void itemClick(Expense expense) {
                     startActivity(new Intent(WalletDetailsActivity.this, ExpenseActivity.class).putExtra("expense", expense));

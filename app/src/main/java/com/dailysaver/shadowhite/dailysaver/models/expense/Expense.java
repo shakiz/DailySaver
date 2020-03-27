@@ -10,12 +10,12 @@ public class Expense implements Serializable {
     private String WalletTitle;
     private int WalletId;
     private String Note;
-    private String ExpenseDate;
+    private long ExpenseDate;
 
     public Expense() {
     }
 
-    public Expense(int amount, int currency, String category, String walletTitle,int walletId, String note, String expenseDate) {
+    public Expense(int amount, int currency, String category, String walletTitle,int walletId, String note, long expenseDate) {
         this.Amount = amount;
         this.Currency = currency;
         this.Category = category;
@@ -81,11 +81,11 @@ public class Expense implements Serializable {
         Note = note;
     }
 
-    public String getExpenseDate() {
+    public long getExpenseDate() {
         return ExpenseDate;
     }
 
-    public void setExpenseDate(String expenseDate) {
+    public void setExpenseDate(long expenseDate) {
         ExpenseDate = expenseDate;
     }
 }

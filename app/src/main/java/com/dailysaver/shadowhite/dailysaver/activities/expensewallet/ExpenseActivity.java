@@ -144,8 +144,16 @@ public class ExpenseActivity extends AppCompatActivity implements View.OnClickLi
     private void saveExpense(){
         if (ux.validation(new int[]{R.id.Amount, R.id.Currency, R.id.Wallet, R.id.Note, R.id.ExpenseDate},mainLayout)){
             if (getRemainingBalance()){
-                databaseHelper.addNewExpense(new Expense(Integer.parseInt(Amount.getText().toString()),
-                        currencyValue,categoryTitle.getText().toString(), walletTitleStr, walletValue,Note.getText().toString(),ExpenseDate.getText().toString()));
+
+                databaseHelper.addNewExpense(new Expense(
+                                Integer.parseInt(Amount.getText().toString()),
+                                currencyValue,
+                                categoryTitle.getText().toString(),
+                                walletTitleStr,
+                                walletValue,
+                                Note.getText().toString(),
+                                tools.convertDateToLong(tools.convertStrToDate(ExpenseDate.getText().toString()))));
+
                 Toast.makeText(this,getResources().getString(R.string.data_saved_successfully),Toast.LENGTH_LONG).show();
                 startActivity(new Intent(ExpenseActivity.this,HomeActivity.class));
             }
@@ -171,9 +179,17 @@ public class ExpenseActivity extends AppCompatActivity implements View.OnClickLi
 
     //Update expense
     private void updateExpense() {
-        databaseHelper.updateExpense(new Expense(Integer.parseInt(Amount.getText().toString()),
-                currencyValue,categoryTitle.getText().toString(), walletTitleStr, walletValue,Note.getText().toString(),ExpenseDate.getText().toString())
-            , expense.getId());
+
+        databaseHelper.updateExpense(new Expense(
+                        Integer.parseInt(Amount.getText().toString()),
+                        currencyValue,
+                        categoryTitle.getText().toString(),
+                        walletTitleStr,
+                        walletValue,
+                        Note.getText().toString(),
+                        tools.convertDateToLong(tools.convertStrToDate(ExpenseDate.getText().toString())))
+                        , expense.getId());
+
         Toast.makeText(this,getResources().getString(R.string.data_updated_successfully),Toast.LENGTH_LONG).show();
         startActivity(new Intent(ExpenseActivity.this,HomeActivity.class));
     }
@@ -186,7 +202,7 @@ public class ExpenseActivity extends AppCompatActivity implements View.OnClickLi
         setTypeIcon(categoryIcon, expense.getCategory());
         Amount.setText(""+ expense.getAmount());
         Note.setText(expense.getNote());
-        ExpenseDate.setText(expense.getExpenseDate());
+        ExpenseDate.setText(tools.longToDateString(expense.getExpenseDate()));
         currencySpinner.setSelection(expense.getWalletId(), true);
         walletSpinner.setSelection(expense.getWalletId(), true);
         addOrUpdate.setImageResource(R.drawable.ic_action_done);

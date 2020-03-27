@@ -23,7 +23,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import com.dailysaver.shadowhite.dailysaver.R;
 import com.google.android.material.snackbar.Snackbar;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
@@ -40,7 +39,11 @@ public class UX {
         loadingDialog = new Dialog(context);
     }
 
-    //Toolbar
+    /**
+     * This method will set the Toolbar
+     *
+     * @param toolbar,from,to
+     */
     public void setToolbar(Toolbar toolbar, final Activity from, final Class to){
         ((AppCompatActivity) context).setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -49,11 +52,12 @@ public class UX {
                 context.startActivity(new Intent(from, to));
             }
         });
-//        ((AppCompatActivity) context).getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_left_arrow);
+        //((AppCompatActivity) context).getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_left_arrow);
     }
-    //End toolbar
 
-    //Loading view creator and cancel
+    /**
+     * This method will perform Loading view creator and cancel
+     */
     public void getLoadingView(){
         loadingDialog.setContentView(R.layout.loading_layout);
         loadingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
@@ -61,12 +65,16 @@ public class UX {
         loadingDialog.show();
     }
 
+    /**
+     * This method will remove Loading view
+     */
     public void removeLoadingView(){
         if (loadingDialog.isShowing()) loadingDialog.cancel();
     }
-    //End loading view
 
-    //Clear UI components
+    /**
+     * This method will perform Clear UI components
+     */
     public void clearDetailsUI(int[] resIds,View view){
         for (int resId : resIds){
             View child = view.findViewById(resId);
@@ -80,18 +88,20 @@ public class UX {
             }
         }
     }
-    //End
 
-    //Set spinner adapter
+    /**
+     * This method will set spinner adapter
+     */
     public void setSpinnerAdapter(ArrayList<String> dataSet, Spinner spinner) {
         spinnerAdapter = new ArrayAdapter<String>(context,R.layout.spinner_drop,dataSet);
         spinner.setAdapter(spinnerAdapter);
         spinnerAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
         spinnerAdapter.notifyDataSetChanged();
     }
-    //End spinner adapter
 
-    //Spinner on change
+    /**
+     * This method will perform Spinner on change
+     */
     public void onSpinnerChange(Spinner spinner, onSpinnerChangeListener listener) {
         final onSpinnerChangeListener customListener = listener;
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -112,6 +122,9 @@ public class UX {
     }
     //End spinner
 
+    /**
+     * This method will perform checkbox on change
+     */
     public void onChange(CheckBox checkBox, final onChangeListener listener) {
         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -127,7 +140,11 @@ public class UX {
         void onChange(boolean isChecked);
     }
 
-    //Date on click operation
+    /**
+     * This method will perform Date on click operation
+     *
+     * @param dateViewTXT
+     */
     public void getAndSetDate(final TextView dateViewTXT){
         DateFormat dateFormatter = null;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -148,9 +165,12 @@ public class UX {
         },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
         datePickerDialog.show();
     }
-    //End
 
-    //Validation of all view
+    /**
+     * This method will perform Validation of all view
+     *
+     * @params resIds and view
+     */
     public boolean validation(int[] resIds,View view){
         boolean valid = false;
         for (int resId : resIds){
@@ -211,9 +231,12 @@ public class UX {
         }
         return valid;
     }
-    //Validation End
 
-    //region custom toast bar styling
+    /**
+     * This method will perform custom toast bar styling
+     *
+     * @params resIds and view
+     */
     LGSnackBarTheme customTheme() {
         LGSnackBarStyle successStyle = new LGSnackBarStyle(context.getResources().getColor(R.color.md_green_400),
                 Color.WHITE,

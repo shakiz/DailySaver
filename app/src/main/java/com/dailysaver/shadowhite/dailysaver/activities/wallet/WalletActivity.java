@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -107,8 +106,14 @@ public class WalletActivity extends AppCompatActivity implements View.OnClickLis
     private void saveWallet() {
         if (ux.validation(new int[]{R.id.Amount, R.id.Currency, R.id.WalletName, R.id.Note, R.id.ExpiresOn},mainLayout)){
             if (!budgetTypeStr.isEmpty()){
-                databaseHelper.addNewWallet(new Wallet(WalletName.getText().toString(),Integer.parseInt(Amount.getText().toString()),
-                        currencyValue,ExpiresOn.getText().toString(),budgetTypeStr,Note.getText().toString()));
+
+                databaseHelper.addNewWallet(new Wallet(WalletName.getText().toString(),
+                        Integer.parseInt(Amount.getText().toString()),
+                        currencyValue,
+                        tools.convertDateToLong(tools.convertStrToDate(ExpiresOn.getText().toString())),
+                        budgetTypeStr,
+                        Note.getText().toString()));
+
                 Toast.makeText(this,getResources().getString(R.string.data_saved_successfully),Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(WalletActivity.this,HomeActivity.class));
             }
@@ -120,11 +125,13 @@ public class WalletActivity extends AppCompatActivity implements View.OnClickLis
 
     //Update expense
     private void updateWallet() {
-        databaseHelper.updateWallet(new Wallet(
-                WalletName.getText().toString(),Integer.parseInt(Amount.getText().toString()),
-                currencyValue,ExpiresOn.getText().toString(),budgetTypeStr,Note.getText().toString()
-        )
-        ,0);
+        databaseHelper.updateWallet(new Wallet(WalletName.getText().toString(),
+                Integer.parseInt(Amount.getText().toString()),
+                currencyValue,
+                tools.convertDateToLong(tools.convertStrToDate(ExpiresOn.getText().toString())),
+                budgetTypeStr,
+                Note.getText().toString())
+                ,0);
         Toast.makeText(this,getResources().getString(R.string.data_updated_successfully),Toast.LENGTH_LONG).show();
         startActivity(new Intent(WalletActivity.this,HomeActivity.class));
     }

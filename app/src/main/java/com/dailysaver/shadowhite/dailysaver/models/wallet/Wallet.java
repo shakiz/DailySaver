@@ -9,10 +9,10 @@ public class Wallet implements Serializable {
     private int Currency;
     private String WalletType;
     private String Note;
-    private String ExpiresOn;
+    private long ExpiresOn;
 
 
-    public Wallet(String title, int amount, int currency, String expiresOn, String walletType,String note) {
+    public Wallet(String title, int amount, int currency, long expiresOn, String walletType,String note) {
         Title = title;
         Amount = amount;
         Currency = currency;
@@ -56,11 +56,11 @@ public class Wallet implements Serializable {
         Currency = currency;
     }
 
-    public String getExpiresOn() {
+    public long getExpiresOn() {
         return ExpiresOn;
     }
 
-    public void setExpiresOn(String expiresOn) {
+    public void setExpiresOn(long expiresOn) {
         ExpiresOn = expiresOn;
     }
 

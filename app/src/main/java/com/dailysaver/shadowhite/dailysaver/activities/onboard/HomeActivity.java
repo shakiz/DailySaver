@@ -171,7 +171,7 @@ public class HomeActivity extends AppCompatActivity {
             noBudgetData.setVisibility(View.VISIBLE);
         }
         else {
-            monthlyExpenseAdapter = new MonthlyExpenseAdapter(expenseList, new MonthlyExpenseAdapter.onItemClick() {
+            monthlyExpenseAdapter = new MonthlyExpenseAdapter(expenseList, this,new MonthlyExpenseAdapter.onItemClick() {
                 @Override
                 public void itemClick(Expense expense) {
                     startActivity(new Intent(HomeActivity.this, ExpenseActivity.class).putExtra("expense", expense));

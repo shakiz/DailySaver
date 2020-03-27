@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import com.dailysaver.shadowhite.dailysaver.R;
 import com.dailysaver.shadowhite.dailysaver.models.wallet.Wallet;
+import com.dailysaver.shadowhite.dailysaver.utills.Tools;
 import com.dailysaver.shadowhite.dailysaver.utills.dbhelper.DatabaseHelper;
 import com.github.lzyzsd.circleprogress.ArcProgress;
 import com.smarteist.autoimageslider.SliderViewAdapter;
@@ -18,12 +19,14 @@ public class WalletDetailsSliderAdapter extends SliderViewAdapter<WalletDetailsS
     private Context context;
     private onItemClick onItemClick;
     private DatabaseHelper databaseHelper;
+    private Tools tools;
 
     public WalletDetailsSliderAdapter(ArrayList<Wallet> cardItemList, Context context,onItemClick onItemClick) {
         this.cardItemList = cardItemList;
         this.context = context;
         this.onItemClick = onItemClick;
         databaseHelper = new DatabaseHelper(context);
+        tools = new Tools(context);
     }
 
     public interface onItemClick{
@@ -43,8 +46,8 @@ public class WalletDetailsSliderAdapter extends SliderViewAdapter<WalletDetailsS
         viewHolder.Title.setText(itemModel.getTitle());
         viewHolder.Amount.setText(""+itemModel.getAmount());
         viewHolder.Type.setText(""+itemModel.getWalletType());
-        viewHolder.ExpiresOn.setText(itemModel.getExpiresOn());
-        final int walletId = databaseHelper.getWalletId(itemModel.getTitle());
+        viewHolder.ExpiresOn.setText(tools.longToDateString(itemModel.getExpiresOn()));
+        final int walletId = itemModel.getId();
         setProgressData(itemModel.getAmount(),databaseHelper.singleWalletTotalCost(walletId),viewHolder.RemainingBalance);
         viewHolder.TotalCost.setText(""+databaseHelper.singleWalletTotalCost(walletId));
 
