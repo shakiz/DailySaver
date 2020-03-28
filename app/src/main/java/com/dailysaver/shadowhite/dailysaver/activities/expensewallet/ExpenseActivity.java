@@ -167,6 +167,9 @@ public class ExpenseActivity extends AppCompatActivity implements View.OnClickLi
 
     //region get selected wallet remaining balance
     private boolean getRemainingBalance(){
+        if (getIntent().getSerializableExtra("expense") != null) {
+            walletValue = expense.getWalletId();
+        }
         int remaining = databaseHelper.getWalletBalance(walletValue) - databaseHelper.singleWalletTotalCost(walletValue);
         if (Integer.parseInt(Amount.getText().toString()) < remaining){
             return true;
@@ -180,18 +183,26 @@ public class ExpenseActivity extends AppCompatActivity implements View.OnClickLi
     //Update expense
     private void updateExpense() {
 
-        databaseHelper.updateExpense(new Expense(
-                        Integer.parseInt(Amount.getText().toString()),
-                        currencyValue,
-                        categoryTitle.getText().toString(),
-                        walletTitleStr,
-                        walletValue,
-                        Note.getText().toString(),
-                        tools.convertDateToLong(tools.convertStrToDate(ExpenseDate.getText().toString())))
+        if (ux.validation(new int[]{R.id.Amount, R.id.Currency, R.id.Wallet, R.id.Note, R.id.ExpenseDate},mainLayout)){
+            if (getRemainingBalance()){
+                databaseHelper.updateExpense(new Expense(
+                                Integer.parseInt(Amount.getText().toString()),
+                                currencyValue,
+                                categoryTitle.getText().toString(),
+                                walletTitleStr,
+                                walletValue,
+                                Note.getText().toString(),
+                                tools.convertDateToLong(tools.convertStrToDate(ExpenseDate.getText().toString())))
                         , expense.getId());
 
-        Toast.makeText(this,getResources().getString(R.string.data_updated_successfully),Toast.LENGTH_LONG).show();
-        startActivity(new Intent(ExpenseActivity.this,HomeActivity.class));
+                Toast.makeText(this,getResources().getString(R.string.data_updated_successfully),Toast.LENGTH_LONG).show();
+                startActivity(new Intent(ExpenseActivity.this,HomeActivity.class));
+            }
+            else{
+                //LGSnackbarManager.show(LGSnackBarTheme.SnackbarStyle.INFO, getResources().getString(R.string.wallet_amount_exceeds));
+                Snackbar.make(mainLayout,getResources().getString(R.string.wallet_amount_exceeds), Snackbar.LENGTH_LONG).show();
+            }
+        }
     }
     //end
 

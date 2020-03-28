@@ -30,19 +30,26 @@ public class Tools {
     }
 
     /**
+     * This method will provide the date formatter
+     */
+    private DateFormat getDateFormat(){
+        DateFormat dateFormatter = null;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            dateFormatter = new SimpleDateFormat("dd-MMM-yyyy", Locale.US);
+        }
+        return dateFormatter;
+    }
+
+    /**
      * This method will convert string to a date value
      *
      * @param strDate
      */
     public Date convertStrToDate(String strDate){
-        DateFormat dateFormatter = null;
         Date date = null;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            dateFormatter = new SimpleDateFormat("dd-MMM-yyyy", Locale.US);
-        }
         try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                date = dateFormatter.parse(strDate);
+                date = getDateFormat().parse(strDate);
                 System.out.println("Current Date Time : " + date);
             }
             System.out.println(date);
@@ -59,13 +66,9 @@ public class Tools {
      * @param date
      */
     public String dateToStr(Date date){
-        DateFormat dateFormatter = null;
         String dateStr = null;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            dateFormatter = new SimpleDateFormat("dd-MMM-yyyy", Locale.US);
-        }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            dateStr = dateFormatter.format(date);
+            dateStr = getDateFormat().format(date);
         }
         System.out.println("Current Date Time : " + dateStr);
 
@@ -90,14 +93,10 @@ public class Tools {
      * @param dateInLong
      */
     public String longToDateString(long dateInLong){
-        DateFormat dateFormatter = null;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            dateFormatter = new SimpleDateFormat("dd-MMM-yyyy", Locale.US);
-        }
         // or you already have long value of date, use this instead of milliseconds variable.
         String dateString = null;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            dateString = dateFormatter.format(new Date(dateInLong));
+            dateString = getDateFormat().format(new Date(dateInLong));
         }
         return dateString;
     }
