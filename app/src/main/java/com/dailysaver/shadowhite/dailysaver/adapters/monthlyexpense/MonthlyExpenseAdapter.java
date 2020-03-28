@@ -43,7 +43,7 @@ public class MonthlyExpenseAdapter extends RecyclerView.Adapter<MonthlyExpenseAd
         holder.Category.setText(expense.getCategory());
         holder.WalletName.setText(expense.getWalletTitle());
         holder.Amount.setText(""+ expense.getAmount());
-        holder.ExpenseDate.setText(tools.longToDateString(expense.getExpenseDate()));
+        holder.ExpenseDate.setText(expense.getExpenseDate());
         setTypeIcon(holder.Icon, expense.getCategory());
         holder.view.setOnClickListener(new View.OnClickListener() {
             @Override

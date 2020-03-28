@@ -152,7 +152,7 @@ public class ExpenseActivity extends AppCompatActivity implements View.OnClickLi
                                 walletTitleStr,
                                 walletValue,
                                 Note.getText().toString(),
-                                tools.convertDateToLong(tools.convertStrToDate(ExpenseDate.getText().toString()))));
+                                ExpenseDate.getText().toString()));
 
                 Toast.makeText(this,getResources().getString(R.string.data_saved_successfully),Toast.LENGTH_LONG).show();
                 startActivity(new Intent(ExpenseActivity.this,HomeActivity.class));
@@ -192,7 +192,7 @@ public class ExpenseActivity extends AppCompatActivity implements View.OnClickLi
                                 walletTitleStr,
                                 walletValue,
                                 Note.getText().toString(),
-                                tools.convertDateToLong(tools.convertStrToDate(ExpenseDate.getText().toString())))
+                                ExpenseDate.getText().toString())
                         , expense.getId());
 
                 Toast.makeText(this,getResources().getString(R.string.data_updated_successfully),Toast.LENGTH_LONG).show();
@@ -213,7 +213,7 @@ public class ExpenseActivity extends AppCompatActivity implements View.OnClickLi
         setTypeIcon(categoryIcon, expense.getCategory());
         Amount.setText(""+ expense.getAmount());
         Note.setText(expense.getNote());
-        ExpenseDate.setText(tools.longToDateString(expense.getExpenseDate()));
+        ExpenseDate.setText(expense.getExpenseDate());
         currencySpinner.setSelection(expense.getWalletId(), true);
         walletSpinner.setSelection(expense.getWalletId(), true);
         addOrUpdate.setImageResource(R.drawable.ic_action_done);

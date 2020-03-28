@@ -35,12 +35,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static String CREATE_EXPENSE_TABLE = "CREATE TABLE " + EXPENSE_TABLE + "("
             + COLUMN_EXPENSE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + COLUMN_EXPENSE_AMOUNT + " INTEGER,"
             + COLUMN_EXPENSE_CURRENCY + " INTEGER," + COLUMN_EXPENSE_CATEGORY + " TEXT," + COLUMN_EXPENSE_NOTE + " TEXT,"+ COLUMN_EXPENSE_WALLET_ID + " INTEGER,"
-            + COLUMN_EXPENSE_WALLET + " TEXT," + COLUMN_EXPENSE_DATE + " INTEGER" + ")";
+            + COLUMN_EXPENSE_WALLET + " TEXT," + COLUMN_EXPENSE_DATE + " TEXT" + ")";
 
     private static String CREATE_WALLET_TABLE = "CREATE TABLE " + WALLET_TABLE + "("
             + COLUMN_WALLET_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + COLUMN_WALLET_AMOUNT + " REAL,"
             + COLUMN_WALLET_CURRENCY + " INTEGER," + COLUMN_WALLET_TITLE + " TEXT," + COLUMN_WALLET_NOTE + " TEXT,"
-            + COLUMN_WALLET_TYPE + " INTEGER," + COLUMN_WALLET_EXPIRES_ON + " INTEGER" + ")";
+            + COLUMN_WALLET_TYPE + " INTEGER," + COLUMN_WALLET_EXPIRES_ON + " TEXT" + ")";
 
     private static String DROP_WALLET_TABLE = "DROP TABLE IF EXISTS "+WALLET_TABLE;
     private static String DROP_EXPENSE_TABLE = "DROP TABLE IF EXISTS "+EXPENSE_TABLE;
@@ -147,7 +147,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     expense.setId(cursor.getInt(cursor.getColumnIndex(COLUMN_EXPENSE_ID)));
                     expense.setAmount(cursor.getInt(cursor.getColumnIndex(COLUMN_EXPENSE_AMOUNT)));
                     expense.setCategory((cursor.getString(cursor.getColumnIndex(COLUMN_EXPENSE_CATEGORY))));
-                    expense.setExpenseDate((cursor.getLong(cursor.getColumnIndex(COLUMN_EXPENSE_DATE))));
+                    expense.setExpenseDate((cursor.getString(cursor.getColumnIndex(COLUMN_EXPENSE_DATE))));
                     expense.setCurrency(cursor.getInt(cursor.getColumnIndex(COLUMN_EXPENSE_CURRENCY)));
                     expense.setNote(cursor.getString(cursor.getColumnIndex(COLUMN_EXPENSE_NOTE)));
                     expense.setWalletTitle(cursor.getString(cursor.getColumnIndex(COLUMN_EXPENSE_WALLET)));
@@ -236,7 +236,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     wallet.setTitle((cursor.getString(cursor.getColumnIndex(COLUMN_WALLET_TITLE))));
                     wallet.setNote((cursor.getString(cursor.getColumnIndex(COLUMN_WALLET_NOTE))));
                     wallet.setCurrency(cursor.getInt(cursor.getColumnIndex(COLUMN_WALLET_CURRENCY)));
-                    wallet.setExpiresOn(cursor.getLong(cursor.getColumnIndex(COLUMN_WALLET_EXPIRES_ON)));
+                    wallet.setExpiresOn(cursor.getString(cursor.getColumnIndex(COLUMN_WALLET_EXPIRES_ON)));
                     wallet.setWalletType(cursor.getString(cursor.getColumnIndex(COLUMN_WALLET_TYPE)));
 
                     walletList.add(wallet);
@@ -371,5 +371,37 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         sqLiteDatabase.close();
         return walletId;
+    }
+
+    /**
+     * This method is to all cost for a single month
+     *
+     */
+    public int getCostOfMonth(long date) {
+        int totalCost = 0;
+        // array of columns to fetch
+        String[] columns = {
+                COLUMN_EXPENSE_ID,
+                COLUMN_EXPENSE_AMOUNT,
+                COLUMN_EXPENSE_DATE
+        };
+        // sorting orders
+        String sortOrder =
+                COLUMN_EXPENSE_ID + " DESC";
+        SQLiteDatabase db = this.getReadableDatabase();
+        String where = "" + COLUMN_EXPENSE_DATE + " = '"+ date +"'";
+
+        Cursor cursor = db.query(EXPENSE_TABLE, columns, where, null, null, null, sortOrder); //The sort order
+
+        if (cursor != null){
+            if (cursor.moveToFirst()) {
+                do {
+                    totalCost += cursor.getInt(cursor.getColumnIndex(COLUMN_EXPENSE_AMOUNT));
+                } while (cursor.moveToNext());
+            }
+        }
+        cursor.close();
+        db.close();
+        return totalCost;
     }
 }

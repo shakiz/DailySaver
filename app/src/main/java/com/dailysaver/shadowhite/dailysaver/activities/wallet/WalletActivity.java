@@ -110,7 +110,7 @@ public class WalletActivity extends AppCompatActivity implements View.OnClickLis
                 databaseHelper.addNewWallet(new Wallet(WalletName.getText().toString(),
                         Integer.parseInt(Amount.getText().toString()),
                         currencyValue,
-                        tools.convertDateToLong(tools.convertStrToDate(ExpiresOn.getText().toString())),
+                        ExpiresOn.getText().toString(),
                         budgetTypeStr,
                         Note.getText().toString()));
 
@@ -128,7 +128,7 @@ public class WalletActivity extends AppCompatActivity implements View.OnClickLis
         databaseHelper.updateWallet(new Wallet(WalletName.getText().toString(),
                 Integer.parseInt(Amount.getText().toString()),
                 currencyValue,
-                tools.convertDateToLong(tools.convertStrToDate(ExpiresOn.getText().toString())),
+                ExpiresOn.getText().toString(),
                 budgetTypeStr,
                 Note.getText().toString())
                 ,0);

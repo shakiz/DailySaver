@@ -68,7 +68,7 @@ public class WalletDetailsActivity extends AppCompatActivity {
         CurrentBalance = findViewById(R.id.CurrentBalance);
         CurrentBalance.animateText(""+(wallet.getAmount()-databaseHelper.singleWalletTotalCost(walletId)));
         CurrentBalance.setDelay(0);
-        ExpiresOn.setText(tools.longToDateString(wallet.getExpiresOn()));
+        ExpiresOn.setText(wallet.getExpiresOn());
     }
 
     private void getId() {

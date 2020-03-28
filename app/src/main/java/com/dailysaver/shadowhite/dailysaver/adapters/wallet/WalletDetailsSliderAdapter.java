@@ -46,7 +46,7 @@ public class WalletDetailsSliderAdapter extends SliderViewAdapter<WalletDetailsS
         viewHolder.Title.setText(itemModel.getTitle());
         viewHolder.Amount.setText(""+itemModel.getAmount());
         viewHolder.Type.setText(""+itemModel.getWalletType());
-        viewHolder.ExpiresOn.setText(tools.longToDateString(itemModel.getExpiresOn()));
+        viewHolder.ExpiresOn.setText(itemModel.getExpiresOn());
         final int walletId = itemModel.getId();
         setProgressData(itemModel.getAmount(),databaseHelper.singleWalletTotalCost(walletId),viewHolder.RemainingBalance);
         viewHolder.TotalCost.setText(""+databaseHelper.singleWalletTotalCost(walletId));
