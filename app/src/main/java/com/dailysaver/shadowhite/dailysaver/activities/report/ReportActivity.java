@@ -75,7 +75,7 @@ public class ReportActivity extends AppCompatActivity {
     //region data render
     private DataRenderer getRenderer() {
         CustomBarChartRenderer customBarChartRenderer = new CustomBarChartRenderer(barChart, barChart.getAnimator(), barChart.getViewPortHandler());
-        customBarChartRenderer.setRadius(40);
+        customBarChartRenderer.setRadius(32);
         return customBarChartRenderer;
     }
     //endregion
@@ -107,18 +107,13 @@ public class ReportActivity extends AppCompatActivity {
     //region data for barChart
     private List<BarEntry> getEntries() {
         List<BarEntry> entries = new ArrayList<>();
-        entries.add(new BarEntry(0, 1100));
-        entries.add(new BarEntry(1, 1200));
-        entries.add(new BarEntry(2, 1300));
-        entries.add(new BarEntry(3, 700));
-        entries.add(new BarEntry(4, 470));
-        entries.add(new BarEntry(5, 900));
-        entries.add(new BarEntry(6, 400));
-        entries.add(new BarEntry(7, 1000));
-        entries.add(new BarEntry(8, 1400));
-        entries.add(new BarEntry(9, 2000));
-        entries.add(new BarEntry(10, 900));
-        entries.add(new BarEntry(11, 1100));
+
+        String[] monthNames = new String[]{"Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"};
+
+        for (int start = 0; start < monthNames.length; start++) {
+            entries.add(new BarEntry(start, databaseHelper.getCostOfMonth(monthNames[start])));
+        }
+
         return entries;
     }
     //endregion
@@ -126,6 +121,7 @@ public class ReportActivity extends AppCompatActivity {
     //region xAxis labels
     private ArrayList getXAxisValues() {
         ArrayList<String> xLabels = new ArrayList<>();
+
         xLabels.add("Jan");
         xLabels.add("Feb");
         xLabels.add("Mar");
@@ -145,9 +141,15 @@ public class ReportActivity extends AppCompatActivity {
 
     //region make barChart
     private void makeBarChart(){
+        //remove extra space from bottom if value is zero
+        barChart.getAxisLeft().setAxisMinimum(0f);
+        barChart.getAxisRight().setAxisMinimum(0f);
+        //end
+
         barChart.getDescription().setEnabled(false);
         barChart.getDescription().setPosition(10f,10f);
-        barChart.setData(mData);barChart.getBarData().setBarWidth(barWidth);
+        barChart.setData(mData);
+        barChart.getBarData().setBarWidth(barWidth);
         barChart.setVisibleXRangeMaximum(6);
         barChart.resetViewPortOffsets();
         barChart.animateXY(1000, 1000);
@@ -157,6 +159,7 @@ public class ReportActivity extends AppCompatActivity {
         barChart.setRenderer(getRenderer());
         barChart.setFitBars(true);
         barChart.invalidate();
+
     }
     //endregion
 }

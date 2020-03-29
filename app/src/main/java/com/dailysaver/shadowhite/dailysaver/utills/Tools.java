@@ -4,11 +4,14 @@ import android.content.Context;
 import android.icu.text.DateFormat;
 import android.icu.text.SimpleDateFormat;
 import android.os.Build;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import com.dailysaver.shadowhite.dailysaver.R;
 import java.text.ParseException;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -32,7 +35,7 @@ public class Tools {
     /**
      * This method will provide the date formatter
      */
-    private DateFormat getDateFormat(){
+    private DateFormat getAndroidDateFormat(){
         DateFormat dateFormatter = null;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             dateFormatter = new SimpleDateFormat("dd-MMM-yyyy", Locale.US);
@@ -49,7 +52,7 @@ public class Tools {
         Date date = null;
         try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                date = getDateFormat().parse(strDate);
+                date = getAndroidDateFormat().parse(strDate);
                 System.out.println("Current Date Time : " + date);
             }
             System.out.println(date);
@@ -68,7 +71,7 @@ public class Tools {
     public String dateToStr(Date date){
         String dateStr = null;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            dateStr = getDateFormat().format(date);
+            dateStr = getAndroidDateFormat().format(date);
         }
         System.out.println("Current Date Time : " + dateStr);
 
@@ -96,7 +99,7 @@ public class Tools {
         // or you already have long value of date, use this instead of milliseconds variable.
         String dateString = null;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            dateString = getDateFormat().format(new Date(dateInLong));
+            dateString = getAndroidDateFormat().format(new Date(dateInLong));
         }
         return dateString;
     }

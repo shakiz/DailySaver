@@ -377,7 +377,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      * This method is to all cost for a single month
      *
      */
-    public int getCostOfMonth(long date) {
+    public int getCostOfMonth(String monthName) {
         int totalCost = 0;
         // array of columns to fetch
         String[] columns = {
@@ -389,9 +389,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String sortOrder =
                 COLUMN_EXPENSE_ID + " DESC";
         SQLiteDatabase db = this.getReadableDatabase();
-        String where = "" + COLUMN_EXPENSE_DATE + " = '"+ date +"'";
 
-        Cursor cursor = db.query(EXPENSE_TABLE, columns, where, null, null, null, sortOrder); //The sort order
+        String where = "" + COLUMN_EXPENSE_DATE + " LIKE '%"+ monthName +"%' ";
+
+        Cursor cursor = db.query(EXPENSE_TABLE, columns, where, null, null, null, sortOrder);
 
         if (cursor != null){
             if (cursor.moveToFirst()) {
