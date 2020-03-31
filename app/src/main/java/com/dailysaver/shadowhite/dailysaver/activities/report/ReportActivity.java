@@ -61,7 +61,6 @@ public class ReportActivity extends AppCompatActivity {
     }
 
     private void setBarChart() {
-
         // bind up X-axis properties
         setXAxis();
 

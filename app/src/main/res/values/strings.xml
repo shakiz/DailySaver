@@ -73,4 +73,6 @@
     <string name="select_valid_date">Select valid date</string>
     <string name="expense_report">Expense Report</string>
     <string name="wallet_amount_exceeds">Wallet Amount Exceeds</string>
+    <string name="welcome">Welcome</string>
+    <string name="splash_screen_moto">We have become partners with InterMedCon of Germany to provide IT solutions for healthcare industries in Europe and around the world!</string>
 </resources>

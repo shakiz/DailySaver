@@ -16,6 +16,15 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <!-- Splash application theme. -->
+    <style name="SplashAppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorControlNormal">@color/md_white_1000</item>
+        <item name="colorPrimary">@color/commonColor</item>
+        <item name="colorPrimaryDark">@color/md_white_1000</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
     <style name="TextAppearance.Widget.Event.Toolbar.Title" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
         <!--Any text styling can be done here-->
         <item name="android:textStyle">normal</item>

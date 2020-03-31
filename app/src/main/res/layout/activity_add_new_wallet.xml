@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/md_white_1000"
+    android:background="@drawable/background"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/home_layout">
 
@@ -21,7 +21,7 @@
             app:navigationIcon="?attr/homeAsUpIndicator"
             style="@style/TextAppearance.Widget.Event.Toolbar.Title"
             app:title="@string/add_new_wallet"
-            app:titleTextColor="@color/md_grey_800">
+            app:titleTextColor="@color/md_black_1000">
 
         </androidx.appcompat.widget.Toolbar>
 
@@ -46,7 +46,7 @@
                 app:cardCornerRadius="0dp"
                 android:elevation="0dp"
                 app:cardElevation="0dp"
-                app:cardBackgroundColor="@color/md_white_1000"
+                app:cardBackgroundColor="@color/transparent"
                 android:layout_margin="12dp"
                 android:translationZ="0dp">
 
@@ -91,7 +91,7 @@
                                 android:gravity="center|left"
                                 android:clickable="true"
                                 android:textSize="14sp"
-                                android:textColor="@color/md_grey_800"
+                                android:textColor="@color/md_black_1000"
                                 android:ellipsize="end"
                                 android:padding="4dp"/>
 
@@ -105,7 +105,7 @@
                                 android:layout_marginTop="4dp"
                                 android:background="@drawable/rectangle_background"
                                 android:textColorHint="@color/md_grey_700"
-                                android:textColor="@color/md_grey_800"
+                                android:textColor="@color/md_black_1000"
                                 android:padding="10dp"/>
 
                         </LinearLayout>
@@ -128,7 +128,7 @@
                                 android:gravity="center|left"
                                 android:clickable="true"
                                 android:textSize="14sp"
-                                android:textColor="@color/md_grey_800"
+                                android:textColor="@color/md_black_1000"
                                 android:ellipsize="end"
                                 android:padding="4dp"/>
 
@@ -174,7 +174,7 @@
                                 android:inputType="text"
                                 android:hint="@string/wallet_name_hint"
                                 android:padding="4dp"
-                                android:textColor="@color/md_grey_800"
+                                android:textColor="@color/md_black_1000"
                                 android:textColorHint="@color/md_grey_700"
                                 android:textSize="14sp" />
 
@@ -235,7 +235,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/select_wallet_type"
-                            android:textColor="@color/md_grey_800"
+                            android:textColor="@color/md_black_1000"
                             android:textSize="14sp"
                             android:layout_marginLeft="4dp"
                             android:layout_marginRight="4dp"
@@ -259,7 +259,7 @@
                                 android:tag="@string/expense"
                                 android:text="@string/expense"
                                 android:layout_height="wrap_content"
-                                android:textColor="@color/md_grey_800"
+                                android:textColor="@color/md_black_1000"
                                 android:buttonTint="@color/colorPrimary"/>
 
                             <RadioButton
@@ -271,7 +271,7 @@
                                 android:text="@string/savings"
                                 android:tag="@string/savings"
                                 android:layout_height="wrap_content"
-                                android:textColor="@color/md_grey_800"
+                                android:textColor="@color/md_black_1000"
                                 android:buttonTint="@color/colorPrimary"/>
 
                         </RadioGroup>
@@ -322,7 +322,7 @@
                         android:layout_marginRight="8dp"
                         android:drawableLeft="@drawable/ic_expiry_date"
                         android:drawablePadding="8dp"
-                        android:textColor="@color/md_grey_800"
+                        android:textColor="@color/md_black_1000"
                         android:layout_marginTop="16dp"
                         android:padding="10dp"/>
 

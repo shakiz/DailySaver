@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:focusable="true"
-    android:background="@color/md_white_1000"
+    android:background="@drawable/background"
     android:focusableInTouchMode="true">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -49,7 +49,7 @@
                 app:cardCornerRadius="0dp"
                 android:elevation="0dp"
                 app:cardElevation="0dp"
-                app:cardBackgroundColor="@color/md_white_1000"
+                app:cardBackgroundColor="@color/transparent"
                 android:layout_margin="12dp"
                 android:translationZ="0dp">
 

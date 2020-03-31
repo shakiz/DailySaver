@@ -10,7 +10,7 @@
     app:cardBackgroundColor="@color/md_white_1000"
     android:foreground="?attr/selectableItemBackground"
     app:cardUseCompatPadding="true"
-    app:cardElevation="4dp">
+    app:cardElevation="2dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,8 +21,8 @@
         android:orientation="horizontal">
 
         <LinearLayout
-            android:layout_width="42dp"
-            android:layout_height="42dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_gravity="center"
             android:gravity="center"
             android:layout_marginRight="4dp"
