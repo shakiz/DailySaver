@@ -31,7 +31,7 @@
                 android:textSize="24sp"
                 android:layout_margin="8dp"
                 android:textStyle="bold"
-                android:textColor="@color/md_grey_800"
+                android:textColor="@color/md_black_1000"
                 android:layout_gravity="center"
                 android:gravity="center"/>
 
@@ -42,6 +42,7 @@
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:layout_margin="8dp"
+                android:textColor="@color/md_grey_800"
                 android:layout_gravity="center"
                 android:gravity="center"/>
 
