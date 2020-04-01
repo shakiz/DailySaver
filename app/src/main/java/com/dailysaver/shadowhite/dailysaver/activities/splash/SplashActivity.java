@@ -8,12 +8,13 @@ import android.os.Handler;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.dailysaver.shadowhite.dailysaver.R;
 import com.dailysaver.shadowhite.dailysaver.activities.onboard.HomeActivity;
 
 public class SplashActivity extends AppCompatActivity {
-    private LinearLayout linearLayout;
+    private RelativeLayout linearLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

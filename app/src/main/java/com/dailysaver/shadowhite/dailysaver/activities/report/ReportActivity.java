@@ -145,7 +145,10 @@ public class ReportActivity extends AppCompatActivity {
         barChart.getAxisRight().setAxisMinimum(0f);
         //end
 
-        barChart.getDescription().setEnabled(false);
+        barChart.getAxisRight().setDrawLabels(false);
+        barChart.getAxisRight().setDrawGridLines(false);
+        barChart.getAxisLeft().setDrawGridLines(false);
+        barChart.getXAxis().setDrawGridLines(false);
         barChart.getDescription().setPosition(10f,10f);
         barChart.setData(mData);
         barChart.getBarData().setBarWidth(barWidth);

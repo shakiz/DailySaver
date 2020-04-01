@@ -16,38 +16,72 @@
         android:layout_width="match_parent"
         android:layout_height="fill_parent">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_margin="4dp"
             android:id="@+id/mainLayout"
             android:weightSum="2"
-            android:gravity="center"
             android:orientation="vertical">
 
+            <ImageView
+                android:id="@+id/iconIMG"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:src="@drawable/ic_expense"
+                android:layout_centerHorizontal="true"
+                android:layout_centerInParent="true"/>
+
             <TextView
+                android:id="@+id/welcomeTXT"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/iconIMG"
+                android:layout_centerHorizontal="true"
                 android:text="@string/welcome"
                 android:textSize="24sp"
                 android:layout_margin="8dp"
                 android:textStyle="bold"
-                android:textColor="@color/md_black_1000"
-                android:layout_gravity="center"
-                android:gravity="center"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/splash_screen_moto"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:layout_margin="8dp"
                 android:textColor="@color/md_grey_800"
                 android:layout_gravity="center"
                 android:gravity="center"/>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="32dp"
+                android:padding="8dp"
+                android:orientation="horizontal"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:layout_alignParentBottom="true">
 
-        </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/developed_by"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/md_grey_800"
+                    android:layout_gravity="center"
+                    android:gravity="center"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:text="@string/sakhawat_hossain"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/md_green_400"
+                    android:layout_gravity="center"
+                    android:gravity="center"/>
+
+            </LinearLayout>
+
+        </RelativeLayout>
 
     </androidx.core.widget.NestedScrollView>
 

@@ -37,13 +37,83 @@
         android:layout_width="match_parent"
         android:layout_height="fill_parent">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/mainLayout"
             android:orientation="vertical">
 
+            <!--arcView for customized view-->
+            <com.github.florent37.shapeofview.shapes.ArcView
+                android:id="@+id/arcView"
+                android:layout_width="match_parent"
+                android:layout_height="144dp"
+                android:elevation="4dp"
+                app:shape_arc_cropDirection="outside"
+                app:shape_arc_height="32dp"
+                app:shape_arc_position="bottom">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:background="@color/md_white_1000"
+                    android:orientation="vertical">
+
+                </RelativeLayout>
+
+            </com.github.florent37.shapeofview.shapes.ArcView>
+
             <androidx.cardview.widget.CardView
+                android:id="@+id/infoLayout"
+                android:layout_below="@id/arcView"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                app:cardCornerRadius="50dp"
+                android:layout_marginTop="-50dp"
+                app:cardBackgroundColor="@color/md_white_1000"
+                app:cardElevation="4dp"
+                android:translationZ="8dp"
+                android:layout_centerHorizontal="true">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/totalTXT"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:gravity="center"
+                        android:textColor="@color/md_grey_800"
+                        android:textStyle="bold"
+                        android:textSize="14sp"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="@string/total"/>
+
+                    <TextView
+                        android:layout_below="@id/totalTXT"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:gravity="center"
+                        android:textColor="@color/md_grey_800"
+                        android:textStyle="bold"
+                        android:textSize="18sp"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="@string/dummy_total"/>
+
+                </RelativeLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_below="@id/infoLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:cardCornerRadius="0dp"
@@ -70,7 +140,7 @@
 
             </androidx.cardview.widget.CardView>
 
-        </LinearLayout>
+        </RelativeLayout>
 
     </androidx.core.widget.NestedScrollView>
 
