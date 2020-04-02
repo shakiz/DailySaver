@@ -2,6 +2,8 @@ package com.dailysaver.shadowhite.dailysaver.utills;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.view.View;
+
 import com.dailysaver.shadowhite.dailysaver.models.expense.Expense;
 import com.dailysaver.shadowhite.dailysaver.models.wallet.Wallet;
 import com.dailysaver.shadowhite.dailysaver.utills.dbhelper.DatabaseHelper;
@@ -13,10 +15,12 @@ public class DataLoader {
     private onWalletItemsCompleted onWalletItemsCompleted;
     private onBudgetItemsCompleted onBudgetItemsCompleted;
     private DatabaseHelper databaseHelper;
+    private View view;
 
-    public DataLoader(Context context) {
+    public DataLoader(Context context,View view) {
         this.context = context;
-        ux = new UX(context);
+        this.view = view;
+        ux = new UX(context, view);
         databaseHelper = new DatabaseHelper(context);
     }
 

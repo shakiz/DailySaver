@@ -23,10 +23,13 @@ public class DataManager {
         return currencyList;
     }
 
-    public String[] walletTypeData(){
-        return new String[]{context.getResources().getString(R.string.select_wallet_type),"Savings","Expense"};
+    public ArrayList<String> transactionTypeData(){
+        ArrayList<String> currencyList = new ArrayList<>();
+        currencyList.add(context.getResources().getString(R.string.select_currency));
+        currencyList.add("Savings");
+        currencyList.add("Expense");
+        return currencyList;
     }
-
 
     public ArrayList<String> getWalletTitle(){
         ArrayList<String> walletTitleList = databaseHelper.getWalletTitle();;

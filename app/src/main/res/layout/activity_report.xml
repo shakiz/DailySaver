@@ -96,6 +96,7 @@
                         android:text="@string/total"/>
 
                     <TextView
+                        android:id="@+id/Total"
                         android:layout_below="@id/totalTXT"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

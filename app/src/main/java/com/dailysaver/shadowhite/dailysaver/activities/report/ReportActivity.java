@@ -51,7 +51,7 @@ public class ReportActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.tool_bar);
         mainLayout = findViewById(R.id.parent_container);
         barChart = findViewById(R.id.barChart);
-        ux = new UX(this);
+        ux = new UX(this, mainLayout);
         tools = new Tools(this);
         databaseHelper = new DatabaseHelper(this);
     }

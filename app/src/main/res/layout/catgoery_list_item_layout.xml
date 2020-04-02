@@ -7,7 +7,7 @@
     android:layout_margin="4dp"
     android:padding="2dp"
     android:clickable="true"
-    android:id="@+id/itemLayout"
+    android:id="@+id/categoryItemLayout"
     android:background="@drawable/rounded_layout_with_corner"
     android:layout_height="wrap_content">
 

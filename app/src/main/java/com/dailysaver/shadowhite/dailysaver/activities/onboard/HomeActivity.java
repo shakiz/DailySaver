@@ -110,7 +110,7 @@ public class HomeActivity extends AppCompatActivity {
         noWalletData = findViewById(R.id.NoDataWallet);
         noBudgetData = findViewById(R.id.NoDataBudget);
         tools = new Tools(this);
-        dataLoader = new DataLoader(this);
+        dataLoader = new DataLoader(this, mainLayout);
         databaseHelper = new DatabaseHelper(this);
     }
 

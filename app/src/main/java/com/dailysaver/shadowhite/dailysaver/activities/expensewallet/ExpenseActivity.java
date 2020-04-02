@@ -10,6 +10,8 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -37,16 +39,17 @@ public class ExpenseActivity extends AppCompatActivity implements View.OnClickLi
     private Toolbar toolbar;
     private FloatingActionButton addOrUpdate;
     private EditText Amount,Note;
-    private TextView ExpenseDate, dateView;
+    private TextView ExpenseDate, dateView, CategorySelector;
     private Spinner currencySpinner, walletSpinner;
     private Dialog itemDialog;
     private LinearLayout dialogLinearLayout;
     private TextView categorySelection , categoryTitle;
     private ImageView categoryIcon;
     private RecyclerView categoryRecyclerView;
+    private RadioGroup TransactionType;
     private CategoryRecyclerAdapter categoryRecyclerAdapter;
     private int currencyValue = 0, walletValue = 0;
-    private String walletTitleStr;
+    private String walletTitleStr = "" , transactionTypeStr = "";
     private UX ux;
     private Tools tools;
     private DataLoader dataLoader;
@@ -88,6 +91,8 @@ public class ExpenseActivity extends AppCompatActivity implements View.OnClickLi
         toolbar = findViewById(R.id.tool_bar);
         mainLayout = findViewById(R.id.parent_container);
         currencySpinner = findViewById(R.id.Currency);
+        TransactionType = findViewById(R.id.TransactionType);
+        CategorySelector = findViewById(R.id.CategorySelector);
         walletSpinner = findViewById(R.id.Wallet);
         dateView = findViewById(R.id.ExpenseDate);
         categorySelection = findViewById(R.id.CategorySelector);
@@ -97,9 +102,9 @@ public class ExpenseActivity extends AppCompatActivity implements View.OnClickLi
         ExpenseDate = findViewById(R.id.ExpenseDate);
         Note = findViewById(R.id.Note);
         addOrUpdate = findViewById(R.id.add);
-        ux = new UX(this);
+        ux = new UX(this,mainLayout);
         tools = new Tools(this);
-        dataLoader = new DataLoader(this);
+        dataLoader = new DataLoader(this, mainLayout);
         databaseHelper = new DatabaseHelper(this);
         dataManager = new DataManager(this);
     }
@@ -126,6 +131,23 @@ public class ExpenseActivity extends AppCompatActivity implements View.OnClickLi
         //Category on click for selecting on click
         categorySelection.setOnClickListener(this);
 
+        TransactionType.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                int selectedRadio = group.getCheckedRadioButtonId();
+                View viewRadioButton = findViewById(selectedRadio);
+                RadioButton radioButton = (RadioButton) viewRadioButton;
+                if (radioButton.isChecked()){
+                    transactionTypeStr = radioButton.getTag().toString();
+                    //Change the UI based on transaction type
+                    ux.changeUI(new int[]{R.id.Amount, R.id.Currency, R.id.Wallet, R.id.Note, R.id.ExpenseDate, R.id.categoryItemLayout}, transactionTypeStr);
+
+                    if (transactionTypeStr.equals("Savings")) CategorySelector.setTextColor(getResources().getColor(R.color.md_green_600));
+                    else CategorySelector.setTextColor(getResources().getColor(R.color.md_red_600));
+                }
+            }
+        });
+
         addOrUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -142,7 +164,7 @@ public class ExpenseActivity extends AppCompatActivity implements View.OnClickLi
 
     //Save expense into DB with validation
     private void saveExpense(){
-        if (ux.validation(new int[]{R.id.Amount, R.id.Currency, R.id.Wallet, R.id.Note, R.id.ExpenseDate},mainLayout)){
+        if (ux.validation(new int[]{R.id.Amount, R.id.Currency, R.id.Wallet, R.id.Note, R.id.ExpenseDate})){
             if (getRemainingBalance()){
 
                 databaseHelper.addNewExpense(new Expense(
@@ -183,7 +205,7 @@ public class ExpenseActivity extends AppCompatActivity implements View.OnClickLi
     //Update expense
     private void updateExpense() {
 
-        if (ux.validation(new int[]{R.id.Amount, R.id.Currency, R.id.Wallet, R.id.Note, R.id.ExpenseDate},mainLayout)){
+        if (ux.validation(new int[]{R.id.Amount, R.id.Currency, R.id.Wallet, R.id.Note, R.id.ExpenseDate})){
             if (getRemainingBalance()){
                 databaseHelper.updateExpense(new Expense(
                                 Integer.parseInt(Amount.getText().toString()),

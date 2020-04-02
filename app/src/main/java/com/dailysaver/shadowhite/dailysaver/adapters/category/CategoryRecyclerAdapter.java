@@ -67,7 +67,7 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecycl
             super(itemView);
             Title = itemView.findViewById(R.id.Title);
             IconRes = itemView.findViewById(R.id.IconRes);
-            itemLayout = itemView.findViewById(R.id.itemLayout);
+            itemLayout = itemView.findViewById(R.id.categoryItemLayout);
         }
     }
 }

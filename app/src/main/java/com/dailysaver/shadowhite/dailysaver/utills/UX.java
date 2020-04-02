@@ -33,10 +33,12 @@ public class UX {
     private Context context;
     public Dialog loadingDialog;
     private ArrayAdapter<String> spinnerAdapter;
+    private View view;
 
-    public UX(Context context) {
+    public UX(Context context, View view) {
         this.context = context;
         loadingDialog = new Dialog(context);
+        this.view = view;
     }
 
     /**
@@ -75,7 +77,7 @@ public class UX {
     /**
      * This method will perform Clear UI components
      */
-    public void clearDetailsUI(int[] resIds,View view){
+    public void clearDetailsUI(int[] resIds){
         for (int resId : resIds){
             View child = view.findViewById(resId);
             if (child instanceof TextView){
@@ -171,7 +173,7 @@ public class UX {
      *
      * @params resIds and view
      */
-    public boolean validation(int[] resIds,View view){
+    public boolean validation(int[] resIds){
         boolean valid = false;
         for (int resId : resIds){
             View child = view.findViewById(resId);
@@ -259,6 +261,24 @@ public class UX {
                 R.drawable.ic_information);
 
         return new LGSnackBarTheme(successStyle, warningStyle, errorStyle, infoStyle, 60, Snackbar.LENGTH_LONG);
+    }
+    //endregion
+
+    /**
+     * This method will perform background changing based on transaction type
+     *
+     * @param childResIds
+     */
+    public void changeUI(int[] childResIds,String transactionName) {
+        for (int resId : childResIds){
+            View child = view.findViewById(resId);
+            if (transactionName.equals("Savings")){
+                child.setBackground(context.getResources().getDrawable(R.drawable.rectangle_background_savings));
+            }
+            else{
+                child.setBackground(context.getResources().getDrawable(R.drawable.rectangle_background_expense));
+            }
+        }
     }
     //endregion
 

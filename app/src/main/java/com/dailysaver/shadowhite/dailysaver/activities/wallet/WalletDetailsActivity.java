@@ -87,7 +87,7 @@ public class WalletDetailsActivity extends AppCompatActivity {
         mainLayout = findViewById(R.id.home_layout);
         filter = findViewById(R.id.filter);
         layoutBottomSheet = findViewById(R.id.layoutBottomSheet);
-        ux = new UX(this);
+        ux = new UX(this, mainLayout);
         tools = new Tools(this);
         databaseHelper = new DatabaseHelper(this);
     }

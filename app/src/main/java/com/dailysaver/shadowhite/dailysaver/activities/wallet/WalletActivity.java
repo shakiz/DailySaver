@@ -37,7 +37,7 @@ public class WalletActivity extends AppCompatActivity implements View.OnClickLis
     private Tools tools;
     private DataManager spinnerData;
     private DatabaseHelper databaseHelper;
-    private RadioGroup WalletType;
+    private RadioGroup TransactionType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,13 +58,13 @@ public class WalletActivity extends AppCompatActivity implements View.OnClickLis
         mainLayout = findViewById(R.id.home_layout);
         Amount = findViewById(R.id.Amount);
         WalletName = findViewById(R.id.WalletName);
-        WalletType = findViewById(R.id.WalletType);
+        TransactionType = findViewById(R.id.TransactionType);
         Note = findViewById(R.id.Note);
         ExpiresOn = findViewById(R.id.ExpiresOn);
         currencySpinner = findViewById(R.id.Currency);
         ExpiresOn = findViewById(R.id.ExpiresOn);
         add = findViewById(R.id.add);
-        ux = new UX(this);
+        ux = new UX(this, mainLayout);
         tools = new Tools(this);
         databaseHelper = new DatabaseHelper(this);
         spinnerData = new DataManager(this);
@@ -90,7 +90,7 @@ public class WalletActivity extends AppCompatActivity implements View.OnClickLis
             }
         });
 
-        WalletType.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+        TransactionType.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 int selectedRadio = group.getCheckedRadioButtonId();
@@ -104,7 +104,7 @@ public class WalletActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     private void saveWallet() {
-        if (ux.validation(new int[]{R.id.Amount, R.id.Currency, R.id.WalletName, R.id.Note, R.id.ExpiresOn},mainLayout)){
+        if (ux.validation(new int[]{R.id.Amount, R.id.Currency, R.id.WalletName, R.id.Note, R.id.ExpiresOn})){
             if (!budgetTypeStr.isEmpty()){
 
                 databaseHelper.addNewWallet(new Wallet(WalletName.getText().toString(),
