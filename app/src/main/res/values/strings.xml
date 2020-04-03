@@ -80,4 +80,6 @@
     <string name="total">Total</string>
     <string name="dummy_total">2580</string>
     <string name="transaction_type">Transaction Type</string>
+    <string name="add_new_record">Add New Record</string>
+    <string name="records">All Records</string>
 </resources>

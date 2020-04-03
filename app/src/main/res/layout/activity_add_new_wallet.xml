@@ -91,7 +91,7 @@
                                 android:gravity="center|left"
                                 android:clickable="true"
                                 android:textSize="14sp"
-                                android:textColor="@color/md_black_1000"
+                                android:textColor="@color/md_grey_800"
                                 android:ellipsize="end"
                                 android:padding="4dp"/>
 
@@ -128,7 +128,7 @@
                                 android:gravity="center|left"
                                 android:clickable="true"
                                 android:textSize="14sp"
-                                android:textColor="@color/md_black_1000"
+                                android:textColor="@color/md_grey_800"
                                 android:ellipsize="end"
                                 android:padding="4dp"/>
 
@@ -191,7 +191,7 @@
                             android:paddingRight="8dp"
                             android:text="@string/wallet_name"
                             android:background="@color/md_white_1000"
-                            android:textColor="@color/md_grey_700"
+                            android:textColor="@color/md_grey_800"
                             android:textSize="14sp" />
 
                     </RelativeLayout>
@@ -204,14 +204,13 @@
                         android:weightSum="2"
                         android:orientation="horizontal">
 
-
                         <EditText
                             android:id="@+id/Note"
                             android:layout_width="0dp"
                             android:layout_weight="2"
                             android:maxLines="2"
                             android:layout_height="80dp"
-                            android:background="@drawable/rounded_layout"
+                            android:background="@drawable/rectangle_background_savings"
                             android:hint="@string/note"
                             android:layout_margin="8dp"
                             android:textSize="16sp"
@@ -235,7 +234,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/select_wallet_type"
-                            android:textColor="@color/md_black_1000"
+                            android:textColor="@color/md_grey_800"
                             android:textSize="14sp"
                             android:layout_marginLeft="4dp"
                             android:layout_marginRight="4dp"
@@ -259,8 +258,8 @@
                                 android:tag="@string/expense"
                                 android:text="@string/expense"
                                 android:layout_height="wrap_content"
-                                android:textColor="@color/md_black_1000"
-                                android:buttonTint="@color/colorPrimary"/>
+                                android:textColor="@color/md_grey_800"
+                                android:buttonTint="@color/md_red_400"/>
 
                             <RadioButton
                                 android:id="@+id/WalletTypeSavings"
@@ -270,41 +269,10 @@
                                 android:text="@string/savings"
                                 android:tag="@string/savings"
                                 android:layout_height="wrap_content"
-                                android:textColor="@color/md_black_1000"
-                                android:buttonTint="@color/colorPrimary"/>
+                                android:textColor="@color/md_grey_800"
+                                android:buttonTint="@color/md_green_400"/>
 
                         </RadioGroup>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="40dp"
-                            android:layout_margin="4dp"
-                            android:padding="4dp"
-                            android:visibility="gone"
-                            android:layout_gravity="center"
-                            android:gravity="center"
-                            android:weightSum="4"
-                            android:orientation="horizontal">
-
-                            <androidx.appcompat.widget.AppCompatCheckBox
-                                android:id="@+id/Expense"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1.5"
-                                app:buttonTint="@color/colorPrimary"
-                                android:textColor="@color/md_grey_600"
-                                android:text="@string/expense"/>
-
-                            <androidx.appcompat.widget.AppCompatCheckBox
-                                android:id="@+id/Savings"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1.5"
-                                app:buttonTint="@color/colorPrimary"
-                                android:textColor="@color/md_grey_600"
-                                android:text="@string/savings"/>
-
-                        </LinearLayout>
 
                     </LinearLayout>
 
@@ -321,10 +289,9 @@
                         android:layout_marginRight="8dp"
                         android:drawableLeft="@drawable/ic_expiry_date"
                         android:drawablePadding="8dp"
-                        android:textColor="@color/md_black_1000"
+                        android:textColor="@color/md_grey_800"
                         android:layout_marginTop="16dp"
                         android:padding="10dp"/>
-
 
                 </LinearLayout>
 

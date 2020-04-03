@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <item
         android:title="Report"
         app:showAsAction="always"
         android:id="@+id/report"
         android:icon="@drawable/ic_report"/>
+
+    <item
+        android:title="Records"
+        app:showAsAction="ifRoom"
+        android:id="@+id/records"
+        android:icon="@drawable/ic_history"/>
+
 </menu>

@@ -78,7 +78,7 @@
                             android:text="Savings"
                             android:tag="@string/savings"
                             android:textColor="@color/md_black_1000"
-                            android:buttonTint="@color/colorPrimary"/>
+                            android:buttonTint="@color/md_green_400"/>
 
                         <RadioButton
                             android:id="@+id/Expense"
@@ -88,7 +88,7 @@
                             android:text="Expense"
                             android:tag="@string/expense"
                             android:textColor="@color/md_black_1000"
-                            android:buttonTint="@color/colorPrimary"/>
+                            android:buttonTint="@color/md_red_400"/>
 
                     </RadioGroup>
 
@@ -314,15 +314,14 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:gravity="center"
-                        android:weightSum="2"
-                        android:orientation="horizontal">
+                        android:orientation="vertical">
 
                         <TextView
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/date"
-                            android:layout_margin="10dp"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginRight="8dp"
                             android:ellipsize="end"
                             android:maxLines="1"
                             android:textColor="@color/md_grey_800"
@@ -330,13 +329,13 @@
                             android:padding="4dp"/>
                         <TextView
                             android:id="@+id/ExpenseDate"
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
+                            android:layout_width="match_parent"
                             style="@android:style/Widget.EditText"
                             android:layout_height="40dp"
                             android:background="@drawable/rectangle_background_savings"
                             android:text="@string/date_hint"
-                            android:layout_margin="8dp"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginRight="8dp"
                             android:padding="10dp"
                             android:textSize="14sp"
                             android:clickable="true"
