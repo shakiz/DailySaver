@@ -14,9 +14,9 @@ import com.dailysaver.shadowhite.dailysaver.activities.expensewallet.ExpenseActi
 import com.dailysaver.shadowhite.dailysaver.activities.onboard.HomeActivity;
 import com.dailysaver.shadowhite.dailysaver.adapters.monthlyexpense.MonthlyExpenseAdapter;
 import com.dailysaver.shadowhite.dailysaver.models.expense.Expense;
+import com.dailysaver.shadowhite.dailysaver.utills.DataLoader;
 import com.dailysaver.shadowhite.dailysaver.utills.Tools;
 import com.dailysaver.shadowhite.dailysaver.utills.UX;
-import com.dailysaver.shadowhite.dailysaver.utills.dbhelper.DatabaseHelper;
 import java.util.ArrayList;
 
 public class RecordsActivity extends AppCompatActivity {
@@ -25,7 +25,7 @@ public class RecordsActivity extends AppCompatActivity {
     private TextView noBudgetData;
     private RelativeLayout mainLayout;
     private Toolbar toolbar;
-    private DatabaseHelper databaseHelper;
+    private DataLoader dataLoader;
     private Tools tools;
     private UX ux;
 
@@ -48,13 +48,23 @@ public class RecordsActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.mRecyclerView);
         noBudgetData = findViewById(R.id.NoDataBudget);
         mainLayout = findViewById(R.id.mainLayout);
+        dataLoader = new DataLoader(this,mainLayout);
         tools = new Tools(this);
         ux = new UX(this, mainLayout);
-        databaseHelper = new DatabaseHelper(this);
     }
 
     private void bindUiWithComponents() {
-        setBudgetAdapter(databaseHelper.getAllExpenseItems(0));
+
+        dataLoader.setOnBudgetItemsCompleted(new DataLoader.onBudgetItemsCompleted() {
+            @Override
+            public void onComplete(ArrayList<Expense> expenseList) {
+                if (expenseList != null){
+                    if (expenseList.size() != 0){
+                        setBudgetAdapter(expenseList);
+                    }
+                }
+            }
+        });
     }
 
     private void setBudgetAdapter(ArrayList<Expense> expenseList) {

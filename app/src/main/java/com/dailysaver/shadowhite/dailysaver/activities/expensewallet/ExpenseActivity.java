@@ -73,11 +73,11 @@ public class ExpenseActivity extends AppCompatActivity implements View.OnClickLi
             loadRecord();
         }
 
-        //Set toolbar
+
+//Set toolbar
         ux.setToolbar(toolbar,this,HomeActivity.class);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_left_arrow_grey);
         tools.setAnimation(mainLayout);
-
         //check for any wallet exist or not
         if (databaseHelper.getAllWalletItems().size() == 0){
             Toast.makeText(this,getResources().getString(R.string.please_add_wallet),Toast.LENGTH_LONG).show();
@@ -248,7 +248,7 @@ public class ExpenseActivity extends AppCompatActivity implements View.OnClickLi
         else if (type.equals("Electricity")) icon.setImageResource(R.drawable.ic_electricity);
         else if (type.equals("Education")) icon.setImageResource(R.drawable.ic_education);
         else if (type.equals("Shopping")) icon.setImageResource(R.drawable.ic_cshopping);
-        else if (type.equals("Entertainment")) icon.setImageResource(R.drawable.ic_entertainment);
+        else if (type.equals("Fun")) icon.setImageResource(R.drawable.ic_entertainment);
         else if (type.equals("Family")) icon.setImageResource(R.drawable.ic_family);
         else if (type.equals("Friends")) icon.setImageResource(R.drawable.ic_friends);
         else if (type.equals("Work")) icon.setImageResource(R.drawable.ic_work);

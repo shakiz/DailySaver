@@ -45,7 +45,12 @@ public class WalletDetailsSliderAdapter extends SliderViewAdapter<WalletDetailsS
         viewHolder.Position.setText(""+(++position));
         viewHolder.Title.setText(itemModel.getTitle());
         viewHolder.Amount.setText(""+itemModel.getAmount());
-        viewHolder.Type.setText(""+itemModel.getWalletType());
+        viewHolder.WalletType.setText(""+itemModel.getWalletType());
+
+        //Changing the wallet type color based on wallet type
+        if (itemModel.getWalletType().equals("Expense")) viewHolder.WalletType.setTextColor(context.getResources().getColor(R.color.md_red_600));
+        else viewHolder.WalletType.setTextColor(context.getResources().getColor(R.color.md_green_600));
+
         viewHolder.ExpiresOn.setText(itemModel.getExpiresOn());
         final int walletId = itemModel.getId();
         setProgressData(itemModel.getAmount(),databaseHelper.singleWalletTotalCost(walletId),viewHolder.RemainingBalance);
@@ -78,7 +83,7 @@ public class WalletDetailsSliderAdapter extends SliderViewAdapter<WalletDetailsS
     class SliderAdapterVH extends SliderViewAdapter.ViewHolder {
 
         View itemView;
-        TextView Title,Amount,TotalCost,Position,Type,ExpiresOn;
+        TextView Title,Amount,TotalCost,Position, WalletType,ExpiresOn;
         ArcProgress RemainingBalance;
 
         public SliderAdapterVH(View itemView) {
@@ -88,7 +93,7 @@ public class WalletDetailsSliderAdapter extends SliderViewAdapter<WalletDetailsS
             Amount = itemView.findViewById(R.id.Amount);
             RemainingBalance = itemView.findViewById(R.id.RemainingBalance);
             TotalCost = itemView.findViewById(R.id.TotalCost);
-            Type = itemView.findViewById(R.id.Type);
+            WalletType = itemView.findViewById(R.id.WalletType);
             ExpiresOn = itemView.findViewById(R.id.ExpiresOn);
             this.itemView = itemView;
         }

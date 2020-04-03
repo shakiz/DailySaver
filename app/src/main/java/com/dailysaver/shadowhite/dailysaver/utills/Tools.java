@@ -1,17 +1,15 @@
 package com.dailysaver.shadowhite.dailysaver.utills;
 
 import android.content.Context;
+import android.content.Intent;
 import android.icu.text.DateFormat;
 import android.icu.text.SimpleDateFormat;
 import android.os.Build;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import com.dailysaver.shadowhite.dailysaver.R;
 import java.text.ParseException;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -102,5 +100,15 @@ public class Tools {
             dateString = getAndroidDateFormat().format(new Date(dateInLong));
         }
         return dateString;
+    }
+
+    /**
+     * This method will exit the app
+     */
+    public void exitApp(){
+        Intent exitIntent = new Intent(Intent.ACTION_MAIN);
+        exitIntent.addCategory(Intent.CATEGORY_HOME);
+        exitIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(exitIntent);
     }
 }

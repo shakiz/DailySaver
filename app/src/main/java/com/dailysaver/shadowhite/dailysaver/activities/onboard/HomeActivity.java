@@ -26,6 +26,12 @@ import com.dailysaver.shadowhite.dailysaver.R;
 import com.dailysaver.shadowhite.dailysaver.utills.DataLoader;
 import com.dailysaver.shadowhite.dailysaver.utills.Tools;
 import com.dailysaver.shadowhite.dailysaver.utills.dbhelper.DatabaseHelper;
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.skydoves.powermenu.CircularEffect;
 import com.skydoves.powermenu.CustomPowerMenu;
@@ -35,6 +41,7 @@ import com.smarteist.autoimageslider.IndicatorAnimations;
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
 import java.util.ArrayList;
+import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -44,9 +51,11 @@ public class HomeActivity extends AppCompatActivity {
     private FloatingActionButton addButton;
     private CustomPowerMenu powerMenu;
     private SliderView sliderView;
+    private PieChart pieChart;
     private DataLoader dataLoader;
     private Tools tools;
-    DatabaseHelper databaseHelper;
+    private PieData pieData;
+    private DatabaseHelper databaseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +71,7 @@ public class HomeActivity extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                exitApp();
+                tools.exitApp();
             }
         });
 
@@ -73,6 +82,61 @@ public class HomeActivity extends AppCompatActivity {
     private void bindUiWithComponents() {
         setCardSlider();
         setMenu();
+        setPieChart();
+    }
+
+    private void setPieChart() {
+        setPieData();
+        makePieChart();
+    }
+
+    private void makePieChart() {
+        getLegendForPieChart();
+        pieChart.setEntryLabelColor(getResources().getColor(R.color.md_white_1000));
+        pieChart.setCenterText("Categories");
+        pieChart.setCenterTextColor(getResources().getColor(R.color.md_grey_800));
+        pieChart.setCenterTextSize(12f);
+        pieChart.setEntryLabelTextSize(6f);
+        pieChart.animateXY(2000, 2000);
+        pieChart.getDescription().setEnabled(false);
+        pieChart.invalidate();
+    }
+
+    private void getLegendForPieChart() {
+        Legend l = pieChart.getLegend(); // get legend of pie
+        l.setVerticalAlignment(Legend.LegendVerticalAlignment.CENTER); //vertical alignment for legend
+        l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT); //horizontal alignment for legend
+        l.setOrientation(Legend.LegendOrientation.VERTICAL); //orientation for legend
+        l.setDrawInside(false); //if legend should be drawn inside or not
+    }
+
+    private void setPieData() {
+        PieDataSet dataSet = new PieDataSet(getPieData(), "");
+        pieData = new PieData(dataSet);
+        pieData.setValueFormatter(new PercentFormatter());
+        pieChart.setData(pieData);
+        dataSet.setColors(getResources().getColor(R.color.md_red_300), getResources().getColor(R.color.md_green_500),
+                        getResources().getColor(R.color.md_blue_500), getResources().getColor(R.color.md_grey_500),
+                        getResources().getColor(R.color.md_cyan_500), getResources().getColor(R.color.md_blue_grey_500),
+                        getResources().getColor(R.color.md_yellow_500), getResources().getColor(R.color.md_teal_500),
+                        getResources().getColor(R.color.md_light_green_500), getResources().getColor(R.color.md_lime_500));
+    }
+
+    private List<PieEntry> getPieData() {
+        ArrayList categoryData = new ArrayList();
+
+        categoryData.add(new PieEntry(15, "Gift"));
+        categoryData.add(new PieEntry(15, "Food"));
+        categoryData.add(new PieEntry(10, "Transport"));
+        categoryData.add(new PieEntry(10, "Electricity"));
+        categoryData.add(new PieEntry(10, "Education"));
+        categoryData.add(new PieEntry(8, "Shopping"));
+        categoryData.add(new PieEntry(7, "Fun"));
+        categoryData.add(new PieEntry(9, "Family"));
+        categoryData.add(new PieEntry(9, "Friends"));
+        categoryData.add(new PieEntry(10, "Work"));
+
+        return categoryData;
     }
 
     private void setMenu() {
@@ -99,6 +163,7 @@ public class HomeActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.tool_bar);
         sliderView = findViewById(R.id.Slider);
         mainLayout = findViewById(R.id.home_layout);
+        pieChart = findViewById(R.id.pieChart);
         addButton = findViewById(R.id.add);
         noWalletData = findViewById(R.id.NoDataWallet);
         tools = new Tools(this);
@@ -116,17 +181,16 @@ public class HomeActivity extends AppCompatActivity {
     };
 
     private void setCardSlider() {
-//        dataLoader.setOnWalletItemsCompleted(new DataLoader.onWalletItemsCompleted() {
-//            @Override
-//            public void onComplete(ArrayList<Wallet> walletList) {
-//                if (walletList != null){
-//                    if (walletList.size() != 0){
-//                        setWalletAdapter(walletList);
-//                    }
-//                }
-//            }
-//        });
-        setWalletAdapter(databaseHelper.getAllWalletItems());
+        dataLoader.setOnWalletItemsCompleted(new DataLoader.onWalletItemsCompleted() {
+            @Override
+            public void onComplete(ArrayList<Wallet> walletList) {
+                if (walletList != null){
+                    if (walletList.size() != 0){
+                        setWalletAdapter(walletList);
+                    }
+                }
+            }
+        });
     }
 
     private void setWalletAdapter(ArrayList<Wallet> walletList) {
@@ -171,14 +235,7 @@ public class HomeActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        exitApp();
-    }
-
-    public void exitApp(){
-        Intent exitIntent = new Intent(Intent.ACTION_MAIN);
-        exitIntent.addCategory(Intent.CATEGORY_HOME);
-        exitIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        this.startActivity(exitIntent);
+        tools.exitApp();
     }
 }
 

@@ -28,7 +28,6 @@ public class ReportActivity extends AppCompatActivity {
     private UX ux;
     private Tools tools;
     private BarChart barChart;
-    private float barWidth = 0.8f;
     private BarData mData;
     private DatabaseHelper databaseHelper;
 
@@ -151,7 +150,7 @@ public class ReportActivity extends AppCompatActivity {
         barChart.getXAxis().setDrawGridLines(false);
         barChart.getDescription().setPosition(10f,10f);
         barChart.setData(mData);
-        barChart.getBarData().setBarWidth(barWidth);
+        barChart.getBarData().setBarWidth(0.6f);
         barChart.setVisibleXRangeMaximum(6);
         barChart.resetViewPortOffsets();
         barChart.animateXY(1000, 1000);
