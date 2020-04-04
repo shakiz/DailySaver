@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -26,11 +27,19 @@ import com.dailysaver.shadowhite.dailysaver.R;
 import com.dailysaver.shadowhite.dailysaver.utills.DataLoader;
 import com.dailysaver.shadowhite.dailysaver.utills.Tools;
 import com.dailysaver.shadowhite.dailysaver.utills.dbhelper.DatabaseHelper;
+import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
+import com.github.mikephil.charting.formatter.LargeValueFormatter;
 import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.skydoves.powermenu.CircularEffect;
@@ -52,10 +61,14 @@ public class HomeActivity extends AppCompatActivity {
     private CustomPowerMenu powerMenu;
     private SliderView sliderView;
     private PieChart pieChart;
+    private BarChart groupedBarChart;
     private DataLoader dataLoader;
     private Tools tools;
     private PieData pieData;
     private DatabaseHelper databaseHelper;
+    float barWidth = 0.3f;
+    float barSpace = 0f;
+    float groupSpace = 0.4f;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,15 +95,16 @@ public class HomeActivity extends AppCompatActivity {
     private void bindUiWithComponents() {
         setCardSlider();
         setMenu();
-        setPieChart();
+        setCategoryPieChart();
+        setExpenseVsSavingsChart();
     }
 
-    private void setPieChart() {
-        setPieData();
-        makePieChart();
+    private void setCategoryPieChart() {
+        setCategoryPieData();
+        makeCategoryPieChart();
     }
 
-    private void makePieChart() {
+    private void makeCategoryPieChart() {
         getLegendForPieChart();
         pieChart.setEntryLabelColor(getResources().getColor(R.color.md_white_1000));
         pieChart.setCenterText("Categories");
@@ -99,6 +113,7 @@ public class HomeActivity extends AppCompatActivity {
         pieChart.setEntryLabelTextSize(6f);
         pieChart.animateXY(2000, 2000);
         pieChart.getDescription().setEnabled(false);
+        pieChart.setData(pieData);
         pieChart.invalidate();
     }
 
@@ -110,16 +125,17 @@ public class HomeActivity extends AppCompatActivity {
         l.setDrawInside(false); //if legend should be drawn inside or not
     }
 
-    private void setPieData() {
+    private void setCategoryPieData() {
         PieDataSet dataSet = new PieDataSet(getPieData(), "");
         pieData = new PieData(dataSet);
+        pieData.setValueTextColor(getResources().getColor(R.color.md_white_1000));
+        pieData.setValueTextSize(10f);
         pieData.setValueFormatter(new PercentFormatter());
-        pieChart.setData(pieData);
         dataSet.setColors(getResources().getColor(R.color.md_red_300), getResources().getColor(R.color.md_green_500),
-                        getResources().getColor(R.color.md_blue_500), getResources().getColor(R.color.md_grey_500),
-                        getResources().getColor(R.color.md_cyan_500), getResources().getColor(R.color.md_blue_grey_500),
-                        getResources().getColor(R.color.md_yellow_500), getResources().getColor(R.color.md_teal_500),
-                        getResources().getColor(R.color.md_light_green_500), getResources().getColor(R.color.md_lime_500));
+                getResources().getColor(R.color.md_blue_500), getResources().getColor(R.color.md_grey_500),
+                getResources().getColor(R.color.md_cyan_500), getResources().getColor(R.color.md_blue_grey_500),
+                getResources().getColor(R.color.md_yellow_700), getResources().getColor(R.color.md_teal_500),
+                getResources().getColor(R.color.md_light_green_500), getResources().getColor(R.color.md_lime_700));
     }
 
     private List<PieEntry> getPieData() {
@@ -137,6 +153,84 @@ public class HomeActivity extends AppCompatActivity {
         categoryData.add(new PieEntry(10, "Work"));
 
         return categoryData;
+    }
+
+    private void setExpenseVsSavingsChart() {
+
+        groupedBarChart.setDescription(null);
+        groupedBarChart.setPinchZoom(false);
+        groupedBarChart.setScaleEnabled(false);
+        groupedBarChart.setDrawBarShadow(false);
+        groupedBarChart.setDrawGridBackground(false);
+
+        int groupCount = 6;
+
+        ArrayList xVals = new ArrayList();
+
+        xVals.add("Jan");
+        xVals.add("Feb");
+        xVals.add("Mar");
+        xVals.add("Apr");
+        xVals.add("May");
+        xVals.add("Jun");
+
+        ArrayList yVals1 = new ArrayList();
+        ArrayList yVals2 = new ArrayList();
+
+        yVals1.add(new BarEntry(1, (float) 1));
+        yVals2.add(new BarEntry(1, (float) 2));
+        yVals1.add(new BarEntry(2, (float) 3));
+        yVals2.add(new BarEntry(2, (float) 4));
+        yVals1.add(new BarEntry(3, (float) 5));
+        yVals2.add(new BarEntry(3, (float) 6));
+        yVals1.add(new BarEntry(4, (float) 7));
+        yVals2.add(new BarEntry(4, (float) 8));
+        yVals1.add(new BarEntry(5, (float) 9));
+        yVals2.add(new BarEntry(5, (float) 10));
+        yVals1.add(new BarEntry(6, (float) 11));
+        yVals2.add(new BarEntry(6, (float) 12));
+
+        BarDataSet set1, set2;
+        set1 = new BarDataSet(yVals1, "A");
+        set1.setColor(Color.RED);
+        set2 = new BarDataSet(yVals2, "B");
+        set2.setColor(Color.BLUE);
+        BarData data = new BarData(set1, set2);
+        data.setValueFormatter(new LargeValueFormatter());
+        groupedBarChart.setData(data);
+        groupedBarChart.getBarData().setBarWidth(barWidth);
+        groupedBarChart.getXAxis().setAxisMinimum(0);
+        groupedBarChart.getXAxis().setAxisMaximum(0 + groupedBarChart.getBarData().getGroupWidth(groupSpace, barSpace) * groupCount);
+        groupedBarChart.groupBars(0, groupSpace, barSpace);
+        groupedBarChart.getData().setHighlightEnabled(false);
+        groupedBarChart.invalidate();
+
+        Legend l = groupedBarChart.getLegend();
+        l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
+        l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
+        l.setOrientation(Legend.LegendOrientation.HORIZONTAL);
+        l.setDrawInside(true);
+        l.setYOffset(20f);
+        l.setXOffset(0f);
+        l.setYEntrySpace(0f);
+        l.setTextSize(8f);
+
+        //X-axis
+        XAxis xAxis = groupedBarChart.getXAxis();
+        xAxis.setGranularity(1f);
+        xAxis.setGranularityEnabled(true);
+        xAxis.setCenterAxisLabels(true);
+        xAxis.setDrawGridLines(false);
+        xAxis.setAxisMaximum(6);
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setValueFormatter(new IndexAxisValueFormatter(xVals));
+        //Y-axis
+        groupedBarChart.getAxisRight().setEnabled(false);
+        YAxis leftAxis = groupedBarChart.getAxisLeft();
+        leftAxis.setValueFormatter(new LargeValueFormatter());
+        leftAxis.setDrawGridLines(true);
+        leftAxis.setSpaceTop(35f);
+        leftAxis.setAxisMinimum(0f);
     }
 
     private void setMenu() {
@@ -164,6 +258,7 @@ public class HomeActivity extends AppCompatActivity {
         sliderView = findViewById(R.id.Slider);
         mainLayout = findViewById(R.id.home_layout);
         pieChart = findViewById(R.id.pieChart);
+        groupedBarChart = findViewById(R.id.GroupedBarChart);
         addButton = findViewById(R.id.add);
         noWalletData = findViewById(R.id.NoDataWallet);
         tools = new Tools(this);

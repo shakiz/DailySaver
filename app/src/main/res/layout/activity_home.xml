@@ -149,17 +149,65 @@
                         android:textSize="16sp"
                         android:textColor="@color/md_grey_800"
                         android:textStyle="bold"
-                        android:padding="8dp"
-                        android:layout_margin="8dp"
+                        android:padding="4dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
                         android:text="@string/expense_structure"/>
 
                     <com.github.mikephil.charting.charts.PieChart
                         android:id="@+id/pieChart"
+                        android:layout_width="match_parent"
+                        android:layout_height="250dp"
                         android:layout_below="@id/Heading"
                         android:layout_gravity="center"
-                        android:layout_margin="8dp"
+                        android:layout_margin="8dp"/>
+
+                </RelativeLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_below="@id/app_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="8dp"
+                app:cardCornerRadius="12dp"
+                android:translationZ="4dp"
+                android:layout_marginBottom="8dp"
+                android:clickable="true"
+                app:cardBackgroundColor="@color/md_white_1000"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
+                app:cardUseCompatPadding="true">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/Heading2"
                         android:layout_width="match_parent"
-                        android:layout_height="250dp" />
+                        android:layout_height="wrap_content"
+                        android:gravity="center|left"
+                        android:textSize="16sp"
+                        android:textColor="@color/md_grey_800"
+                        android:textStyle="bold"
+                        android:padding="4dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:text="@string/expense_savings_graph"/>
+
+                    <com.github.mikephil.charting.charts.BarChart
+                        android:id="@+id/GroupedBarChart"
+                        android:layout_width="match_parent"
+                        android:layout_height="250dp"
+                        android:layout_below="@id/Heading2"
+                        android:layout_gravity="center"
+                        android:layout_margin="8dp" />
 
                 </RelativeLayout>
 

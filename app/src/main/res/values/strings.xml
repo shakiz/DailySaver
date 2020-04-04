@@ -83,4 +83,5 @@
     <string name="add_new_record">Add New Record</string>
     <string name="records">All Records</string>
     <string name="expense_structure">Expenses/Savings Structure</string>
+    <string name="expense_savings_graph">Expense vs Savings Graph</string>
 </resources>
