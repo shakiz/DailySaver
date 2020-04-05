@@ -26,6 +26,7 @@ import com.dailysaver.shadowhite.dailysaver.models.menu.IconPowerMenuItem;
 import com.dailysaver.shadowhite.dailysaver.R;
 import com.dailysaver.shadowhite.dailysaver.utills.DataLoader;
 import com.dailysaver.shadowhite.dailysaver.utills.Tools;
+import com.dailysaver.shadowhite.dailysaver.utills.bar_chart.CustomBarChartRenderer;
 import com.dailysaver.shadowhite.dailysaver.utills.dbhelper.DatabaseHelper;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.PieChart;
@@ -41,6 +42,7 @@ import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.formatter.LargeValueFormatter;
 import com.github.mikephil.charting.formatter.PercentFormatter;
+import com.github.mikephil.charting.renderer.DataRenderer;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.skydoves.powermenu.CircularEffect;
 import com.skydoves.powermenu.CustomPowerMenu;
@@ -65,10 +67,11 @@ public class HomeActivity extends AppCompatActivity {
     private DataLoader dataLoader;
     private Tools tools;
     private PieData pieData;
+    private BarData groupedBarData;
     private DatabaseHelper databaseHelper;
     float barWidth = 0.3f;
-    float barSpace = 0f;
-    float groupSpace = 0.4f;
+    float barSpace = 0.1f;
+    float groupSpace = 0.2f;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,7 +99,7 @@ public class HomeActivity extends AppCompatActivity {
         setCardSlider();
         setMenu();
         setCategoryPieChart();
-        setExpenseVsSavingsChart();
+        setExpenseVsSavingsBarChart();
     }
 
     private void setCategoryPieChart() {
@@ -155,56 +158,92 @@ public class HomeActivity extends AppCompatActivity {
         return categoryData;
     }
 
-    private void setExpenseVsSavingsChart() {
+    private void setExpenseVsSavingsBarChart() {
+        ArrayList xLabels = new ArrayList();
+        xLabels.add("Jan");
+        xLabels.add("Feb");
+        xLabels.add("Mar");
+        xLabels.add("Apr");
+        xLabels.add("May");
+        xLabels.add("Jun");
+        xLabels.add("July");
+        xLabels.add("Aug");
+        xLabels.add("Sep");
+        xLabels.add("Oct");
+        xLabels.add("Nov");
+        xLabels.add("Dec");
+        
+        ArrayList yLabels1 = new ArrayList();
+        ArrayList yLabels2 = new ArrayList();
 
-        groupedBarChart.setDescription(null);
-        groupedBarChart.setPinchZoom(false);
-        groupedBarChart.setScaleEnabled(false);
-        groupedBarChart.setDrawBarShadow(false);
-        groupedBarChart.setDrawGridBackground(false);
+        yLabels1.add(new BarEntry(1, 1005));
+        yLabels2.add(new BarEntry(1, 2007));
+        yLabels1.add(new BarEntry(2, 2003));
+        yLabels2.add(new BarEntry(2, 4004));
+        yLabels1.add(new BarEntry(3, 3005));
+        yLabels2.add(new BarEntry(3, 4006));
+        yLabels1.add(new BarEntry(4, 5006));
+        yLabels2.add(new BarEntry(4, 3008));
+        yLabels1.add(new BarEntry(5, 5009));
+        yLabels2.add(new BarEntry(5, 3008));
+        yLabels1.add(new BarEntry(6, 10010));
+        yLabels2.add(new BarEntry(6, 11013));
+        yLabels1.add(new BarEntry(7, 1005));
+        yLabels2.add(new BarEntry(7, 2007));
+        yLabels1.add(new BarEntry(8, 2003));
+        yLabels2.add(new BarEntry(8, 4004));
+        yLabels1.add(new BarEntry(9, 3005));
+        yLabels2.add(new BarEntry(9, 4006));
+        yLabels1.add(new BarEntry(10,5006));
+        yLabels2.add(new BarEntry(10,3008));
+        yLabels1.add(new BarEntry(11,4009));
+        yLabels2.add(new BarEntry(11,3008));
+        yLabels1.add(new BarEntry(12,10010));
+        yLabels2.add(new BarEntry(12,10013));
 
-        int groupCount = 6;
+        BarDataSet dataSet1, dataSet2;
+        dataSet1 = new BarDataSet(yLabels1, "Savings");
+        dataSet1.setColor(Color.RED);
+        dataSet2 = new BarDataSet(yLabels2, "Expense");
+        dataSet2.setColor(Color.BLUE);
+        groupedBarData = new BarData(dataSet1, dataSet2);
+        dataSet1.setColor(getResources().getColor(R.color.md_green_400));
+        dataSet2.setColor(getResources().getColor(R.color.md_red_400));
+        groupedBarData.setValueFormatter(new LargeValueFormatter());
+        
+        makeGroupedBarChart();
+        setLegendForGroupedBarChart();
+        setXAndYAxisGroupedBarChart(xLabels);
+    }
 
-        ArrayList xVals = new ArrayList();
+    //region data render
+    private DataRenderer getGroupedBarRenderer() {
+        CustomBarChartRenderer customBarChartRenderer = new CustomBarChartRenderer(groupedBarChart, groupedBarChart.getAnimator(), groupedBarChart.getViewPortHandler());
+        customBarChartRenderer.setRadius(18);
+        return customBarChartRenderer;
+    }
+    //endregion
 
-        xVals.add("Jan");
-        xVals.add("Feb");
-        xVals.add("Mar");
-        xVals.add("Apr");
-        xVals.add("May");
-        xVals.add("Jun");
+    private void setXAndYAxisGroupedBarChart(ArrayList xLabels) {
+        //X-axis
+        XAxis xAxis = groupedBarChart.getXAxis();
+        xAxis.setCenterAxisLabels(true);
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setValueFormatter(new IndexAxisValueFormatter(xLabels));
+        xAxis.setGranularityEnabled(true);
+        xAxis.setGranularity(1f);
+        xAxis.setAxisMinimum(0f);
+        xAxis.setAxisMaximum(12f);
+        xAxis.setAvoidFirstLastClipping(false);
+        xAxis.setCenterAxisLabels(true);
+        xAxis.setDrawGridLines(false);
+        //Y-axis
+        groupedBarChart.getAxisRight().setEnabled(false);
+        YAxis leftAxis = groupedBarChart.getAxisLeft();
+        leftAxis.setSpaceTop(35f);
+    }
 
-        ArrayList yVals1 = new ArrayList();
-        ArrayList yVals2 = new ArrayList();
-
-        yVals1.add(new BarEntry(1, (float) 1));
-        yVals2.add(new BarEntry(1, (float) 2));
-        yVals1.add(new BarEntry(2, (float) 3));
-        yVals2.add(new BarEntry(2, (float) 4));
-        yVals1.add(new BarEntry(3, (float) 5));
-        yVals2.add(new BarEntry(3, (float) 6));
-        yVals1.add(new BarEntry(4, (float) 7));
-        yVals2.add(new BarEntry(4, (float) 8));
-        yVals1.add(new BarEntry(5, (float) 9));
-        yVals2.add(new BarEntry(5, (float) 10));
-        yVals1.add(new BarEntry(6, (float) 11));
-        yVals2.add(new BarEntry(6, (float) 12));
-
-        BarDataSet set1, set2;
-        set1 = new BarDataSet(yVals1, "A");
-        set1.setColor(Color.RED);
-        set2 = new BarDataSet(yVals2, "B");
-        set2.setColor(Color.BLUE);
-        BarData data = new BarData(set1, set2);
-        data.setValueFormatter(new LargeValueFormatter());
-        groupedBarChart.setData(data);
-        groupedBarChart.getBarData().setBarWidth(barWidth);
-        groupedBarChart.getXAxis().setAxisMinimum(0);
-        groupedBarChart.getXAxis().setAxisMaximum(0 + groupedBarChart.getBarData().getGroupWidth(groupSpace, barSpace) * groupCount);
-        groupedBarChart.groupBars(0, groupSpace, barSpace);
-        groupedBarChart.getData().setHighlightEnabled(false);
-        groupedBarChart.invalidate();
-
+    private void setLegendForGroupedBarChart() {
         Legend l = groupedBarChart.getLegend();
         l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
         l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
@@ -212,25 +251,37 @@ public class HomeActivity extends AppCompatActivity {
         l.setDrawInside(true);
         l.setYOffset(20f);
         l.setXOffset(0f);
-        l.setYEntrySpace(0f);
         l.setTextSize(8f);
+    }
 
-        //X-axis
-        XAxis xAxis = groupedBarChart.getXAxis();
-        xAxis.setGranularity(1f);
-        xAxis.setGranularityEnabled(true);
-        xAxis.setCenterAxisLabels(true);
-        xAxis.setDrawGridLines(false);
-        xAxis.setAxisMaximum(6);
-        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-        xAxis.setValueFormatter(new IndexAxisValueFormatter(xVals));
-        //Y-axis
-        groupedBarChart.getAxisRight().setEnabled(false);
-        YAxis leftAxis = groupedBarChart.getAxisLeft();
-        leftAxis.setValueFormatter(new LargeValueFormatter());
-        leftAxis.setDrawGridLines(true);
-        leftAxis.setSpaceTop(35f);
-        leftAxis.setAxisMinimum(0f);
+    private void makeGroupedBarChart() {
+
+        //remove extra space from bottom if value is zero
+        groupedBarChart.getAxisLeft().setAxisMinimum(0f);
+        groupedBarChart.getAxisRight().setAxisMinimum(0f);
+        //end
+
+        groupedBarChart.getAxisRight().setDrawLabels(false);
+        groupedBarChart.getAxisRight().setDrawGridLines(false);
+        groupedBarChart.getAxisLeft().setDrawGridLines(false);
+        groupedBarChart.getXAxis().setDrawGridLines(false);
+        groupedBarChart.setData(groupedBarData);
+        groupedBarChart.setVisibleXRangeMaximum(6);
+        groupedBarChart.resetViewPortOffsets();
+        groupedBarChart.animateXY(1000, 1000);
+        groupedBarChart.setData(groupedBarData);
+        groupedBarChart.getData().setHighlightEnabled(false);
+        groupedBarChart.setDoubleTapToZoomEnabled(false);
+        groupedBarChart.setRenderer(getGroupedBarRenderer());
+        groupedBarChart.setFitBars(true);
+        groupedBarChart.setDescription(null);
+        groupedBarChart.setPinchZoom(false);
+        groupedBarChart.setScaleEnabled(false);
+        groupedBarChart.setDrawBarShadow(false);
+        groupedBarChart.setDrawGridBackground(false);
+        groupedBarChart.getBarData().setBarWidth(barWidth);
+        groupedBarChart.groupBars(0, groupSpace, barSpace);
+        groupedBarChart.invalidate();
     }
 
     private void setMenu() {

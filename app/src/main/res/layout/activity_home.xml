@@ -168,6 +168,7 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/groupedChartLayout"
                 android:layout_below="@id/app_bar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -177,7 +178,7 @@
                 android:layout_marginTop="8dp"
                 app:cardCornerRadius="12dp"
                 android:translationZ="4dp"
-                android:layout_marginBottom="8dp"
+                android:layout_marginBottom="16dp"
                 android:clickable="true"
                 app:cardBackgroundColor="@color/md_white_1000"
                 android:foreground="?attr/selectableItemBackgroundBorderless"
@@ -213,6 +214,21 @@
 
             </androidx.cardview.widget.CardView>
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/groupedChartLayout"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textColor="@color/md_green_600"
+                android:textSize="16sp"
+                android:padding="4dp"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="16dp"
+                android:text="@string/coming_soon"/>
+
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
@@ -225,7 +241,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_margin="24dp"
+        android:layout_margin="16dp"
         android:src="@drawable/ic_add"
         app:backgroundTint="@color/white_transparent"
         app:fabSize="normal" />

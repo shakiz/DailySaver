@@ -84,4 +84,5 @@
     <string name="records">All Records</string>
     <string name="expense_structure">Expenses/Savings Structure</string>
     <string name="expense_savings_graph">Expense vs Savings Graph</string>
+    <string name="coming_soon">Intersting things are coming soon</string>
 </resources>
