@@ -85,4 +85,5 @@
     <string name="expense_structure">Expenses/Savings Structure</string>
     <string name="expense_savings_graph">Expense vs Savings Graph</string>
     <string name="coming_soon">Intersting things are coming soon</string>
+    <string name="monthly_expense_chart">Monhtly Expense Chart</string>
 </resources>

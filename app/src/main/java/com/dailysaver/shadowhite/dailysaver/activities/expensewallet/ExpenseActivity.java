@@ -20,7 +20,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import com.dailysaver.shadowhite.dailysaver.activities.onboard.HomeActivity;
+import com.dailysaver.shadowhite.dailysaver.activities.records.RecordsActivity;
 import com.dailysaver.shadowhite.dailysaver.activities.wallet.WalletActivity;
 import com.dailysaver.shadowhite.dailysaver.adapters.category.CategoryRecyclerAdapter;
 import com.dailysaver.shadowhite.dailysaver.R;
@@ -46,10 +46,10 @@ public class ExpenseActivity extends AppCompatActivity implements View.OnClickLi
     private TextView categorySelection , categoryTitle;
     private ImageView categoryIcon;
     private RecyclerView categoryRecyclerView;
-    private RadioGroup TransactionType;
+    private RadioGroup RecordType;
     private CategoryRecyclerAdapter categoryRecyclerAdapter;
     private int currencyValue = 0, walletValue = 0;
-    private String walletTitleStr = "" , transactionTypeStr = "";
+    private String walletTitleStr = "" , recordTypeStr = "";
     private UX ux;
     private Tools tools;
     private DataLoader dataLoader;
@@ -73,9 +73,8 @@ public class ExpenseActivity extends AppCompatActivity implements View.OnClickLi
             loadRecord();
         }
 
-
-//Set toolbar
-        ux.setToolbar(toolbar,this,HomeActivity.class);
+        //Set toolbar
+        ux.setToolbar(toolbar,this,RecordsActivity.class);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_left_arrow_grey);
         tools.setAnimation(mainLayout);
         //check for any wallet exist or not
@@ -91,7 +90,7 @@ public class ExpenseActivity extends AppCompatActivity implements View.OnClickLi
         toolbar = findViewById(R.id.tool_bar);
         mainLayout = findViewById(R.id.parent_container);
         currencySpinner = findViewById(R.id.Currency);
-        TransactionType = findViewById(R.id.TransactionType);
+        RecordType = findViewById(R.id.RecordType);
         CategorySelector = findViewById(R.id.CategorySelector);
         walletSpinner = findViewById(R.id.Wallet);
         dateView = findViewById(R.id.ExpenseDate);
@@ -131,18 +130,18 @@ public class ExpenseActivity extends AppCompatActivity implements View.OnClickLi
         //Category on click for selecting on click
         categorySelection.setOnClickListener(this);
 
-        TransactionType.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+        RecordType.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 int selectedRadio = group.getCheckedRadioButtonId();
                 View viewRadioButton = findViewById(selectedRadio);
                 RadioButton radioButton = (RadioButton) viewRadioButton;
                 if (radioButton.isChecked()){
-                    transactionTypeStr = radioButton.getTag().toString();
+                    recordTypeStr = radioButton.getTag().toString();
                     //Change the UI based on transaction type
-                    ux.changeUI(new int[]{R.id.Amount, R.id.Currency, R.id.Wallet, R.id.Note, R.id.ExpenseDate, R.id.categoryItemLayout}, transactionTypeStr);
+                    ux.changeUI(new int[]{R.id.Amount, R.id.Currency, R.id.Wallet, R.id.Note, R.id.ExpenseDate, R.id.categoryItemLayout}, recordTypeStr);
 
-                    if (transactionTypeStr.equals("Savings")) CategorySelector.setTextColor(getResources().getColor(R.color.md_green_600));
+                    if (recordTypeStr.equals("Savings")) CategorySelector.setTextColor(getResources().getColor(R.color.md_green_600));
                     else CategorySelector.setTextColor(getResources().getColor(R.color.md_red_600));
                 }
             }
@@ -164,12 +163,13 @@ public class ExpenseActivity extends AppCompatActivity implements View.OnClickLi
 
     //Save expense into DB with validation
     private void saveExpense(){
-        if (ux.validation(new int[]{R.id.Amount, R.id.Currency, R.id.Wallet, R.id.Note, R.id.ExpenseDate})){
+        if (ux.validation(new int[]{R.id.Amount, R.id.Currency, R.id.Wallet, R.id.Note, R.id.ExpenseDate, R.id.RecordType})){
             if (getRemainingBalance()){
 
                 databaseHelper.addNewExpense(new Expense(
                                 Integer.parseInt(Amount.getText().toString()),
                                 currencyValue,
+                                recordTypeStr,
                                 categoryTitle.getText().toString(),
                                 walletTitleStr,
                                 walletValue,
@@ -177,7 +177,7 @@ public class ExpenseActivity extends AppCompatActivity implements View.OnClickLi
                                 ExpenseDate.getText().toString()));
 
                 Toast.makeText(this,getResources().getString(R.string.data_saved_successfully),Toast.LENGTH_LONG).show();
-                startActivity(new Intent(ExpenseActivity.this,HomeActivity.class));
+                startActivity(new Intent(ExpenseActivity.this,RecordsActivity.class));
             }
             else{
                 //LGSnackbarManager.show(LGSnackBarTheme.SnackbarStyle.INFO, getResources().getString(R.string.wallet_amount_exceeds));
@@ -205,11 +205,12 @@ public class ExpenseActivity extends AppCompatActivity implements View.OnClickLi
     //Update expense
     private void updateExpense() {
 
-        if (ux.validation(new int[]{R.id.Amount, R.id.Currency, R.id.Wallet, R.id.Note, R.id.ExpenseDate})){
+        if (ux.validation(new int[]{R.id.Amount, R.id.Currency, R.id.Wallet, R.id.Note, R.id.ExpenseDate, R.id.RecordType })){
             if (getRemainingBalance()){
                 databaseHelper.updateExpense(new Expense(
                                 Integer.parseInt(Amount.getText().toString()),
                                 currencyValue,
+                                recordTypeStr,
                                 categoryTitle.getText().toString(),
                                 walletTitleStr,
                                 walletValue,
@@ -218,7 +219,7 @@ public class ExpenseActivity extends AppCompatActivity implements View.OnClickLi
                         , expense.getId());
 
                 Toast.makeText(this,getResources().getString(R.string.data_updated_successfully),Toast.LENGTH_LONG).show();
-                startActivity(new Intent(ExpenseActivity.this,HomeActivity.class));
+                startActivity(new Intent(ExpenseActivity.this,RecordsActivity.class));
             }
             else{
                 //LGSnackbarManager.show(LGSnackBarTheme.SnackbarStyle.INFO, getResources().getString(R.string.wallet_amount_exceeds));
@@ -294,7 +295,7 @@ public class ExpenseActivity extends AppCompatActivity implements View.OnClickLi
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(ExpenseActivity.this,HomeActivity.class));
+        startActivity(new Intent(ExpenseActivity.this, RecordsActivity.class));
         overridePendingTransition(R.anim.fadein,R.anim.push_up_out);
     }
 

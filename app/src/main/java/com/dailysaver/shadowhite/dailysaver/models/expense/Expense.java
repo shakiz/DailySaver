@@ -4,9 +4,10 @@ import java.io.Serializable;
 
 public class Expense implements Serializable {
     private int Id;
+    private String RecordType;
+    private String Category;
     private int Amount;
     private int Currency;
-    private String Category;
     private String WalletTitle;
     private int WalletId;
     private String Note;
@@ -15,9 +16,10 @@ public class Expense implements Serializable {
     public Expense() {
     }
 
-    public Expense(int amount, int currency, String category, String walletTitle,int walletId, String note, String expenseDate) {
+    public Expense(int amount, int currency, String recordType, String category, String walletTitle,int walletId, String note, String expenseDate) {
         this.Amount = amount;
         this.Currency = currency;
+        this.RecordType = recordType;
         this.Category = category;
         this.WalletTitle = walletTitle;
         this.WalletId = walletId;
@@ -31,6 +33,22 @@ public class Expense implements Serializable {
 
     public void setId(int id) {
         Id = id;
+    }
+
+    public String getRecordType() {
+        return RecordType;
+    }
+
+    public void setRecordType(String recordType) {
+        RecordType = recordType;
+    }
+
+    public String getCategory() {
+        return Category;
+    }
+
+    public void setCategory(String category) {
+        Category = category;
     }
 
     public int getAmount() {
@@ -47,14 +65,6 @@ public class Expense implements Serializable {
 
     public void setCurrency(int currency) {
         Currency = currency;
-    }
-
-    public String getCategory() {
-        return Category;
-    }
-
-    public void setCategory(String category) {
-        Category = category;
     }
 
     public String getWalletTitle() {

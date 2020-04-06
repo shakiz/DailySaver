@@ -40,14 +40,32 @@ public class DataManager {
         ArrayList<Category> categoryList = new ArrayList<>();
         categoryList.add(new Category("Food",R.drawable.ic_food_icon));
         categoryList.add(new Category("Transport",R.drawable.ic_transport));
-        categoryList.add(new Category("Electricity",R.drawable.ic_electricity));
+        categoryList.add(new Category("Energy",R.drawable.ic_electricity));
         categoryList.add(new Category("Education",R.drawable.ic_education));
         categoryList.add(new Category("Shopping",R.drawable.ic_cshopping));
-        categoryList.add(new Category("Entertainment",R.drawable.ic_entertainment));
+        categoryList.add(new Category("Fun",R.drawable.ic_entertainment));
         categoryList.add(new Category("Family",R.drawable.ic_family));
         categoryList.add(new Category("Friends",R.drawable.ic_friends));
         categoryList.add(new Category("Work",R.drawable.ic_work));
         categoryList.add(new Category("Gift",R.drawable.ic_gift));
         return categoryList;
+    }
+
+    public ArrayList getMonthNameForLabel(){
+        ArrayList xLabels = new ArrayList();
+        xLabels.add("Jan");
+        xLabels.add("Feb");
+        xLabels.add("Mar");
+        xLabels.add("Apr");
+        xLabels.add("May");
+        xLabels.add("Jun");
+        xLabels.add("July");
+        xLabels.add("Aug");
+        xLabels.add("Sep");
+        xLabels.add("Oct");
+        xLabels.add("Nov");
+        xLabels.add("Dec");
+
+        return xLabels;
     }
 }

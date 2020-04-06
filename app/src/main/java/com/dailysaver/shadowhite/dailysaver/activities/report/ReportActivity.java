@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.widget.RelativeLayout;
 import com.dailysaver.shadowhite.dailysaver.R;
 import com.dailysaver.shadowhite.dailysaver.activities.onboard.HomeActivity;
+import com.dailysaver.shadowhite.dailysaver.utills.DataManager;
 import com.dailysaver.shadowhite.dailysaver.utills.Tools;
 import com.dailysaver.shadowhite.dailysaver.utills.UX;
 import com.dailysaver.shadowhite.dailysaver.utills.bar_chart.CustomBarChartRenderer;
@@ -30,13 +31,14 @@ public class ReportActivity extends AppCompatActivity {
     private BarChart barChart;
     private BarData mData;
     private DatabaseHelper databaseHelper;
+    private DataManager dataManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report);
 
-        initUI();
+        init();
 
         //Set toolbar
         ux.setToolbar(toolbar,this, HomeActivity.class);
@@ -46,12 +48,13 @@ public class ReportActivity extends AppCompatActivity {
         bindUIWithComponents();
     }
 
-    private void initUI() {
+    private void init() {
         toolbar = findViewById(R.id.tool_bar);
         mainLayout = findViewById(R.id.parent_container);
         barChart = findViewById(R.id.barChart);
         ux = new UX(this, mainLayout);
         tools = new Tools(this);
+        dataManager = new DataManager(this);
         databaseHelper = new DatabaseHelper(this);
     }
 
@@ -118,21 +121,7 @@ public class ReportActivity extends AppCompatActivity {
 
     //region xAxis labels
     private ArrayList getXAxisValues() {
-        ArrayList<String> xLabels = new ArrayList<>();
-
-        xLabels.add("Jan");
-        xLabels.add("Feb");
-        xLabels.add("Mar");
-        xLabels.add("Apr");
-        xLabels.add("May");
-        xLabels.add("Jun");
-        xLabels.add("Jul");
-        xLabels.add("Aug");
-        xLabels.add("Sep");
-        xLabels.add("Oct");
-        xLabels.add("Nov");
-        xLabels.add("Dec");
-
+        ArrayList<String> xLabels = dataManager.getMonthNameForLabel();
         return xLabels;
     }
     //end region

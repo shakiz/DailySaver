@@ -25,6 +25,7 @@ import com.dailysaver.shadowhite.dailysaver.models.wallet.Wallet;
 import com.dailysaver.shadowhite.dailysaver.models.menu.IconPowerMenuItem;
 import com.dailysaver.shadowhite.dailysaver.R;
 import com.dailysaver.shadowhite.dailysaver.utills.DataLoader;
+import com.dailysaver.shadowhite.dailysaver.utills.DataManager;
 import com.dailysaver.shadowhite.dailysaver.utills.Tools;
 import com.dailysaver.shadowhite.dailysaver.utills.bar_chart.CustomBarChartRenderer;
 import com.dailysaver.shadowhite.dailysaver.utills.dbhelper.DatabaseHelper;
@@ -72,6 +73,7 @@ public class HomeActivity extends AppCompatActivity {
     float barWidth = 0.3f;
     float barSpace = 0.1f;
     float groupSpace = 0.2f;
+    private DataManager dataManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -147,7 +149,7 @@ public class HomeActivity extends AppCompatActivity {
         categoryData.add(new PieEntry(15, "Gift"));
         categoryData.add(new PieEntry(15, "Food"));
         categoryData.add(new PieEntry(10, "Transport"));
-        categoryData.add(new PieEntry(10, "Electricity"));
+        categoryData.add(new PieEntry(10, "Energy"));
         categoryData.add(new PieEntry(10, "Education"));
         categoryData.add(new PieEntry(8, "Shopping"));
         categoryData.add(new PieEntry(7, "Fun"));
@@ -159,47 +161,16 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void setExpenseVsSavingsBarChart() {
-        ArrayList xLabels = new ArrayList();
-        xLabels.add("Jan");
-        xLabels.add("Feb");
-        xLabels.add("Mar");
-        xLabels.add("Apr");
-        xLabels.add("May");
-        xLabels.add("Jun");
-        xLabels.add("July");
-        xLabels.add("Aug");
-        xLabels.add("Sep");
-        xLabels.add("Oct");
-        xLabels.add("Nov");
-        xLabels.add("Dec");
+        ArrayList xLabels = dataManager.getMonthNameForLabel();
+        String[] monthNames = new String[]{"Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"};
         
         ArrayList yLabels1 = new ArrayList();
         ArrayList yLabels2 = new ArrayList();
 
-        yLabels1.add(new BarEntry(1, 1005));
-        yLabels2.add(new BarEntry(1, 2007));
-        yLabels1.add(new BarEntry(2, 2003));
-        yLabels2.add(new BarEntry(2, 4004));
-        yLabels1.add(new BarEntry(3, 3005));
-        yLabels2.add(new BarEntry(3, 4006));
-        yLabels1.add(new BarEntry(4, 5006));
-        yLabels2.add(new BarEntry(4, 3008));
-        yLabels1.add(new BarEntry(5, 5009));
-        yLabels2.add(new BarEntry(5, 3008));
-        yLabels1.add(new BarEntry(6, 10010));
-        yLabels2.add(new BarEntry(6, 11013));
-        yLabels1.add(new BarEntry(7, 1005));
-        yLabels2.add(new BarEntry(7, 2007));
-        yLabels1.add(new BarEntry(8, 2003));
-        yLabels2.add(new BarEntry(8, 4004));
-        yLabels1.add(new BarEntry(9, 3005));
-        yLabels2.add(new BarEntry(9, 4006));
-        yLabels1.add(new BarEntry(10,5006));
-        yLabels2.add(new BarEntry(10,3008));
-        yLabels1.add(new BarEntry(11,4009));
-        yLabels2.add(new BarEntry(11,3008));
-        yLabels1.add(new BarEntry(12,10010));
-        yLabels2.add(new BarEntry(12,10013));
+        for (int startIndex = 0; startIndex < monthNames.length; startIndex++) {
+            yLabels1.add(new BarEntry(startIndex,databaseHelper.getCostOfMonthWithRecordType(monthNames[startIndex],"Savings")));
+            yLabels2.add(new BarEntry(startIndex,databaseHelper.getCostOfMonthWithRecordType(monthNames[startIndex],"Expense")));
+        }
 
         BarDataSet dataSet1, dataSet2;
         dataSet1 = new BarDataSet(yLabels1, "Savings");
@@ -266,7 +237,7 @@ public class HomeActivity extends AppCompatActivity {
         groupedBarChart.getAxisLeft().setDrawGridLines(false);
         groupedBarChart.getXAxis().setDrawGridLines(false);
         groupedBarChart.setData(groupedBarData);
-        groupedBarChart.setVisibleXRangeMaximum(6);
+        groupedBarChart.setVisibleXRangeMaximum(5);
         groupedBarChart.resetViewPortOffsets();
         groupedBarChart.animateXY(1000, 1000);
         groupedBarChart.setData(groupedBarData);
@@ -313,6 +284,7 @@ public class HomeActivity extends AppCompatActivity {
         addButton = findViewById(R.id.add);
         noWalletData = findViewById(R.id.NoDataWallet);
         tools = new Tools(this);
+        dataManager = new DataManager(this);
         dataLoader = new DataLoader(this, mainLayout);
         databaseHelper = new DatabaseHelper(this);
     }

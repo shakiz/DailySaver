@@ -17,6 +17,7 @@ import static com.dailysaver.shadowhite.dailysaver.utills.dbhelper.DBColumns.COL
 import static com.dailysaver.shadowhite.dailysaver.utills.dbhelper.DBColumns.COLUMN_EXPENSE_NOTE;
 import static com.dailysaver.shadowhite.dailysaver.utills.dbhelper.DBColumns.COLUMN_EXPENSE_WALLET;
 import static com.dailysaver.shadowhite.dailysaver.utills.dbhelper.DBColumns.COLUMN_EXPENSE_WALLET_ID;
+import static com.dailysaver.shadowhite.dailysaver.utills.dbhelper.DBColumns.COLUMN_RECORD_TYPE;
 import static com.dailysaver.shadowhite.dailysaver.utills.dbhelper.DBColumns.COLUMN_WALLET_AMOUNT;
 import static com.dailysaver.shadowhite.dailysaver.utills.dbhelper.DBColumns.COLUMN_WALLET_CURRENCY;
 import static com.dailysaver.shadowhite.dailysaver.utills.dbhelper.DBColumns.COLUMN_WALLET_EXPIRES_ON;
@@ -33,7 +34,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String EXPENSE_TABLE = "Expense";
 
     private static String CREATE_EXPENSE_TABLE = "CREATE TABLE " + EXPENSE_TABLE + "("
-            + COLUMN_EXPENSE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + COLUMN_EXPENSE_AMOUNT + " INTEGER,"
+            + COLUMN_EXPENSE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + COLUMN_EXPENSE_AMOUNT + " INTEGER," + COLUMN_RECORD_TYPE + " TEXT,"
             + COLUMN_EXPENSE_CURRENCY + " INTEGER," + COLUMN_EXPENSE_CATEGORY + " TEXT," + COLUMN_EXPENSE_NOTE + " TEXT,"+ COLUMN_EXPENSE_WALLET_ID + " INTEGER,"
             + COLUMN_EXPENSE_WALLET + " TEXT," + COLUMN_EXPENSE_DATE + " TEXT" + ")";
 
@@ -73,6 +74,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(COLUMN_EXPENSE_AMOUNT, expense.getAmount());
         values.put(COLUMN_EXPENSE_CURRENCY, expense.getCurrency());
+        values.put(COLUMN_RECORD_TYPE, expense.getRecordType());
         values.put(COLUMN_EXPENSE_CATEGORY, expense.getCategory());
         values.put(COLUMN_EXPENSE_WALLET, expense.getWalletTitle());
         values.put(COLUMN_EXPENSE_WALLET_ID, expense.getWalletId());
@@ -400,6 +402,44 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     totalCost += cursor.getInt(cursor.getColumnIndex(COLUMN_EXPENSE_AMOUNT));
                 } while (cursor.moveToNext());
             }
+        }
+        cursor.close();
+        db.close();
+        return totalCost;
+    }
+
+    /**
+     * This method is to all cost based on month and record type [savings or expense]
+     * @param monthName
+     * @param recordType
+     */
+    public int getCostOfMonthWithRecordType(String monthName, String recordType) {
+        int totalCost = 0;
+        // array of columns to fetch
+        String[] columns = {
+                COLUMN_EXPENSE_ID,
+                COLUMN_EXPENSE_AMOUNT,
+                COLUMN_EXPENSE_DATE,
+                COLUMN_RECORD_TYPE
+        };
+        // sorting orders
+        String sortOrder =
+                COLUMN_EXPENSE_ID + " DESC";
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String where = "" + COLUMN_EXPENSE_DATE + " LIKE '%"+ monthName +"%' and " + COLUMN_RECORD_TYPE + " = '" + recordType + "'";
+
+        Cursor cursor = db.query(EXPENSE_TABLE, columns, where, null, null, null, sortOrder);
+
+        if (cursor != null){
+            if (cursor.moveToFirst()) {
+                do {
+                    totalCost += cursor.getInt(cursor.getColumnIndex(COLUMN_EXPENSE_AMOUNT));
+                } while (cursor.moveToNext());
+            }
+        }
+        else{
+            totalCost = 0;
         }
         cursor.close();
         db.close();

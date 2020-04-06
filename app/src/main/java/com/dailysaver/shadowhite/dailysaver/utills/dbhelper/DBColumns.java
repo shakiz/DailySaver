@@ -1,14 +1,15 @@
 package com.dailysaver.shadowhite.dailysaver.utills.dbhelper;
 
 public class DBColumns {
-    public static final String COLUMN_EXPENSE_ID = "expense_id";
-    public static final String COLUMN_EXPENSE_AMOUNT = "expense_amount";
-    public static final String COLUMN_EXPENSE_CURRENCY = "expense_currency";
-    public static final String COLUMN_EXPENSE_CATEGORY = "expense_category";
-    public static final String COLUMN_EXPENSE_WALLET = "expense_wallet";
-    public static final String COLUMN_EXPENSE_WALLET_ID = "expense_wallet_id";
-    public static final String COLUMN_EXPENSE_NOTE = "expense_note";
-    public static final String COLUMN_EXPENSE_DATE = "expense_date";
+    public static final String COLUMN_EXPENSE_ID = "id";
+    public static final String COLUMN_RECORD_TYPE = "record_type";
+    public static final String COLUMN_EXPENSE_AMOUNT = "amount";
+    public static final String COLUMN_EXPENSE_CURRENCY = "currency";
+    public static final String COLUMN_EXPENSE_CATEGORY = "category";
+    public static final String COLUMN_EXPENSE_WALLET = "wallet";
+    public static final String COLUMN_EXPENSE_WALLET_ID = "wallet_id";
+    public static final String COLUMN_EXPENSE_NOTE = "note";
+    public static final String COLUMN_EXPENSE_DATE = "date";
 
 
     public static final String COLUMN_WALLET_ID = "wallet_id";

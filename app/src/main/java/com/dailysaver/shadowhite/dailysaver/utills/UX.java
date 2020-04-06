@@ -17,6 +17,8 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
@@ -224,6 +226,19 @@ public class UX {
                 CheckBox checkBox = (CheckBox) child;
                 if (!checkBox.isSelected()) {
                     checkBox.setError(context.getResources().getString(R.string.select_your_option));
+                    valid = false;
+                }
+                else {
+                    valid = true;
+                }
+            }
+            else if (child instanceof RadioGroup){
+                RadioGroup radioGroup = (RadioGroup) child;
+                int selectedRadio = radioGroup.getCheckedRadioButtonId();
+                View viewRadioButton = view.findViewById(selectedRadio);
+                RadioButton radioButton = (RadioButton) viewRadioButton;
+                if (!radioButton.isChecked()) {
+                    radioButton.setError(context.getResources().getString(R.string.select_your_option));
                     valid = false;
                 }
                 else {
