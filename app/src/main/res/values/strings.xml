@@ -89,4 +89,6 @@
     <string name="food">Food</string>
     <string name="test">Test</string>
     <string name="date_title">Date</string>
+    <string name="select_record_type">Select record type</string>
+    <string name="select_record_type_error_message">Please select record type</string>
 </resources>

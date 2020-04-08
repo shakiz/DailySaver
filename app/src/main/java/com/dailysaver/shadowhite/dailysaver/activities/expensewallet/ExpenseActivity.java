@@ -3,6 +3,7 @@ package com.dailysaver.shadowhite.dailysaver.activities.expensewallet;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -41,7 +42,7 @@ public class ExpenseActivity extends AppCompatActivity implements View.OnClickLi
     private Toolbar toolbar;
     private FloatingActionButton addOrUpdate;
     private EditText Amount,Note;
-    private TextView ExpenseDate, dateView, CategorySelector;
+    private TextView ExpenseDate, DateView, CategorySelector , headingTXTRecordType;
     private Spinner currencySpinner, walletSpinner;
     private Dialog itemDialog;
     private LinearLayout dialogLinearLayout;
@@ -62,7 +63,7 @@ public class ExpenseActivity extends AppCompatActivity implements View.OnClickLi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_new_expense);
+        setContentView(R.layout.activity_add_new_record);
 
         init();
 
@@ -96,8 +97,9 @@ public class ExpenseActivity extends AppCompatActivity implements View.OnClickLi
         currencySpinner = findViewById(R.id.Currency);
         RecordType = findViewById(R.id.RecordType);
         CategorySelector = findViewById(R.id.CategorySelector);
+        headingTXTRecordType = findViewById(R.id.HeadingTXTRecordType);
         walletSpinner = findViewById(R.id.Wallet);
-        dateView = findViewById(R.id.ExpenseDate);
+        DateView = findViewById(R.id.ExpenseDate);
         categorySelection = findViewById(R.id.CategorySelector);
         categoryTitle = findViewById(R.id.Title);
         categoryIcon = findViewById(R.id.IconRes);
@@ -129,7 +131,7 @@ public class ExpenseActivity extends AppCompatActivity implements View.OnClickLi
             }
         });
 
-        dateView.setOnClickListener(this);
+        DateView.setOnClickListener(this);
 
         //Category on click for selecting on click
         categorySelection.setOnClickListener(this);
@@ -142,11 +144,18 @@ public class ExpenseActivity extends AppCompatActivity implements View.OnClickLi
                 RadioButton radioButton = (RadioButton) viewRadioButton;
                 if (radioButton.isChecked()){
                     recordTypeStr = radioButton.getTag().toString();
+                    Log.v("recordTypeStr",recordTypeStr);
                     //Change the UI based on transaction type
                     ux.changeUI(new int[]{R.id.Amount, R.id.Currency, R.id.Wallet, R.id.Note, R.id.ExpenseDate, R.id.categoryItemLayout}, recordTypeStr);
 
-                    if (recordTypeStr.equals("Savings")) CategorySelector.setTextColor(getResources().getColor(R.color.md_green_600));
-                    else CategorySelector.setTextColor(getResources().getColor(R.color.md_red_600));
+                    if (recordTypeStr.equals("Savings")) {
+                        CategorySelector.setTextColor(getResources().getColor(R.color.md_green_600));
+                        headingTXTRecordType.setTextColor(getResources().getColor(R.color.md_green_400));
+                    }
+                    else {
+                        CategorySelector.setTextColor(getResources().getColor(R.color.md_red_600));
+                        headingTXTRecordType.setTextColor(getResources().getColor(R.color.md_red_400));
+                    }
                 }
             }
         });
@@ -167,26 +176,28 @@ public class ExpenseActivity extends AppCompatActivity implements View.OnClickLi
 
     //Save expense into DB with validation
     private void saveExpense(){
-        if (ux.validation(new int[]{R.id.Amount, R.id.Currency, R.id.Wallet, R.id.Note, R.id.ExpenseDate, R.id.RecordType})){
-            if (getRemainingBalance()){
+        if (ux.validation(new int[]{R.id.Amount, R.id.Currency, R.id.Wallet, R.id.Note, R.id.ExpenseDate})){
+            if (!recordTypeStr.isEmpty()){
+                if (getRemainingBalance()){
 
-                databaseHelper.addNewExpense(new Expense(
-                                Integer.parseInt(Amount.getText().toString()),
-                                currencyValue,
-                                recordTypeStr,
-                                categoryTitle.getText().toString(),
-                                walletTitleStr,
-                                walletValue,
-                                Note.getText().toString(),
-                                ExpenseDate.getText().toString()));
+                    databaseHelper.addNewExpense(new Expense(
+                            Integer.parseInt(Amount.getText().toString()),
+                            currencyValue,
+                            recordTypeStr,
+                            categoryTitle.getText().toString(),
+                            walletTitleStr,
+                            walletValue,
+                            Note.getText().toString(),
+                            ExpenseDate.getText().toString()));
 
-                Toast.makeText(this,getResources().getString(R.string.data_saved_successfully),Toast.LENGTH_LONG).show();
-                startActivity(new Intent(ExpenseActivity.this,RecordsActivity.class));
+                    Toast.makeText(this,getResources().getString(R.string.data_saved_successfully),Toast.LENGTH_LONG).show();
+                    startActivity(new Intent(ExpenseActivity.this,RecordsActivity.class));
+                }
+                else{
+                    Snackbar.make(mainLayout,getResources().getString(R.string.wallet_amount_exceeds), Snackbar.LENGTH_SHORT).show();
+                }
             }
-            else{
-                //LGSnackbarManager.show(LGSnackBarTheme.SnackbarStyle.INFO, getResources().getString(R.string.wallet_amount_exceeds));
-                Snackbar.make(mainLayout,getResources().getString(R.string.wallet_amount_exceeds), Snackbar.LENGTH_LONG).show();
-            }
+            else Snackbar.make(mainLayout,getResources().getString(R.string.select_record_type_error_message),Snackbar.LENGTH_SHORT).show();
         }
     }
     //end
@@ -209,26 +220,28 @@ public class ExpenseActivity extends AppCompatActivity implements View.OnClickLi
     //Update expense
     private void updateExpense() {
 
-        if (ux.validation(new int[]{R.id.Amount, R.id.Currency, R.id.Wallet, R.id.Note, R.id.ExpenseDate, R.id.RecordType })){
-            if (getRemainingBalance()){
-                databaseHelper.updateExpense(new Expense(
-                                Integer.parseInt(Amount.getText().toString()),
-                                currencyValue,
-                                recordTypeStr,
-                                categoryTitle.getText().toString(),
-                                walletTitleStr,
-                                walletValue,
-                                Note.getText().toString(),
-                                ExpenseDate.getText().toString())
-                        , expense.getId());
+        if (ux.validation(new int[]{R.id.Amount, R.id.Currency, R.id.Wallet, R.id.Note, R.id.ExpenseDate})){
+            if (!recordTypeStr.isEmpty()){
+                if (getRemainingBalance()){
+                    databaseHelper.updateExpense(new Expense(
+                                    Integer.parseInt(Amount.getText().toString()),
+                                    currencyValue,
+                                    recordTypeStr,
+                                    categoryTitle.getText().toString(),
+                                    walletTitleStr,
+                                    walletValue,
+                                    Note.getText().toString(),
+                                    ExpenseDate.getText().toString())
+                            , expense.getId());
 
-                Toast.makeText(this,getResources().getString(R.string.data_updated_successfully),Toast.LENGTH_LONG).show();
-                startActivity(new Intent(ExpenseActivity.this,RecordsActivity.class));
+                    Toast.makeText(this,getResources().getString(R.string.data_updated_successfully),Toast.LENGTH_LONG).show();
+                    startActivity(new Intent(ExpenseActivity.this,RecordsActivity.class));
+                }
+                else{
+                    Snackbar.make(mainLayout,getResources().getString(R.string.wallet_amount_exceeds), Snackbar.LENGTH_LONG).show();
+                }
             }
-            else{
-                //LGSnackbarManager.show(LGSnackBarTheme.SnackbarStyle.INFO, getResources().getString(R.string.wallet_amount_exceeds));
-                Snackbar.make(mainLayout,getResources().getString(R.string.wallet_amount_exceeds), Snackbar.LENGTH_LONG).show();
-            }
+            else Snackbar.make(mainLayout,getResources().getString(R.string.select_record_type_error_message),Snackbar.LENGTH_SHORT).show();
         }
     }
     //end
@@ -236,6 +249,7 @@ public class ExpenseActivity extends AppCompatActivity implements View.OnClickLi
     //Load pref data
     private void loadRecord() {
         expense = (Expense) getIntent().getSerializableExtra("expense");
+        loadRadioGroupData();
         categoryTitle.setText(expense.getCategory());
         setTypeIcon(categoryIcon, expense.getCategory());
         Amount.setText(""+ expense.getAmount());
@@ -285,11 +299,24 @@ public class ExpenseActivity extends AppCompatActivity implements View.OnClickLi
         categoryRecyclerView = itemDialog.findViewById(R.id.categoryRecyclerView);
     }
 
+    private void loadRadioGroupData(){
+        for (int i = 0; i <RecordType.getChildCount() ; i++) {
+            RadioButton radioButton = (RadioButton)RecordType.getChildAt(i);
+            if (radioButton.getHint() != null) {
+                if(radioButton.getHint().equals("Expense")) {
+                    radioButton.setChecked(true);
+                } else {
+                    radioButton.setChecked(false);
+                }
+            }
+        }
+    }
+
     @Override
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.ExpenseDate:
-                ux.getAndSetDate(dateView);
+                ux.getAndSetDate(DateView);
                 break;
             case R.id.CategorySelector:
                 showDialog();

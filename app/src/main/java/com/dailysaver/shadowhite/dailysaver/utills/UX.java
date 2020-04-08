@@ -232,19 +232,6 @@ public class UX {
                     valid = true;
                 }
             }
-            else if (child instanceof RadioGroup){
-                RadioGroup radioGroup = (RadioGroup) child;
-                int selectedRadio = radioGroup.getCheckedRadioButtonId();
-                View viewRadioButton = view.findViewById(selectedRadio);
-                RadioButton radioButton = (RadioButton) viewRadioButton;
-                if (!radioButton.isChecked()) {
-                    radioButton.setError(context.getResources().getString(R.string.select_your_option));
-                    valid = false;
-                }
-                else {
-                    valid = true;
-                }
-            }
         }
         return valid;
     }

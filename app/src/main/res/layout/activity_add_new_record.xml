@@ -60,37 +60,57 @@
                     android:paddingTop="4dp"
                     android:paddingBottom="4dp">
 
-                    <RadioGroup
-                        android:id="@+id/RecordType"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:layout_marginTop="8dp"
-                        android:layout_alignParentRight="true"
-                        android:orientation="horizontal">
+                        android:orientation="vertical"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp">
 
-                        <RadioButton
-                            android:id="@+id/Savings"
-                            android:checked="true"
+                        <TextView
+                            android:id="@+id/HeadingTXTRecordType"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/select_record_type"
+                            android:background="@drawable/rectangle_background_filled_savings"
+                            android:textColor="@color/md_white_1000"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:layout_marginTop="4dp"
+                            android:padding="4dp"/>
+
+                        <RadioGroup
+                            android:id="@+id/RecordType"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Savings"
-                            android:tag="@string/savings"
-                            android:textColor="@color/md_black_1000"
-                            android:buttonTint="@color/md_green_400"/>
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:layout_marginBottom="4dp"
+                            android:orientation="horizontal">
 
-                        <RadioButton
-                            android:id="@+id/Expense"
-                            android:layout_marginLeft="16dp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Expense"
-                            android:tag="@string/expense"
-                            android:textColor="@color/md_black_1000"
-                            android:buttonTint="@color/md_red_400"/>
+                            <RadioButton
+                                android:id="@+id/Savings"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Savings"
+                                android:tag="@string/savings"
+                                android:textColor="@color/md_black_1000"
+                                android:buttonTint="@color/md_green_400"/>
 
-                    </RadioGroup>
+                            <RadioButton
+                                android:id="@+id/Expense"
+                                android:layout_marginLeft="16dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Expense"
+                                android:tag="@string/expense"
+                                android:textColor="@color/md_black_1000"
+                                android:buttonTint="@color/md_red_400"/>
+
+                        </RadioGroup>
+
+                    </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"

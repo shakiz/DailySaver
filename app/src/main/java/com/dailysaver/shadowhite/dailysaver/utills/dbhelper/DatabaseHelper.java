@@ -97,6 +97,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(COLUMN_EXPENSE_AMOUNT, expense.getAmount());
         values.put(COLUMN_EXPENSE_CURRENCY, expense.getCurrency());
+        values.put(COLUMN_RECORD_TYPE, expense.getRecordType());
         values.put(COLUMN_EXPENSE_CATEGORY, expense.getCategory());
         values.put(COLUMN_EXPENSE_WALLET, expense.getWalletTitle());
         values.put(COLUMN_EXPENSE_WALLET_ID, expense.getWalletId());
