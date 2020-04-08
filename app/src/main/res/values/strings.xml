@@ -86,4 +86,7 @@
     <string name="expense_savings_graph">Expense vs Savings Graph</string>
     <string name="coming_soon">Intersting things are coming soon</string>
     <string name="monthly_expense_chart">Monhtly Expense Chart</string>
+    <string name="food">Food</string>
+    <string name="test">Test</string>
+    <string name="date_title">Date</string>
 </resources>

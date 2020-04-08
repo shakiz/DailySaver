@@ -102,7 +102,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:gravity="center"
-                        android:textColor="@color/md_grey_800"
+                        android:textColor="@color/md_red_400"
                         android:textStyle="bold"
                         android:textSize="18sp"
                         android:ellipsize="end"

@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.dailysaver.shadowhite.dailysaver.R;
 import com.dailysaver.shadowhite.dailysaver.activities.expensewallet.ExpenseActivity;
 import com.dailysaver.shadowhite.dailysaver.activities.onboard.HomeActivity;
+import com.dailysaver.shadowhite.dailysaver.activities.records.RecordsActivity;
 import com.dailysaver.shadowhite.dailysaver.adapters.monthlyexpense.MonthlyExpenseAdapter;
 import com.dailysaver.shadowhite.dailysaver.models.expense.Expense;
 import com.dailysaver.shadowhite.dailysaver.models.wallet.Wallet;
@@ -154,6 +155,7 @@ public class WalletDetailsActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(WalletDetailsActivity.this,HomeActivity.class));
+        startActivity(new Intent(WalletDetailsActivity.this, RecordsActivity.class));
+        overridePendingTransition(R.anim.fadein,R.anim.push_up_out);
     }
 }

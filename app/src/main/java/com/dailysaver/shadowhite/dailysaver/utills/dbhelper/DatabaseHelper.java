@@ -346,33 +346,30 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     /**
-     * This method is to get id of a wallet
-     *
-     * @param title
+     * This method is to get all the costs
      */
-    public int getWalletId(String title) {
-        int walletId = 0;
+    public int getAllCost(){
+        int totalCost = 0;
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
-
         String columns[] = {
-                COLUMN_EXPENSE_WALLET_ID
+                COLUMN_EXPENSE_AMOUNT
         };
-        String where = "" + COLUMN_EXPENSE_WALLET + " = '"+ title +"'";
-        Cursor cursor = sqLiteDatabase.query(EXPENSE_TABLE, columns, where, null, null, null, null);
+        Cursor cursor = sqLiteDatabase.query(EXPENSE_TABLE, columns, null, null, null, null, null);
 
         if (cursor != null){
             if (cursor.moveToFirst()){
                 do {
-                    walletId = cursor.getInt(0);
+                    totalCost += cursor.getInt(cursor.getColumnIndex(COLUMN_EXPENSE_AMOUNT));
                 }while (cursor.moveToNext());
             }
         }
         else{
-            walletId = 0;
+            totalCost = 0;
         }
 
+        cursor.close();
         sqLiteDatabase.close();
-        return walletId;
+        return totalCost;
     }
 
     /**

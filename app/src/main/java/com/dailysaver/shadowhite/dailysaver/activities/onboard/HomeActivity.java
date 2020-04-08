@@ -292,8 +292,8 @@ public class HomeActivity extends AppCompatActivity {
     private OnMenuItemClickListener<IconPowerMenuItem> onMenuItemClickListener = new OnMenuItemClickListener<IconPowerMenuItem>() {
         @Override
         public void onItemClick(int position, IconPowerMenuItem item) {
-            if (position==0)startActivity(new Intent(HomeActivity.this, ExpenseActivity.class));
-            else if (position==1) startActivity(new Intent(HomeActivity.this, WalletActivity.class));
+            if (position==0)startActivity(new Intent(HomeActivity.this, ExpenseActivity.class).putExtra("from","main"));
+            else if (position==1) startActivity(new Intent(HomeActivity.this, WalletActivity.class).putExtra("from","main"));
             powerMenu.dismiss();
         }
     };

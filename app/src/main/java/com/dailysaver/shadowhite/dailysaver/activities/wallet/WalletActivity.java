@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.dailysaver.shadowhite.dailysaver.R;
 import com.dailysaver.shadowhite.dailysaver.activities.onboard.HomeActivity;
+import com.dailysaver.shadowhite.dailysaver.activities.records.RecordsActivity;
 import com.dailysaver.shadowhite.dailysaver.models.wallet.Wallet;
 import com.dailysaver.shadowhite.dailysaver.utills.DataManager;
 import com.dailysaver.shadowhite.dailysaver.utills.Tools;
@@ -46,7 +47,9 @@ public class WalletActivity extends AppCompatActivity implements View.OnClickLis
 
         init();
 
-        ux.setToolbar(toolbar,this,HomeActivity.class);
+        if (getIntent().getStringExtra("from").equals("record")) ux.setToolbar(toolbar,this,RecordsActivity.class);
+        else ux.setToolbar(toolbar,this,HomeActivity.class);
+
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_left_arrow_grey);
         tools.setAnimation(mainLayout);
 
@@ -146,4 +149,14 @@ public class WalletActivity extends AppCompatActivity implements View.OnClickLis
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        if (getIntent().getStringExtra("from").equals("record")) {
+            startActivity(new Intent(WalletActivity.this, RecordsActivity.class));
+        }
+        else{
+            startActivity(new Intent(WalletActivity.this, HomeActivity.class));
+        }
+        overridePendingTransition(R.anim.fadein,R.anim.push_up_out);
+    }
 }
