@@ -122,6 +122,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 COLUMN_EXPENSE_CATEGORY,
                 COLUMN_EXPENSE_DATE,
                 COLUMN_EXPENSE_CURRENCY,
+                COLUMN_RECORD_TYPE,
                 COLUMN_EXPENSE_NOTE,
                 COLUMN_EXPENSE_WALLET,
                 COLUMN_EXPENSE_WALLET_ID
@@ -149,6 +150,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
                     expense.setId(cursor.getInt(cursor.getColumnIndex(COLUMN_EXPENSE_ID)));
                     expense.setAmount(cursor.getInt(cursor.getColumnIndex(COLUMN_EXPENSE_AMOUNT)));
+                    expense.setRecordType(cursor.getString(cursor.getColumnIndex(COLUMN_RECORD_TYPE)));
                     expense.setCategory((cursor.getString(cursor.getColumnIndex(COLUMN_EXPENSE_CATEGORY))));
                     expense.setExpenseDate((cursor.getString(cursor.getColumnIndex(COLUMN_EXPENSE_DATE))));
                     expense.setCurrency(cursor.getInt(cursor.getColumnIndex(COLUMN_EXPENSE_CURRENCY)));

@@ -42,7 +42,7 @@ public class ExpenseActivity extends AppCompatActivity implements View.OnClickLi
     private Toolbar toolbar;
     private FloatingActionButton addOrUpdate;
     private EditText Amount,Note;
-    private TextView ExpenseDate, DateView, CategorySelector , headingTXTRecordType;
+    private TextView ExpenseDate, DateView, CategorySelector;
     private Spinner currencySpinner, walletSpinner;
     private Dialog itemDialog;
     private LinearLayout dialogLinearLayout;
@@ -97,7 +97,6 @@ public class ExpenseActivity extends AppCompatActivity implements View.OnClickLi
         currencySpinner = findViewById(R.id.Currency);
         RecordType = findViewById(R.id.RecordType);
         CategorySelector = findViewById(R.id.CategorySelector);
-        headingTXTRecordType = findViewById(R.id.HeadingTXTRecordType);
         walletSpinner = findViewById(R.id.Wallet);
         DateView = findViewById(R.id.ExpenseDate);
         categorySelection = findViewById(R.id.CategorySelector);
@@ -150,11 +149,9 @@ public class ExpenseActivity extends AppCompatActivity implements View.OnClickLi
 
                     if (recordTypeStr.equals("Savings")) {
                         CategorySelector.setTextColor(getResources().getColor(R.color.md_green_600));
-                        headingTXTRecordType.setTextColor(getResources().getColor(R.color.md_green_400));
                     }
                     else {
                         CategorySelector.setTextColor(getResources().getColor(R.color.md_red_600));
-                        headingTXTRecordType.setTextColor(getResources().getColor(R.color.md_red_400));
                     }
                 }
             }

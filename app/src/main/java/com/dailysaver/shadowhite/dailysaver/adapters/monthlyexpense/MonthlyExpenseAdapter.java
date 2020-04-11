@@ -11,19 +11,17 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 import com.dailysaver.shadowhite.dailysaver.models.expense.Expense;
 import com.dailysaver.shadowhite.dailysaver.R;
-import com.dailysaver.shadowhite.dailysaver.utills.Tools;
 import java.util.ArrayList;
 
 public class MonthlyExpenseAdapter extends RecyclerView.Adapter<MonthlyExpenseAdapter.ViewHolder>{
     private ArrayList<Expense> expenseList;
     private onItemClick onItemClick;
-    private Tools tools;
     private Context context;
 
     public MonthlyExpenseAdapter(ArrayList<Expense> expenseList, Context context, onItemClick onItemClick) {
         this.expenseList = expenseList;
         this.onItemClick = onItemClick;
-        tools = new Tools(context);
+        this.context = context;
     }
 
     public interface onItemClick{
@@ -45,12 +43,21 @@ public class MonthlyExpenseAdapter extends RecyclerView.Adapter<MonthlyExpenseAd
         holder.Amount.setText(""+ expense.getAmount());
         holder.ExpenseDate.setText(expense.getExpenseDate());
         setTypeIcon(holder.Icon, expense.getCategory());
+        setIndicatorColor(expense.getRecordType(),holder.IndicatorView);
         holder.view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onItemClick.itemClick(expense);
             }
         });
+    }
+
+    private void setIndicatorColor(String recordType, View indicatorView) {
+        if (!recordType.equals(null)){
+            if (recordType.equals("Expense")) indicatorView.setBackgroundColor(context.getResources().getColor(R.color.md_red_400));
+            else if (recordType.equals("Savings")) indicatorView.setBackgroundColor(context.getResources().getColor(R.color.md_green_400));
+        }
+        else return;
     }
 
     private void setTypeIcon(ImageView icon, String type) {
@@ -76,10 +83,12 @@ public class MonthlyExpenseAdapter extends RecyclerView.Adapter<MonthlyExpenseAd
         TextView Category,WalletName,Amount,ExpenseDate;
         ImageView Icon;
         CardView view;
+        View IndicatorView;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             Category = itemView.findViewById(R.id.Category);
             WalletName = itemView.findViewById(R.id.WalletName);
+            IndicatorView = itemView.findViewById(R.id.IndicatorView);
             Amount = itemView.findViewById(R.id.Amount);
             Icon = itemView.findViewById(R.id.Icon);
             ExpenseDate = itemView.findViewById(R.id.ExpenseDate);
