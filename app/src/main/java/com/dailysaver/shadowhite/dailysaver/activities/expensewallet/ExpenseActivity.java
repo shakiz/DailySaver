@@ -302,10 +302,24 @@ public class ExpenseActivity extends AppCompatActivity implements View.OnClickLi
             if (radioButton.getTag() != null) {
                 if(radioButton.getTag().equals(expense.getRecordType())) {
                     radioButton.setChecked(true);
+                    if (expense.getRecordType().equals("Savings")) {
+                        //Change the UI based on transaction type
+                        ux.changeUI(new int[]{R.id.Amount, R.id.Currency, R.id.Wallet, R.id.Note, R.id.ExpenseDate, R.id.categoryItemLayout}, "Savings");
+                        CategorySelector.setTextColor(getResources().getColor(R.color.md_green_600));
+                    }
+                    else if (expense.getRecordType().equals("Expense")){
+                        //Change the UI based on transaction type
+                        ux.changeUI(new int[]{R.id.Amount, R.id.Currency, R.id.Wallet, R.id.Note, R.id.ExpenseDate, R.id.categoryItemLayout}, "Expense");
+                        CategorySelector.setTextColor(getResources().getColor(R.color.md_red_600));
+                    }
                     return;
                 }
             }
         }
+    }
+
+    private void changeUiOnRecord(String recordTypeStr){
+
     }
 
     @Override
