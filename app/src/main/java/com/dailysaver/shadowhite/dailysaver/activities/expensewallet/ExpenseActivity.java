@@ -299,11 +299,10 @@ public class ExpenseActivity extends AppCompatActivity implements View.OnClickLi
     private void loadRadioGroupData(){
         for (int i = 0; i <RecordType.getChildCount() ; i++) {
             RadioButton radioButton = (RadioButton)RecordType.getChildAt(i);
-            if (radioButton.getHint() != null) {
-                if(radioButton.getHint().equals("Expense")) {
+            if (radioButton.getTag() != null) {
+                if(radioButton.getTag().equals(expense.getRecordType())) {
                     radioButton.setChecked(true);
-                } else {
-                    radioButton.setChecked(false);
+                    return;
                 }
             }
         }
