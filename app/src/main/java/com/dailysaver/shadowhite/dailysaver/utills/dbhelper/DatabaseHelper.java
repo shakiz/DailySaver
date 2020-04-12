@@ -349,6 +349,34 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     /**
+     * This method is to get all the wallet total balance
+     */
+    public int getTotalWalletBalance(){
+        int totalBalance = 0;
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        String columns[] = {
+                COLUMN_WALLET_ID,
+                COLUMN_WALLET_AMOUNT
+        };
+        Cursor cursor = sqLiteDatabase.query(WALLET_TABLE, columns, null, null, null, null, null);
+
+        if (cursor != null){
+            if (cursor.moveToFirst()){
+                do {
+                    totalBalance += cursor.getInt(1);
+                }while (cursor.moveToNext());
+            }
+        }
+        else{
+            totalBalance = 0;
+        }
+
+        cursor.close();
+        sqLiteDatabase.close();
+        return totalBalance;
+    }
+
+    /**
      * This method is to get all the costs
      */
     public int getAllCost(){

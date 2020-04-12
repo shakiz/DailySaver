@@ -91,4 +91,8 @@
     <string name="date_title">Date</string>
     <string name="select_record_type">Select record type</string>
     <string name="select_record_type_error_message">Please select record type</string>
+    <string name="total_balance">Total Balance</string>
+    <string name="total_remaining">Total Remaining</string>
+    <string name="yearly">Yearly cost chart</string>
+    <string name="all_your_expense_details">Expense Summary</string>
 </resources>

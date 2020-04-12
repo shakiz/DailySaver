@@ -2,16 +2,11 @@ package com.dailysaver.shadowhite.dailysaver.activities.report;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import com.dailysaver.shadowhite.dailysaver.R;
-import com.dailysaver.shadowhite.dailysaver.activities.expensewallet.ExpenseActivity;
 import com.dailysaver.shadowhite.dailysaver.activities.onboard.HomeActivity;
 import com.dailysaver.shadowhite.dailysaver.utills.DataManager;
 import com.dailysaver.shadowhite.dailysaver.utills.Tools;
@@ -30,9 +25,9 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ReportActivity extends AppCompatActivity {
+public class ExpenseReportActivity extends AppCompatActivity {
     private RelativeLayout mainLayout;
-    private TextView Total;
+    private TextView TotalCost, TotalRemaining, TotalBalance;
     private Toolbar toolbar;
     private UX ux;
     private Tools tools;
@@ -61,7 +56,9 @@ public class ReportActivity extends AppCompatActivity {
         mainLayout = findViewById(R.id.parent_container);
         barChart = findViewById(R.id.barChart);
         ux = new UX(this, mainLayout);
-        Total = findViewById(R.id.Total);
+        TotalCost = findViewById(R.id.TotalCost);
+        TotalBalance = findViewById(R.id.TotalBalance);
+        TotalRemaining = findViewById(R.id.TotalRemaining);
         tools = new Tools(this);
         dataManager = new DataManager(this);
         databaseHelper = new DatabaseHelper(this);
@@ -69,7 +66,9 @@ public class ReportActivity extends AppCompatActivity {
 
     private void bindUIWithComponents() {
         setBarChart();
-        Total.setText(""+databaseHelper.getAllCost());
+        TotalBalance.setText(""+databaseHelper.getTotalWalletBalance());
+        TotalCost.setText(""+databaseHelper.getAllCost());
+        TotalRemaining.setText(""+(databaseHelper.getTotalWalletBalance() - databaseHelper.getAllCost()));
     }
 
     private void setBarChart() {
@@ -166,7 +165,7 @@ public class ReportActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(ReportActivity.this, HomeActivity.class));
+        startActivity(new Intent(ExpenseReportActivity.this, HomeActivity.class));
         overridePendingTransition(R.anim.fadein,R.anim.push_up_out);
     }
 }

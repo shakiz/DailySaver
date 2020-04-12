@@ -15,7 +15,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.amitshekhar.DebugDB;
 import com.dailysaver.shadowhite.dailysaver.activities.records.RecordsActivity;
-import com.dailysaver.shadowhite.dailysaver.activities.report.ReportActivity;
+import com.dailysaver.shadowhite.dailysaver.activities.report.ExpenseReportActivity;
 import com.dailysaver.shadowhite.dailysaver.activities.wallet.WalletDetailsActivity;
 import com.dailysaver.shadowhite.dailysaver.activities.expensewallet.ExpenseActivity;
 import com.dailysaver.shadowhite.dailysaver.activities.wallet.WalletActivity;
@@ -341,7 +341,7 @@ public class HomeActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             //for item menu generate invoice
             case R.id.report:
-                startActivity(new Intent(HomeActivity.this, ReportActivity.class));
+                startActivity(new Intent(HomeActivity.this, ExpenseReportActivity.class));
                 return true;
             case R.id.records:
                 startActivity(new Intent(HomeActivity.this, RecordsActivity.class));

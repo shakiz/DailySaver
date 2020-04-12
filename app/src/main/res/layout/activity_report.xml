@@ -54,11 +54,136 @@
                 app:shape_arc_position="bottom">
 
                 <RelativeLayout
+                    android:id="@+id/dummylayout"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="144dp"
                     android:layout_gravity="center"
                     android:background="@color/md_white_1000"
                     android:orientation="vertical">
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/TotalBalanceLayout"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginLeft="24dp"
+                        android:layout_marginBottom="40dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        app:cardCornerRadius="40dp"
+                        app:cardBackgroundColor="@color/md_grey_100"
+                        app:cardElevation="4dp"
+                        android:translationZ="8dp"
+                        android:layout_centerHorizontal="true">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/totalTXTWallet2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerHorizontal="true"
+                                android:gravity="center"
+                                android:layout_marginLeft="4dp"
+                                android:layout_marginRight="4dp"
+                                android:textColor="@color/md_grey_800"
+                                android:textStyle="bold"
+                                android:textSize="12sp"
+                                android:ellipsize="end"
+                                android:maxLines="2"
+                                android:text="@string/total_balance"/>
+
+                            <TextView
+                                android:id="@+id/TotalBalance"
+                                android:layout_below="@id/totalTXTWallet2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerHorizontal="true"
+                                android:gravity="center"
+                                android:textColor="@color/md_blue_grey_700"
+                                android:textStyle="bold"
+                                android:textSize="14sp"
+                                android:ellipsize="end"
+                                android:maxLines="1"
+                                android:text="@string/dummy_total"/>
+
+                        </RelativeLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                    <ImageView
+                        android:id="@+id/DownwardIcon"
+                        android:layout_width="20dp"
+                        android:layout_height="42dp"
+                        android:gravity="center"
+                        android:src="@drawable/ic_down_arrow"
+                        android:layout_alignRight="@id/TotalBalanceLayout"
+                        android:layout_marginRight="8dp"/>
+
+                    <ImageView
+                        android:id="@+id/UpwardIcon"
+                        android:layout_width="20dp"
+                        android:layout_height="42dp"
+                        android:gravity="center"
+                        android:src="@drawable/ic_down_arrow"
+                        android:layout_alignLeft="@id/TotalRemainingLayout"
+                        android:layout_marginLeft="8dp"/>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/TotalRemainingLayout"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginRight="24dp"
+                        android:layout_marginBottom="40dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        app:cardCornerRadius="40dp"
+                        app:cardBackgroundColor="@color/md_grey_100"
+                        app:cardElevation="4dp"
+                        android:translationZ="8dp"
+                        android:layout_centerHorizontal="true">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/totalTXTWallet3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="4dp"
+                                android:layout_marginRight="4dp"
+                                android:layout_centerHorizontal="true"
+                                android:gravity="center"
+                                android:textColor="@color/md_grey_800"
+                                android:textStyle="bold"
+                                android:textSize="12sp"
+                                android:ellipsize="end"
+                                android:maxLines="2"
+                                android:text="@string/total_remaining"/>
+
+                            <TextView
+                                android:id="@+id/TotalRemaining"
+                                android:layout_below="@id/totalTXTWallet3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerHorizontal="true"
+                                android:gravity="center"
+                                android:textColor="@color/md_green_600"
+                                android:textStyle="bold"
+                                android:textSize="14sp"
+                                android:ellipsize="end"
+                                android:maxLines="1"
+                                android:text="@string/dummy_total"/>
+
+                        </RelativeLayout>
+
+                    </androidx.cardview.widget.CardView>
 
                 </RelativeLayout>
 
@@ -96,7 +221,7 @@
                         android:text="@string/total"/>
 
                     <TextView
-                        android:id="@+id/Total"
+                        android:id="@+id/TotalCost"
                         android:layout_below="@id/totalTXT"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -151,10 +276,23 @@
                         android:layout_marginRight="8dp"
                         android:text="@string/monthly_expense_chart"/>
 
+                    <TextView
+                        android:id="@+id/Heading3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center|left"
+                        android:textSize="12sp"
+                        android:textColor="@color/md_grey_600"
+                        android:textStyle="bold"
+                        android:paddingLeft="4dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:text="@string/yearly"/>
+
                     <com.github.mikephil.charting.charts.BarChart
                         android:id="@+id/barChart"
                         android:layout_width="match_parent"
-                        android:layout_height="250dp"
+                        android:layout_height="match_parent"
                         android:layout_gravity="center"
                         android:layout_margin="8dp"/>
 
