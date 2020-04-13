@@ -356,14 +356,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
         String columns[] = {
                 COLUMN_WALLET_ID,
+                COLUMN_WALLET_TYPE,
                 COLUMN_WALLET_AMOUNT
         };
-        Cursor cursor = sqLiteDatabase.query(WALLET_TABLE, columns, null, null, null, null, null);
+        String where = "" + COLUMN_WALLET_TYPE + " = 'Expense'";
+        Cursor cursor = sqLiteDatabase.query(WALLET_TABLE, columns, where, null, null, null, null);
 
         if (cursor != null){
             if (cursor.moveToFirst()){
                 do {
-                    totalBalance += cursor.getInt(1);
+                    totalBalance += cursor.getInt(2);
                 }while (cursor.moveToNext());
             }
         }
@@ -471,6 +473,36 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         cursor.close();
         db.close();
+        return totalCost;
+    }
+
+    /**
+     * This method is to get all the costs based on recordType
+     * @param recordType
+     */
+    public int getAllCostBasedOnRecord(String recordType){
+        int totalCost = 0;
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        String columns[] = {
+                COLUMN_EXPENSE_AMOUNT,
+                COLUMN_RECORD_TYPE
+        };
+        String where = "" + COLUMN_RECORD_TYPE + " = '"+ recordType +"' ";
+
+        Cursor cursor = sqLiteDatabase.query(EXPENSE_TABLE, columns, where, null, null, null, null);
+        if (cursor != null){
+            if (cursor.moveToFirst()){
+                do {
+                    totalCost += cursor.getInt(cursor.getColumnIndex(COLUMN_EXPENSE_AMOUNT));
+                }while (cursor.moveToNext());
+            }
+        }
+        else{
+            totalCost = 0;
+        }
+
+        cursor.close();
+        sqLiteDatabase.close();
         return totalCost;
     }
 }

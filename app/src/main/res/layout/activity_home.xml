@@ -155,11 +155,25 @@
                         android:layout_marginRight="8dp"
                         android:text="@string/expense_structure"/>
 
+                    <TextView
+                        android:id="@+id/SubHeading1"
+                        android:layout_below="@id/Heading"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center|left"
+                        android:textSize="12sp"
+                        android:textColor="@color/md_grey_600"
+                        android:textStyle="bold"
+                        android:paddingLeft="4dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:text="@string/yearly_structure"/>
+
                     <com.github.mikephil.charting.charts.PieChart
                         android:id="@+id/pieChart"
                         android:layout_width="match_parent"
                         android:layout_height="250dp"
-                        android:layout_below="@id/Heading"
+                        android:layout_below="@id/SubHeading1"
                         android:layout_gravity="center"
                         android:layout_margin="8dp"/>
 
@@ -202,11 +216,87 @@
                         android:layout_marginRight="8dp"
                         android:text="@string/expense_savings_graph"/>
 
+                    <LinearLayout
+                        android:id="@+id/TotalExpenseLayout"
+                        android:layout_below="@id/Heading2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingLeft="4dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center|left"
+                            android:textSize="12sp"
+                            android:textColor="@color/md_grey_600"
+                            android:text="@string/total_expense"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center|left"
+                            android:textSize="12sp"
+                            android:textColor="@color/md_grey_600"
+                            android:text=" : "/>
+
+                        <TextView
+                            android:id="@+id/TotalExpense"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center|left"
+                            android:textSize="12sp"
+                            android:textColor="@color/md_red_400"
+                            android:textStyle="bold"
+                            android:text="@string/amount_dummy"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/TotalSavingsLayout"
+                        android:layout_below="@id/TotalExpenseLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingLeft="4dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center|left"
+                            android:textSize="12sp"
+                            android:textColor="@color/md_grey_600"
+                            android:text="@string/total_savings"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center|left"
+                            android:textSize="12sp"
+                            android:textColor="@color/md_grey_600"
+                            android:text=" : "/>
+
+                        <TextView
+                            android:id="@+id/TotalSavings"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center|left"
+                            android:textSize="12sp"
+                            android:textColor="@color/md_green_400"
+                            android:textStyle="bold"
+                            android:text="@string/amount_dummy"/>
+
+                    </LinearLayout>
+
                     <com.github.mikephil.charting.charts.BarChart
                         android:id="@+id/GroupedBarChart"
                         android:layout_width="match_parent"
                         android:layout_height="250dp"
-                        android:layout_below="@id/Heading2"
+                        android:layout_below="@id/TotalSavingsLayout"
                         android:layout_gravity="center"
                         android:layout_margin="8dp" />
 

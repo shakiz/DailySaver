@@ -45,6 +45,10 @@ import com.github.mikephil.charting.formatter.LargeValueFormatter;
 import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.renderer.DataRenderer;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.shashank.sony.fancydialoglib.Animation;
+import com.shashank.sony.fancydialoglib.FancyAlertDialog;
+import com.shashank.sony.fancydialoglib.FancyAlertDialogListener;
+import com.shashank.sony.fancydialoglib.Icon;
 import com.skydoves.powermenu.CircularEffect;
 import com.skydoves.powermenu.CustomPowerMenu;
 import com.skydoves.powermenu.MenuAnimation;
@@ -57,7 +61,7 @@ import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
 
-    private TextView noWalletData;
+    private TextView noWalletData, TotalExpense, TotalSavings;
     private RelativeLayout mainLayout;
     private Toolbar toolbar;
     private FloatingActionButton addButton;
@@ -102,6 +106,9 @@ public class HomeActivity extends AppCompatActivity {
         setMenu();
         setCategoryPieChart();
         setExpenseVsSavingsBarChart();
+
+        TotalExpense.setText(""+databaseHelper.getAllCostBasedOnRecord("Expense"));
+        TotalSavings.setText(""+databaseHelper.getAllCostBasedOnRecord("Savings"));
     }
 
     private void setCategoryPieChart() {
@@ -279,6 +286,8 @@ public class HomeActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.tool_bar);
         sliderView = findViewById(R.id.Slider);
         mainLayout = findViewById(R.id.home_layout);
+        TotalExpense = findViewById(R.id.TotalExpense);
+        TotalSavings = findViewById(R.id.TotalSavings);
         pieChart = findViewById(R.id.pieChart);
         groupedBarChart = findViewById(R.id.GroupedBarChart);
         addButton = findViewById(R.id.add);
@@ -341,7 +350,34 @@ public class HomeActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             //for item menu generate invoice
             case R.id.report:
-                startActivity(new Intent(HomeActivity.this, ExpenseReportActivity.class));
+                if (databaseHelper.getTotalWalletBalance() > 0) {
+                    startActivity(new Intent(HomeActivity.this, ExpenseReportActivity.class));
+                } else {
+                    new FancyAlertDialog.Builder(this)
+                            .setTitle("No expense wallet found")
+                            .setBackgroundColor(getResources().getColor(R.color.md_green_400))  //Don't pass R.color.colorvalue
+                            .setMessage("Do you want to add one?")
+                            .setNegativeBtnText("Cancel")
+                            .setPositiveBtnBackground(getResources().getColor(R.color.md_green_400))  //Don't pass R.color.colorvalue
+                            .setPositiveBtnText("Ok")
+                            .setNegativeBtnBackground(getResources().getColor(R.color.md_red_400))  //Don't pass R.color.colorvalue
+                            .setAnimation(Animation.POP)
+                            .isCancellable(true)
+                            .setIcon(R.drawable.ic_wallet, Icon.Visible)
+                            .OnPositiveClicked(new FancyAlertDialogListener() {
+                                @Override
+                                public void OnClick() {
+                                    startActivity(new Intent(HomeActivity.this, WalletActivity.class).putExtra("from","main"));
+                                }
+                            })
+                            .OnNegativeClicked(new FancyAlertDialogListener() {
+                                @Override
+                                public void OnClick() {
+                                    return;
+                                }
+                            })
+                            .build();
+                }
                 return true;
             case R.id.records:
                 startActivity(new Intent(HomeActivity.this, RecordsActivity.class));
