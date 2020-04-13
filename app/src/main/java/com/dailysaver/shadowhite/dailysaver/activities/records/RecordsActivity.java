@@ -11,7 +11,7 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.dailysaver.shadowhite.dailysaver.R;
-import com.dailysaver.shadowhite.dailysaver.activities.expensewallet.ExpenseActivity;
+import com.dailysaver.shadowhite.dailysaver.activities.expensewallet.AddNewRecordActivity;
 import com.dailysaver.shadowhite.dailysaver.activities.onboard.HomeActivity;
 import com.dailysaver.shadowhite.dailysaver.activities.wallet.WalletActivity;
 import com.dailysaver.shadowhite.dailysaver.adapters.menu.IconMenuAdapter;
@@ -103,7 +103,7 @@ public class RecordsActivity extends AppCompatActivity {
     private OnMenuItemClickListener<IconPowerMenuItem> onMenuItemClickListener = new OnMenuItemClickListener<IconPowerMenuItem>() {
         @Override
         public void onItemClick(int position, IconPowerMenuItem item) {
-            if (position==0)startActivity(new Intent(RecordsActivity.this, ExpenseActivity.class).putExtra("from","record"));
+            if (position==0)startActivity(new Intent(RecordsActivity.this, AddNewRecordActivity.class).putExtra("from","record"));
             else if (position==1) startActivity(new Intent(RecordsActivity.this, WalletActivity.class).putExtra("from","record"));
             powerMenu.dismiss();
         }
@@ -117,7 +117,7 @@ public class RecordsActivity extends AppCompatActivity {
             monthlyExpenseAdapter = new MonthlyExpenseAdapter(expenseList, this,new MonthlyExpenseAdapter.onItemClick() {
                 @Override
                 public void itemClick(Expense expense) {
-                    startActivity(new Intent(RecordsActivity.this, ExpenseActivity.class).putExtra("expense", expense).putExtra("from","record"));
+                    startActivity(new Intent(RecordsActivity.this, AddNewRecordActivity.class).putExtra("expense", expense).putExtra("from","record"));
                 }
             });
             recyclerView.setLayoutManager(new LinearLayoutManager(this));

@@ -5,7 +5,6 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.icu.text.DateFormat;
 import android.icu.text.SimpleDateFormat;
@@ -17,19 +16,20 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import com.dailysaver.shadowhite.dailysaver.R;
-import com.google.android.material.snackbar.Snackbar;
+import com.dailysaver.shadowhite.dailysaver.activities.wallet.WalletActivity;
+import com.shashank.sony.fancydialoglib.Animation;
+import com.shashank.sony.fancydialoglib.FancyAlertDialog;
+import com.shashank.sony.fancydialoglib.FancyAlertDialogListener;
+import com.shashank.sony.fancydialoglib.Icon;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
-import greco.lorenzo.com.lgsnackbar.style.LGSnackBarStyle;
-import greco.lorenzo.com.lgsnackbar.style.LGSnackBarTheme;
 
 public class UX {
     private Context context;
@@ -237,36 +237,6 @@ public class UX {
     }
 
     /**
-     * This method will perform custom toast bar styling
-     *
-     * @params resIds and view
-     */
-    LGSnackBarTheme customTheme() {
-        LGSnackBarStyle successStyle = new LGSnackBarStyle(context.getResources().getColor(R.color.md_green_400),
-                Color.WHITE,
-                context.getResources().getColor(R.color.md_green_400),
-                R.drawable.ic_action_done);
-
-        LGSnackBarStyle warningStyle = new LGSnackBarStyle(context.getResources().getColor(R.color.md_red_400),
-                Color.WHITE,
-                context.getResources().getColor(R.color.md_red_400),
-                R.drawable.ic_warning);
-
-        LGSnackBarStyle errorStyle = new LGSnackBarStyle(context.getResources().getColor(R.color.md_red_800),
-                Color.WHITE,
-                context.getResources().getColor(R.color.md_red_800),
-                R.drawable.ic_error);
-
-        LGSnackBarStyle infoStyle = new LGSnackBarStyle(context.getResources().getColor(R.color.md_grey_400),
-                Color.WHITE,
-                context.getResources().getColor(R.color.md_grey_400),
-                R.drawable.ic_information);
-
-        return new LGSnackBarTheme(successStyle, warningStyle, errorStyle, infoStyle, 60, Snackbar.LENGTH_LONG);
-    }
-    //endregion
-
-    /**
      * This method will perform background changing based on transaction type
      *
      * @param childResIds
@@ -283,5 +253,60 @@ public class UX {
         }
     }
     //endregion
+
+    public void showReportDialog(Activity activity){
+        new FancyAlertDialog.Builder(activity)
+                .setTitle("No expense wallet found")
+                .setBackgroundColor(context.getResources().getColor(R.color.md_green_400))  //Don't pass R.color.colorvalue
+                .setMessage("Do you want to add one?")
+                .setNegativeBtnText("Cancel")
+                .setPositiveBtnBackground(context.getResources().getColor(R.color.md_green_400))  //Don't pass R.color.colorvalue
+                .setPositiveBtnText("Ok")
+                .setNegativeBtnBackground(context.getResources().getColor(R.color.md_red_400))  //Don't pass R.color.colorvalue
+                .setAnimation(Animation.POP)
+                .isCancellable(true)
+                .setIcon(R.drawable.ic_wallet, Icon.Visible)
+                .OnPositiveClicked(new FancyAlertDialogListener() {
+                    @Override
+                    public void OnClick() {
+                        context.startActivity(new Intent(context, WalletActivity.class).putExtra("from","main"));
+                    }
+                })
+                .OnNegativeClicked(new FancyAlertDialogListener() {
+                    @Override
+                    public void OnClick() {
+                        return;
+                    }
+                })
+                .build();
+    }
+
+    public void showNoWalletDialog(Activity activity) {
+        new FancyAlertDialog.Builder(activity)
+                .setTitle("No wallet found")
+                .setBackgroundColor(context.getResources().getColor(R.color.md_green_400))  //Don't pass R.color.colorvalue
+                .setMessage("Do you want to add one?")
+                .setMessage(context.getResources().getString(R.string.please_add_wallet))
+                .setNegativeBtnText("Cancel")
+                .setPositiveBtnBackground(context.getResources().getColor(R.color.md_green_400))  //Don't pass R.color.colorvalue
+                .setPositiveBtnText("Ok")
+                .setNegativeBtnBackground(context.getResources().getColor(R.color.md_red_400))  //Don't pass R.color.colorvalue
+                .setAnimation(Animation.POP)
+                .isCancellable(true)
+                .setIcon(R.drawable.ic_wallet, Icon.Visible)
+                .OnPositiveClicked(new FancyAlertDialogListener() {
+                    @Override
+                    public void OnClick() {
+                        context.startActivity(new Intent(context, WalletActivity.class));
+                    }
+                })
+                .OnNegativeClicked(new FancyAlertDialogListener() {
+                    @Override
+                    public void OnClick() {
+                        return;
+                    }
+                })
+                .build();
+    }
 
 }

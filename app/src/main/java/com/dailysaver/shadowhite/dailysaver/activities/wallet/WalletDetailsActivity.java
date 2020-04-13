@@ -13,7 +13,7 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.dailysaver.shadowhite.dailysaver.R;
-import com.dailysaver.shadowhite.dailysaver.activities.expensewallet.ExpenseActivity;
+import com.dailysaver.shadowhite.dailysaver.activities.expensewallet.AddNewRecordActivity;
 import com.dailysaver.shadowhite.dailysaver.activities.onboard.HomeActivity;
 import com.dailysaver.shadowhite.dailysaver.activities.records.RecordsActivity;
 import com.dailysaver.shadowhite.dailysaver.adapters.monthlyexpense.MonthlyExpenseAdapter;
@@ -144,7 +144,7 @@ public class WalletDetailsActivity extends AppCompatActivity {
             monthlyExpenseAdapter = new MonthlyExpenseAdapter(allExpenseItems, this,new MonthlyExpenseAdapter.onItemClick() {
                 @Override
                 public void itemClick(Expense expense) {
-                    startActivity(new Intent(WalletDetailsActivity.this, ExpenseActivity.class).putExtra("expense", expense));
+                    startActivity(new Intent(WalletDetailsActivity.this, AddNewRecordActivity.class).putExtra("expense", expense));
                 }
             });
             recyclerView.setLayoutManager(new LinearLayoutManager(this));

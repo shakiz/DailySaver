@@ -36,7 +36,7 @@ import com.dailysaver.shadowhite.dailysaver.utills.dbhelper.DatabaseHelper;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
-public class ExpenseActivity extends AppCompatActivity implements View.OnClickListener {
+public class AddNewRecordActivity extends AppCompatActivity implements View.OnClickListener {
 
     private RelativeLayout mainLayout;
     private Toolbar toolbar;
@@ -84,8 +84,7 @@ public class ExpenseActivity extends AppCompatActivity implements View.OnClickLi
         tools.setAnimation(mainLayout);
         //check for any wallet exist or not
         if (databaseHelper.getAllWalletItems().size() == 0){
-            Toast.makeText(this,getResources().getString(R.string.please_add_wallet),Toast.LENGTH_LONG).show();
-            startActivity(new Intent(ExpenseActivity.this, WalletActivity.class));
+            ux.showNoWalletDialog(this);
         }
 
         bindUIWIthComponents();
@@ -188,7 +187,7 @@ public class ExpenseActivity extends AppCompatActivity implements View.OnClickLi
                             ExpenseDate.getText().toString()));
 
                     Toast.makeText(this,getResources().getString(R.string.data_saved_successfully),Toast.LENGTH_LONG).show();
-                    startActivity(new Intent(ExpenseActivity.this,RecordsActivity.class));
+                    startActivity(new Intent(AddNewRecordActivity.this,RecordsActivity.class));
                 }
                 else{
                     Snackbar.make(mainLayout,getResources().getString(R.string.wallet_amount_exceeds), Snackbar.LENGTH_SHORT).show();
@@ -232,7 +231,7 @@ public class ExpenseActivity extends AppCompatActivity implements View.OnClickLi
                             , expense.getId());
 
                     Toast.makeText(this,getResources().getString(R.string.data_updated_successfully),Toast.LENGTH_LONG).show();
-                    startActivity(new Intent(ExpenseActivity.this,RecordsActivity.class));
+                    startActivity(new Intent(AddNewRecordActivity.this,RecordsActivity.class));
                 }
                 else{
                     Snackbar.make(mainLayout,getResources().getString(R.string.wallet_amount_exceeds), Snackbar.LENGTH_LONG).show();
@@ -337,10 +336,10 @@ public class ExpenseActivity extends AppCompatActivity implements View.OnClickLi
     @Override
     public void onBackPressed() {
         if (getIntent().getStringExtra("from").equals("record")) {
-            startActivity(new Intent(ExpenseActivity.this, RecordsActivity.class));
+            startActivity(new Intent(AddNewRecordActivity.this, RecordsActivity.class));
         }
         else{
-            startActivity(new Intent(ExpenseActivity.this, HomeActivity.class));
+            startActivity(new Intent(AddNewRecordActivity.this, HomeActivity.class));
         }
         overridePendingTransition(R.anim.fadein,R.anim.push_up_out);
     }

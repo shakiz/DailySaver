@@ -17,7 +17,7 @@ import com.amitshekhar.DebugDB;
 import com.dailysaver.shadowhite.dailysaver.activities.records.RecordsActivity;
 import com.dailysaver.shadowhite.dailysaver.activities.report.ExpenseReportActivity;
 import com.dailysaver.shadowhite.dailysaver.activities.wallet.WalletDetailsActivity;
-import com.dailysaver.shadowhite.dailysaver.activities.expensewallet.ExpenseActivity;
+import com.dailysaver.shadowhite.dailysaver.activities.expensewallet.AddNewRecordActivity;
 import com.dailysaver.shadowhite.dailysaver.activities.wallet.WalletActivity;
 import com.dailysaver.shadowhite.dailysaver.adapters.wallet.WalletDetailsSliderAdapter;
 import com.dailysaver.shadowhite.dailysaver.adapters.menu.IconMenuAdapter;
@@ -27,6 +27,7 @@ import com.dailysaver.shadowhite.dailysaver.R;
 import com.dailysaver.shadowhite.dailysaver.utills.DataLoader;
 import com.dailysaver.shadowhite.dailysaver.utills.DataManager;
 import com.dailysaver.shadowhite.dailysaver.utills.Tools;
+import com.dailysaver.shadowhite.dailysaver.utills.UX;
 import com.dailysaver.shadowhite.dailysaver.utills.bar_chart.CustomBarChartRenderer;
 import com.dailysaver.shadowhite.dailysaver.utills.dbhelper.DatabaseHelper;
 import com.github.mikephil.charting.charts.BarChart;
@@ -45,10 +46,6 @@ import com.github.mikephil.charting.formatter.LargeValueFormatter;
 import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.renderer.DataRenderer;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.shashank.sony.fancydialoglib.Animation;
-import com.shashank.sony.fancydialoglib.FancyAlertDialog;
-import com.shashank.sony.fancydialoglib.FancyAlertDialogListener;
-import com.shashank.sony.fancydialoglib.Icon;
 import com.skydoves.powermenu.CircularEffect;
 import com.skydoves.powermenu.CustomPowerMenu;
 import com.skydoves.powermenu.MenuAnimation;
@@ -71,6 +68,7 @@ public class HomeActivity extends AppCompatActivity {
     private BarChart groupedBarChart;
     private DataLoader dataLoader;
     private Tools tools;
+    private UX ux;
     private PieData pieData;
     private BarData groupedBarData;
     private DatabaseHelper databaseHelper;
@@ -296,12 +294,13 @@ public class HomeActivity extends AppCompatActivity {
         dataManager = new DataManager(this);
         dataLoader = new DataLoader(this, mainLayout);
         databaseHelper = new DatabaseHelper(this);
+        ux = new UX(this, mainLayout);
     }
 
     private OnMenuItemClickListener<IconPowerMenuItem> onMenuItemClickListener = new OnMenuItemClickListener<IconPowerMenuItem>() {
         @Override
         public void onItemClick(int position, IconPowerMenuItem item) {
-            if (position==0)startActivity(new Intent(HomeActivity.this, ExpenseActivity.class).putExtra("from","main"));
+            if (position==0)startActivity(new Intent(HomeActivity.this, AddNewRecordActivity.class).putExtra("from","main"));
             else if (position==1) startActivity(new Intent(HomeActivity.this, WalletActivity.class).putExtra("from","main"));
             powerMenu.dismiss();
         }
@@ -353,30 +352,7 @@ public class HomeActivity extends AppCompatActivity {
                 if (databaseHelper.getTotalWalletBalance() > 0) {
                     startActivity(new Intent(HomeActivity.this, ExpenseReportActivity.class));
                 } else {
-                    new FancyAlertDialog.Builder(this)
-                            .setTitle("No expense wallet found")
-                            .setBackgroundColor(getResources().getColor(R.color.md_green_400))  //Don't pass R.color.colorvalue
-                            .setMessage("Do you want to add one?")
-                            .setNegativeBtnText("Cancel")
-                            .setPositiveBtnBackground(getResources().getColor(R.color.md_green_400))  //Don't pass R.color.colorvalue
-                            .setPositiveBtnText("Ok")
-                            .setNegativeBtnBackground(getResources().getColor(R.color.md_red_400))  //Don't pass R.color.colorvalue
-                            .setAnimation(Animation.POP)
-                            .isCancellable(true)
-                            .setIcon(R.drawable.ic_wallet, Icon.Visible)
-                            .OnPositiveClicked(new FancyAlertDialogListener() {
-                                @Override
-                                public void OnClick() {
-                                    startActivity(new Intent(HomeActivity.this, WalletActivity.class).putExtra("from","main"));
-                                }
-                            })
-                            .OnNegativeClicked(new FancyAlertDialogListener() {
-                                @Override
-                                public void OnClick() {
-                                    return;
-                                }
-                            })
-                            .build();
+                    ux.showReportDialog(this);
                 }
                 return true;
             case R.id.records:
