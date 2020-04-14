@@ -15,7 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.dailysaver.shadowhite.dailysaver.R;
 import com.dailysaver.shadowhite.dailysaver.activities.expensewallet.AddNewRecordActivity;
-import com.dailysaver.shadowhite.dailysaver.activities.onboard.HomeActivity;
+import com.dailysaver.shadowhite.dailysaver.activities.dashboard.DashboardActivity;
 import com.dailysaver.shadowhite.dailysaver.activities.records.RecordsActivity;
 import com.dailysaver.shadowhite.dailysaver.models.wallet.Wallet;
 import com.dailysaver.shadowhite.dailysaver.utills.DataManager;
@@ -50,7 +50,7 @@ public class AddNewWalletActivity extends AppCompatActivity implements View.OnCl
 
         if (getIntent().getStringExtra("from").equals("record")) ux.setToolbar(toolbar,this,RecordsActivity.class,"","");
         else if (getIntent().getStringExtra("from").equals("newRecord")) ux.setToolbar(toolbar,this, AddNewRecordActivity.class,"from","wallet");
-        else if (getIntent().getStringExtra("from").equals("main")) ux.setToolbar(toolbar,this,HomeActivity.class,"","");
+        else if (getIntent().getStringExtra("from").equals("main")) ux.setToolbar(toolbar,this, DashboardActivity.class,"","");
 
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_left_arrow_grey);
         tools.setAnimation(mainLayout);
@@ -120,7 +120,7 @@ public class AddNewWalletActivity extends AppCompatActivity implements View.OnCl
                         Note.getText().toString()));
 
                 Toast.makeText(this,getResources().getString(R.string.data_saved_successfully),Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(AddNewWalletActivity.this,HomeActivity.class));
+                startActivity(new Intent(AddNewWalletActivity.this, DashboardActivity.class));
             }
             else {
                 Snackbar.make(mainLayout,getResources().getString(R.string.select_wallet_type),Snackbar.LENGTH_SHORT).show();
@@ -138,7 +138,7 @@ public class AddNewWalletActivity extends AppCompatActivity implements View.OnCl
                 Note.getText().toString())
                 ,0);
         Toast.makeText(this,getResources().getString(R.string.data_updated_successfully),Toast.LENGTH_LONG).show();
-        startActivity(new Intent(AddNewWalletActivity.this,HomeActivity.class));
+        startActivity(new Intent(AddNewWalletActivity.this, DashboardActivity.class));
     }
     //end
 
@@ -155,7 +155,7 @@ public class AddNewWalletActivity extends AppCompatActivity implements View.OnCl
     public void onBackPressed() {
         if (getIntent().getStringExtra("from").equals("record")) startActivity(new Intent(AddNewWalletActivity.this, RecordsActivity.class));
         else if (getIntent().getStringExtra("from").equals("newRecord")) startActivity(new Intent(this, AddNewRecordActivity.class).putExtra("from","wallet"));
-        else if (getIntent().getStringExtra("from").equals("home")) startActivity(new Intent(AddNewWalletActivity.this, HomeActivity.class));
+        else if (getIntent().getStringExtra("from").equals("home")) startActivity(new Intent(AddNewWalletActivity.this, DashboardActivity.class));
         overridePendingTransition(R.anim.fadein,R.anim.push_up_out);
     }
 }

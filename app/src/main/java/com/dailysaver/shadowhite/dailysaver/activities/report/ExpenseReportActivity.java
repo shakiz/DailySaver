@@ -7,11 +7,11 @@ import android.os.Bundle;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.dailysaver.shadowhite.dailysaver.R;
-import com.dailysaver.shadowhite.dailysaver.activities.onboard.HomeActivity;
+import com.dailysaver.shadowhite.dailysaver.activities.dashboard.DashboardActivity;
 import com.dailysaver.shadowhite.dailysaver.utills.DataManager;
 import com.dailysaver.shadowhite.dailysaver.utills.Tools;
 import com.dailysaver.shadowhite.dailysaver.utills.UX;
-import com.dailysaver.shadowhite.dailysaver.utills.bar_chart.CustomBarChartRenderer;
+import com.dailysaver.shadowhite.dailysaver.utills.chart.CustomBarChartRenderer;
 import com.dailysaver.shadowhite.dailysaver.utills.dbhelper.DatabaseHelper;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.XAxis;
@@ -44,7 +44,7 @@ public class ExpenseReportActivity extends AppCompatActivity {
         init();
 
         //Set toolbar
-        ux.setToolbar(toolbar,this, HomeActivity.class,"","");
+        ux.setToolbar(toolbar,this, DashboardActivity.class,"","");
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_left_arrow_grey);
         tools.setAnimation(mainLayout);
 
@@ -165,7 +165,7 @@ public class ExpenseReportActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(ExpenseReportActivity.this, HomeActivity.class));
+        startActivity(new Intent(ExpenseReportActivity.this, DashboardActivity.class));
         overridePendingTransition(R.anim.fadein,R.anim.push_up_out);
     }
 }

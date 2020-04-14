@@ -23,7 +23,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import com.dailysaver.shadowhite.dailysaver.activities.onboard.HomeActivity;
+import com.dailysaver.shadowhite.dailysaver.activities.dashboard.DashboardActivity;
 import com.dailysaver.shadowhite.dailysaver.activities.records.RecordsActivity;
 import com.dailysaver.shadowhite.dailysaver.activities.wallet.AddNewWalletActivity;
 import com.dailysaver.shadowhite.dailysaver.adapters.category.CategoryRecyclerAdapter;
@@ -77,7 +77,7 @@ public class AddNewRecordActivity extends AppCompatActivity implements View.OnCl
 
         //Set toolbar
         if (getIntent().getStringExtra("from").equals("record")) ux.setToolbar(toolbar,this,RecordsActivity.class,"","");
-        else ux.setToolbar(toolbar,this,HomeActivity.class,"","");
+        else ux.setToolbar(toolbar,this, DashboardActivity.class,"","");
 
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_left_arrow_grey);
         tools.setAnimation(mainLayout);
@@ -345,7 +345,7 @@ public class AddNewRecordActivity extends AppCompatActivity implements View.OnCl
     @Override
     public void onBackPressed() {
         if (getIntent().getStringExtra("from").equals("record")) startActivity(new Intent(AddNewRecordActivity.this, RecordsActivity.class));
-        else startActivity(new Intent(AddNewRecordActivity.this, HomeActivity.class));
+        else startActivity(new Intent(AddNewRecordActivity.this, DashboardActivity.class));
         overridePendingTransition(R.anim.fadein,R.anim.push_up_out);
     }
 

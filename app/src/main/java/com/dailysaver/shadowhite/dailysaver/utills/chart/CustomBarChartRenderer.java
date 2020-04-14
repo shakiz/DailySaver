@@ -1,4 +1,4 @@
-package com.dailysaver.shadowhite.dailysaver.utills.bar_chart;
+package com.dailysaver.shadowhite.dailysaver.utills.chart;
 
 import android.graphics.Canvas;
 import android.graphics.LinearGradient;

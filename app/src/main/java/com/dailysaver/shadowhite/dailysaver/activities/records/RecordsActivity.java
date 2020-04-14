@@ -12,7 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.dailysaver.shadowhite.dailysaver.R;
 import com.dailysaver.shadowhite.dailysaver.activities.expensewallet.AddNewRecordActivity;
-import com.dailysaver.shadowhite.dailysaver.activities.onboard.HomeActivity;
+import com.dailysaver.shadowhite.dailysaver.activities.dashboard.DashboardActivity;
 import com.dailysaver.shadowhite.dailysaver.activities.wallet.AddNewWalletActivity;
 import com.dailysaver.shadowhite.dailysaver.adapters.menu.IconMenuAdapter;
 import com.dailysaver.shadowhite.dailysaver.adapters.monthlyexpense.MonthlyExpenseAdapter;
@@ -47,7 +47,7 @@ public class RecordsActivity extends AppCompatActivity {
 
         init();
         //Set toolbar
-        ux.setToolbar(toolbar,RecordsActivity.this, HomeActivity.class,"","");
+        ux.setToolbar(toolbar,RecordsActivity.this, DashboardActivity.class,"","");
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_left_arrow_grey);
         tools.setAnimation(mainLayout);
 
@@ -129,7 +129,7 @@ public class RecordsActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(RecordsActivity.this, HomeActivity.class));
+        startActivity(new Intent(RecordsActivity.this, DashboardActivity.class));
         overridePendingTransition(R.anim.fadein,R.anim.push_up_out);
     }
 }

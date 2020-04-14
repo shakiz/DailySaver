@@ -1,8 +1,5 @@
-package com.dailysaver.shadowhite.dailysaver.activities.onboard;
+package com.dailysaver.shadowhite.dailysaver.activities.dashboard;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -14,26 +11,28 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import com.amitshekhar.DebugDB;
+import com.dailysaver.shadowhite.dailysaver.R;
+import com.dailysaver.shadowhite.dailysaver.activities.expensewallet.AddNewRecordActivity;
 import com.dailysaver.shadowhite.dailysaver.activities.records.RecordsActivity;
 import com.dailysaver.shadowhite.dailysaver.activities.report.ExpenseReportActivity;
-import com.dailysaver.shadowhite.dailysaver.activities.wallet.WalletDetailsActivity;
-import com.dailysaver.shadowhite.dailysaver.activities.expensewallet.AddNewRecordActivity;
 import com.dailysaver.shadowhite.dailysaver.activities.wallet.AddNewWalletActivity;
-import com.dailysaver.shadowhite.dailysaver.adapters.wallet.WalletDetailsSliderAdapter;
+import com.dailysaver.shadowhite.dailysaver.activities.wallet.WalletDetailsActivity;
 import com.dailysaver.shadowhite.dailysaver.adapters.menu.IconMenuAdapter;
-import com.dailysaver.shadowhite.dailysaver.models.wallet.Wallet;
+import com.dailysaver.shadowhite.dailysaver.adapters.wallet.WalletDetailsSliderAdapter;
 import com.dailysaver.shadowhite.dailysaver.models.menu.IconPowerMenuItem;
-import com.dailysaver.shadowhite.dailysaver.R;
+import com.dailysaver.shadowhite.dailysaver.models.wallet.Wallet;
+import com.dailysaver.shadowhite.dailysaver.utills.chart.Chart;
 import com.dailysaver.shadowhite.dailysaver.utills.DataLoader;
 import com.dailysaver.shadowhite.dailysaver.utills.DataManager;
 import com.dailysaver.shadowhite.dailysaver.utills.Tools;
 import com.dailysaver.shadowhite.dailysaver.utills.UX;
-import com.dailysaver.shadowhite.dailysaver.utills.bar_chart.CustomBarChartRenderer;
 import com.dailysaver.shadowhite.dailysaver.utills.dbhelper.DatabaseHelper;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.PieChart;
-import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
@@ -45,7 +44,6 @@ import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.formatter.LargeValueFormatter;
 import com.github.mikephil.charting.formatter.PercentFormatter;
-import com.github.mikephil.charting.renderer.DataRenderer;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.skydoves.powermenu.CircularEffect;
 import com.skydoves.powermenu.CustomPowerMenu;
@@ -57,7 +55,7 @@ import com.smarteist.autoimageslider.SliderView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeActivity extends AppCompatActivity {
+public class DashboardActivity extends AppCompatActivity {
 
     private TextView noWalletData, TotalExpense, TotalSavings;
     private RelativeLayout mainLayout;
@@ -73,10 +71,9 @@ public class HomeActivity extends AppCompatActivity {
     private PieData pieData;
     private BarData groupedBarData;
     private DatabaseHelper databaseHelper;
-    float barWidth = 0.3f;
-    float barSpace = 0.1f;
-    float groupSpace = 0.2f;
+    float barWidth = 0.3f ,barSpace = 0.1f ,groupSpace = 0.2f;
     private DataManager dataManager;
+    private Chart chart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,24 +113,9 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void makeCategoryPieChart() {
-        getLegendForPieChart();
-        pieChart.setEntryLabelColor(getResources().getColor(R.color.md_white_1000));
-        pieChart.setCenterText("Categories");
-        pieChart.setCenterTextColor(getResources().getColor(R.color.md_grey_800));
-        pieChart.setCenterTextSize(12f);
-        pieChart.setEntryLabelTextSize(6f);
-        pieChart.animateXY(2000, 2000);
-        pieChart.getDescription().setEnabled(false);
-        pieChart.setData(pieData);
-        pieChart.invalidate();
-    }
-
-    private void getLegendForPieChart() {
-        Legend l = pieChart.getLegend(); // get legend of pie
-        l.setVerticalAlignment(Legend.LegendVerticalAlignment.CENTER); //vertical alignment for legend
-        l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT); //horizontal alignment for legend
-        l.setOrientation(Legend.LegendOrientation.VERTICAL); //orientation for legend
-        l.setDrawInside(false); //if legend should be drawn inside or not
+        chart.getLegendForPieChart();
+        chart.setPieChart(pieChart);
+        chart.buildPieChart("Categories",12,6,2000,2000,pieData,R.color.md_white_1000,R.color.md_grey_800);
     }
 
     private void setCategoryPieData() {
@@ -189,17 +171,8 @@ public class HomeActivity extends AppCompatActivity {
         groupedBarData.setValueFormatter(new LargeValueFormatter());
         
         makeGroupedBarChart();
-        setLegendForGroupedBarChart();
         setXAndYAxisGroupedBarChart(xLabels);
     }
-
-    //region data render
-    private DataRenderer getGroupedBarRenderer() {
-        CustomBarChartRenderer customBarChartRenderer = new CustomBarChartRenderer(groupedBarChart, groupedBarChart.getAnimator(), groupedBarChart.getViewPortHandler());
-        customBarChartRenderer.setRadius(18);
-        return customBarChartRenderer;
-    }
-    //endregion
 
     private void setXAndYAxisGroupedBarChart(ArrayList xLabels) {
         //X-axis
@@ -220,45 +193,10 @@ public class HomeActivity extends AppCompatActivity {
         leftAxis.setSpaceTop(35f);
     }
 
-    private void setLegendForGroupedBarChart() {
-        Legend l = groupedBarChart.getLegend();
-        l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
-        l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
-        l.setOrientation(Legend.LegendOrientation.HORIZONTAL);
-        l.setDrawInside(true);
-        l.setYOffset(20f);
-        l.setXOffset(0f);
-        l.setTextSize(8f);
-    }
-
     private void makeGroupedBarChart() {
-
-        //remove extra space from bottom if value is zero
-        groupedBarChart.getAxisLeft().setAxisMinimum(0f);
-        groupedBarChart.getAxisRight().setAxisMinimum(0f);
-        //end
-
-        groupedBarChart.getAxisRight().setDrawLabels(false);
-        groupedBarChart.getAxisRight().setDrawGridLines(false);
-        groupedBarChart.getAxisLeft().setDrawGridLines(false);
-        groupedBarChart.getXAxis().setDrawGridLines(false);
-        groupedBarChart.setData(groupedBarData);
-        groupedBarChart.setVisibleXRangeMaximum(5);
-        groupedBarChart.resetViewPortOffsets();
-        groupedBarChart.animateXY(1000, 1000);
-        groupedBarChart.setData(groupedBarData);
-        groupedBarChart.getData().setHighlightEnabled(false);
-        groupedBarChart.setDoubleTapToZoomEnabled(false);
-        groupedBarChart.setRenderer(getGroupedBarRenderer());
-        groupedBarChart.setFitBars(true);
-        groupedBarChart.setDescription(null);
-        groupedBarChart.setPinchZoom(false);
-        groupedBarChart.setScaleEnabled(false);
-        groupedBarChart.setDrawBarShadow(false);
-        groupedBarChart.setDrawGridBackground(false);
-        groupedBarChart.getBarData().setBarWidth(barWidth);
-        groupedBarChart.groupBars(0, groupSpace, barSpace);
-        groupedBarChart.invalidate();
+        chart.setBarChart(groupedBarChart);
+        chart.setLegendForGroupedBarChart();
+        chart.buildBarChart(true,groupedBarData, 1000,1000, 5,barWidth,barSpace,groupSpace,18);
     }
 
     private void setMenu() {
@@ -296,13 +234,14 @@ public class HomeActivity extends AppCompatActivity {
         dataLoader = new DataLoader(this, mainLayout);
         databaseHelper = new DatabaseHelper(this);
         ux = new UX(this, mainLayout);
+        chart = new Chart(this);
     }
 
     private OnMenuItemClickListener<IconPowerMenuItem> onMenuItemClickListener = new OnMenuItemClickListener<IconPowerMenuItem>() {
         @Override
         public void onItemClick(int position, IconPowerMenuItem item) {
-            if (position==0)startActivity(new Intent(HomeActivity.this, AddNewRecordActivity.class).putExtra("from","main"));
-            else if (position==1) startActivity(new Intent(HomeActivity.this, AddNewWalletActivity.class).putExtra("from","main"));
+            if (position==0)startActivity(new Intent(DashboardActivity.this, AddNewRecordActivity.class).putExtra("from","main"));
+            else if (position==1) startActivity(new Intent(DashboardActivity.this, AddNewWalletActivity.class).putExtra("from","main"));
             powerMenu.dismiss();
         }
     };
@@ -329,7 +268,7 @@ public class HomeActivity extends AppCompatActivity {
             sliderView.setSliderAdapter(new WalletDetailsSliderAdapter(walletList, this, new WalletDetailsSliderAdapter.onItemClick() {
                 @Override
                 public void itemClick(Wallet wallet, int id) {
-                    startActivity(new Intent(HomeActivity.this, WalletDetailsActivity.class).putExtra("id",id).putExtra("wallet",wallet));
+                    startActivity(new Intent(DashboardActivity.this, WalletDetailsActivity.class).putExtra("id",id).putExtra("wallet",wallet));
                 }
             }));
             sliderView.setIndicatorAnimation(IndicatorAnimations.WORM);
@@ -351,18 +290,18 @@ public class HomeActivity extends AppCompatActivity {
             //for item menu generate invoice
             case R.id.report:
                 if (databaseHelper.getTotalWalletBalance() > 0) {
-                    startActivity(new Intent(HomeActivity.this, ExpenseReportActivity.class));
+                    startActivity(new Intent(DashboardActivity.this, ExpenseReportActivity.class));
                 } else {
                     ux.showDialog(R.layout.dialog_no_expense_wallet, "", new UX.onDialogOkListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int id) {
-                            startActivity(new Intent(HomeActivity.this, AddNewWalletActivity.class).putExtra("from","main"));
+                            startActivity(new Intent(DashboardActivity.this, AddNewWalletActivity.class).putExtra("from","main"));
                         }
                     });
                 }
                 return true;
             case R.id.records:
-                startActivity(new Intent(HomeActivity.this, RecordsActivity.class));
+                startActivity(new Intent(DashboardActivity.this, RecordsActivity.class));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
