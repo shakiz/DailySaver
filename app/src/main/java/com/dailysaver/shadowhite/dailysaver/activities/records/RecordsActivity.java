@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.dailysaver.shadowhite.dailysaver.R;
 import com.dailysaver.shadowhite.dailysaver.activities.expensewallet.AddNewRecordActivity;
 import com.dailysaver.shadowhite.dailysaver.activities.onboard.HomeActivity;
-import com.dailysaver.shadowhite.dailysaver.activities.wallet.WalletActivity;
+import com.dailysaver.shadowhite.dailysaver.activities.wallet.AddNewWalletActivity;
 import com.dailysaver.shadowhite.dailysaver.adapters.menu.IconMenuAdapter;
 import com.dailysaver.shadowhite.dailysaver.adapters.monthlyexpense.MonthlyExpenseAdapter;
 import com.dailysaver.shadowhite.dailysaver.models.expense.Expense;
@@ -47,7 +47,7 @@ public class RecordsActivity extends AppCompatActivity {
 
         init();
         //Set toolbar
-        ux.setToolbar(toolbar,RecordsActivity.this, HomeActivity.class);
+        ux.setToolbar(toolbar,RecordsActivity.this, HomeActivity.class,"","");
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_left_arrow_grey);
         tools.setAnimation(mainLayout);
 
@@ -104,7 +104,7 @@ public class RecordsActivity extends AppCompatActivity {
         @Override
         public void onItemClick(int position, IconPowerMenuItem item) {
             if (position==0)startActivity(new Intent(RecordsActivity.this, AddNewRecordActivity.class).putExtra("from","record"));
-            else if (position==1) startActivity(new Intent(RecordsActivity.this, WalletActivity.class).putExtra("from","record"));
+            else if (position==1) startActivity(new Intent(RecordsActivity.this, AddNewWalletActivity.class).putExtra("from","record"));
             powerMenu.dismiss();
         }
     };

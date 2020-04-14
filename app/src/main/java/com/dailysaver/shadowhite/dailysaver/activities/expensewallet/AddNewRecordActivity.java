@@ -1,8 +1,10 @@
 package com.dailysaver.shadowhite.dailysaver.activities.expensewallet;
 
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
@@ -21,14 +23,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.dailysaver.shadowhite.dailysaver.activities.onboard.HomeActivity;
 import com.dailysaver.shadowhite.dailysaver.activities.records.RecordsActivity;
-import com.dailysaver.shadowhite.dailysaver.activities.wallet.WalletActivity;
+import com.dailysaver.shadowhite.dailysaver.activities.wallet.AddNewWalletActivity;
 import com.dailysaver.shadowhite.dailysaver.adapters.category.CategoryRecyclerAdapter;
 import com.dailysaver.shadowhite.dailysaver.R;
 import com.dailysaver.shadowhite.dailysaver.models.expense.Expense;
-import com.dailysaver.shadowhite.dailysaver.utills.DataLoader;
 import com.dailysaver.shadowhite.dailysaver.utills.DataManager;
 import com.dailysaver.shadowhite.dailysaver.utills.Tools;
 import com.dailysaver.shadowhite.dailysaver.utills.UX;
@@ -55,7 +55,6 @@ public class AddNewRecordActivity extends AppCompatActivity implements View.OnCl
     private String walletTitleStr = "" , recordTypeStr = "";
     private UX ux;
     private Tools tools;
-    private DataLoader dataLoader;
     private DatabaseHelper databaseHelper;
     private DataManager dataManager;
     private Expense expense;
@@ -69,7 +68,7 @@ public class AddNewRecordActivity extends AppCompatActivity implements View.OnCl
 
         //set spinner data
         ux.setSpinnerAdapter(dataManager.currencyData(),currencySpinner);
-        ux.setSpinnerAdapter(dataManager.getWalletTitle(),walletSpinner);
+        ux.setSpinnerAdapter(dataManager.getWalletTitle(""),walletSpinner);
 
         //Check for pref data
         if (getIntent().getSerializableExtra("expense") != null){
@@ -77,14 +76,19 @@ public class AddNewRecordActivity extends AppCompatActivity implements View.OnCl
         }
 
         //Set toolbar
-        if (getIntent().getStringExtra("from").equals("record")) ux.setToolbar(toolbar,this,RecordsActivity.class);
-        else ux.setToolbar(toolbar,this,HomeActivity.class);
+        if (getIntent().getStringExtra("from").equals("record")) ux.setToolbar(toolbar,this,RecordsActivity.class,"","");
+        else ux.setToolbar(toolbar,this,HomeActivity.class,"","");
 
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_left_arrow_grey);
         tools.setAnimation(mainLayout);
         //check for any wallet exist or not
         if (databaseHelper.getAllWalletItems().size() == 0){
-            ux.showNoWalletDialog(this);
+            ux.showDialog(R.layout.dialog_no_wallet, "", new UX.onDialogOkListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int id) {
+                    startActivity(new Intent(AddNewRecordActivity.this, AddNewWalletActivity.class));
+                }
+            });
         }
 
         bindUIWIthComponents();
@@ -107,7 +111,6 @@ public class AddNewRecordActivity extends AppCompatActivity implements View.OnCl
         addOrUpdate = findViewById(R.id.add);
         ux = new UX(this,mainLayout);
         tools = new Tools(this);
-        dataLoader = new DataLoader(this, mainLayout);
         databaseHelper = new DatabaseHelper(this);
         dataManager = new DataManager(this);
     }
@@ -147,9 +150,11 @@ public class AddNewRecordActivity extends AppCompatActivity implements View.OnCl
                     ux.changeUI(new int[]{R.id.Amount, R.id.Currency, R.id.Wallet, R.id.Note, R.id.ExpenseDate, R.id.categoryItemLayout}, recordTypeStr);
 
                     if (recordTypeStr.equals("Savings")) {
+                        ux.setSpinnerAdapter(dataManager.getWalletTitle("Savings"),walletSpinner);
                         CategorySelector.setTextColor(getResources().getColor(R.color.md_green_600));
                     }
-                    else {
+                    else if (recordTypeStr.equals("Expense")){
+                        ux.setSpinnerAdapter(dataManager.getWalletTitle("Expense"),walletSpinner);
                         CategorySelector.setTextColor(getResources().getColor(R.color.md_red_600));
                     }
                 }
@@ -172,10 +177,9 @@ public class AddNewRecordActivity extends AppCompatActivity implements View.OnCl
 
     //Save expense into DB with validation
     private void saveExpense(){
-        if (ux.validation(new int[]{R.id.Amount, R.id.Currency, R.id.Wallet, R.id.Note, R.id.ExpenseDate})){
-            if (!recordTypeStr.isEmpty()){
+        if (!recordTypeStr.isEmpty()){
+            if (ux.validation(new int[]{R.id.Amount, R.id.Currency, R.id.Wallet, R.id.Note, R.id.ExpenseDate})){
                 if (getRemainingBalance()){
-
                     databaseHelper.addNewExpense(new Expense(
                             Integer.parseInt(Amount.getText().toString()),
                             currencyValue,
@@ -193,31 +197,16 @@ public class AddNewRecordActivity extends AppCompatActivity implements View.OnCl
                     Snackbar.make(mainLayout,getResources().getString(R.string.wallet_amount_exceeds), Snackbar.LENGTH_SHORT).show();
                 }
             }
-            else Snackbar.make(mainLayout,getResources().getString(R.string.select_record_type_error_message),Snackbar.LENGTH_SHORT).show();
         }
+        else Snackbar.make(mainLayout,getResources().getString(R.string.select_record_type_error_message),Snackbar.LENGTH_SHORT).show();
     }
     //end
-
-    //region get selected wallet remaining balance
-    private boolean getRemainingBalance(){
-        if (getIntent().getSerializableExtra("expense") != null) {
-            walletValue = expense.getWalletId();
-        }
-        int remaining = databaseHelper.getWalletBalance(walletValue) - databaseHelper.singleWalletTotalCost(walletValue);
-        if (Integer.parseInt(Amount.getText().toString()) < remaining){
-            return true;
-        }
-        else{
-            return false;
-        }
-    }
-    //endregion
 
     //Update expense
     private void updateExpense() {
 
-        if (ux.validation(new int[]{R.id.Amount, R.id.Currency, R.id.Wallet, R.id.Note, R.id.ExpenseDate})){
-            if (!recordTypeStr.isEmpty()){
+        if (!recordTypeStr.isEmpty()){
+            if (ux.validation(new int[]{R.id.Amount, R.id.Currency, R.id.Wallet, R.id.Note, R.id.ExpenseDate})){
                 if (getRemainingBalance()){
                     databaseHelper.updateExpense(new Expense(
                                     Integer.parseInt(Amount.getText().toString()),
@@ -237,10 +226,30 @@ public class AddNewRecordActivity extends AppCompatActivity implements View.OnCl
                     Snackbar.make(mainLayout,getResources().getString(R.string.wallet_amount_exceeds), Snackbar.LENGTH_LONG).show();
                 }
             }
-            else Snackbar.make(mainLayout,getResources().getString(R.string.select_record_type_error_message),Snackbar.LENGTH_SHORT).show();
         }
+        else Snackbar.make(mainLayout,getResources().getString(R.string.select_record_type_error_message),Snackbar.LENGTH_SHORT).show();
     }
     //end
+
+    //region get selected wallet remaining balance
+    private boolean getRemainingBalance(){
+        if (getIntent().getSerializableExtra("expense") != null) {
+            walletValue = expense.getWalletId();
+        }
+        int remaining = databaseHelper.getWalletBalance(walletValue) - databaseHelper.singleWalletTotalCost(walletValue);
+        if (!TextUtils.isEmpty(Amount.getText().toString())){
+            if (Integer.parseInt(Amount.getText().toString()) < remaining){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+        else {
+            return false;
+        }
+    }
+    //endregion
 
     //Load pref data
     private void loadRecord() {
@@ -335,12 +344,8 @@ public class AddNewRecordActivity extends AppCompatActivity implements View.OnCl
 
     @Override
     public void onBackPressed() {
-        if (getIntent().getStringExtra("from").equals("record")) {
-            startActivity(new Intent(AddNewRecordActivity.this, RecordsActivity.class));
-        }
-        else{
-            startActivity(new Intent(AddNewRecordActivity.this, HomeActivity.class));
-        }
+        if (getIntent().getStringExtra("from").equals("record")) startActivity(new Intent(AddNewRecordActivity.this, RecordsActivity.class));
+        else startActivity(new Intent(AddNewRecordActivity.this, HomeActivity.class));
         overridePendingTransition(R.anim.fadein,R.anim.push_up_out);
     }
 

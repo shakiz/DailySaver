@@ -55,7 +55,7 @@ public class WalletDetailsActivity extends AppCompatActivity {
             loadRecord();
         }
 
-        ux.setToolbar(toolbar,this,HomeActivity.class);
+        ux.setToolbar(toolbar,this,HomeActivity.class,"","");
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_left_arrow_white);
         tools.setAnimation(mainLayout);
 

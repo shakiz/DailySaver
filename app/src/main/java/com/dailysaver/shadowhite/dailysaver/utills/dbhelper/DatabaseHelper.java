@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.text.TextUtils;
 import androidx.annotation.Nullable;
 import com.dailysaver.shadowhite.dailysaver.models.expense.Expense;
 import com.dailysaver.shadowhite.dailysaver.models.wallet.Wallet;
@@ -257,15 +258,24 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      * This method is to get wallet title
      *
      */
-    public ArrayList<String> getWalletTitle() {
+    public ArrayList<String> getWalletTitle(String walletType) {
         ArrayList<String> walletTitle = new ArrayList<>();
+        Cursor cursor;
+        String where = "";
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
 
         String[] columns = {
+                COLUMN_WALLET_TYPE,
                 COLUMN_WALLET_TITLE
         };
 
-        Cursor cursor = sqLiteDatabase.query(WALLET_TABLE, columns ,null , null , null , null , null);
+        if (!TextUtils.isEmpty(walletType)){
+            where = "" + COLUMN_WALLET_TYPE + " = '"+ walletType +"' ";
+            cursor = sqLiteDatabase.query(WALLET_TABLE, columns ,where , null , null , null , null);
+        }
+        else{
+            cursor = sqLiteDatabase.query(WALLET_TABLE, columns ,null , null , null , null , null);
+        }
         int counter = 0;
         if (cursor != null){
             if (cursor.getCount() > 0){
@@ -273,7 +283,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     walletTitle.add(0,"Select Wallet");
                     do{
                         counter++;
-                        walletTitle.add(counter,cursor.getString(0));
+                        walletTitle.add(counter,cursor.getString(cursor.getColumnIndex(COLUMN_WALLET_TITLE)));
                     }while (cursor.moveToNext());
                 }
             }

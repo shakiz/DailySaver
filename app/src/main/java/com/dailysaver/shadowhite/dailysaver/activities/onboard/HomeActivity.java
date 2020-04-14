@@ -3,6 +3,7 @@ package com.dailysaver.shadowhite.dailysaver.activities.onboard;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -18,7 +19,7 @@ import com.dailysaver.shadowhite.dailysaver.activities.records.RecordsActivity;
 import com.dailysaver.shadowhite.dailysaver.activities.report.ExpenseReportActivity;
 import com.dailysaver.shadowhite.dailysaver.activities.wallet.WalletDetailsActivity;
 import com.dailysaver.shadowhite.dailysaver.activities.expensewallet.AddNewRecordActivity;
-import com.dailysaver.shadowhite.dailysaver.activities.wallet.WalletActivity;
+import com.dailysaver.shadowhite.dailysaver.activities.wallet.AddNewWalletActivity;
 import com.dailysaver.shadowhite.dailysaver.adapters.wallet.WalletDetailsSliderAdapter;
 import com.dailysaver.shadowhite.dailysaver.adapters.menu.IconMenuAdapter;
 import com.dailysaver.shadowhite.dailysaver.models.wallet.Wallet;
@@ -301,7 +302,7 @@ public class HomeActivity extends AppCompatActivity {
         @Override
         public void onItemClick(int position, IconPowerMenuItem item) {
             if (position==0)startActivity(new Intent(HomeActivity.this, AddNewRecordActivity.class).putExtra("from","main"));
-            else if (position==1) startActivity(new Intent(HomeActivity.this, WalletActivity.class).putExtra("from","main"));
+            else if (position==1) startActivity(new Intent(HomeActivity.this, AddNewWalletActivity.class).putExtra("from","main"));
             powerMenu.dismiss();
         }
     };
@@ -352,7 +353,12 @@ public class HomeActivity extends AppCompatActivity {
                 if (databaseHelper.getTotalWalletBalance() > 0) {
                     startActivity(new Intent(HomeActivity.this, ExpenseReportActivity.class));
                 } else {
-                    ux.showReportDialog(this);
+                    ux.showDialog(R.layout.dialog_no_expense_wallet, "", new UX.onDialogOkListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int id) {
+                            startActivity(new Intent(HomeActivity.this, AddNewWalletActivity.class).putExtra("from","main"));
+                        }
+                    });
                 }
                 return true;
             case R.id.records:

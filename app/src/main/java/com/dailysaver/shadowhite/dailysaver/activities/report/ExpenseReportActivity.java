@@ -44,7 +44,7 @@ public class ExpenseReportActivity extends AppCompatActivity {
         init();
 
         //Set toolbar
-        ux.setToolbar(toolbar,this, HomeActivity.class);
+        ux.setToolbar(toolbar,this, HomeActivity.class,"","");
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_left_arrow_grey);
         tools.setAnimation(mainLayout);
 

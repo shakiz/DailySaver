@@ -1,7 +1,10 @@
 package com.dailysaver.shadowhite.dailysaver.utills;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import com.dailysaver.shadowhite.dailysaver.R;
+import com.dailysaver.shadowhite.dailysaver.activities.wallet.AddNewWalletActivity;
 import com.dailysaver.shadowhite.dailysaver.models.category.Category;
 import com.dailysaver.shadowhite.dailysaver.utills.dbhelper.DatabaseHelper;
 import java.util.ArrayList;
@@ -9,10 +12,12 @@ import java.util.ArrayList;
 public class DataManager {
     private Context context;
     private DatabaseHelper databaseHelper;
+    private UX ux;
 
     public DataManager(Context context) {
         this.context = context;
         databaseHelper = new DatabaseHelper(context);
+        ux = new UX(context);
     }
 
     public ArrayList<String> currencyData(){
@@ -23,7 +28,7 @@ public class DataManager {
         return currencyList;
     }
 
-    public ArrayList<String> transactionTypeData(){
+    public ArrayList<String> recordTypeData(){
         ArrayList<String> currencyList = new ArrayList<>();
         currencyList.add(context.getResources().getString(R.string.select_currency));
         currencyList.add("Savings");
@@ -31,8 +36,19 @@ public class DataManager {
         return currencyList;
     }
 
-    public ArrayList<String> getWalletTitle(){
-        ArrayList<String> walletTitleList = databaseHelper.getWalletTitle();;
+    public ArrayList<String> getWalletTitle(String walletType){
+        ArrayList<String> walletTitleList = databaseHelper.getWalletTitle(walletType);
+        if (walletTitleList.size() != 0){
+            if (walletTitleList.get(0).equals("No Data")){
+                //TODO add a dialog here to prevent amount related bug
+                ux.showDialog(R.layout.dialog_no_savings_wallet, "No savings wallet found", new UX.onDialogOkListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        context.startActivity(new Intent(context, AddNewWalletActivity.class).putExtra("from","newRecord"));
+                    }
+                });
+            }
+        }
         return walletTitleList;
     }
 

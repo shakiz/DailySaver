@@ -99,4 +99,12 @@
     <string name="yearly_record_graph">Yearly Record Graph</string>
     <string name="total_expense">Total Expense</string>
     <string name="total_savings">Total Savings</string>
+    <string name="cancel">Cancel</string>
+    <string name="ok">Ok</string>
+    <string name="want_to_add_savings_wallet">Do you want to add savings wallet?</string>
+    <string name="need_to_add_savings_wallet">You need to add a savings wallet first.</string>
+    <string name="need_to_add_expense_wallet">You need to have at least one expense wallet.</string>
+    <string name="want_to_add_expense_wallet">Do you want to add an expense wallet?</string>
+    <string name="need_to_add_wallet">You dont have any wallet.Please add wallet first.</string>
+    <string name="want_to_add_wallet">Do you want to add wallet?</string>
 </resources>

@@ -4,11 +4,13 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.icu.text.DateFormat;
 import android.icu.text.SimpleDateFormat;
 import android.os.Build;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -18,15 +20,10 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import com.dailysaver.shadowhite.dailysaver.R;
-import com.dailysaver.shadowhite.dailysaver.activities.wallet.WalletActivity;
-import com.shashank.sony.fancydialoglib.Animation;
-import com.shashank.sony.fancydialoglib.FancyAlertDialog;
-import com.shashank.sony.fancydialoglib.FancyAlertDialogListener;
-import com.shashank.sony.fancydialoglib.Icon;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
@@ -43,17 +40,22 @@ public class UX {
         this.view = view;
     }
 
+    public UX(Context context) {
+        this.context = context;
+    }
+
     /**
      * This method will set the Toolbar
      *
      * @param toolbar,from,to
      */
-    public void setToolbar(Toolbar toolbar, final Activity from, final Class to){
+    public void setToolbar(Toolbar toolbar, final Activity from, final Class to, final String key, final String value){
         ((AppCompatActivity) context).setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                context.startActivity(new Intent(from, to));
+                if (TextUtils.isEmpty(key) && TextUtils.isEmpty(value)) context.startActivity(new Intent(from, to));
+                else context.startActivity(new Intent(from, to).putExtra(key,value));
             }
         });
         //((AppCompatActivity) context).getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_left_arrow);
@@ -254,59 +256,38 @@ public class UX {
     }
     //endregion
 
-    public void showReportDialog(Activity activity){
-        new FancyAlertDialog.Builder(activity)
-                .setTitle("No expense wallet found")
-                .setBackgroundColor(context.getResources().getColor(R.color.md_green_400))  //Don't pass R.color.colorvalue
-                .setMessage("Do you want to add one?")
-                .setNegativeBtnText("Cancel")
-                .setPositiveBtnBackground(context.getResources().getColor(R.color.md_green_400))  //Don't pass R.color.colorvalue
-                .setPositiveBtnText("Ok")
-                .setNegativeBtnBackground(context.getResources().getColor(R.color.md_red_400))  //Don't pass R.color.colorvalue
-                .setAnimation(Animation.POP)
-                .isCancellable(true)
-                .setIcon(R.drawable.ic_wallet, Icon.Visible)
-                .OnPositiveClicked(new FancyAlertDialogListener() {
-                    @Override
-                    public void OnClick() {
-                        context.startActivity(new Intent(context, WalletActivity.class).putExtra("from","main"));
+    /**
+     * This method will perform custom dialog functionality
+     *
+     * @param layout,title,okListener
+     */
+    public View showDialog(int layout, String title, onDialogOkListener okListener) {
+        final onDialogOkListener onDialogOkListener = okListener;
+        final View modalView = View.inflate(context, layout, null);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle(title)
+                .setView(modalView)
+                .setCancelable(true)
+                .setNegativeButton(context.getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
                     }
-                })
-                .OnNegativeClicked(new FancyAlertDialogListener() {
-                    @Override
-                    public void OnClick() {
-                        return;
-                    }
-                })
-                .build();
+                });
+
+        builder.setPositiveButton(context.getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                onDialogOkListener.onClick(dialog, id);
+            }
+        });
+
+        builder.show();
+        return modalView;
     }
 
-    public void showNoWalletDialog(Activity activity) {
-        new FancyAlertDialog.Builder(activity)
-                .setTitle("No wallet found")
-                .setBackgroundColor(context.getResources().getColor(R.color.md_green_400))  //Don't pass R.color.colorvalue
-                .setMessage("Do you want to add one?")
-                .setMessage(context.getResources().getString(R.string.please_add_wallet))
-                .setNegativeBtnText("Cancel")
-                .setPositiveBtnBackground(context.getResources().getColor(R.color.md_green_400))  //Don't pass R.color.colorvalue
-                .setPositiveBtnText("Ok")
-                .setNegativeBtnBackground(context.getResources().getColor(R.color.md_red_400))  //Don't pass R.color.colorvalue
-                .setAnimation(Animation.POP)
-                .isCancellable(true)
-                .setIcon(R.drawable.ic_wallet, Icon.Visible)
-                .OnPositiveClicked(new FancyAlertDialogListener() {
-                    @Override
-                    public void OnClick() {
-                        context.startActivity(new Intent(context, WalletActivity.class));
-                    }
-                })
-                .OnNegativeClicked(new FancyAlertDialogListener() {
-                    @Override
-                    public void OnClick() {
-                        return;
-                    }
-                })
-                .build();
+    public interface onDialogOkListener {
+        void onClick(DialogInterface dialog, int id);
     }
+    //region end for custom dialog
 
 }
