@@ -1,26 +1,23 @@
 package com.dailysaver.shadowhite.dailysaver.activities.report;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import com.dailysaver.shadowhite.dailysaver.R;
 import com.dailysaver.shadowhite.dailysaver.activities.dashboard.DashboardActivity;
 import com.dailysaver.shadowhite.dailysaver.utills.DataManager;
 import com.dailysaver.shadowhite.dailysaver.utills.Tools;
 import com.dailysaver.shadowhite.dailysaver.utills.UX;
-import com.dailysaver.shadowhite.dailysaver.utills.chart.CustomBarChartRenderer;
+import com.dailysaver.shadowhite.dailysaver.utills.chart.Chart;
 import com.dailysaver.shadowhite.dailysaver.utills.dbhelper.DatabaseHelper;
 import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.formatter.LargeValueFormatter;
-import com.github.mikephil.charting.renderer.DataRenderer;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,9 +29,10 @@ public class ExpenseReportActivity extends AppCompatActivity {
     private UX ux;
     private Tools tools;
     private BarChart barChart;
-    private BarData mData;
+    private BarData barData;
     private DatabaseHelper databaseHelper;
     private DataManager dataManager;
+    private Chart chart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +60,7 @@ public class ExpenseReportActivity extends AppCompatActivity {
         tools = new Tools(this);
         dataManager = new DataManager(this);
         databaseHelper = new DatabaseHelper(this);
+        chart = new Chart(this);
     }
 
     private void bindUIWithComponents() {
@@ -71,48 +70,23 @@ public class ExpenseReportActivity extends AppCompatActivity {
         TotalRemaining.setText(""+(databaseHelper.getTotalWalletBalance() - databaseHelper.getAllCost()));
     }
 
+    //make bar chart complete
     private void setBarChart() {
-        // bind up X-axis properties
-        setXAxis();
-
-        // bind bar chart data bind
-        setData();
-
-        //region make barChart
-        makeBarChart();
+        chart.setBarChart(barChart);
+        setBarData();
+        chart.buildBarChart(false,barData,1000,1000,6,0.6f,0,0,24);
+        chart.setAxisForBarChart(false,0, getXAxisValues(), 12, 1,0.5f, 0.5f,12,0);
     }
-
-    //region data render
-    private DataRenderer getRenderer() {
-        CustomBarChartRenderer customBarChartRenderer = new CustomBarChartRenderer(barChart, barChart.getAnimator(), barChart.getViewPortHandler());
-        customBarChartRenderer.setRadius(32);
-        return customBarChartRenderer;
-    }
-    //endregion
+    //end
 
     // bind bar chart data bind
-    private void setData() {
+    private void setBarData() {
         BarDataSet set = new BarDataSet(getEntries(), "Cost per month");
         set.setColors(ColorTemplate.MATERIAL_COLORS);
-        mData = new BarData(set);
-        mData.setValueFormatter(new LargeValueFormatter());
+        barData = new BarData(set);
+        barData.setValueFormatter(new LargeValueFormatter());
     }
-    //endregion
-
-    //region set xAxis properties
-    private void setXAxis() {
-        XAxis xAxis = barChart.getXAxis();
-        xAxis.setGranularity(1f);
-        xAxis.setSpaceMax(0.5f);
-        xAxis.setSpaceMin(0.5f);
-        xAxis.setGranularityEnabled(true);
-        xAxis.setCenterAxisLabels(false);
-        xAxis.setDrawGridLines(false);
-        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-        xAxis.setValueFormatter(new IndexAxisValueFormatter(getXAxisValues()));
-        xAxis.setLabelCount(12);
-    }
-    //endregion
+    //end
 
     //region data for barChart
     private List<BarEntry> getEntries() {
@@ -133,35 +107,7 @@ public class ExpenseReportActivity extends AppCompatActivity {
         ArrayList<String> xLabels = dataManager.getMonthNameForLabel();
         return xLabels;
     }
-    //end region
-
-    //region make barChart
-    private void makeBarChart(){
-        //remove extra space from bottom if value is zero
-        barChart.getAxisLeft().setAxisMinimum(0f);
-        barChart.getAxisRight().setAxisMinimum(0f);
-        //end
-
-        barChart.getAxisRight().setDrawLabels(false);
-        barChart.getAxisRight().setDrawGridLines(false);
-        barChart.getAxisLeft().setDrawGridLines(false);
-        barChart.getXAxis().setDrawGridLines(false);
-        barChart.getDescription().setPosition(10f,10f);
-        barChart.setData(mData);
-        barChart.getBarData().setBarWidth(0.6f);
-        barChart.setVisibleXRangeMaximum(6);
-        barChart.resetViewPortOffsets();
-        barChart.animateXY(1000, 1000);
-        barChart.setData(mData);
-        barChart.getData().setHighlightEnabled(true);
-        barChart.setDoubleTapToZoomEnabled(false);
-        barChart.setRenderer(getRenderer());
-        barChart.setFitBars(true);
-        barChart.invalidate();
-
-    }
-    //endregion
-
+    //end
 
     @Override
     public void onBackPressed() {

@@ -33,15 +33,12 @@ import com.dailysaver.shadowhite.dailysaver.utills.UX;
 import com.dailysaver.shadowhite.dailysaver.utills.dbhelper.DatabaseHelper;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.PieChart;
-import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
-import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.formatter.LargeValueFormatter;
 import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -113,8 +110,8 @@ public class DashboardActivity extends AppCompatActivity {
     }
 
     private void makeCategoryPieChart() {
-        chart.getLegendForPieChart();
         chart.setPieChart(pieChart);
+        chart.getLegendForPieChart();
         chart.buildPieChart("Categories",12,6,2000,2000,pieData,R.color.md_white_1000,R.color.md_grey_800);
     }
 
@@ -170,32 +167,13 @@ public class DashboardActivity extends AppCompatActivity {
         dataSet2.setColor(getResources().getColor(R.color.md_red_400));
         groupedBarData.setValueFormatter(new LargeValueFormatter());
         
-        makeGroupedBarChart();
-        setXAndYAxisGroupedBarChart(xLabels);
+        makeGroupedBarChart(xLabels);
     }
 
-    private void setXAndYAxisGroupedBarChart(ArrayList xLabels) {
-        //X-axis
-        XAxis xAxis = groupedBarChart.getXAxis();
-        xAxis.setCenterAxisLabels(true);
-        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-        xAxis.setValueFormatter(new IndexAxisValueFormatter(xLabels));
-        xAxis.setGranularityEnabled(true);
-        xAxis.setGranularity(1f);
-        xAxis.setAxisMinimum(0f);
-        xAxis.setAxisMaximum(12f);
-        xAxis.setAvoidFirstLastClipping(false);
-        xAxis.setCenterAxisLabels(true);
-        xAxis.setDrawGridLines(false);
-        //Y-axis
-        groupedBarChart.getAxisRight().setEnabled(false);
-        YAxis leftAxis = groupedBarChart.getAxisLeft();
-        leftAxis.setSpaceTop(35f);
-    }
-
-    private void makeGroupedBarChart() {
+    private void makeGroupedBarChart(ArrayList xLabels) {
         chart.setBarChart(groupedBarChart);
         chart.setLegendForGroupedBarChart();
+        chart.setAxisForBarChart(true, 35, xLabels, 12, 1, 0.5f,0.5f, 12, 0);
         chart.buildBarChart(true,groupedBarData, 1000,1000, 5,barWidth,barSpace,groupSpace,18);
     }
 

@@ -4,9 +4,13 @@ import android.content.Context;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.renderer.DataRenderer;
+import java.util.ArrayList;
 
 public class Chart {
     private Context context;
@@ -60,8 +64,8 @@ public class Chart {
         barChart.setScaleEnabled(false);
         barChart.setDrawBarShadow(false);
         barChart.setDrawGridBackground(false);
+        barChart.getBarData().setBarWidth(barWidth);
         if (isBarChart){
-            barChart.getBarData().setBarWidth(barWidth);
             barChart.groupBars(0, groupSpace, barSpace);
         }
         barChart.invalidate();
@@ -92,5 +96,29 @@ public class Chart {
         l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT); //horizontal alignment for legend
         l.setOrientation(Legend.LegendOrientation.VERTICAL); //orientation for legend
         l.setDrawInside(false); //if legend should be drawn inside or not
+    }
+
+    public void setAxisForBarChart(boolean isGroupedBarChart, int spaceTop, ArrayList xLabels , int labelCount, float granularity, float mSpaceMax, float mSpaceMin, float axisMax, float axisMin) {
+        XAxis xAxis = barChart.getXAxis();
+        xAxis.setGranularity(granularity);
+        xAxis.setSpaceMax(mSpaceMax);
+        xAxis.setSpaceMin(mSpaceMin);
+        xAxis.setAxisMaximum(axisMax);
+        xAxis.setAxisMinimum(axisMin);
+        xAxis.setLabelCount(labelCount);
+        xAxis.setGranularityEnabled(true);
+        xAxis.setDrawGridLines(false);
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setValueFormatter(new IndexAxisValueFormatter(xLabels));
+        xAxis.setAvoidFirstLastClipping(false);
+
+        if (isGroupedBarChart) {
+            barChart.getAxisRight().setEnabled(false);
+            xAxis.setCenterAxisLabels(true);
+            YAxis leftAxis = barChart.getAxisLeft();
+            leftAxis.setSpaceTop(spaceTop);
+        }
+        else xAxis.setCenterAxisLabels(false);
+
     }
 }
