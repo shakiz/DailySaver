@@ -46,9 +46,11 @@ public class ExpenseReportActivity extends AppCompatActivity {
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_left_arrow_grey);
         tools.setAnimation(mainLayout);
 
+        // all the user interactions
         bindUIWithComponents();
     }
 
+    //will init all the components and new instances
     private void init() {
         toolbar = findViewById(R.id.tool_bar);
         mainLayout = findViewById(R.id.parent_container);

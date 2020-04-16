@@ -26,6 +26,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.dailysaver.shadowhite.dailysaver.activities.dashboard.DashboardActivity;
 import com.dailysaver.shadowhite.dailysaver.activities.records.RecordsActivity;
 import com.dailysaver.shadowhite.dailysaver.activities.wallet.AddNewWalletActivity;
+import com.dailysaver.shadowhite.dailysaver.activities.wallet.WalletDetailsActivity;
 import com.dailysaver.shadowhite.dailysaver.adapters.category.CategoryRecyclerAdapter;
 import com.dailysaver.shadowhite.dailysaver.R;
 import com.dailysaver.shadowhite.dailysaver.models.expense.Expense;
@@ -77,6 +78,7 @@ public class AddNewRecordActivity extends AppCompatActivity implements View.OnCl
 
         //Set toolbar
         if (getIntent().getStringExtra("from").equals("record")) ux.setToolbar(toolbar,this,RecordsActivity.class,"","");
+        else if (getIntent().getStringExtra("from").equals("details")) ux.setToolbar(toolbar,this, WalletDetailsActivity.class,"","");
         else ux.setToolbar(toolbar,this, DashboardActivity.class,"","");
 
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_left_arrow_grey);
@@ -91,9 +93,11 @@ public class AddNewRecordActivity extends AppCompatActivity implements View.OnCl
             });
         }
 
+        // all the user interactions
         bindUIWIthComponents();
     }
 
+    //will init all the components and new instances
     private void init() {
         toolbar = findViewById(R.id.tool_bar);
         mainLayout = findViewById(R.id.parent_container);
@@ -117,13 +121,13 @@ public class AddNewRecordActivity extends AppCompatActivity implements View.OnCl
 
     private void bindUIWIthComponents() {
 
+        //spinner onChange
         ux.onSpinnerChange(currencySpinner, new UX.onSpinnerChangeListener() {
             @Override
             public void onChange(AdapterView<?> parent, View view, int position, long id) {
                 currencyValue = position;
             }
         });
-
         ux.onSpinnerChange(walletSpinner, new UX.onSpinnerChangeListener() {
             @Override
             public void onChange(AdapterView<?> parent, View view, int position, long id) {
@@ -132,11 +136,13 @@ public class AddNewRecordActivity extends AppCompatActivity implements View.OnCl
             }
         });
 
+        //DateView click listener
         DateView.setOnClickListener(this);
 
         //Category on click for selecting on click
         categorySelection.setOnClickListener(this);
 
+        //RecordType click listener
         RecordType.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -161,6 +167,7 @@ public class AddNewRecordActivity extends AppCompatActivity implements View.OnCl
             }
         });
 
+        //add and update event listener
         addOrUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -299,12 +306,15 @@ public class AddNewRecordActivity extends AppCompatActivity implements View.OnCl
         categoryRecyclerAdapter.notifyDataSetChanged();
     }
 
+    //dialog components init
     private void customViewInit(Dialog itemDialog) {
         dialogLinearLayout = itemDialog.findViewById(R.id.dialogLinearLayout);
         categoryRecyclerView = itemDialog.findViewById(R.id.categoryRecyclerView);
     }
 
+    //load the radioGroup of recordType data
     private void loadRadioGroupData(){
+        recordTypeStr = expense.getRecordType();
         for (int i = 0; i <RecordType.getChildCount() ; i++) {
             RadioButton radioButton = (RadioButton)RecordType.getChildAt(i);
             if (radioButton.getTag() != null) {
@@ -326,10 +336,6 @@ public class AddNewRecordActivity extends AppCompatActivity implements View.OnCl
         }
     }
 
-    private void changeUiOnRecord(String recordTypeStr){
-
-    }
-
     @Override
     public void onClick(View view) {
         switch (view.getId()){
@@ -345,6 +351,7 @@ public class AddNewRecordActivity extends AppCompatActivity implements View.OnCl
     @Override
     public void onBackPressed() {
         if (getIntent().getStringExtra("from").equals("record")) startActivity(new Intent(AddNewRecordActivity.this, RecordsActivity.class));
+        else if (getIntent().getStringExtra("from").equals("details")) ux.setToolbar(toolbar,this, WalletDetailsActivity.class,"","");
         else startActivity(new Intent(AddNewRecordActivity.this, DashboardActivity.class));
         overridePendingTransition(R.anim.fadein,R.anim.push_up_out);
     }

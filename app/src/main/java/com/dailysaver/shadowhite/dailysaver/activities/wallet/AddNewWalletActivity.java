@@ -48,16 +48,20 @@ public class AddNewWalletActivity extends AppCompatActivity implements View.OnCl
 
         init();
 
+        //check for intent to navigate toolbar onBackEventClick
         if (getIntent().getStringExtra("from").equals("record")) ux.setToolbar(toolbar,this,RecordsActivity.class,"","");
         else if (getIntent().getStringExtra("from").equals("newRecord")) ux.setToolbar(toolbar,this, AddNewRecordActivity.class,"from","wallet");
         else if (getIntent().getStringExtra("from").equals("main")) ux.setToolbar(toolbar,this, DashboardActivity.class,"","");
 
+        //load animation with activity UI
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_left_arrow_grey);
         tools.setAnimation(mainLayout);
 
+        // all the user interactions
         bindUiWithComponents();
     }
 
+    //will init all the components and new instances
     private void init() {
         toolbar = findViewById(R.id.tool_bar);
         mainLayout = findViewById(R.id.home_layout);
@@ -76,10 +80,13 @@ public class AddNewWalletActivity extends AppCompatActivity implements View.OnCl
     }
 
     private void bindUiWithComponents() {
+        //set spinner
         ux.setSpinnerAdapter(spinnerData.currencyData(),currencySpinner);
 
+        //Date selection
         ExpiresOn.setOnClickListener(this);
 
+        //spinner onChange
         ux.onSpinnerChange(currencySpinner, new UX.onSpinnerChangeListener() {
             @Override
             public void onChange(AdapterView<?> parent, View view, int position, long id) {
@@ -87,7 +94,7 @@ public class AddNewWalletActivity extends AppCompatActivity implements View.OnCl
             }
         });
 
-
+        //add new wallet listener
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -95,6 +102,7 @@ public class AddNewWalletActivity extends AppCompatActivity implements View.OnCl
             }
         });
 
+        //transactionType or recordType change listener
         TransactionType.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -108,6 +116,7 @@ public class AddNewWalletActivity extends AppCompatActivity implements View.OnCl
         });
     }
 
+    //save wallet
     private void saveWallet() {
         if (ux.validation(new int[]{R.id.Amount, R.id.Currency, R.id.WalletName, R.id.Note, R.id.ExpiresOn})){
             if (!budgetTypeStr.isEmpty()){

@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.text.TextUtils;
+import android.util.Log;
 import androidx.annotation.Nullable;
 import com.dailysaver.shadowhite.dailysaver.models.expense.Expense;
 import com.dailysaver.shadowhite.dailysaver.models.wallet.Wallet;
@@ -136,6 +137,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         Cursor cursor = null;
 
+        Log.v("fromDBID",""+walletId);
         if (walletId == 0) {
             cursor = db.query(EXPENSE_TABLE, columns, null, null, null, null, sortOrder);
         }

@@ -71,6 +71,7 @@ public class DashboardActivity extends AppCompatActivity {
     float barWidth = 0.3f ,barSpace = 0.1f ,groupSpace = 0.2f;
     private DataManager dataManager;
     private Chart chart;
+    private ArrayList yLabels1, yLabels2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,27 +95,28 @@ public class DashboardActivity extends AppCompatActivity {
         bindUiWithComponents();
     }
 
+    //bind components with UI
     private void bindUiWithComponents() {
         setCardSlider();
         setMenu();
-        setCategoryPieChart();
-        setExpenseVsSavingsBarChart();
+        makeCategoryPieChart();
+        makeExpenseVsSavingsBarChart();
 
         TotalExpense.setText(""+databaseHelper.getAllCostBasedOnRecord("Expense"));
         TotalSavings.setText(""+databaseHelper.getAllCostBasedOnRecord("Savings"));
     }
+    //bind UI end
 
-    private void setCategoryPieChart() {
-        setCategoryPieData();
-        makeCategoryPieChart();
-    }
-
+    //set the category pie chart
     private void makeCategoryPieChart() {
         chart.setPieChart(pieChart);
+        setCategoryPieData();
         chart.getLegendForPieChart();
         chart.buildPieChart("Categories",12,6,2000,2000,pieData,R.color.md_white_1000,R.color.md_grey_800);
     }
+    //pie chart build done
 
+    //get category pie data and set it to PieDataSet
     private void setCategoryPieData() {
         PieDataSet dataSet = new PieDataSet(getPieData(), "");
         pieData = new PieData(dataSet);
@@ -127,7 +129,9 @@ public class DashboardActivity extends AppCompatActivity {
                 getResources().getColor(R.color.md_yellow_700), getResources().getColor(R.color.md_teal_500),
                 getResources().getColor(R.color.md_light_green_500), getResources().getColor(R.color.md_lime_700));
     }
+    //PieDataSet end
 
+    //will get pie data from database
     private List<PieEntry> getPieData() {
         ArrayList categoryData = new ArrayList();
         String[] categoryLabels = new String[]{"Gift","Food","Transport","Energy","Education","Shopping","Fun","Family","Friends","Work"};
@@ -142,30 +146,28 @@ public class DashboardActivity extends AppCompatActivity {
         }
 
         for (int startIndex = 0; startIndex < componentValues.length; startIndex++) {
-            if (componentValues[startIndex] > 0) {
-                categoryData.add(new PieEntry(chart.getSinglePieValue(componentValues[startIndex], chart.roundValueIntoTwoDecimal(totalValue)), categoryLabels[startIndex]));
-            }
-            else{
-                continue;
-            }
+            if (componentValues[startIndex] > 0) { categoryData.add(new PieEntry(chart.getSinglePieValue(componentValues[startIndex], chart.roundValueIntoTwoDecimal(totalValue)), categoryLabels[startIndex])); }
+            else{ continue; }
         }
 
         return categoryData;
     }
+    //pie data from database end
 
-    private void setExpenseVsSavingsBarChart() {
-        ArrayList xLabels = dataManager.getMonthNameForLabel();
-        String[] monthNames = new String[]{"Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"};
-        
-        ArrayList yLabels1 = new ArrayList();
-        ArrayList yLabels2 = new ArrayList();
+    //responsible for making the savings vs expense grouped bar chart
+    private void makeExpenseVsSavingsBarChart() {
+        chart.setBarChart(groupedBarChart);
+        setSavingsVsExpenseBarData();
+        chart.setLegendForGroupedBarChart();
+        chart.setAxisForBarChart(true, 35, dataManager.getMonthNameForLabel(), 12, 1, 0.5f,0.5f, 12, 0);
+        chart.buildBarChart(true,groupedBarData, 1000,1000, 5,barWidth,barSpace,groupSpace,18);
+    }
+    //end of making the savings vs expense grouped bar chart
 
-        for (int startIndex = 0; startIndex < monthNames.length; startIndex++) {
-            yLabels1.add(new BarEntry(startIndex,databaseHelper.getCostOfMonthWithRecordType(monthNames[startIndex],"Savings")));
-            yLabels2.add(new BarEntry(startIndex,databaseHelper.getCostOfMonthWithRecordType(monthNames[startIndex],"Expense")));
-        }
-
+    //get data for savings vs expense from database and set it to barDataSet
+    private void setSavingsVsExpenseBarData(){
         BarDataSet dataSet1, dataSet2;
+        getSavingsVsExpenseBarData();
         dataSet1 = new BarDataSet(yLabels1, "Savings");
         dataSet1.setColor(Color.RED);
         dataSet2 = new BarDataSet(yLabels2, "Expense");
@@ -174,17 +176,24 @@ public class DashboardActivity extends AppCompatActivity {
         dataSet1.setColor(getResources().getColor(R.color.md_green_400));
         dataSet2.setColor(getResources().getColor(R.color.md_red_400));
         groupedBarData.setValueFormatter(new LargeValueFormatter());
-        
-        makeExpenseVsSavingsBarChart(xLabels);
     }
+    //barDataSet end
 
-    private void makeExpenseVsSavingsBarChart(ArrayList xLabels) {
-        chart.setBarChart(groupedBarChart);
-        chart.setLegendForGroupedBarChart();
-        chart.setAxisForBarChart(true, 35, xLabels, 12, 1, 0.5f,0.5f, 12, 0);
-        chart.buildBarChart(true,groupedBarData, 1000,1000, 5,barWidth,barSpace,groupSpace,18);
+    //get expense vs savings grouped bar chart from database
+    private void getSavingsVsExpenseBarData() {
+        String[] monthNames = new String[]{"Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"};
+
+        yLabels1 = new ArrayList();
+        yLabels2 = new ArrayList();
+
+        for (int startIndex = 0; startIndex < monthNames.length; startIndex++) {
+            yLabels1.add(new BarEntry(startIndex,databaseHelper.getCostOfMonthWithRecordType(monthNames[startIndex],"Savings")));
+            yLabels2.add(new BarEntry(startIndex,databaseHelper.getCostOfMonthWithRecordType(monthNames[startIndex],"Expense")));
+        }
     }
+    // grouped bar chart from database end
 
+    //setting the pop up menu
     private void setMenu() {
         powerMenu =new CustomPowerMenu.Builder<>(this, new IconMenuAdapter())
                 .addItem(new IconPowerMenuItem(ContextCompat.getDrawable(this, R.drawable.ic_new_record), getResources().getString(R.string.add_new_record)))
@@ -204,7 +213,20 @@ public class DashboardActivity extends AppCompatActivity {
             }
         });
     }
+    //menu set up end
 
+    //popup menu click listener
+    private OnMenuItemClickListener<IconPowerMenuItem> onMenuItemClickListener = new OnMenuItemClickListener<IconPowerMenuItem>() {
+        @Override
+        public void onItemClick(int position, IconPowerMenuItem item) {
+            if (position==0)startActivity(new Intent(DashboardActivity.this, AddNewRecordActivity.class).putExtra("from","main"));
+            else if (position==1) startActivity(new Intent(DashboardActivity.this, AddNewWalletActivity.class).putExtra("from","main"));
+            powerMenu.dismiss();
+        }
+    };
+    //menu click listener end
+
+    //responsible for initiating all the components
     private void init() {
         toolbar = findViewById(R.id.tool_bar);
         sliderView = findViewById(R.id.Slider);
@@ -222,16 +244,9 @@ public class DashboardActivity extends AppCompatActivity {
         ux = new UX(this, mainLayout);
         chart = new Chart(this);
     }
+    //initiating done
 
-    private OnMenuItemClickListener<IconPowerMenuItem> onMenuItemClickListener = new OnMenuItemClickListener<IconPowerMenuItem>() {
-        @Override
-        public void onItemClick(int position, IconPowerMenuItem item) {
-            if (position==0)startActivity(new Intent(DashboardActivity.this, AddNewRecordActivity.class).putExtra("from","main"));
-            else if (position==1) startActivity(new Intent(DashboardActivity.this, AddNewWalletActivity.class).putExtra("from","main"));
-            powerMenu.dismiss();
-        }
-    };
-
+    //set up the card slider for wallet dashboard
     private void setCardSlider() {
         dataLoader.setOnWalletItemsCompleted(new DataLoader.onWalletItemsCompleted() {
             @Override
@@ -244,7 +259,9 @@ public class DashboardActivity extends AppCompatActivity {
             }
         });
     }
+    //wallet dashboard setup done
 
+    //set up the card slider for wallet dashboard data
     private void setWalletAdapter(ArrayList<Wallet> walletList) {
         if (walletList.size() <= 0){
             sliderView.setVisibility(View.GONE);
@@ -262,6 +279,7 @@ public class DashboardActivity extends AppCompatActivity {
             sliderView.setIndicatorPadding(8);
         }
     }
+    //wallet dashboard data setup done
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

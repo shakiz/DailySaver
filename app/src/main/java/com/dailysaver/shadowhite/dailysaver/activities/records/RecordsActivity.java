@@ -51,9 +51,11 @@ public class RecordsActivity extends AppCompatActivity {
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_left_arrow_grey);
         tools.setAnimation(mainLayout);
 
+        // all the user interactions
         bindUiWithComponents();
     }
 
+    //will init all the components and new instances
     private void init() {
         toolbar = findViewById(R.id.tool_bar);
         recyclerView = findViewById(R.id.mRecyclerView);
@@ -80,6 +82,7 @@ public class RecordsActivity extends AppCompatActivity {
         });
     }
 
+    //setting the pop up menu
     private void setMenu() {
         powerMenu =new CustomPowerMenu.Builder<>(this, new IconMenuAdapter())
                 .addItem(new IconPowerMenuItem(ContextCompat.getDrawable(this, R.drawable.ic_new_record), getResources().getString(R.string.add_new_record)))
@@ -99,7 +102,9 @@ public class RecordsActivity extends AppCompatActivity {
             }
         });
     }
+    //menu set up end
 
+    //popup menu click listener
     private OnMenuItemClickListener<IconPowerMenuItem> onMenuItemClickListener = new OnMenuItemClickListener<IconPowerMenuItem>() {
         @Override
         public void onItemClick(int position, IconPowerMenuItem item) {
@@ -108,7 +113,9 @@ public class RecordsActivity extends AppCompatActivity {
             powerMenu.dismiss();
         }
     };
+    //menu click listener end
 
+    //set the budget list adapter
     private void setBudgetAdapter(ArrayList<Expense> expenseList) {
         if (expenseList.size() <= 0 ){
             noBudgetData.setVisibility(View.VISIBLE);
@@ -124,7 +131,6 @@ public class RecordsActivity extends AppCompatActivity {
             recyclerView.setAdapter(monthlyExpenseAdapter);
             monthlyExpenseAdapter.notifyDataSetChanged();
         }
-
     }
 
     @Override

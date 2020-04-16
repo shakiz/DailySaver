@@ -2,6 +2,7 @@ package com.dailysaver.shadowhite.dailysaver.activities.wallet;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -62,22 +63,8 @@ public class WalletDetailsActivity extends AppCompatActivity {
         bindUIWithComponents();
     }
 
-    private void loadRecord() {
-        Wallet wallet = (Wallet) getIntent().getSerializableExtra("wallet");
-        Amount.setText(""+wallet.getAmount());
-        TotalCost.setText(""+databaseHelper.singleWalletTotalCost(walletId));
-        CurrentBalance = findViewById(R.id.CurrentBalance);
-        CurrentBalance.animateText(""+(wallet.getAmount()-databaseHelper.singleWalletTotalCost(walletId)));
-        CurrentBalance.setDelay(0);
-        ExpiresOn.setText(wallet.getExpiresOn());
-    }
 
-    private void getId() {
-        if (getIntent().getIntExtra("id",0) != 0){
-            walletId = getIntent().getIntExtra("id",0);
-        }
-    }
-
+    //will init all the components and new instances
     private void init() {
         recyclerView = findViewById(R.id.mRecyclerView);
         noBudgetData = findViewById(R.id.NoDataBudget);
@@ -93,12 +80,30 @@ public class WalletDetailsActivity extends AppCompatActivity {
         databaseHelper = new DatabaseHelper(this);
     }
 
+    //load wallet record
+    private void loadRecord() {
+        Wallet wallet = (Wallet) getIntent().getSerializableExtra("wallet");
+        Amount.setText(""+wallet.getAmount());
+        TotalCost.setText(""+databaseHelper.singleWalletTotalCost(walletId));
+        CurrentBalance = findViewById(R.id.CurrentBalance);
+        CurrentBalance.animateText(""+(wallet.getAmount()-databaseHelper.singleWalletTotalCost(walletId)));
+        CurrentBalance.setDelay(0);
+        ExpiresOn.setText(wallet.getExpiresOn());
+    }
+
+    //get wallet id from intent
+    private void getId() {
+        if (getIntent().getIntExtra("id",0) != 0){
+            walletId = getIntent().getIntExtra("id",0);
+            Log.v("walletID",""+walletId);
+        }
+    }
+
+    //TODO not in used
     private void bindUIWithComponents() {
-        //getPieChart();
         setAdapter(databaseHelper.getAllExpenseItems(walletId));
 
         bottomSheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
-        //setMonthAdapter();
 
         bottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
             @Override
@@ -136,6 +141,7 @@ public class WalletDetailsActivity extends AppCompatActivity {
 
     }
 
+    //set adapter for records for the specific wallet
     private void setAdapter(ArrayList<Expense> allExpenseItems) {
         if (allExpenseItems.size() <=0 ){
             noBudgetData.setVisibility(View.VISIBLE);
@@ -144,7 +150,7 @@ public class WalletDetailsActivity extends AppCompatActivity {
             monthlyExpenseAdapter = new MonthlyExpenseAdapter(allExpenseItems, this,new MonthlyExpenseAdapter.onItemClick() {
                 @Override
                 public void itemClick(Expense expense) {
-                    startActivity(new Intent(WalletDetailsActivity.this, AddNewRecordActivity.class).putExtra("expense", expense));
+                    startActivity(new Intent(WalletDetailsActivity.this, AddNewRecordActivity.class).putExtra("expense", expense).putExtra("from","details"));
                 }
             });
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
