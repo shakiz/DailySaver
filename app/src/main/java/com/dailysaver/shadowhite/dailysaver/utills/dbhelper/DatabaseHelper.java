@@ -515,4 +515,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         sqLiteDatabase.close();
         return totalCost;
     }
+
+    /**
+     * This method is to get count of expense or savings record from database
+     * @param categoryLabel
+     */
+    public float getCategoryCount(String categoryLabel) {
+
+        String countQuery = "SELECT  * FROM " + EXPENSE_TABLE  +" WHERE " + COLUMN_EXPENSE_CATEGORY +" = '"+categoryLabel+"' ";
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        Cursor cursor = sqLiteDatabase.rawQuery(countQuery, null);
+        float count = cursor.getCount();
+        cursor.close();
+        sqLiteDatabase.close();
+
+        if (count > 0){
+            return count;
+        }
+        else return 0;
+    }
 }

@@ -130,17 +130,25 @@ public class DashboardActivity extends AppCompatActivity {
 
     private List<PieEntry> getPieData() {
         ArrayList categoryData = new ArrayList();
+        String[] categoryLabels = new String[]{"Gift","Food","Transport","Energy","Education","Shopping","Fun","Family","Friends","Work"};
+        float[] componentValues = new float[categoryLabels.length];
+        float totalValue = 0;
 
-        categoryData.add(new PieEntry(15, "Gift"));
-        categoryData.add(new PieEntry(15, "Food"));
-        categoryData.add(new PieEntry(10, "Transport"));
-        categoryData.add(new PieEntry(10, "Energy"));
-        categoryData.add(new PieEntry(10, "Education"));
-        categoryData.add(new PieEntry(8, "Shopping"));
-        categoryData.add(new PieEntry(7, "Fun"));
-        categoryData.add(new PieEntry(9, "Family"));
-        categoryData.add(new PieEntry(9, "Friends"));
-        categoryData.add(new PieEntry(10, "Work"));
+        for (int startIndex = 0; startIndex < categoryLabels.length; startIndex++) {
+            componentValues[startIndex] = databaseHelper.getCategoryCount(categoryLabels[startIndex]) / 100;
+        }
+        for (double value: componentValues) {
+            totalValue += value;
+        }
+
+        for (int startIndex = 0; startIndex < componentValues.length; startIndex++) {
+            if (componentValues[startIndex] > 0) {
+                categoryData.add(new PieEntry(chart.getSinglePieValue(componentValues[startIndex], chart.roundValueIntoTwoDecimal(totalValue)), categoryLabels[startIndex]));
+            }
+            else{
+                continue;
+            }
+        }
 
         return categoryData;
     }
@@ -167,10 +175,10 @@ public class DashboardActivity extends AppCompatActivity {
         dataSet2.setColor(getResources().getColor(R.color.md_red_400));
         groupedBarData.setValueFormatter(new LargeValueFormatter());
         
-        makeGroupedBarChart(xLabels);
+        makeExpenseVsSavingsBarChart(xLabels);
     }
 
-    private void makeGroupedBarChart(ArrayList xLabels) {
+    private void makeExpenseVsSavingsBarChart(ArrayList xLabels) {
         chart.setBarChart(groupedBarChart);
         chart.setLegendForGroupedBarChart();
         chart.setAxisForBarChart(true, 35, xLabels, 12, 1, 0.5f,0.5f, 12, 0);

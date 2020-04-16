@@ -10,6 +10,8 @@ import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.renderer.DataRenderer;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class Chart {
@@ -119,6 +121,16 @@ public class Chart {
             leftAxis.setSpaceTop(spaceTop);
         }
         else xAxis.setCenterAxisLabels(false);
+    }
 
+    public float getSinglePieValue(float componentValue, float totalValue) {
+        return (componentValue/totalValue) * 360;
+    }
+
+    public float roundValueIntoTwoDecimal(float value){
+        DecimalFormat df = new DecimalFormat("#.##");
+        df.setRoundingMode(RoundingMode.CEILING);
+        System.out.println(df.format(value));
+        return Float.parseFloat(df.format(value));
     }
 }
