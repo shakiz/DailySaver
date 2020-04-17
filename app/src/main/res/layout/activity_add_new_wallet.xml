@@ -255,8 +255,8 @@
                             <RadioButton
                                 android:id="@+id/WalletTypeExpense"
                                 android:layout_width="wrap_content"
-                                android:tag="@string/expense"
-                                android:text="@string/expense"
+                                android:tag="@string/record"
+                                android:text="@string/record"
                                 android:layout_marginRight="4dp"
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/md_grey_800"

@@ -16,7 +16,7 @@ import com.dailysaver.shadowhite.dailysaver.activities.dashboard.DashboardActivi
 import com.dailysaver.shadowhite.dailysaver.activities.wallet.AddNewWalletActivity;
 import com.dailysaver.shadowhite.dailysaver.adapters.menu.IconMenuAdapter;
 import com.dailysaver.shadowhite.dailysaver.adapters.monthlyexpense.MonthlyExpenseAdapter;
-import com.dailysaver.shadowhite.dailysaver.models.expense.Expense;
+import com.dailysaver.shadowhite.dailysaver.models.record.Record;
 import com.dailysaver.shadowhite.dailysaver.models.menu.IconPowerMenuItem;
 import com.dailysaver.shadowhite.dailysaver.utills.DataLoader;
 import com.dailysaver.shadowhite.dailysaver.utills.Tools;
@@ -72,10 +72,10 @@ public class RecordsActivity extends AppCompatActivity {
 
         dataLoader.setOnBudgetItemsCompleted(new DataLoader.onBudgetItemsCompleted() {
             @Override
-            public void onComplete(ArrayList<Expense> expenseList) {
-                if (expenseList != null){
-                    if (expenseList.size() != 0){
-                        setBudgetAdapter(expenseList);
+            public void onComplete(ArrayList<Record> recordList) {
+                if (recordList != null){
+                    if (recordList.size() != 0){
+                        setBudgetAdapter(recordList);
                     }
                 }
             }
@@ -116,15 +116,15 @@ public class RecordsActivity extends AppCompatActivity {
     //menu click listener end
 
     //set the budget list adapter
-    private void setBudgetAdapter(ArrayList<Expense> expenseList) {
-        if (expenseList.size() <= 0 ){
+    private void setBudgetAdapter(ArrayList<Record> recordList) {
+        if (recordList.size() <= 0 ){
             noBudgetData.setVisibility(View.VISIBLE);
         }
         else {
-            monthlyExpenseAdapter = new MonthlyExpenseAdapter(expenseList, this,new MonthlyExpenseAdapter.onItemClick() {
+            monthlyExpenseAdapter = new MonthlyExpenseAdapter(recordList, this,new MonthlyExpenseAdapter.onItemClick() {
                 @Override
-                public void itemClick(Expense expense) {
-                    startActivity(new Intent(RecordsActivity.this, AddNewRecordActivity.class).putExtra("expense", expense).putExtra("from","record"));
+                public void itemClick(Record record) {
+                    startActivity(new Intent(RecordsActivity.this, AddNewRecordActivity.class).putExtra("expense", record).putExtra("from","record"));
                 }
             });
             recyclerView.setLayoutManager(new LinearLayoutManager(this));

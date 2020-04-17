@@ -1,8 +1,8 @@
-package com.dailysaver.shadowhite.dailysaver.models.expense;
+package com.dailysaver.shadowhite.dailysaver.models.record;
 
 import java.io.Serializable;
 
-public class Expense implements Serializable {
+public class Record implements Serializable {
     private int Id;
     private String RecordType;
     private String Category;
@@ -13,10 +13,10 @@ public class Expense implements Serializable {
     private String Note;
     private String ExpenseDate;
 
-    public Expense() {
+    public Record() {
     }
 
-    public Expense(int amount, int currency, String recordType, String category, String walletTitle,int walletId, String note, String expenseDate) {
+    public Record(int amount, int currency, String recordType, String category, String walletTitle, int walletId, String note, String expenseDate) {
         this.Amount = amount;
         this.Currency = currency;
         this.RecordType = recordType;

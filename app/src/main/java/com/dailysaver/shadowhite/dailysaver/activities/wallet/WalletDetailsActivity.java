@@ -13,7 +13,7 @@ import com.dailysaver.shadowhite.dailysaver.R;
 import com.dailysaver.shadowhite.dailysaver.activities.dashboard.DashboardActivity;
 import com.dailysaver.shadowhite.dailysaver.activities.records.RecordsActivity;
 import com.dailysaver.shadowhite.dailysaver.adapters.monthlyexpense.MonthlyExpenseAdapter;
-import com.dailysaver.shadowhite.dailysaver.models.expense.Expense;
+import com.dailysaver.shadowhite.dailysaver.models.record.Record;
 import com.dailysaver.shadowhite.dailysaver.models.wallet.Wallet;
 import com.dailysaver.shadowhite.dailysaver.utills.Tools;
 import com.dailysaver.shadowhite.dailysaver.utills.UX;
@@ -94,14 +94,14 @@ public class WalletDetailsActivity extends AppCompatActivity {
     }
 
     //set adapter for records for the specific wallet
-    private void setAdapter(ArrayList<Expense> allExpenseItems) {
-        if (allExpenseItems.size() <=0 ){
+    private void setAdapter(ArrayList<Record> allRecordItems) {
+        if (allRecordItems.size() <=0 ){
             noBudgetData.setVisibility(View.VISIBLE);
         }
         else {
-            monthlyExpenseAdapter = new MonthlyExpenseAdapter(allExpenseItems, this,new MonthlyExpenseAdapter.onItemClick() {
+            monthlyExpenseAdapter = new MonthlyExpenseAdapter(allRecordItems, this,new MonthlyExpenseAdapter.onItemClick() {
                 @Override
-                public void itemClick(Expense expense) {
+                public void itemClick(Record record) {
 
                 }
             });

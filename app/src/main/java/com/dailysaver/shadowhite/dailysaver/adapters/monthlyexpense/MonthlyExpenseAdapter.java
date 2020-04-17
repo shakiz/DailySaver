@@ -9,23 +9,24 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
-import com.dailysaver.shadowhite.dailysaver.models.expense.Expense;
+import com.dailysaver.shadowhite.dailysaver.models.record.Record;
 import com.dailysaver.shadowhite.dailysaver.R;
+
 import java.util.ArrayList;
 
 public class MonthlyExpenseAdapter extends RecyclerView.Adapter<MonthlyExpenseAdapter.ViewHolder>{
-    private ArrayList<Expense> expenseList;
+    private ArrayList<Record> recordList;
     private onItemClick onItemClick;
     private Context context;
 
-    public MonthlyExpenseAdapter(ArrayList<Expense> expenseList, Context context, onItemClick onItemClick) {
-        this.expenseList = expenseList;
+    public MonthlyExpenseAdapter(ArrayList<Record> recordList, Context context, onItemClick onItemClick) {
+        this.recordList = recordList;
         this.onItemClick = onItemClick;
         this.context = context;
     }
 
     public interface onItemClick{
-        void itemClick(Expense expense);
+        void itemClick(Record record);
     }
 
     @NonNull
@@ -37,17 +38,17 @@ public class MonthlyExpenseAdapter extends RecyclerView.Adapter<MonthlyExpenseAd
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        final Expense expense = expenseList.get(position);
-        holder.Category.setText(expense.getCategory());
-        holder.WalletName.setText(expense.getWalletTitle());
-        holder.Amount.setText(""+ expense.getAmount());
-        holder.ExpenseDate.setText(expense.getExpenseDate());
-        setTypeIcon(holder.Icon, expense.getCategory());
-        setIndicatorColor(expense.getRecordType(),holder.IndicatorView);
+        final Record record = recordList.get(position);
+        holder.Category.setText(record.getCategory());
+        holder.WalletName.setText(record.getWalletTitle());
+        holder.Amount.setText(""+ record.getAmount());
+        holder.ExpenseDate.setText(record.getExpenseDate());
+        setTypeIcon(holder.Icon, record.getCategory());
+        setIndicatorColor(record.getRecordType(),holder.IndicatorView);
         holder.view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onItemClick.itemClick(expense);
+                onItemClick.itemClick(record);
             }
         });
     }
@@ -75,7 +76,7 @@ public class MonthlyExpenseAdapter extends RecyclerView.Adapter<MonthlyExpenseAd
 
     @Override
     public int getItemCount() {
-        return expenseList.size();
+        return recordList.size();
     }
 
 

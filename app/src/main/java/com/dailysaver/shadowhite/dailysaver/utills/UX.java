@@ -263,26 +263,15 @@ public class UX {
      */
     public View showDialog(int layout, String title, onDialogOkListener okListener) {
         final onDialogOkListener onDialogOkListener = okListener;
-        final View modalView = View.inflate(context, layout, null);
+        final View dialogView = View.inflate(context, layout, null);
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle(title)
-                .setView(modalView)
-                .setCancelable(true)
-                .setNegativeButton(context.getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
+        Dialog dialog = new Dialog(context);
+        dialog.setContentView(dialogView);
+        dialog.setTitle(title);
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        dialog.show();
 
-        builder.setPositiveButton(context.getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                onDialogOkListener.onClick(dialog, id);
-            }
-        });
-
-        builder.show();
-        return modalView;
+        return dialogView;
     }
 
     public interface onDialogOkListener {

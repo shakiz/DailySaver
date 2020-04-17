@@ -8,18 +8,18 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.text.TextUtils;
 import android.util.Log;
 import androidx.annotation.Nullable;
-import com.dailysaver.shadowhite.dailysaver.models.expense.Expense;
+import com.dailysaver.shadowhite.dailysaver.models.record.Record;
 import com.dailysaver.shadowhite.dailysaver.models.wallet.Wallet;
 import java.util.ArrayList;
-import static com.dailysaver.shadowhite.dailysaver.utills.dbhelper.DBColumns.COLUMN_EXPENSE_AMOUNT;
-import static com.dailysaver.shadowhite.dailysaver.utills.dbhelper.DBColumns.COLUMN_EXPENSE_CATEGORY;
-import static com.dailysaver.shadowhite.dailysaver.utills.dbhelper.DBColumns.COLUMN_EXPENSE_CURRENCY;
-import static com.dailysaver.shadowhite.dailysaver.utills.dbhelper.DBColumns.COLUMN_EXPENSE_DATE;
-import static com.dailysaver.shadowhite.dailysaver.utills.dbhelper.DBColumns.COLUMN_EXPENSE_ID;
-import static com.dailysaver.shadowhite.dailysaver.utills.dbhelper.DBColumns.COLUMN_EXPENSE_NOTE;
-import static com.dailysaver.shadowhite.dailysaver.utills.dbhelper.DBColumns.COLUMN_EXPENSE_WALLET;
-import static com.dailysaver.shadowhite.dailysaver.utills.dbhelper.DBColumns.COLUMN_EXPENSE_WALLET_ID;
+import static com.dailysaver.shadowhite.dailysaver.utills.dbhelper.DBColumns.COLUMN_RECORD_AMOUNT;
+import static com.dailysaver.shadowhite.dailysaver.utills.dbhelper.DBColumns.COLUMN_RECORD_CATEGORY;
+import static com.dailysaver.shadowhite.dailysaver.utills.dbhelper.DBColumns.COLUMN_RECORD_CURRENCY;
+import static com.dailysaver.shadowhite.dailysaver.utills.dbhelper.DBColumns.COLUMN_RECORD_DATE;
+import static com.dailysaver.shadowhite.dailysaver.utills.dbhelper.DBColumns.COLUMN_RECORD_ID;
+import static com.dailysaver.shadowhite.dailysaver.utills.dbhelper.DBColumns.COLUMN_RECORD_NOTE;
 import static com.dailysaver.shadowhite.dailysaver.utills.dbhelper.DBColumns.COLUMN_RECORD_TYPE;
+import static com.dailysaver.shadowhite.dailysaver.utills.dbhelper.DBColumns.COLUMN_RECORD_WALLET;
+import static com.dailysaver.shadowhite.dailysaver.utills.dbhelper.DBColumns.COLUMN_RECORD_WALLET_ID;
 import static com.dailysaver.shadowhite.dailysaver.utills.dbhelper.DBColumns.COLUMN_WALLET_AMOUNT;
 import static com.dailysaver.shadowhite.dailysaver.utills.dbhelper.DBColumns.COLUMN_WALLET_CURRENCY;
 import static com.dailysaver.shadowhite.dailysaver.utills.dbhelper.DBColumns.COLUMN_WALLET_EXPIRES_ON;
@@ -33,12 +33,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final int DB_VERSION = 1;
 
     private static final String WALLET_TABLE = "Wallet";
-    private static final String EXPENSE_TABLE = "Expense";
+    private static final String RECORD_TABLE = "Record";
 
-    private static String CREATE_EXPENSE_TABLE = "CREATE TABLE " + EXPENSE_TABLE + "("
-            + COLUMN_EXPENSE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + COLUMN_EXPENSE_AMOUNT + " INTEGER," + COLUMN_RECORD_TYPE + " TEXT,"
-            + COLUMN_EXPENSE_CURRENCY + " INTEGER," + COLUMN_EXPENSE_CATEGORY + " TEXT," + COLUMN_EXPENSE_NOTE + " TEXT,"+ COLUMN_EXPENSE_WALLET_ID + " INTEGER,"
-            + COLUMN_EXPENSE_WALLET + " TEXT," + COLUMN_EXPENSE_DATE + " TEXT" + ")";
+    private static String CREATE_EXPENSE_TABLE = "CREATE TABLE " + RECORD_TABLE + "("
+            + COLUMN_RECORD_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + COLUMN_RECORD_AMOUNT + " INTEGER," + COLUMN_RECORD_TYPE + " TEXT,"
+            + COLUMN_RECORD_CURRENCY + " INTEGER," + COLUMN_RECORD_CATEGORY + " TEXT," + COLUMN_RECORD_NOTE + " TEXT,"+ COLUMN_RECORD_WALLET_ID + " INTEGER,"
+            + COLUMN_RECORD_WALLET + " TEXT," + COLUMN_RECORD_DATE + " TEXT" + ")";
 
     private static String CREATE_WALLET_TABLE = "CREATE TABLE " + WALLET_TABLE + "("
             + COLUMN_WALLET_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + COLUMN_WALLET_AMOUNT + " REAL,"
@@ -46,7 +46,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + COLUMN_WALLET_TYPE + " INTEGER," + COLUMN_WALLET_EXPIRES_ON + " TEXT" + ")";
 
     private static String DROP_WALLET_TABLE = "DROP TABLE IF EXISTS "+WALLET_TABLE;
-    private static String DROP_EXPENSE_TABLE = "DROP TABLE IF EXISTS "+EXPENSE_TABLE;
+    private static String DROP_EXPENSE_TABLE = "DROP TABLE IF EXISTS "+ RECORD_TABLE;
 
 
     public DatabaseHelper(@Nullable Context context) {
@@ -68,46 +68,46 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     /**
      * This method is to create EXPENSE record
      *
-     * @param expense
+     * @param record
      */
-    public void addNewExpense(Expense expense) {
+    public void addNewExpense(Record record) {
         SQLiteDatabase db = this.getWritableDatabase();
         
         ContentValues values = new ContentValues();
-        values.put(COLUMN_EXPENSE_AMOUNT, expense.getAmount());
-        values.put(COLUMN_EXPENSE_CURRENCY, expense.getCurrency());
-        values.put(COLUMN_RECORD_TYPE, expense.getRecordType());
-        values.put(COLUMN_EXPENSE_CATEGORY, expense.getCategory());
-        values.put(COLUMN_EXPENSE_WALLET, expense.getWalletTitle());
-        values.put(COLUMN_EXPENSE_WALLET_ID, expense.getWalletId());
-        values.put(COLUMN_EXPENSE_NOTE, expense.getNote());
-        values.put(COLUMN_EXPENSE_DATE, expense.getExpenseDate());
+        values.put(COLUMN_RECORD_AMOUNT, record.getAmount());
+        values.put(COLUMN_RECORD_CURRENCY, record.getCurrency());
+        values.put(COLUMN_RECORD_TYPE, record.getRecordType());
+        values.put(COLUMN_RECORD_CATEGORY, record.getCategory());
+        values.put(COLUMN_RECORD_WALLET, record.getWalletTitle());
+        values.put(COLUMN_RECORD_WALLET_ID, record.getWalletId());
+        values.put(COLUMN_RECORD_NOTE, record.getNote());
+        values.put(COLUMN_RECORD_DATE, record.getExpenseDate());
 
         // Inserting Row
-        db.insert(EXPENSE_TABLE, null, values);
+        db.insert(RECORD_TABLE, null, values);
         db.close();
     }
 
     /**
      * This method is to update EXPENSE record
      *
-     * @param expense
+     * @param record
      */
-    public void updateExpense(Expense expense, int expenseId) {
+    public void updateExpense(Record record, int expenseId) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(COLUMN_EXPENSE_AMOUNT, expense.getAmount());
-        values.put(COLUMN_EXPENSE_CURRENCY, expense.getCurrency());
-        values.put(COLUMN_RECORD_TYPE, expense.getRecordType());
-        values.put(COLUMN_EXPENSE_CATEGORY, expense.getCategory());
-        values.put(COLUMN_EXPENSE_WALLET, expense.getWalletTitle());
-        values.put(COLUMN_EXPENSE_WALLET_ID, expense.getWalletId());
-        values.put(COLUMN_EXPENSE_NOTE, expense.getNote());
-        values.put(COLUMN_EXPENSE_DATE, expense.getExpenseDate());
+        values.put(COLUMN_RECORD_AMOUNT, record.getAmount());
+        values.put(COLUMN_RECORD_CURRENCY, record.getCurrency());
+        values.put(COLUMN_RECORD_TYPE, record.getRecordType());
+        values.put(COLUMN_RECORD_CATEGORY, record.getCategory());
+        values.put(COLUMN_RECORD_WALLET, record.getWalletTitle());
+        values.put(COLUMN_RECORD_WALLET_ID, record.getWalletId());
+        values.put(COLUMN_RECORD_NOTE, record.getNote());
+        values.put(COLUMN_RECORD_DATE, record.getExpenseDate());
 
         // Inserting Row
-        db.update(EXPENSE_TABLE, values, COLUMN_EXPENSE_ID+" = "+expenseId, null);
+        db.update(RECORD_TABLE, values, COLUMN_RECORD_ID+" = "+expenseId, null);
         db.close();
     }
 
@@ -116,58 +116,58 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      *
      * @param walletName
      */
-    public ArrayList<Expense> getAllExpenseItems(String walletName) {
+    public ArrayList<Record> getAllExpenseItems(String walletName) {
         // array of columns to fetch
         String[] columns = {
-                COLUMN_EXPENSE_ID,
-                COLUMN_EXPENSE_AMOUNT,
-                COLUMN_EXPENSE_CATEGORY,
-                COLUMN_EXPENSE_DATE,
-                COLUMN_EXPENSE_CURRENCY,
+                COLUMN_RECORD_ID,
+                COLUMN_RECORD_AMOUNT,
+                COLUMN_RECORD_CATEGORY,
+                COLUMN_RECORD_DATE,
+                COLUMN_RECORD_CURRENCY,
                 COLUMN_RECORD_TYPE,
-                COLUMN_EXPENSE_NOTE,
-                COLUMN_EXPENSE_WALLET,
-                COLUMN_EXPENSE_WALLET_ID
+                COLUMN_RECORD_NOTE,
+                COLUMN_RECORD_WALLET,
+                COLUMN_RECORD_WALLET_ID
         };
         // sorting orders
         String sortOrder =
-                COLUMN_EXPENSE_ID + " DESC";
-        ArrayList<Expense> expenseList = new ArrayList<Expense>();
+                COLUMN_RECORD_ID + " DESC";
+        ArrayList<Record> recordList = new ArrayList<Record>();
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = null;
 
         Log.v("fromDBWalletName",""+walletName);
         if (TextUtils.isEmpty(walletName)) {
-            cursor = db.query(EXPENSE_TABLE, columns, null, null, null, null, sortOrder);
+            cursor = db.query(RECORD_TABLE, columns, null, null, null, null, sortOrder);
         }
         else {
-            String where = "" + COLUMN_EXPENSE_WALLET + " = '"+ walletName +"'";
-            cursor = db.query(EXPENSE_TABLE, columns, where, null, null, null, sortOrder);
+            String where = "" + COLUMN_RECORD_WALLET + " = '"+ walletName +"'";
+            cursor = db.query(RECORD_TABLE, columns, where, null, null, null, sortOrder);
         }
 
         if (cursor != null){
             if (cursor.moveToFirst()) {
                 do {
-                    Expense expense = new Expense();
+                    Record record = new Record();
 
-                    expense.setId(cursor.getInt(cursor.getColumnIndex(COLUMN_EXPENSE_ID)));
-                    expense.setAmount(cursor.getInt(cursor.getColumnIndex(COLUMN_EXPENSE_AMOUNT)));
-                    expense.setRecordType(cursor.getString(cursor.getColumnIndex(COLUMN_RECORD_TYPE)));
-                    expense.setCategory((cursor.getString(cursor.getColumnIndex(COLUMN_EXPENSE_CATEGORY))));
-                    expense.setExpenseDate((cursor.getString(cursor.getColumnIndex(COLUMN_EXPENSE_DATE))));
-                    expense.setCurrency(cursor.getInt(cursor.getColumnIndex(COLUMN_EXPENSE_CURRENCY)));
-                    expense.setNote(cursor.getString(cursor.getColumnIndex(COLUMN_EXPENSE_NOTE)));
-                    expense.setWalletTitle(cursor.getString(cursor.getColumnIndex(COLUMN_EXPENSE_WALLET)));
-                    expense.setWalletId(cursor.getInt(cursor.getColumnIndex(COLUMN_EXPENSE_WALLET_ID)));
-                    Log.v("Record::","wallet : "+cursor.getInt(cursor.getColumnIndex(COLUMN_EXPENSE_WALLET)));
-                    expenseList.add(expense);
+                    record.setId(cursor.getInt(cursor.getColumnIndex(COLUMN_RECORD_ID)));
+                    record.setAmount(cursor.getInt(cursor.getColumnIndex(COLUMN_RECORD_AMOUNT)));
+                    record.setRecordType(cursor.getString(cursor.getColumnIndex(COLUMN_RECORD_TYPE)));
+                    record.setCategory((cursor.getString(cursor.getColumnIndex(COLUMN_RECORD_CATEGORY))));
+                    record.setExpenseDate((cursor.getString(cursor.getColumnIndex(COLUMN_RECORD_DATE))));
+                    record.setCurrency(cursor.getInt(cursor.getColumnIndex(COLUMN_RECORD_CURRENCY)));
+                    record.setNote(cursor.getString(cursor.getColumnIndex(COLUMN_RECORD_NOTE)));
+                    record.setWalletTitle(cursor.getString(cursor.getColumnIndex(COLUMN_RECORD_WALLET)));
+                    record.setWalletId(cursor.getInt(cursor.getColumnIndex(COLUMN_RECORD_WALLET_ID)));
+                    Log.v("Record::","wallet : "+cursor.getInt(cursor.getColumnIndex(COLUMN_RECORD_WALLET)));
+                    recordList.add(record);
                 } while (cursor.moveToNext());
             }
         }
         cursor.close();
         db.close();
-        return expenseList;
+        return recordList;
     }
 
     /**
@@ -308,12 +308,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         int totalCost = 0;
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
         String columns[] = {
-                COLUMN_EXPENSE_ID,
-                COLUMN_EXPENSE_WALLET,
-                COLUMN_EXPENSE_AMOUNT
+                COLUMN_RECORD_ID,
+                COLUMN_RECORD_WALLET,
+                COLUMN_RECORD_AMOUNT
         };
-        String where = "" + COLUMN_EXPENSE_WALLET + " = '" + walletName + "'";
-        Cursor cursor = sqLiteDatabase.query(EXPENSE_TABLE, columns, where, null, null, null, null);
+        String where = "" + COLUMN_RECORD_WALLET + " = '" + walletName + "'";
+        Cursor cursor = sqLiteDatabase.query(RECORD_TABLE, columns, where, null, null, null, null);
 
         if (cursor != null){
             if (cursor.moveToFirst()){
@@ -399,14 +399,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         int totalCost = 0;
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
         String columns[] = {
-                COLUMN_EXPENSE_AMOUNT
+                COLUMN_RECORD_AMOUNT
         };
-        Cursor cursor = sqLiteDatabase.query(EXPENSE_TABLE, columns, null, null, null, null, null);
+        Cursor cursor = sqLiteDatabase.query(RECORD_TABLE, columns, null, null, null, null, null);
 
         if (cursor != null){
             if (cursor.moveToFirst()){
                 do {
-                    totalCost += cursor.getInt(cursor.getColumnIndex(COLUMN_EXPENSE_AMOUNT));
+                    totalCost += cursor.getInt(cursor.getColumnIndex(COLUMN_RECORD_AMOUNT));
                 }while (cursor.moveToNext());
             }
         }
@@ -427,23 +427,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         int totalCost = 0;
         // array of columns to fetch
         String[] columns = {
-                COLUMN_EXPENSE_ID,
-                COLUMN_EXPENSE_AMOUNT,
-                COLUMN_EXPENSE_DATE
+                COLUMN_RECORD_ID,
+                COLUMN_RECORD_AMOUNT,
+                COLUMN_RECORD_DATE
         };
         // sorting orders
         String sortOrder =
-                COLUMN_EXPENSE_ID + " DESC";
+                COLUMN_RECORD_ID + " DESC";
         SQLiteDatabase db = this.getReadableDatabase();
 
-        String where = "" + COLUMN_EXPENSE_DATE + " LIKE '%"+ monthName +"%' ";
+        String where = "" + COLUMN_RECORD_DATE + " LIKE '%"+ monthName +"%' ";
 
-        Cursor cursor = db.query(EXPENSE_TABLE, columns, where, null, null, null, sortOrder);
+        Cursor cursor = db.query(RECORD_TABLE, columns, where, null, null, null, sortOrder);
 
         if (cursor != null){
             if (cursor.moveToFirst()) {
                 do {
-                    totalCost += cursor.getInt(cursor.getColumnIndex(COLUMN_EXPENSE_AMOUNT));
+                    totalCost += cursor.getInt(cursor.getColumnIndex(COLUMN_RECORD_AMOUNT));
                 } while (cursor.moveToNext());
             }
         }
@@ -461,24 +461,24 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         int totalCost = 0;
         // array of columns to fetch
         String[] columns = {
-                COLUMN_EXPENSE_ID,
-                COLUMN_EXPENSE_AMOUNT,
-                COLUMN_EXPENSE_DATE,
+                COLUMN_RECORD_ID,
+                COLUMN_RECORD_AMOUNT,
+                COLUMN_RECORD_DATE,
                 COLUMN_RECORD_TYPE
         };
         // sorting orders
         String sortOrder =
-                COLUMN_EXPENSE_ID + " DESC";
+                COLUMN_RECORD_ID + " DESC";
         SQLiteDatabase db = this.getReadableDatabase();
 
-        String where = "" + COLUMN_EXPENSE_DATE + " LIKE '%"+ monthName +"%' and " + COLUMN_RECORD_TYPE + " = '" + recordType + "'";
+        String where = "" + COLUMN_RECORD_DATE + " LIKE '%"+ monthName +"%' and " + COLUMN_RECORD_TYPE + " = '" + recordType + "'";
 
-        Cursor cursor = db.query(EXPENSE_TABLE, columns, where, null, null, null, sortOrder);
+        Cursor cursor = db.query(RECORD_TABLE, columns, where, null, null, null, sortOrder);
 
         if (cursor != null){
             if (cursor.moveToFirst()) {
                 do {
-                    totalCost += cursor.getInt(cursor.getColumnIndex(COLUMN_EXPENSE_AMOUNT));
+                    totalCost += cursor.getInt(cursor.getColumnIndex(COLUMN_RECORD_AMOUNT));
                 } while (cursor.moveToNext());
             }
         }
@@ -498,16 +498,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         int totalCost = 0;
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
         String columns[] = {
-                COLUMN_EXPENSE_AMOUNT,
+                COLUMN_RECORD_AMOUNT,
                 COLUMN_RECORD_TYPE
         };
         String where = "" + COLUMN_RECORD_TYPE + " = '"+ recordType +"' ";
 
-        Cursor cursor = sqLiteDatabase.query(EXPENSE_TABLE, columns, where, null, null, null, null);
+        Cursor cursor = sqLiteDatabase.query(RECORD_TABLE, columns, where, null, null, null, null);
         if (cursor != null){
             if (cursor.moveToFirst()){
                 do {
-                    totalCost += cursor.getInt(cursor.getColumnIndex(COLUMN_EXPENSE_AMOUNT));
+                    totalCost += cursor.getInt(cursor.getColumnIndex(COLUMN_RECORD_AMOUNT));
                 }while (cursor.moveToNext());
             }
         }
@@ -526,7 +526,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      */
     public float getCategoryCount(String categoryLabel) {
 
-        String countQuery = "SELECT  * FROM " + EXPENSE_TABLE  +" WHERE " + COLUMN_EXPENSE_CATEGORY +" = '"+categoryLabel+"' ";
+        String countQuery = "SELECT  * FROM " + RECORD_TABLE +" WHERE " + COLUMN_RECORD_CATEGORY +" = '"+categoryLabel+"' ";
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
         Cursor cursor = sqLiteDatabase.rawQuery(countQuery, null);
         float count = cursor.getCount();

@@ -23,7 +23,7 @@
     <string name="wallet_name">Wallet Name</string>
     <string name="expiry_date">Expiry Date</string>
     <string name="select_wallet_type">Select Wallet Type</string>
-    <string name="expense">Expense</string>
+    <string name="record">Expense</string>
     <string name="income">Income</string>
     <string name="title">Title</string>
     <string name="type">Type</string>
@@ -41,7 +41,7 @@
     <string name="data_saved_successfully">Data Saved Successfully</string>
     <string name="no_data">No Data</string>
     <string name="no_wallet_data">No wallet data available</string>
-    <string name="no_budget_data">No expense data available</string>
+    <string name="no_budget_data">No record data available</string>
     <string name="please_add_wallet">Please add wallet first \n You dont have any wallet</string>
     <string name="hello">Hello!!</string>
     <string name="current_balance">Current Balance</string>
@@ -84,8 +84,8 @@
     <string name="records">All Records</string>
     <string name="expense_structure">Expenses/Savings Structure</string>
     <string name="expense_savings_graph">Expense vs Savings Graph</string>
-    <string name="coming_soon">Intersting things are coming soon</string>
-    <string name="monthly_expense_chart">Monhtly Expense Chart</string>
+    <string name="coming_soon">Interesting things are coming soon</string>
+    <string name="monthly_expense_chart">Monthly Expense Chart</string>
     <string name="food">Food</string>
     <string name="test">Test</string>
     <string name="date_title">Date</string>
@@ -107,4 +107,5 @@
     <string name="want_to_add_expense_wallet">Do you want to add an expense wallet?</string>
     <string name="need_to_add_wallet">You dont have any wallet.Please add wallet first.</string>
     <string name="want_to_add_wallet">Do you want to add wallet?</string>
+    <string name="expense">Expense</string>
 </resources>

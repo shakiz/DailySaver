@@ -26,10 +26,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.dailysaver.shadowhite.dailysaver.activities.dashboard.DashboardActivity;
 import com.dailysaver.shadowhite.dailysaver.activities.records.RecordsActivity;
 import com.dailysaver.shadowhite.dailysaver.activities.wallet.AddNewWalletActivity;
-import com.dailysaver.shadowhite.dailysaver.activities.wallet.WalletDetailsActivity;
 import com.dailysaver.shadowhite.dailysaver.adapters.category.CategoryRecyclerAdapter;
 import com.dailysaver.shadowhite.dailysaver.R;
-import com.dailysaver.shadowhite.dailysaver.models.expense.Expense;
+import com.dailysaver.shadowhite.dailysaver.models.record.Record;
 import com.dailysaver.shadowhite.dailysaver.utills.DataManager;
 import com.dailysaver.shadowhite.dailysaver.utills.Tools;
 import com.dailysaver.shadowhite.dailysaver.utills.UX;
@@ -58,7 +57,7 @@ public class AddNewRecordActivity extends AppCompatActivity implements View.OnCl
     private Tools tools;
     private DatabaseHelper databaseHelper;
     private DataManager dataManager;
-    private Expense expense;
+    private Record record;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -186,7 +185,7 @@ public class AddNewRecordActivity extends AppCompatActivity implements View.OnCl
         if (!recordTypeStr.isEmpty()){
             if (ux.validation(new int[]{R.id.Amount, R.id.Currency, R.id.Wallet, R.id.Note, R.id.ExpenseDate})){
                 if (getRemainingBalance()){
-                    databaseHelper.addNewExpense(new Expense(
+                    databaseHelper.addNewExpense(new Record(
                             Integer.parseInt(Amount.getText().toString()),
                             currencyValue,
                             recordTypeStr,
@@ -214,7 +213,7 @@ public class AddNewRecordActivity extends AppCompatActivity implements View.OnCl
         if (!recordTypeStr.isEmpty()){
             if (ux.validation(new int[]{R.id.Amount, R.id.Currency, R.id.Wallet, R.id.Note, R.id.ExpenseDate})){
                 if (getRemainingBalance()){
-                    databaseHelper.updateExpense(new Expense(
+                    databaseHelper.updateExpense(new Record(
                                     Integer.parseInt(Amount.getText().toString()),
                                     currencyValue,
                                     recordTypeStr,
@@ -223,7 +222,7 @@ public class AddNewRecordActivity extends AppCompatActivity implements View.OnCl
                                     walletValue,
                                     Note.getText().toString(),
                                     ExpenseDate.getText().toString())
-                            , expense.getId());
+                            , record.getId());
 
                     Toast.makeText(this,getResources().getString(R.string.data_updated_successfully),Toast.LENGTH_LONG).show();
                     startActivity(new Intent(AddNewRecordActivity.this,RecordsActivity.class));
@@ -240,9 +239,9 @@ public class AddNewRecordActivity extends AppCompatActivity implements View.OnCl
     //region get selected wallet remaining balance
     private boolean getRemainingBalance(){
         if (getIntent().getSerializableExtra("expense") != null) {
-            walletValue = expense.getWalletId();
+            walletValue = record.getWalletId();
         }
-        int remaining = databaseHelper.getWalletBalance(walletValue) - databaseHelper.singleWalletTotalCost(expense.getWalletTitle());
+        int remaining = databaseHelper.getWalletBalance(walletValue) - databaseHelper.singleWalletTotalCost(record.getWalletTitle());
         if (!TextUtils.isEmpty(Amount.getText().toString())){
             if (Integer.parseInt(Amount.getText().toString()) < remaining){
                 return true;
@@ -259,19 +258,19 @@ public class AddNewRecordActivity extends AppCompatActivity implements View.OnCl
 
     //Load pref data
     private void loadRecord() {
-        expense = (Expense) getIntent().getSerializableExtra("expense");
+        record = (Record) getIntent().getSerializableExtra("expense");
         loadRadioGroupData();
-        ux.setSpinnerAdapter(dataManager.getWalletTitle(expense.getRecordType()),walletSpinner);
-        walletValue = expense.getWalletId();
-        walletTitleStr = expense.getWalletTitle();
-        categoryTitle.setText(expense.getCategory());
-        setTypeIcon(categoryIcon, expense.getCategory());
-        Amount.setText(""+ expense.getAmount());
-        Note.setText(expense.getNote());
-        ExpenseDate.setText(expense.getExpenseDate());
-        currencySpinner.setSelection(expense.getWalletId(), true);
-        currencyValue = expense.getCurrency();
-        walletSpinner.setSelection(expense.getWalletId(), true);
+        ux.setSpinnerAdapter(dataManager.getWalletTitle(record.getRecordType()),walletSpinner);
+        walletValue = record.getWalletId();
+        walletTitleStr = record.getWalletTitle();
+        categoryTitle.setText(record.getCategory());
+        setTypeIcon(categoryIcon, record.getCategory());
+        Amount.setText(""+ record.getAmount());
+        Note.setText(record.getNote());
+        ExpenseDate.setText(record.getExpenseDate());
+        currencySpinner.setSelection(record.getWalletId(), true);
+        currencyValue = record.getCurrency();
+        walletSpinner.setSelection(record.getWalletId(), true);
         addOrUpdate.setImageResource(R.drawable.ic_action_done);
     }
 
@@ -317,18 +316,18 @@ public class AddNewRecordActivity extends AppCompatActivity implements View.OnCl
 
     //load the radioGroup of recordType data
     private void loadRadioGroupData(){
-        recordTypeStr = expense.getRecordType();
+        recordTypeStr = record.getRecordType();
         for (int i = 0; i <RecordType.getChildCount() ; i++) {
             RadioButton radioButton = (RadioButton)RecordType.getChildAt(i);
             if (radioButton.getTag() != null) {
-                if(radioButton.getTag().equals(expense.getRecordType())) {
+                if(radioButton.getTag().equals(record.getRecordType())) {
                     radioButton.setChecked(true);
-                    if (expense.getRecordType().equals("Savings")) {
+                    if (record.getRecordType().equals("Savings")) {
                         //Change the UI based on transaction type
                         ux.changeUI(new int[]{R.id.Amount, R.id.Currency, R.id.Wallet, R.id.Note, R.id.ExpenseDate, R.id.categoryItemLayout}, "Savings");
                         CategorySelector.setTextColor(getResources().getColor(R.color.md_green_600));
                     }
-                    else if (expense.getRecordType().equals("Expense")){
+                    else if (record.getRecordType().equals("Expense")){
                         //Change the UI based on transaction type
                         ux.changeUI(new int[]{R.id.Amount, R.id.Currency, R.id.Wallet, R.id.Note, R.id.ExpenseDate, R.id.categoryItemLayout}, "Expense");
                         CategorySelector.setTextColor(getResources().getColor(R.color.md_red_600));
