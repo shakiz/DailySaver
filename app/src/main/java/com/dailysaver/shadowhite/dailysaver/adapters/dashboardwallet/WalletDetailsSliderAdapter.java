@@ -1,4 +1,4 @@
-package com.dailysaver.shadowhite.dailysaver.adapters.wallet;
+package com.dailysaver.shadowhite.dailysaver.adapters.dashboardwallet;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import com.dailysaver.shadowhite.dailysaver.R;
 import com.dailysaver.shadowhite.dailysaver.models.wallet.Wallet;
-import com.dailysaver.shadowhite.dailysaver.utills.Tools;
 import com.dailysaver.shadowhite.dailysaver.utills.dbhelper.DatabaseHelper;
 import com.github.lzyzsd.circleprogress.ArcProgress;
 import com.smarteist.autoimageslider.SliderViewAdapter;
@@ -19,14 +18,12 @@ public class WalletDetailsSliderAdapter extends SliderViewAdapter<WalletDetailsS
     private Context context;
     private onItemClick onItemClick;
     private DatabaseHelper databaseHelper;
-    private Tools tools;
 
     public WalletDetailsSliderAdapter(ArrayList<Wallet> cardItemList, Context context,onItemClick onItemClick) {
         this.cardItemList = cardItemList;
         this.context = context;
         this.onItemClick = onItemClick;
         databaseHelper = new DatabaseHelper(context);
-        tools = new Tools(context);
     }
 
     public interface onItemClick{
@@ -42,19 +39,27 @@ public class WalletDetailsSliderAdapter extends SliderViewAdapter<WalletDetailsS
     @Override
     public void onBindViewHolder(SliderAdapterVH viewHolder, int position) {
         final Wallet itemModel = cardItemList.get(position);
+        final String walletName = itemModel.getTitle();
+        final int walletId = itemModel.getId();
         viewHolder.Position.setText(""+(++position));
         viewHolder.Title.setText(itemModel.getTitle());
-        viewHolder.Amount.setText(""+itemModel.getAmount());
         viewHolder.WalletType.setText(""+itemModel.getWalletType());
 
         //Changing the wallet type color based on wallet type
-        if (itemModel.getWalletType().equals("Expense")) viewHolder.WalletType.setTextColor(context.getResources().getColor(R.color.md_red_600));
-        else viewHolder.WalletType.setTextColor(context.getResources().getColor(R.color.md_green_600));
+        if (itemModel.getWalletType().equals("Expense")) {
+            viewHolder.Amount.setText(""+itemModel.getAmount());
+            viewHolder.WalletType.setTextColor(context.getResources().getColor(R.color.md_red_600));
+        }
+        else if (itemModel.getWalletType().equals("Savings")){
+            viewHolder.Amount.setText(""+itemModel.getAmount());
+            viewHolder.TotalHeading.setText("Total Savings");
+            viewHolder.RemainingHeading.setText("Total Amount");
+            viewHolder.WalletType.setTextColor(context.getResources().getColor(R.color.md_green_600));
+        }
 
         viewHolder.ExpiresOn.setText(itemModel.getExpiresOn());
-        final int walletId = itemModel.getId();
-        setProgressData(itemModel.getAmount(),databaseHelper.singleWalletTotalCost(walletId),viewHolder.RemainingBalance);
-        viewHolder.TotalCost.setText(""+databaseHelper.singleWalletTotalCost(walletId));
+        setProgressData(itemModel,databaseHelper.singleWalletTotalCost(walletName),viewHolder.RemainingBalance);
+        viewHolder.TotalCost.setText(""+databaseHelper.singleWalletTotalCost(walletName));
 
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,15 +69,22 @@ public class WalletDetailsSliderAdapter extends SliderViewAdapter<WalletDetailsS
         });
     }
 
-    private void setProgressData(int totalAmount, int totalCost, ArcProgress RemainingBalanceArc) {
-        RemainingBalanceArc.setMax(totalAmount);
+    private void setProgressData(Wallet wallet, int totalCost, ArcProgress RemainingBalanceArc) {
         RemainingBalanceArc.setSuffixText("");
-        RemainingBalanceArc.setFinishedStrokeColor(context.getResources().getColor(R.color.md_green_400));
-        RemainingBalanceArc.setUnfinishedStrokeColor(context.getResources().getColor(R.color.md_red_400));
+        RemainingBalanceArc.setFinishedStrokeColor(context.getResources().getColor(R.color.md_red_400));
+        RemainingBalanceArc.setUnfinishedStrokeColor(context.getResources().getColor(R.color.md_green_400));
         RemainingBalanceArc.setTextSize(40);
         RemainingBalanceArc.setBottomText(null);
         RemainingBalanceArc.setTextColor(context.getResources().getColor(R.color.md_grey_600));
-        RemainingBalanceArc.setProgress((totalAmount-totalCost));
+        if (wallet.getWalletType().equals("Expense")) {
+            RemainingBalanceArc.setMax(wallet.getAmount());
+            RemainingBalanceArc.setProgress((wallet.getAmount() - totalCost));
+        }
+        else{
+            RemainingBalanceArc.setMax((wallet.getAmount() + totalCost));
+            RemainingBalanceArc.setProgress((wallet.getAmount() + totalCost));
+            RemainingBalanceArc.setFinishedStrokeColor(context.getResources().getColor(R.color.md_green_400));
+        }
     }
 
     @Override
@@ -83,7 +95,7 @@ public class WalletDetailsSliderAdapter extends SliderViewAdapter<WalletDetailsS
     class SliderAdapterVH extends SliderViewAdapter.ViewHolder {
 
         View itemView;
-        TextView Title,Amount,TotalCost,Position, WalletType,ExpiresOn;
+        TextView Title,Amount,TotalCost,Position, WalletType,ExpiresOn, TotalHeading, RemainingHeading;
         ArcProgress RemainingBalance;
 
         public SliderAdapterVH(View itemView) {
@@ -95,6 +107,8 @@ public class WalletDetailsSliderAdapter extends SliderViewAdapter<WalletDetailsS
             TotalCost = itemView.findViewById(R.id.TotalCost);
             WalletType = itemView.findViewById(R.id.WalletType);
             ExpiresOn = itemView.findViewById(R.id.ExpiresOn);
+            TotalHeading = itemView.findViewById(R.id.TotalHeading);
+            RemainingHeading = itemView.findViewById(R.id.RemainingHeading);
             this.itemView = itemView;
         }
     }

@@ -2,19 +2,14 @@ package com.dailysaver.shadowhite.dailysaver.activities.wallet;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.dailysaver.shadowhite.dailysaver.R;
-import com.dailysaver.shadowhite.dailysaver.activities.expensewallet.AddNewRecordActivity;
 import com.dailysaver.shadowhite.dailysaver.activities.dashboard.DashboardActivity;
 import com.dailysaver.shadowhite.dailysaver.activities.records.RecordsActivity;
 import com.dailysaver.shadowhite.dailysaver.adapters.monthlyexpense.MonthlyExpenseAdapter;
@@ -23,25 +18,22 @@ import com.dailysaver.shadowhite.dailysaver.models.wallet.Wallet;
 import com.dailysaver.shadowhite.dailysaver.utills.Tools;
 import com.dailysaver.shadowhite.dailysaver.utills.UX;
 import com.dailysaver.shadowhite.dailysaver.utills.dbhelper.DatabaseHelper;
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import java.util.ArrayList;
 import in.codeshuffle.typewriterview.TypeWriterView;
 
 public class WalletDetailsActivity extends AppCompatActivity {
     private CoordinatorLayout mainLayout;
-    private TextView TotalCost, Amount, ExpiresOn;
+    private TextView TotalCost, Amount, WalletName, CostHeading;
     private TypeWriterView CurrentBalance;
     private Toolbar toolbar;
     private UX ux;
     private int walletId = 0;
+    private String walletName = "";
     private Tools tools;
     private RecyclerView recyclerView;
     private MonthlyExpenseAdapter monthlyExpenseAdapter;
     private DatabaseHelper databaseHelper;
     private TextView noBudgetData;
-    private ImageView filter;
-    private BottomSheetBehavior bottomSheetBehavior;
-    private LinearLayout layoutBottomSheet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,8 +41,6 @@ public class WalletDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_wallet_details);
 
         init();
-
-        getId();
 
         if (getIntent().getSerializableExtra("wallet") != null){
             loadRecord();
@@ -69,12 +59,12 @@ public class WalletDetailsActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.mRecyclerView);
         noBudgetData = findViewById(R.id.NoDataBudget);
         Amount = findViewById(R.id.Amount);
+        WalletName = findViewById(R.id.WalletName);
         TotalCost = findViewById(R.id.TotalCost);
-        ExpiresOn = findViewById(R.id.ExpiresOn);
+        CostHeading = findViewById(R.id.CostHeading);
+        CurrentBalance = findViewById(R.id.CurrentBalance);
         toolbar = findViewById(R.id.tool_bar);
         mainLayout = findViewById(R.id.home_layout);
-        filter = findViewById(R.id.filter);
-        layoutBottomSheet = findViewById(R.id.layoutBottomSheet);
         ux = new UX(this, mainLayout);
         tools = new Tools(this);
         databaseHelper = new DatabaseHelper(this);
@@ -83,62 +73,24 @@ public class WalletDetailsActivity extends AppCompatActivity {
     //load wallet record
     private void loadRecord() {
         Wallet wallet = (Wallet) getIntent().getSerializableExtra("wallet");
-        Amount.setText(""+wallet.getAmount());
-        TotalCost.setText(""+databaseHelper.singleWalletTotalCost(walletId));
-        CurrentBalance = findViewById(R.id.CurrentBalance);
-        CurrentBalance.animateText(""+(wallet.getAmount()-databaseHelper.singleWalletTotalCost(walletId)));
+        walletId = wallet.getId();
+        walletName = wallet.getTitle();
+        CurrentBalance.setWithMusic(false);
         CurrentBalance.setDelay(0);
-        ExpiresOn.setText(wallet.getExpiresOn());
-    }
-
-    //get wallet id from intent
-    private void getId() {
-        if (getIntent().getIntExtra("id",0) != 0){
-            walletId = getIntent().getIntExtra("id",0);
-            Log.v("walletID",""+walletId);
+        if (wallet.getWalletType().equals("Savings")){
+            CostHeading.setText("Additional Savings");
+            CurrentBalance.animateText(""+(wallet.getAmount() + databaseHelper.singleWalletTotalCost(walletName)));
         }
+        else{
+            CurrentBalance.animateText(""+(wallet.getAmount() - databaseHelper.singleWalletTotalCost(walletName)));
+        }
+        Amount.setText(""+wallet.getAmount());
+        WalletName.setText(wallet.getTitle());
+        TotalCost.setText(""+databaseHelper.singleWalletTotalCost(walletName));
     }
 
-    //TODO not in used
     private void bindUIWithComponents() {
-        setAdapter(databaseHelper.getAllExpenseItems(walletId));
-
-        bottomSheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
-
-        bottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
-            @Override
-            public void onStateChanged(@NonNull View view, int newState) {
-                switch (newState) {
-                    case BottomSheetBehavior.STATE_HIDDEN:
-                        break;
-                    case BottomSheetBehavior.STATE_EXPANDED:
-                        break;
-                    case BottomSheetBehavior.STATE_COLLAPSED:
-                        break;
-                    case BottomSheetBehavior.STATE_DRAGGING:
-                        break;
-                    case BottomSheetBehavior.STATE_SETTLING:
-                        break;
-                }
-            }
-
-            @Override
-            public void onSlide(@NonNull View view, float v) {
-
-            }
-        });
-
-        filter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (bottomSheetBehavior.getState() != BottomSheetBehavior.STATE_EXPANDED) {
-                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-                } else {
-                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-                }
-            }
-        });
-
+        setAdapter(databaseHelper.getAllExpenseItems(walletName));
     }
 
     //set adapter for records for the specific wallet
@@ -150,7 +102,7 @@ public class WalletDetailsActivity extends AppCompatActivity {
             monthlyExpenseAdapter = new MonthlyExpenseAdapter(allExpenseItems, this,new MonthlyExpenseAdapter.onItemClick() {
                 @Override
                 public void itemClick(Expense expense) {
-                    startActivity(new Intent(WalletDetailsActivity.this, AddNewRecordActivity.class).putExtra("expense", expense).putExtra("from","details"));
+
                 }
             });
             recyclerView.setLayoutManager(new LinearLayoutManager(this));

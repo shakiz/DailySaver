@@ -78,7 +78,6 @@ public class AddNewRecordActivity extends AppCompatActivity implements View.OnCl
 
         //Set toolbar
         if (getIntent().getStringExtra("from").equals("record")) ux.setToolbar(toolbar,this,RecordsActivity.class,"","");
-        else if (getIntent().getStringExtra("from").equals("details")) ux.setToolbar(toolbar,this, WalletDetailsActivity.class,"","");
         else ux.setToolbar(toolbar,this, DashboardActivity.class,"","");
 
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_left_arrow_grey);
@@ -243,7 +242,7 @@ public class AddNewRecordActivity extends AppCompatActivity implements View.OnCl
         if (getIntent().getSerializableExtra("expense") != null) {
             walletValue = expense.getWalletId();
         }
-        int remaining = databaseHelper.getWalletBalance(walletValue) - databaseHelper.singleWalletTotalCost(walletValue);
+        int remaining = databaseHelper.getWalletBalance(walletValue) - databaseHelper.singleWalletTotalCost(expense.getWalletTitle());
         if (!TextUtils.isEmpty(Amount.getText().toString())){
             if (Integer.parseInt(Amount.getText().toString()) < remaining){
                 return true;
@@ -262,12 +261,16 @@ public class AddNewRecordActivity extends AppCompatActivity implements View.OnCl
     private void loadRecord() {
         expense = (Expense) getIntent().getSerializableExtra("expense");
         loadRadioGroupData();
+        ux.setSpinnerAdapter(dataManager.getWalletTitle(expense.getRecordType()),walletSpinner);
+        walletValue = expense.getWalletId();
+        walletTitleStr = expense.getWalletTitle();
         categoryTitle.setText(expense.getCategory());
         setTypeIcon(categoryIcon, expense.getCategory());
         Amount.setText(""+ expense.getAmount());
         Note.setText(expense.getNote());
         ExpenseDate.setText(expense.getExpenseDate());
         currencySpinner.setSelection(expense.getWalletId(), true);
+        currencyValue = expense.getCurrency();
         walletSpinner.setSelection(expense.getWalletId(), true);
         addOrUpdate.setImageResource(R.drawable.ic_action_done);
     }
@@ -351,7 +354,6 @@ public class AddNewRecordActivity extends AppCompatActivity implements View.OnCl
     @Override
     public void onBackPressed() {
         if (getIntent().getStringExtra("from").equals("record")) startActivity(new Intent(AddNewRecordActivity.this, RecordsActivity.class));
-        else if (getIntent().getStringExtra("from").equals("details")) ux.setToolbar(toolbar,this, WalletDetailsActivity.class,"","");
         else startActivity(new Intent(AddNewRecordActivity.this, DashboardActivity.class));
         overridePendingTransition(R.anim.fadein,R.anim.push_up_out);
     }

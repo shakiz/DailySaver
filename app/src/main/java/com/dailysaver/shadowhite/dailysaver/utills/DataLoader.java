@@ -56,11 +56,10 @@ public class DataLoader {
 
         @Override
         protected void onPostExecute(ArrayList<Wallet> wallets) {
-                    onWalletItemsCompleted.onComplete(wallets);
-                    if (ux.loadingDialog.isShowing()){
-                        ux.removeLoadingView();
-                    }
-
+            onWalletItemsCompleted.onComplete(wallets);
+            if (ux.loadingDialog.isShowing()){
+                ux.removeLoadingView();
+            }
         }
     }
 
@@ -73,16 +72,15 @@ public class DataLoader {
 
         @Override
         protected ArrayList<Expense> doInBackground(String... strings) {
-            return databaseHelper.getAllExpenseItems(0);
+            return databaseHelper.getAllExpenseItems("");
         }
 
         @Override
         protected void onPostExecute(ArrayList<Expense> expenses) {
-
-                    onBudgetItemsCompleted.onComplete(expenses);
-                    if (ux.loadingDialog.isShowing()) {
-                        ux.removeLoadingView();
-                    }
+            onBudgetItemsCompleted.onComplete(expenses);
+            if (ux.loadingDialog.isShowing()) {
+                ux.removeLoadingView();
+            }
         }
     }
 }

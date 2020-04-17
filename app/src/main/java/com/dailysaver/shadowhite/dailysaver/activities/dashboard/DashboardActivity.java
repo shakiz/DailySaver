@@ -22,7 +22,7 @@ import com.dailysaver.shadowhite.dailysaver.activities.report.ExpenseReportActiv
 import com.dailysaver.shadowhite.dailysaver.activities.wallet.AddNewWalletActivity;
 import com.dailysaver.shadowhite.dailysaver.activities.wallet.WalletDetailsActivity;
 import com.dailysaver.shadowhite.dailysaver.adapters.menu.IconMenuAdapter;
-import com.dailysaver.shadowhite.dailysaver.adapters.wallet.WalletDetailsSliderAdapter;
+import com.dailysaver.shadowhite.dailysaver.adapters.dashboardwallet.WalletDetailsSliderAdapter;
 import com.dailysaver.shadowhite.dailysaver.models.menu.IconPowerMenuItem;
 import com.dailysaver.shadowhite.dailysaver.models.wallet.Wallet;
 import com.dailysaver.shadowhite.dailysaver.utills.chart.Chart;
@@ -271,7 +271,7 @@ public class DashboardActivity extends AppCompatActivity {
             sliderView.setSliderAdapter(new WalletDetailsSliderAdapter(walletList, this, new WalletDetailsSliderAdapter.onItemClick() {
                 @Override
                 public void itemClick(Wallet wallet, int id) {
-                    startActivity(new Intent(DashboardActivity.this, WalletDetailsActivity.class).putExtra("id",id).putExtra("wallet",wallet));
+                    startActivity(new Intent(DashboardActivity.this, WalletDetailsActivity.class).putExtra("wallet",wallet));
                 }
             }));
             sliderView.setIndicatorAnimation(IndicatorAnimations.WORM);

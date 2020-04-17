@@ -114,9 +114,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     /**
      * This method is to get all expense record
      *
-     * @param walletId
+     * @param walletName
      */
-    public ArrayList<Expense> getAllExpenseItems(int walletId) {
+    public ArrayList<Expense> getAllExpenseItems(String walletName) {
         // array of columns to fetch
         String[] columns = {
                 COLUMN_EXPENSE_ID,
@@ -137,12 +137,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         Cursor cursor = null;
 
-        Log.v("fromDBID",""+walletId);
-        if (walletId == 0) {
+        Log.v("fromDBWalletName",""+walletName);
+        if (TextUtils.isEmpty(walletName)) {
             cursor = db.query(EXPENSE_TABLE, columns, null, null, null, null, sortOrder);
         }
         else {
-            String where = "" + COLUMN_EXPENSE_WALLET_ID + " = "+ walletId +"";
+            String where = "" + COLUMN_EXPENSE_WALLET + " = '"+ walletName +"'";
             cursor = db.query(EXPENSE_TABLE, columns, where, null, null, null, sortOrder);
         }
 
@@ -160,6 +160,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     expense.setNote(cursor.getString(cursor.getColumnIndex(COLUMN_EXPENSE_NOTE)));
                     expense.setWalletTitle(cursor.getString(cursor.getColumnIndex(COLUMN_EXPENSE_WALLET)));
                     expense.setWalletId(cursor.getInt(cursor.getColumnIndex(COLUMN_EXPENSE_WALLET_ID)));
+                    Log.v("Record::","wallet : "+cursor.getInt(cursor.getColumnIndex(COLUMN_EXPENSE_WALLET)));
                     expenseList.add(expense);
                 } while (cursor.moveToNext());
             }
@@ -301,22 +302,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     /**
      * This method is to get wallet cost of total
      *
-     * @param walletId
+     * @param walletName
      */
-    public int singleWalletTotalCost(int walletId){
+    public int singleWalletTotalCost(String walletName){
         int totalCost = 0;
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
         String columns[] = {
                 COLUMN_EXPENSE_ID,
+                COLUMN_EXPENSE_WALLET,
                 COLUMN_EXPENSE_AMOUNT
         };
-        String where = "" + COLUMN_EXPENSE_WALLET_ID + " = "+ walletId +"";
+        String where = "" + COLUMN_EXPENSE_WALLET + " = '" + walletName + "'";
         Cursor cursor = sqLiteDatabase.query(EXPENSE_TABLE, columns, where, null, null, null, null);
 
         if (cursor != null){
             if (cursor.moveToFirst()){
                 do {
-                    totalCost += cursor.getInt(1);
+                    totalCost += cursor.getInt(2);
                 }while (cursor.moveToNext());
             }
         }

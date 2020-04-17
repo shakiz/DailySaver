@@ -23,22 +23,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/tool_bar"
-                android:background="@color/colorPrimaryDark"
+                android:background="@color/colorPrimary"
                 app:navigationIcon="?attr/homeAsUpIndicator"
                 style="@style/TextAppearance.Widget.Event.Toolbar.Title"
                 app:title="@string/wallet_details"
                 app:titleTextColor="@color/md_white_1000">
-
-                <ImageView
-                    android:id="@+id/filter"
-                    android:layout_width="28dp"
-                    android:layout_height="28dp"
-                    android:layout_marginRight="16dp"
-                    android:clickable="true"
-                    android:visibility="gone"
-                    android:foreground="?attr/selectableItemBackgroundBorderless"
-                    android:layout_gravity="right"
-                    android:src="@drawable/ic_filter_new"/>
 
             </androidx.appcompat.widget.Toolbar>
 
@@ -62,21 +51,27 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:paddingTop="8dp"
-                    android:background="@color/colorPrimaryDark"
-                    android:paddingBottom="12dp">
+                    android:background="@color/colorPrimary"
+                    android:paddingBottom="48dp">
 
-                    <com.github.mikephil.charting.charts.PieChart
-                        android:id="@+id/piechart"
-                        android:visibility="gone"
+                    <TextView
+                        android:id="@+id/WalletName"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+                        android:layout_height="wrap_content"
+                        android:text="@string/title"
+                        android:textColor="@color/md_white_1000"
+                        android:textSize="20sp"
+                        android:gravity="center"
+                        android:textStyle="bold"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"/>
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/current_balance"
                         android:textColor="@color/md_white_1000"
-                        android:textSize="20sp"
+                        android:textSize="18sp"
                         android:gravity="center"
                         android:layout_marginLeft="8dp"
                         android:layout_marginRight="8dp"/>
@@ -110,6 +105,7 @@
                             android:orientation="vertical">
 
                             <TextView
+                                android:id="@+id/CostHeading"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="@string/cost"
@@ -158,35 +154,6 @@
                                 android:textSize="14sp"/>
 
                         </LinearLayout>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginRight="8dp"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:layout_gravity="center"
-                            android:src="@drawable/ic_expiry_date_new"/>
-
-                        <TextView
-                            android:id="@+id/ExpiresOn"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_marginLeft="4dp"
-                            android:text="@string/expiry_date_hint"
-                            android:textColor="@color/md_white_1000"
-                            android:textSize="20sp"
-                            android:gravity="center"
-                            android:layout_gravity="center"/>
 
                     </LinearLayout>
 
