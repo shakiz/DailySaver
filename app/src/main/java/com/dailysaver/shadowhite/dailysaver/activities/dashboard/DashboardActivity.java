@@ -219,7 +219,20 @@ public class DashboardActivity extends AppCompatActivity {
     private OnMenuItemClickListener<IconPowerMenuItem> onMenuItemClickListener = new OnMenuItemClickListener<IconPowerMenuItem>() {
         @Override
         public void onItemClick(int position, IconPowerMenuItem item) {
-            if (position==0)startActivity(new Intent(DashboardActivity.this, AddNewRecordActivity.class).putExtra("from","main"));
+            if (position==0){
+                //check for any wallet exist or not
+                if (databaseHelper.getAllWalletItems().size() == 0){
+                    ux.showDialog(R.layout.dialog_no_wallet, "No wallet found", new UX.onDialogOkListener() {
+                        @Override
+                        public void onClick(View dialog, int id) {
+                            startActivity(new Intent(DashboardActivity.this, AddNewWalletActivity.class));
+                        }
+                    });
+                }
+                else{
+                    startActivity(new Intent(DashboardActivity.this, AddNewRecordActivity.class).putExtra("from","main"));
+                }
+            }
             else if (position==1) startActivity(new Intent(DashboardActivity.this, AddNewWalletActivity.class).putExtra("from","main"));
             powerMenu.dismiss();
         }
@@ -296,9 +309,9 @@ public class DashboardActivity extends AppCompatActivity {
                 if (databaseHelper.getTotalWalletBalance() > 0) {
                     startActivity(new Intent(DashboardActivity.this, ExpenseReportActivity.class));
                 } else {
-                    ux.showDialog(R.layout.dialog_no_expense_wallet, "", new UX.onDialogOkListener() {
+                    ux.showDialog(R.layout.dialog_no_expense_wallet, "No expense wallet found", new UX.onDialogOkListener() {
                         @Override
-                        public void onClick(DialogInterface dialog, int id) {
+                        public void onClick(View dialog, int id) {
                             startActivity(new Intent(DashboardActivity.this, AddNewWalletActivity.class).putExtra("from","main"));
                         }
                     });

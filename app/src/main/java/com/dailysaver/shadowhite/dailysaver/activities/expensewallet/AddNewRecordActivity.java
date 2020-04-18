@@ -81,15 +81,6 @@ public class AddNewRecordActivity extends AppCompatActivity implements View.OnCl
 
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_left_arrow_grey);
         tools.setAnimation(mainLayout);
-        //check for any wallet exist or not
-        if (databaseHelper.getAllWalletItems().size() == 0){
-            ux.showDialog(R.layout.dialog_no_wallet, "", new UX.onDialogOkListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int id) {
-                    startActivity(new Intent(AddNewRecordActivity.this, AddNewWalletActivity.class));
-                }
-            });
-        }
 
         // all the user interactions
         bindUIWIthComponents();

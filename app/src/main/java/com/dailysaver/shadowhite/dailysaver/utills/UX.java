@@ -14,6 +14,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
@@ -263,19 +264,38 @@ public class UX {
      */
     public View showDialog(int layout, String title, onDialogOkListener okListener) {
         final onDialogOkListener onDialogOkListener = okListener;
+        Button CancelButton , OkButton;
+        TextView DialogMessage;
         final View dialogView = View.inflate(context, layout, null);
 
-        Dialog dialog = new Dialog(context);
+        final Dialog dialog = new Dialog(context);
         dialog.setContentView(dialogView);
         dialog.setTitle(title);
         dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         dialog.show();
 
+        DialogMessage = dialogView.findViewById(R.id.DialogMessage);
+        DialogMessage.setText(title);
+        dialogView.findViewById(R.id.OkButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onDialogOkListener.onClick(view, view.getId());
+            }
+        });
+
+        dialogView.findViewById(R.id.CancelButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                dialog.cancel();
+            }
+        });
+
         return dialogView;
     }
 
     public interface onDialogOkListener {
-        void onClick(DialogInterface dialog, int id);
+        void onClick(View dialog, int id);
     }
     //region end for custom dialog
 

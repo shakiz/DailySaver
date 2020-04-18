@@ -1,8 +1,8 @@
 package com.dailysaver.shadowhite.dailysaver.utills;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
+import android.view.View;
 import com.dailysaver.shadowhite.dailysaver.R;
 import com.dailysaver.shadowhite.dailysaver.activities.wallet.AddNewWalletActivity;
 import com.dailysaver.shadowhite.dailysaver.models.category.Category;
@@ -40,10 +40,9 @@ public class DataManager {
         ArrayList<String> walletTitleList = databaseHelper.getWalletTitle(walletType);
         if (walletTitleList.size() != 0){
             if (walletTitleList.get(0).equals("No Data")){
-                //TODO add a dialog here to prevent amount related bug
                 ux.showDialog(R.layout.dialog_no_savings_wallet, "No savings wallet found", new UX.onDialogOkListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int id) {
+                    public void onClick(View dialog, int id) {
                         context.startActivity(new Intent(context, AddNewWalletActivity.class).putExtra("from","newRecord"));
                     }
                 });
