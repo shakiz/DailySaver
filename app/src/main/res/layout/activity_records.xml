@@ -43,7 +43,15 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent">
+
+                <pl.droidsonroids.gif.GifImageView
+                    android:id="@+id/NoDataGif"
+                    android:layout_width="124dp"
+                    android:layout_height="96dp"
+                    android:visibility="gone"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/no_data_available"/>
 
                 <TextView
                     android:id="@+id/NoDataBudget"
@@ -51,7 +59,7 @@
                     android:layout_height="wrap_content"
                     android:visibility="gone"
                     android:gravity="center"
-                    android:layout_centerInParent="true"
+                    android:layout_below="@id/NoDataGif"
                     android:textSize="20sp"
                     android:textColor="@color/md_red_400"
                     android:textStyle="bold"

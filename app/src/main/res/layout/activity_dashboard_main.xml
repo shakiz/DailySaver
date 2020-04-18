@@ -62,18 +62,28 @@
                         app:sliderScrollTimeInSec="1"
                         app:sliderStartAutoCycle="false" />
 
+                    <pl.droidsonroids.gif.GifImageView
+                        android:id="@+id/NoDataGif"
+                        android:layout_width="124dp"
+                        android:layout_height="96dp"
+                        android:visibility="gone"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/no_data_available"/>
+
                     <TextView
                         android:id="@+id/NoDataWallet"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_below="@id/NoDataGif"
                         android:visibility="gone"
                         android:gravity="center"
-                        android:layout_centerInParent="true"
-                        android:textSize="20sp"
+                        android:textSize="16sp"
                         android:textColor="@color/md_red_400"
                         android:textStyle="bold"
-                        android:padding="8dp"
-                        android:layout_margin="8dp"
+                        android:padding="4dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginBottom="8dp"
                         android:text="@string/no_wallet_data"/>
 
                 </RelativeLayout>
@@ -135,7 +145,6 @@
                         android:layout_below="@id/SubHeading1"
                         android:layout_gravity="center"
                         android:layout_margin="8dp"/>
-
                 </RelativeLayout>
 
             </androidx.cardview.widget.CardView>

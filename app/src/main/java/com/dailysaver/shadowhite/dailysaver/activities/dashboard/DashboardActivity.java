@@ -52,12 +52,14 @@ import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
 import java.util.ArrayList;
 import java.util.List;
+import pl.droidsonroids.gif.GifImageView;
 
 public class DashboardActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private ActionBarDrawerToggle toggle;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private TextView noWalletData, TotalExpense, TotalSavings;
+    private GifImageView noDataGif;
     private RelativeLayout mainLayout;
     private Toolbar toolbar;
     private FloatingActionButton addButton;
@@ -92,6 +94,29 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         bindUiWithComponents();
     }
 
+    //responsible for initiating all the components
+    private void init() {
+        navigationView = findViewById(R.id.nav_view);
+        drawerLayout = findViewById(R.id.drawerLayout);
+        toolbar = findViewById(R.id.tool_bar);
+        sliderView = findViewById(R.id.Slider);
+        mainLayout = findViewById(R.id.home_layout);
+        TotalExpense = findViewById(R.id.TotalExpense);
+        TotalSavings = findViewById(R.id.TotalSavings);
+        pieChart = findViewById(R.id.pieChart);
+        groupedBarChart = findViewById(R.id.GroupedBarChart);
+        addButton = findViewById(R.id.add);
+        noWalletData = findViewById(R.id.NoDataWallet);
+        noDataGif = findViewById(R.id.NoDataGif);
+        tools = new Tools(this);
+        dataManager = new DataManager(this);
+        dataLoader = new DataLoader(this, mainLayout);
+        databaseHelper = new DatabaseHelper(this);
+        ux = new UX(this, mainLayout);
+        chart = new Chart(this);
+    }
+    //initiating done
+
     //bind components with UI
     private void bindUiWithComponents() {
         setNavDrawer();
@@ -115,41 +140,14 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
     }
     //bind UI end
 
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handling navigation view item clicks based on their respective ids.
-        int id = item.getItemId();
-        switch (id) {
-            //for item menu generate invoice
-            case R.id.report:
-                if (databaseHelper.getTotalWalletBalance() > 0) {
-                    startActivity(new Intent(DashboardActivity.this, ExpenseReportActivity.class));
-                } else {
-                    ux.showDialog(R.layout.dialog_no_expense_wallet, "No expense wallet found", new UX.onDialogOkListener() {
-                        @Override
-                        public void onClick(View dialog, int id) {
-                            startActivity(new Intent(DashboardActivity.this, AddNewWalletActivity.class).putExtra("from","main"));
-                        }
-                    });
-                }
-                drawerLayout.closeDrawer(GravityCompat.START);
-                return true;
-            case R.id.records:
-                startActivity(new Intent(DashboardActivity.this, RecordsActivity.class));
-                drawerLayout.closeDrawer(GravityCompat.START);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
     //set the category pie chart
     private void makeCategoryPieChart() {
         chart.setPieChart(pieChart);
         setCategoryPieData();
         chart.getLegendForPieChart();
-        chart.buildPieChart("Categories",12,6,2000,2000,pieData,R.color.md_white_1000,R.color.md_grey_800);
+        if (getPieData().size() > 0) {
+            chart.buildPieChart("Categories",12,6,2000,2000,pieData,R.color.md_white_1000,R.color.md_grey_800);
+        }
     }
     //pie chart build done
 
@@ -270,37 +268,13 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
                         }
                     });
                 }
-                else{
-                    startActivity(new Intent(DashboardActivity.this, AddNewRecordActivity.class).putExtra("from","main"));
-                }
+                else{ startActivity(new Intent(DashboardActivity.this, AddNewRecordActivity.class).putExtra("from","main")); }
             }
             else if (position==1) startActivity(new Intent(DashboardActivity.this, AddNewWalletActivity.class).putExtra("from","main"));
             powerMenu.dismiss();
         }
     };
     //menu click listener end
-
-    //responsible for initiating all the components
-    private void init() {
-        navigationView = findViewById(R.id.nav_view);
-        drawerLayout = findViewById(R.id.drawerLayout);
-        toolbar = findViewById(R.id.tool_bar);
-        sliderView = findViewById(R.id.Slider);
-        mainLayout = findViewById(R.id.home_layout);
-        TotalExpense = findViewById(R.id.TotalExpense);
-        TotalSavings = findViewById(R.id.TotalSavings);
-        pieChart = findViewById(R.id.pieChart);
-        groupedBarChart = findViewById(R.id.GroupedBarChart);
-        addButton = findViewById(R.id.add);
-        noWalletData = findViewById(R.id.NoDataWallet);
-        tools = new Tools(this);
-        dataManager = new DataManager(this);
-        dataLoader = new DataLoader(this, mainLayout);
-        databaseHelper = new DatabaseHelper(this);
-        ux = new UX(this, mainLayout);
-        chart = new Chart(this);
-    }
-    //initiating done
 
     //set up the card slider for wallet dashboard
     private void setCardSlider() {
@@ -314,6 +288,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
                     else{
                         sliderView.setVisibility(View.GONE);
                         noWalletData.setVisibility(View.VISIBLE);
+                        noDataGif.setVisibility(View.VISIBLE);
                     }
                 }
             }
@@ -334,6 +309,35 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         sliderView.setIndicatorPadding(8);
     }
     //wallet dashboard data setup done
+
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Handling navigation view item clicks based on their respective ids.
+        int id = item.getItemId();
+        switch (id) {
+            //for item menu generate invoice
+            case R.id.report:
+                if (databaseHelper.getTotalWalletBalance() > 0) {
+                    startActivity(new Intent(DashboardActivity.this, ExpenseReportActivity.class));
+                } else {
+                    ux.showDialog(R.layout.dialog_no_expense_wallet, "No expense wallet found", new UX.onDialogOkListener() {
+                        @Override
+                        public void onClick(View dialog, int id) {
+                            startActivity(new Intent(DashboardActivity.this, AddNewWalletActivity.class).putExtra("from","main"));
+                        }
+                    });
+                }
+                drawerLayout.closeDrawer(GravityCompat.START);
+                return true;
+            case R.id.records:
+                startActivity(new Intent(DashboardActivity.this, RecordsActivity.class));
+                drawerLayout.closeDrawer(GravityCompat.START);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

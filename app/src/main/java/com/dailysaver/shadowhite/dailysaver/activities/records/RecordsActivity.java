@@ -28,12 +28,15 @@ import com.skydoves.powermenu.MenuAnimation;
 import com.skydoves.powermenu.OnMenuItemClickListener;
 import java.util.ArrayList;
 
+import pl.droidsonroids.gif.GifImageView;
+
 public class RecordsActivity extends AppCompatActivity {
     private MonthlyExpenseAdapter monthlyExpenseAdapter;
     private FloatingActionButton addNew;
     private CustomPowerMenu powerMenu;
     private RecyclerView recyclerView;
     private TextView noBudgetData;
+    private GifImageView noDataGif;
     private RelativeLayout mainLayout;
     private Toolbar toolbar;
     private DataLoader dataLoader;
@@ -60,6 +63,7 @@ public class RecordsActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.tool_bar);
         recyclerView = findViewById(R.id.mRecyclerView);
         noBudgetData = findViewById(R.id.NoDataBudget);
+        noDataGif = findViewById(R.id.NoDataGif);
         addNew = findViewById(R.id.add);
         mainLayout = findViewById(R.id.mainLayout);
         dataLoader = new DataLoader(this,mainLayout);
@@ -77,7 +81,10 @@ public class RecordsActivity extends AppCompatActivity {
                     if (recordList.size() != 0){
                         setBudgetAdapter(recordList);
                     }
-                    else noBudgetData.setVisibility(View.VISIBLE);
+                    else {
+                        noBudgetData.setVisibility(View.VISIBLE);
+                        noDataGif.setVisibility(View.VISIBLE);
+                    }
                 }
             }
         });
