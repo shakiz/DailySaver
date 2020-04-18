@@ -1,6 +1,5 @@
 package com.dailysaver.shadowhite.dailysaver.activities.dashboard;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -138,13 +137,17 @@ public class DashboardActivity extends AppCompatActivity {
         float[] componentValues = new float[categoryLabels.length];
         float totalValue = 0;
 
+        //getting individual component value from db
         for (int startIndex = 0; startIndex < categoryLabels.length; startIndex++) {
             componentValues[startIndex] = databaseHelper.getCategoryCount(categoryLabels[startIndex]) / 100;
         }
+
+        //getting the tootal of of component value
         for (double value: componentValues) {
             totalValue += value;
         }
 
+        //finally calculating the pie chart value from component and total value
         for (int startIndex = 0; startIndex < componentValues.length; startIndex++) {
             if (componentValues[startIndex] > 0) { categoryData.add(new PieEntry(chart.getSinglePieValue(componentValues[startIndex], chart.roundValueIntoTwoDecimal(totalValue)), categoryLabels[startIndex])); }
             else{ continue; }
@@ -268,6 +271,10 @@ public class DashboardActivity extends AppCompatActivity {
                     if (walletList.size() != 0){
                         setWalletAdapter(walletList);
                     }
+                    else{
+                        sliderView.setVisibility(View.GONE);
+                        noWalletData.setVisibility(View.VISIBLE);
+                    }
                 }
             }
         });
@@ -276,21 +283,15 @@ public class DashboardActivity extends AppCompatActivity {
 
     //set up the card slider for wallet dashboard data
     private void setWalletAdapter(ArrayList<Wallet> walletList) {
-        if (walletList.size() <= 0){
-            sliderView.setVisibility(View.GONE);
-            noWalletData.setVisibility(View.VISIBLE);
-        }
-        else {
-            sliderView.setSliderAdapter(new WalletDetailsSliderAdapter(walletList, this, new WalletDetailsSliderAdapter.onItemClick() {
-                @Override
-                public void itemClick(Wallet wallet, int id) {
-                    startActivity(new Intent(DashboardActivity.this, WalletDetailsActivity.class).putExtra("wallet",wallet));
-                }
-            }));
-            sliderView.setIndicatorAnimation(IndicatorAnimations.WORM);
-            sliderView.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
-            sliderView.setIndicatorPadding(8);
-        }
+        sliderView.setSliderAdapter(new WalletDetailsSliderAdapter(walletList, this, new WalletDetailsSliderAdapter.onItemClick() {
+            @Override
+            public void itemClick(Wallet wallet, int id) {
+                startActivity(new Intent(DashboardActivity.this, WalletDetailsActivity.class).putExtra("wallet",wallet));
+            }
+        }));
+        sliderView.setIndicatorAnimation(IndicatorAnimations.WORM);
+        sliderView.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
+        sliderView.setIndicatorPadding(8);
     }
     //wallet dashboard data setup done
 

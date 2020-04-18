@@ -77,6 +77,7 @@ public class RecordsActivity extends AppCompatActivity {
                     if (recordList.size() != 0){
                         setBudgetAdapter(recordList);
                     }
+                    else noBudgetData.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -117,20 +118,15 @@ public class RecordsActivity extends AppCompatActivity {
 
     //set the budget list adapter
     private void setBudgetAdapter(ArrayList<Record> recordList) {
-        if (recordList.size() <= 0 ){
-            noBudgetData.setVisibility(View.VISIBLE);
-        }
-        else {
-            monthlyExpenseAdapter = new MonthlyExpenseAdapter(recordList, this,new MonthlyExpenseAdapter.onItemClick() {
-                @Override
-                public void itemClick(Record record) {
-                    startActivity(new Intent(RecordsActivity.this, AddNewRecordActivity.class).putExtra("expense", record).putExtra("from","record"));
-                }
-            });
-            recyclerView.setLayoutManager(new LinearLayoutManager(this));
-            recyclerView.setAdapter(monthlyExpenseAdapter);
-            monthlyExpenseAdapter.notifyDataSetChanged();
-        }
+        monthlyExpenseAdapter = new MonthlyExpenseAdapter(recordList, this,new MonthlyExpenseAdapter.onItemClick() {
+            @Override
+            public void itemClick(Record record) {
+                startActivity(new Intent(RecordsActivity.this, AddNewRecordActivity.class).putExtra("expense", record).putExtra("from","record"));
+            }
+        });
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(monthlyExpenseAdapter);
+        monthlyExpenseAdapter.notifyDataSetChanged();
     }
 
     @Override
