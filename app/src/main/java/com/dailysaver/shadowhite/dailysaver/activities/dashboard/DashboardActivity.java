@@ -4,15 +4,16 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import com.amitshekhar.DebugDB;
 import com.dailysaver.shadowhite.dailysaver.R;
 import com.dailysaver.shadowhite.dailysaver.activities.expensewallet.AddNewRecordActivity;
@@ -41,6 +42,7 @@ import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.LargeValueFormatter;
 import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
 import com.skydoves.powermenu.CircularEffect;
 import com.skydoves.powermenu.CustomPowerMenu;
 import com.skydoves.powermenu.MenuAnimation;
@@ -51,8 +53,10 @@ import com.smarteist.autoimageslider.SliderView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DashboardActivity extends AppCompatActivity {
-
+public class DashboardActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+    private ActionBarDrawerToggle toggle;
+    private DrawerLayout drawerLayout;
+    private NavigationView navigationView;
     private TextView noWalletData, TotalExpense, TotalSavings;
     private RelativeLayout mainLayout;
     private Toolbar toolbar;
@@ -75,7 +79,7 @@ public class DashboardActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.activity_dashboard);
 
         init();
 
@@ -83,12 +87,6 @@ public class DashboardActivity extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_left_arrow_grey);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                tools.exitApp();
-            }
-        });
 
         tools.setAnimation(mainLayout);
         bindUiWithComponents();
@@ -96,6 +94,7 @@ public class DashboardActivity extends AppCompatActivity {
 
     //bind components with UI
     private void bindUiWithComponents() {
+        setNavDrawer();
         setCardSlider();
         setMenu();
         makeCategoryPieChart();
@@ -104,7 +103,46 @@ public class DashboardActivity extends AppCompatActivity {
         TotalExpense.setText(""+databaseHelper.getAllCostBasedOnRecord("Expense"));
         TotalSavings.setText(""+databaseHelper.getAllCostBasedOnRecord("Savings"));
     }
+
+    private void setNavDrawer() {
+        toggle = new ActionBarDrawerToggle(
+                this, drawerLayout, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawerLayout.addDrawerListener(toggle);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toggle.setDrawerIndicatorEnabled(true);
+        toggle.syncState();
+        navigationView.setNavigationItemSelectedListener(this);
+    }
     //bind UI end
+
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Handling navigation view item clicks based on their respective ids.
+        int id = item.getItemId();
+        switch (id) {
+            //for item menu generate invoice
+            case R.id.report:
+                if (databaseHelper.getTotalWalletBalance() > 0) {
+                    startActivity(new Intent(DashboardActivity.this, ExpenseReportActivity.class));
+                } else {
+                    ux.showDialog(R.layout.dialog_no_expense_wallet, "No expense wallet found", new UX.onDialogOkListener() {
+                        @Override
+                        public void onClick(View dialog, int id) {
+                            startActivity(new Intent(DashboardActivity.this, AddNewWalletActivity.class).putExtra("from","main"));
+                        }
+                    });
+                }
+                drawerLayout.closeDrawer(GravityCompat.START);
+                return true;
+            case R.id.records:
+                startActivity(new Intent(DashboardActivity.this, RecordsActivity.class));
+                drawerLayout.closeDrawer(GravityCompat.START);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
     //set the category pie chart
     private void makeCategoryPieChart() {
@@ -244,6 +282,8 @@ public class DashboardActivity extends AppCompatActivity {
 
     //responsible for initiating all the components
     private void init() {
+        navigationView = findViewById(R.id.nav_view);
+        drawerLayout = findViewById(R.id.drawerLayout);
         toolbar = findViewById(R.id.tool_bar);
         sliderView = findViewById(R.id.Slider);
         mainLayout = findViewById(R.id.home_layout);
@@ -296,39 +336,17 @@ public class DashboardActivity extends AppCompatActivity {
     //wallet dashboard data setup done
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main_menu_item, menu); //your file name
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            //for item menu generate invoice
-            case R.id.report:
-                if (databaseHelper.getTotalWalletBalance() > 0) {
-                    startActivity(new Intent(DashboardActivity.this, ExpenseReportActivity.class));
-                } else {
-                    ux.showDialog(R.layout.dialog_no_expense_wallet, "No expense wallet found", new UX.onDialogOkListener() {
-                        @Override
-                        public void onClick(View dialog, int id) {
-                            startActivity(new Intent(DashboardActivity.this, AddNewWalletActivity.class).putExtra("from","main"));
-                        }
-                    });
-                }
-                return true;
-            case R.id.records:
-                startActivity(new Intent(DashboardActivity.this, RecordsActivity.class));
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
+        return toggle != null && toggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
     }
 
     @Override
     public void onBackPressed() {
-        tools.exitApp();
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            tools.exitApp();
+        }
     }
 }
 

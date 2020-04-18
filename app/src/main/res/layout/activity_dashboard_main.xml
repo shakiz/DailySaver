@@ -7,48 +7,7 @@
     android:background="@color/md_white_1000"
     android:id="@+id/home_layout">
 
-<!--    <View-->
-<!--        android:id="@+id/Object"-->
-<!--        android:layout_width="160dp"-->
-<!--        android:layout_height="128dp"-->
-<!--        android:rotation="0"-->
-<!--        android:layout_marginLeft="-48dp"-->
-<!--        android:layout_marginTop="-48dp"-->
-<!--        android:background="@drawable/shape"/>-->
-
-    <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:elevation="0dp"
-        app:elevation="0dp"
-        android:background="@android:color/transparent"
-        android:id="@+id/app_bar">
-
-        <androidx.appcompat.widget.Toolbar
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/tool_bar"
-            app:navigationIcon="?attr/homeAsUpIndicator"
-            style="@style/TextAppearance.Widget.Event.Toolbar.Title"
-            app:title="@string/app_name"
-            app:titleTextColor="@color/md_grey_800">
-
-        </androidx.appcompat.widget.Toolbar>
-
-    </com.google.android.material.appbar.AppBarLayout>
-
-<!--    <View-->
-<!--        android:id="@+id/Object2"-->
-<!--        android:layout_width="176dp"-->
-<!--        android:layout_height="160dp"-->
-<!--        android:layout_marginRight="-20dp"-->
-<!--        android:layout_marginBottom="-20dp"-->
-<!--        android:layout_alignParentRight="true"-->
-<!--        android:layout_alignParentBottom="true"-->
-<!--        android:background="@drawable/shape_2"/>-->
-
     <androidx.core.widget.NestedScrollView
-        android:layout_below="@id/app_bar"
         android:id="@+id/scrollView"
         android:fillViewport="true"
         android:layout_width="match_parent"

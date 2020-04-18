@@ -108,4 +108,6 @@
     <string name="need_to_add_wallet">You dont have any wallet.Please add wallet first.</string>
     <string name="want_to_add_wallet">Do you want to add wallet?</string>
     <string name="expense">Expense</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
 </resources>
