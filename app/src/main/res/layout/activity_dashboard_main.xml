@@ -3,7 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/md_white_1000"
     android:id="@+id/home_layout">
 
@@ -62,29 +61,8 @@
                         app:sliderScrollTimeInSec="1"
                         app:sliderStartAutoCycle="false" />
 
-                    <pl.droidsonroids.gif.GifImageView
-                        android:id="@+id/NoDataGif"
-                        android:layout_width="124dp"
-                        android:layout_height="96dp"
-                        android:visibility="gone"
-                        android:layout_centerInParent="true"
-                        android:src="@drawable/no_data_available"/>
-
-                    <TextView
-                        android:id="@+id/NoDataWallet"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/NoDataGif"
-                        android:visibility="gone"
-                        android:gravity="center"
-                        android:textSize="16sp"
-                        android:textColor="@color/md_red_400"
-                        android:textStyle="bold"
-                        android:padding="4dp"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginRight="8dp"
-                        android:layout_marginBottom="8dp"
-                        android:text="@string/no_wallet_data"/>
+                    <include
+                        layout="@layout/no_data_layout"/>
 
                 </RelativeLayout>
 
@@ -101,9 +79,8 @@
                 app:cardCornerRadius="12dp"
                 android:translationZ="4dp"
                 android:layout_marginBottom="8dp"
-                android:clickable="true"
+                android:clickable="false"
                 app:cardBackgroundColor="@color/md_white_1000"
-                android:foreground="?attr/selectableItemBackgroundBorderless"
                 app:cardUseCompatPadding="true">
 
                 <RelativeLayout
@@ -161,9 +138,8 @@
                 app:cardCornerRadius="12dp"
                 android:translationZ="4dp"
                 android:layout_marginBottom="16dp"
-                android:clickable="true"
+                android:clickable="false"
                 app:cardBackgroundColor="@color/md_white_1000"
-                android:foreground="?attr/selectableItemBackgroundBorderless"
                 app:cardUseCompatPadding="true">
 
                 <RelativeLayout

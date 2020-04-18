@@ -27,11 +27,9 @@ import com.skydoves.powermenu.CustomPowerMenu;
 import com.skydoves.powermenu.MenuAnimation;
 import com.skydoves.powermenu.OnMenuItemClickListener;
 import java.util.ArrayList;
-
 import pl.droidsonroids.gif.GifImageView;
 
 public class RecordsActivity extends AppCompatActivity {
-    private MonthlyExpenseAdapter monthlyExpenseAdapter;
     private FloatingActionButton addNew;
     private CustomPowerMenu powerMenu;
     private RecyclerView recyclerView;
@@ -62,7 +60,7 @@ public class RecordsActivity extends AppCompatActivity {
     private void init() {
         toolbar = findViewById(R.id.tool_bar);
         recyclerView = findViewById(R.id.mRecyclerView);
-        noBudgetData = findViewById(R.id.NoDataBudget);
+        noBudgetData = findViewById(R.id.NoData);
         noDataGif = findViewById(R.id.NoDataGif);
         addNew = findViewById(R.id.add);
         mainLayout = findViewById(R.id.mainLayout);
@@ -78,7 +76,7 @@ public class RecordsActivity extends AppCompatActivity {
             @Override
             public void onComplete(ArrayList<Record> recordList) {
                 if (recordList != null){
-                    if (recordList.size() != 0){
+                    if (recordList.size() > 0){
                         setBudgetAdapter(recordList);
                     }
                     else {
@@ -95,9 +93,9 @@ public class RecordsActivity extends AppCompatActivity {
         powerMenu =new CustomPowerMenu.Builder<>(this, new IconMenuAdapter())
                 .addItem(new IconPowerMenuItem(ContextCompat.getDrawable(this, R.drawable.ic_new_record), getResources().getString(R.string.add_new_record)))
                 .addItem(new IconPowerMenuItem(ContextCompat.getDrawable(this, R.drawable.ic_wallet), getResources().getString(R.string.add_new_wallet)))
-                .setAnimation(MenuAnimation.SHOW_UP_CENTER) // Animation start point (TOP | LEFT).
-                .setMenuRadius(15f) // sets the corner radius.
-                .setMenuShadow(10f) // sets the shadow.
+                .setAnimation(MenuAnimation.SHOW_UP_CENTER)
+                .setMenuRadius(16f) // sets the corner radius.
+                .setMenuShadow(16f) // sets the shadow.
                 .setWidth(800)
                 .setCircularEffect(CircularEffect.INNER)
                 .setOnMenuItemClickListener(onMenuItemClickListener)
@@ -125,7 +123,7 @@ public class RecordsActivity extends AppCompatActivity {
 
     //set the budget list adapter
     private void setBudgetAdapter(ArrayList<Record> recordList) {
-        monthlyExpenseAdapter = new MonthlyExpenseAdapter(recordList, this,new MonthlyExpenseAdapter.onItemClick() {
+        MonthlyExpenseAdapter monthlyExpenseAdapter = new MonthlyExpenseAdapter(recordList, this,new MonthlyExpenseAdapter.onItemClick() {
             @Override
             public void itemClick(Record record) {
                 startActivity(new Intent(RecordsActivity.this, AddNewRecordActivity.class).putExtra("expense", record).putExtra("from","record"));

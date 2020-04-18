@@ -76,8 +76,8 @@ public class DataLoader {
         }
 
         @Override
-        protected void onPostExecute(ArrayList<Record> expens) {
-            onBudgetItemsCompleted.onComplete(expens);
+        protected void onPostExecute(ArrayList<Record> expense) {
+            onBudgetItemsCompleted.onComplete(expense);
             if (ux.loadingDialog.isShowing()) {
                 ux.removeLoadingView();
             }

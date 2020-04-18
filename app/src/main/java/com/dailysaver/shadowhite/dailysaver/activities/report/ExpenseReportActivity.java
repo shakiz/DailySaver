@@ -106,8 +106,7 @@ public class ExpenseReportActivity extends AppCompatActivity {
 
     //region xAxis labels
     private ArrayList getXAxisValues() {
-        ArrayList<String> xLabels = dataManager.getMonthNameForLabel();
-        return xLabels;
+        return dataManager.getMonthNameForLabel();
     }
     //end
 

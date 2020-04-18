@@ -206,7 +206,4 @@
 
     </RelativeLayout>
 
-    <!-- Adding bottom sheet after main content -->
-    <include layout="@layout/layout_bottom_sheet" />
-
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

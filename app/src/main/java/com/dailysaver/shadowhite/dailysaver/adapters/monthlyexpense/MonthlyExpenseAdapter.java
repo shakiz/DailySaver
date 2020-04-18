@@ -11,7 +11,6 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 import com.dailysaver.shadowhite.dailysaver.models.record.Record;
 import com.dailysaver.shadowhite.dailysaver.R;
-
 import java.util.ArrayList;
 
 public class MonthlyExpenseAdapter extends RecyclerView.Adapter<MonthlyExpenseAdapter.ViewHolder>{
@@ -80,7 +79,7 @@ public class MonthlyExpenseAdapter extends RecyclerView.Adapter<MonthlyExpenseAd
     }
 
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView Category,WalletName,Amount,ExpenseDate;
         ImageView Icon;
         CardView view;

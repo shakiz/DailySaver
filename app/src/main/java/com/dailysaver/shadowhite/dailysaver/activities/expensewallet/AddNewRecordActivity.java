@@ -48,7 +48,6 @@ public class AddNewRecordActivity extends AppCompatActivity implements View.OnCl
     private ImageView categoryIcon;
     private RecyclerView categoryRecyclerView;
     private RadioGroup RecordType;
-    private CategoryRecyclerAdapter categoryRecyclerAdapter;
     private int currencyValue = 0, walletValue = 0;
     private String walletTitleStr = "" , recordTypeStr = "";
     private UX ux;
@@ -230,7 +229,7 @@ public class AddNewRecordActivity extends AppCompatActivity implements View.OnCl
         if (getIntent().getSerializableExtra("expense") != null) {
             walletValue = record.getWalletId();
         }
-        int remaining = databaseHelper.getWalletBalance(walletValue) - databaseHelper.singleWalletTotalCost(record.getWalletTitle());
+        int remaining = databaseHelper.getWalletBalance(walletValue) - databaseHelper.singleWalletTotalCost(walletTitleStr);
         if (!TextUtils.isEmpty(Amount.getText().toString())){
             if (Integer.parseInt(Amount.getText().toString()) < remaining){
                 return true;
@@ -291,7 +290,7 @@ public class AddNewRecordActivity extends AppCompatActivity implements View.OnCl
 
     //Category adapter
     private void setCategoryAdapter() {
-        categoryRecyclerAdapter = new CategoryRecyclerAdapter(this, dataManager.setCategoryDataData(),itemDialog,categoryTitle,categoryIcon);
+        CategoryRecyclerAdapter categoryRecyclerAdapter = new CategoryRecyclerAdapter(this, dataManager.setCategoryDataData(),itemDialog,categoryTitle,categoryIcon);
         categoryRecyclerView.setLayoutManager(new GridLayoutManager(this,2));
         categoryRecyclerView.setAdapter(categoryRecyclerAdapter);
         categoryRecyclerAdapter.notifyDataSetChanged();
@@ -344,10 +343,5 @@ public class AddNewRecordActivity extends AppCompatActivity implements View.OnCl
         if (getIntent().getStringExtra("from").equals("record")) startActivity(new Intent(AddNewRecordActivity.this, RecordsActivity.class));
         else startActivity(new Intent(AddNewRecordActivity.this, DashboardActivity.class));
         overridePendingTransition(R.anim.fadein,R.anim.push_up_out);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
     }
 }

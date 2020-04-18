@@ -152,7 +152,6 @@
                         android:gravity="center"
                         android:layout_marginLeft="8dp"
                         android:layout_marginRight="8dp"
-                        android:id="@+id/emaiLAddressLayout"
                         android:layout_marginTop="16dp">
 
                         <LinearLayout

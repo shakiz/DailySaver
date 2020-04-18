@@ -28,14 +28,6 @@ public class DataManager {
         return currencyList;
     }
 
-    public ArrayList<String> recordTypeData(){
-        ArrayList<String> currencyList = new ArrayList<>();
-        currencyList.add(context.getResources().getString(R.string.select_currency));
-        currencyList.add("Savings");
-        currencyList.add("Expense");
-        return currencyList;
-    }
-
     public ArrayList<String> getWalletTitle(String walletType){
         ArrayList<String> walletTitleList = databaseHelper.getWalletTitle(walletType);
         if (walletTitleList.size() != 0){
@@ -66,8 +58,8 @@ public class DataManager {
         return categoryList;
     }
 
-    public ArrayList getMonthNameForLabel(){
-        ArrayList xLabels = new ArrayList();
+    public ArrayList<String> getMonthNameForLabel(){
+        ArrayList<String> xLabels = new ArrayList();
         xLabels.add("Jan");
         xLabels.add("Feb");
         xLabels.add("Mar");

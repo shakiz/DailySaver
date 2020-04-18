@@ -30,7 +30,6 @@ import java.util.Locale;
 public class UX {
     private Context context;
     public Dialog loadingDialog;
-    private ArrayAdapter<String> spinnerAdapter;
     private View view;
 
     public UX(Context context, View view) {
@@ -98,7 +97,7 @@ public class UX {
      * This method will set spinner adapter
      */
     public void setSpinnerAdapter(ArrayList<String> dataSet, Spinner spinner) {
-        spinnerAdapter = new ArrayAdapter<String>(context,R.layout.spinner_drop,dataSet);
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(context,R.layout.spinner_drop,dataSet);
         spinner.setAdapter(spinnerAdapter);
         spinnerAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
         spinnerAdapter.notifyDataSetChanged();
@@ -174,7 +173,7 @@ public class UX {
     /**
      * This method will perform Validation of all view
      *
-     * @params resIds and view
+     * @param resIds and view
      */
     public boolean validation(int[] resIds){
         boolean valid = false;
@@ -260,9 +259,8 @@ public class UX {
      *
      * @param layout,title,okListener
      */
-    public View showDialog(int layout, String title, onDialogOkListener okListener) {
+    public void showDialog(int layout, String title, onDialogOkListener okListener) {
         final onDialogOkListener onDialogOkListener = okListener;
-        Button CancelButton , OkButton;
         TextView DialogMessage;
         final View dialogView = View.inflate(context, layout, null);
 
@@ -288,8 +286,6 @@ public class UX {
                 dialog.cancel();
             }
         });
-
-        return dialogView;
     }
 
     public interface onDialogOkListener {

@@ -71,8 +71,8 @@ public class WalletDetailsSliderAdapter extends SliderViewAdapter<WalletDetailsS
 
     private void setProgressData(Wallet wallet, int totalCost, ArcProgress RemainingBalanceArc) {
         RemainingBalanceArc.setSuffixText("");
-        RemainingBalanceArc.setFinishedStrokeColor(context.getResources().getColor(R.color.md_red_400));
-        RemainingBalanceArc.setUnfinishedStrokeColor(context.getResources().getColor(R.color.md_green_400));
+        RemainingBalanceArc.setFinishedStrokeColor(context.getResources().getColor(R.color.md_green_400));
+        RemainingBalanceArc.setUnfinishedStrokeColor(context.getResources().getColor(R.color.md_red_400));
         RemainingBalanceArc.setTextSize(40);
         RemainingBalanceArc.setBottomText(null);
         RemainingBalanceArc.setTextColor(context.getResources().getColor(R.color.md_grey_600));
@@ -92,7 +92,7 @@ public class WalletDetailsSliderAdapter extends SliderViewAdapter<WalletDetailsS
         return cardItemList.size();
     }
 
-    class SliderAdapterVH extends SliderViewAdapter.ViewHolder {
+    public static class SliderAdapterVH extends SliderViewAdapter.ViewHolder {
 
         View itemView;
         TextView Title,Amount,TotalCost,Position, WalletType,ExpiresOn, TotalHeading, RemainingHeading;

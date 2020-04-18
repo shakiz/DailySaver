@@ -35,18 +35,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String WALLET_TABLE = "Wallet";
     private static final String RECORD_TABLE = "Record";
 
-    private static String CREATE_EXPENSE_TABLE = "CREATE TABLE " + RECORD_TABLE + "("
+    private static final String CREATE_EXPENSE_TABLE = "CREATE TABLE " + RECORD_TABLE + "("
             + COLUMN_RECORD_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + COLUMN_RECORD_AMOUNT + " INTEGER," + COLUMN_RECORD_TYPE + " TEXT,"
             + COLUMN_RECORD_CURRENCY + " INTEGER," + COLUMN_RECORD_CATEGORY + " TEXT," + COLUMN_RECORD_NOTE + " TEXT,"+ COLUMN_RECORD_WALLET_ID + " INTEGER,"
             + COLUMN_RECORD_WALLET + " TEXT," + COLUMN_RECORD_DATE + " TEXT" + ")";
 
-    private static String CREATE_WALLET_TABLE = "CREATE TABLE " + WALLET_TABLE + "("
+    private static final String CREATE_WALLET_TABLE = "CREATE TABLE " + WALLET_TABLE + "("
             + COLUMN_WALLET_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + COLUMN_WALLET_AMOUNT + " REAL,"
             + COLUMN_WALLET_CURRENCY + " INTEGER," + COLUMN_WALLET_TITLE + " TEXT," + COLUMN_WALLET_NOTE + " TEXT,"
             + COLUMN_WALLET_TYPE + " INTEGER," + COLUMN_WALLET_EXPIRES_ON + " TEXT" + ")";
 
-    private static String DROP_WALLET_TABLE = "DROP TABLE IF EXISTS "+WALLET_TABLE;
-    private static String DROP_EXPENSE_TABLE = "DROP TABLE IF EXISTS "+ RECORD_TABLE;
+    private static final String DROP_WALLET_TABLE = "DROP TABLE IF EXISTS "+WALLET_TABLE;
+    private static final String DROP_EXPENSE_TABLE = "DROP TABLE IF EXISTS "+ RECORD_TABLE;
 
 
     public DatabaseHelper(@Nullable Context context) {
@@ -135,7 +135,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ArrayList<Record> recordList = new ArrayList<Record>();
         SQLiteDatabase db = this.getReadableDatabase();
 
-        Cursor cursor = null;
+        Cursor cursor;
 
         Log.v("fromDBWalletName",""+walletName);
         if (TextUtils.isEmpty(walletName)) {
@@ -160,7 +160,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     record.setNote(cursor.getString(cursor.getColumnIndex(COLUMN_RECORD_NOTE)));
                     record.setWalletTitle(cursor.getString(cursor.getColumnIndex(COLUMN_RECORD_WALLET)));
                     record.setWalletId(cursor.getInt(cursor.getColumnIndex(COLUMN_RECORD_WALLET_ID)));
-                    Log.v("Record::","wallet : "+cursor.getInt(cursor.getColumnIndex(COLUMN_RECORD_WALLET)));
+                    Log.v("Record::","wallet : "+cursor.getString(cursor.getColumnIndex(COLUMN_RECORD_WALLET)));
                     recordList.add(record);
                 } while (cursor.moveToNext());
             }
@@ -264,7 +264,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public ArrayList<String> getWalletTitle(String walletType) {
         ArrayList<String> walletTitle = new ArrayList<>();
         Cursor cursor;
-        String where = "";
+        String where;
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
 
         String[] columns = {
@@ -307,7 +307,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public int singleWalletTotalCost(String walletName){
         int totalCost = 0;
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
-        String columns[] = {
+        String[] columns = {
                 COLUMN_RECORD_ID,
                 COLUMN_RECORD_WALLET,
                 COLUMN_RECORD_AMOUNT
@@ -339,7 +339,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public int getWalletBalance(int walletId){
         int balance = 0;
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
-        String columns[] = {
+        String[] columns = {
                 COLUMN_WALLET_ID,
                 COLUMN_WALLET_AMOUNT
         };
@@ -368,7 +368,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public int getTotalWalletBalance(){
         int totalBalance = 0;
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
-        String columns[] = {
+        String[] columns = {
                 COLUMN_WALLET_ID,
                 COLUMN_WALLET_TYPE,
                 COLUMN_WALLET_AMOUNT
@@ -398,7 +398,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public int getAllCost(){
         int totalCost = 0;
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
-        String columns[] = {
+        String[] columns = {
                 COLUMN_RECORD_AMOUNT
         };
         Cursor cursor = sqLiteDatabase.query(RECORD_TABLE, columns, null, null, null, null, null);
@@ -497,7 +497,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public int getAllCostBasedOnRecord(String recordType){
         int totalCost = 0;
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
-        String columns[] = {
+        String[] columns = {
                 COLUMN_RECORD_AMOUNT,
                 COLUMN_RECORD_TYPE
         };

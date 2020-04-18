@@ -27,11 +27,9 @@ public class WalletDetailsActivity extends AppCompatActivity {
     private TypeWriterView CurrentBalance;
     private Toolbar toolbar;
     private UX ux;
-    private int walletId = 0;
     private String walletName = "";
     private Tools tools;
     private RecyclerView recyclerView;
-    private MonthlyExpenseAdapter monthlyExpenseAdapter;
     private DatabaseHelper databaseHelper;
     private TextView noBudgetData;
 
@@ -73,7 +71,7 @@ public class WalletDetailsActivity extends AppCompatActivity {
     //load wallet record
     private void loadRecord() {
         Wallet wallet = (Wallet) getIntent().getSerializableExtra("wallet");
-        walletId = wallet.getId();
+        int walletId = wallet.getId();
         walletName = wallet.getTitle();
         CurrentBalance.setWithMusic(false);
         CurrentBalance.setDelay(0);
@@ -95,6 +93,7 @@ public class WalletDetailsActivity extends AppCompatActivity {
 
     //set adapter for records for the specific wallet
     private void setAdapter(ArrayList<Record> allRecordItems) {
+        MonthlyExpenseAdapter monthlyExpenseAdapter = null;
         if (allRecordItems.size() <=0 ){
             noBudgetData.setVisibility(View.VISIBLE);
         }

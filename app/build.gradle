@@ -62,7 +62,7 @@ dependencies {
     implementation 'in.codeshuffle:typewriterview:1.1.0'
     implementation 'com.airbnb.android:lottie:2.5.0-rc1'
 
-    //Custom Snackbar library
+    //Custom SnackBar library
     implementation 'com.github.loregr:lgsnackbar:1.0.2'
 
     // library for shape

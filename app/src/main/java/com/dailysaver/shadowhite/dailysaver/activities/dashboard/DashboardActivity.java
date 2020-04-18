@@ -73,10 +73,10 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
     private PieData pieData;
     private BarData groupedBarData;
     private DatabaseHelper databaseHelper;
-    float barWidth = 0.3f ,barSpace = 0.1f ,groupSpace = 0.2f;
+    private final float barWidth = 0.3f ,barSpace = 0.1f ,groupSpace = 0.2f;
     private DataManager dataManager;
     private Chart chart;
-    private ArrayList yLabels1, yLabels2;
+    private ArrayList<BarEntry> yLabels1, yLabels2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,7 +106,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         pieChart = findViewById(R.id.pieChart);
         groupedBarChart = findViewById(R.id.GroupedBarChart);
         addButton = findViewById(R.id.add);
-        noWalletData = findViewById(R.id.NoDataWallet);
+        noWalletData = findViewById(R.id.NoData);
         noDataGif = findViewById(R.id.NoDataGif);
         tools = new Tools(this);
         dataManager = new DataManager(this);
@@ -168,7 +168,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
 
     //will get pie data from database
     private List<PieEntry> getPieData() {
-        ArrayList categoryData = new ArrayList();
+        ArrayList<PieEntry> categoryData = new ArrayList();
         String[] categoryLabels = new String[]{"Gift","Food","Transport","Energy","Education","Shopping","Fun","Family","Friends","Work"};
         float[] componentValues = new float[categoryLabels.length];
         float totalValue = 0;
@@ -178,14 +178,16 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
             componentValues[startIndex] = databaseHelper.getCategoryCount(categoryLabels[startIndex]) / 100;
         }
 
-        //getting the tootal of of component value
+        //getting the total of of component value
         for (double value: componentValues) {
             totalValue += value;
         }
 
         //finally calculating the pie chart value from component and total value
         for (int startIndex = 0; startIndex < componentValues.length; startIndex++) {
-            if (componentValues[startIndex] > 0) { categoryData.add(new PieEntry(chart.getSinglePieValue(componentValues[startIndex], chart.roundValueIntoTwoDecimal(totalValue)), categoryLabels[startIndex])); }
+            if (componentValues[startIndex] > 0) {
+                categoryData.add(new PieEntry(chart.getSinglePieValue(componentValues[startIndex], chart.roundValueIntoTwoDecimal(totalValue)), categoryLabels[startIndex]));
+            }
             else{ continue; }
         }
 
@@ -237,9 +239,9 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         powerMenu =new CustomPowerMenu.Builder<>(this, new IconMenuAdapter())
                 .addItem(new IconPowerMenuItem(ContextCompat.getDrawable(this, R.drawable.ic_new_record), getResources().getString(R.string.add_new_record)))
                 .addItem(new IconPowerMenuItem(ContextCompat.getDrawable(this, R.drawable.ic_wallet), getResources().getString(R.string.add_new_wallet)))
-                .setAnimation(MenuAnimation.SHOW_UP_CENTER) // Animation start point (TOP | LEFT).
-                .setMenuRadius(15f) // sets the corner radius.
-                .setMenuShadow(10f) // sets the shadow.
+                .setAnimation(MenuAnimation.SHOW_UP_CENTER)
+                .setMenuRadius(16f) // sets the corner radius.
+                .setMenuShadow(16f) // sets the shadow.
                 .setWidth(800)
                 .setCircularEffect(CircularEffect.INNER)
                 .setOnMenuItemClickListener(onMenuItemClickListener)
@@ -308,9 +310,8 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         sliderView.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
         sliderView.setIndicatorPadding(8);
     }
-    //wallet dashboard data setup done
 
-    @SuppressWarnings("StatementWithEmptyBody")
+    //wallet dashboard data setup done
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handling navigation view item clicks based on their respective ids.
