@@ -22,14 +22,14 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ExpenseReportActivity extends AppCompatActivity {
+public class RecordsReportActivity extends AppCompatActivity {
     private RelativeLayout mainLayout;
-    private TextView TotalCost, TotalRemaining, TotalBalance;
+    private TextView TotalSavings, TotalExpense;
     private Toolbar toolbar;
     private UX ux;
     private Tools tools;
-    private BarChart barChart;
-    private BarData barData;
+    private BarChart expenseBarChart, savingsBarChart;
+    private BarData expenseBarData, savingsBarData;
     private DatabaseHelper databaseHelper;
     private DataManager dataManager;
     private Chart chart;
@@ -37,7 +37,7 @@ public class ExpenseReportActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_expense_report);
+        setContentView(R.layout.activity_records_report);
 
         init();
 
@@ -54,11 +54,11 @@ public class ExpenseReportActivity extends AppCompatActivity {
     private void init() {
         toolbar = findViewById(R.id.tool_bar);
         mainLayout = findViewById(R.id.parent_container);
-        barChart = findViewById(R.id.barChart);
+        expenseBarChart = findViewById(R.id.ExpenseBarChart);
+        savingsBarChart = findViewById(R.id.SavingsBarChart);
         ux = new UX(this, mainLayout);
-        TotalCost = findViewById(R.id.TotalCost);
-        TotalBalance = findViewById(R.id.TotalBalance);
-        TotalRemaining = findViewById(R.id.TotalRemaining);
+        TotalSavings = findViewById(R.id.TotalSavings);
+        TotalExpense = findViewById(R.id.TotalExpense);
         tools = new Tools(this);
         dataManager = new DataManager(this);
         databaseHelper = new DatabaseHelper(this);
@@ -66,40 +66,72 @@ public class ExpenseReportActivity extends AppCompatActivity {
     }
 
     private void bindUIWithComponents() {
-        setBarChart();
-        TotalBalance.setText(""+databaseHelper.getTotalWalletBalance());
-        TotalCost.setText(""+databaseHelper.getAllCost());
-        TotalRemaining.setText(""+(databaseHelper.getTotalWalletBalance() - databaseHelper.getAllCost()));
+        setExpenseBarChart();
+        setSavingsBarChart();
+        TotalExpense.setText(""+databaseHelper.getAllCostBasedOnRecord("Expense"));
+        TotalSavings.setText(""+databaseHelper.getAllCostBasedOnRecord("Savings"));
+    }
+
+    private void setSavingsBarChart() {
+        chart.setBarChart(savingsBarChart);
+        setSavingsBarData();
+        if (getSavingsEntries().size() > 0) {
+            chart.buildBarChart(false,savingsBarData,1000,1000,5,0.6f,0,0,24);
+        }
+        chart.setAxisForBarChart(false,0, getXAxisValues(), 12, 1,0.5f, 0.5f,12,0);
     }
 
     //make bar chart complete
-    private void setBarChart() {
-        chart.setBarChart(barChart);
-        setBarData();
-        chart.buildBarChart(false,barData,1000,1000,6,0.6f,0,0,24);
+    private void setExpenseBarChart() {
+        chart.setBarChart(expenseBarChart);
+        setExpenseBarData();
+        if (getExpenseEntries().size() > 0) {
+            chart.buildBarChart(false,expenseBarData,1000,1000,5,0.6f,0,0,24);
+        }
         chart.setAxisForBarChart(false,0, getXAxisValues(), 12, 1,0.5f, 0.5f,12,0);
     }
     //end
 
     // bind bar chart data bind
-    private void setBarData() {
-        BarDataSet set = new BarDataSet(getEntries(), "Cost per month");
+    private void setExpenseBarData() {
+        BarDataSet set = new BarDataSet(getExpenseEntries(), "Cost per month");
         set.setColors(ColorTemplate.MATERIAL_COLORS);
-        barData = new BarData(set);
-        barData.setValueFormatter(new LargeValueFormatter());
+        expenseBarData = new BarData(set);
+        expenseBarData.setValueFormatter(new LargeValueFormatter());
+    }
+    //end
+
+    // bind bar chart data bind
+    private void setSavingsBarData() {
+        BarDataSet set = new BarDataSet(getSavingsEntries(), "Savings per month");
+        set.setColors(ColorTemplate.MATERIAL_COLORS);
+        savingsBarData = new BarData(set);
+        savingsBarData.setValueFormatter(new LargeValueFormatter());
     }
     //end
 
     //region data for barChart
-    private List<BarEntry> getEntries() {
+    private List<BarEntry> getExpenseEntries() {
         List<BarEntry> entries = new ArrayList<>();
 
         String[] monthNames = new String[]{"Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"};
 
         for (int start = 0; start < monthNames.length; start++) {
-            entries.add(new BarEntry(start, databaseHelper.getCostOfMonth(monthNames[start])));
+            entries.add(new BarEntry(start, databaseHelper.getCostOfMonthWithRecordType(monthNames[start],"Expense")));
         }
+        return entries;
+    }
+    //endregion
 
+    //region data for barChart
+    private List<BarEntry> getSavingsEntries() {
+        List<BarEntry> entries = new ArrayList<>();
+
+        String[] monthNames = new String[]{"Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"};
+
+        for (int start = 0; start < monthNames.length; start++) {
+            entries.add(new BarEntry(start, databaseHelper.getCostOfMonthWithRecordType(monthNames[start],"Savings")));
+        }
         return entries;
     }
     //endregion
@@ -112,7 +144,7 @@ public class ExpenseReportActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(ExpenseReportActivity.this, DashboardActivity.class));
+        startActivity(new Intent(RecordsReportActivity.this, DashboardActivity.class));
         overridePendingTransition(R.anim.fadein,R.anim.push_up_out);
     }
 }

@@ -111,4 +111,6 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="no_chart_data_available">No chart data available</string>
+    <string name="monthly_savings_chart">Monthly Savings Chart</string>
+    <string name="all_record_report">All Record Report</string>
 </resources>

@@ -18,7 +18,7 @@ import com.amitshekhar.DebugDB;
 import com.dailysaver.shadowhite.dailysaver.R;
 import com.dailysaver.shadowhite.dailysaver.activities.expensewallet.AddNewRecordActivity;
 import com.dailysaver.shadowhite.dailysaver.activities.records.RecordsActivity;
-import com.dailysaver.shadowhite.dailysaver.activities.report.ExpenseReportActivity;
+import com.dailysaver.shadowhite.dailysaver.activities.report.RecordsReportActivity;
 import com.dailysaver.shadowhite.dailysaver.activities.wallet.AddNewWalletActivity;
 import com.dailysaver.shadowhite.dailysaver.activities.wallet.WalletDetailsActivity;
 import com.dailysaver.shadowhite.dailysaver.adapters.menu.IconMenuAdapter;
@@ -320,7 +320,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
             //for item menu generate invoice
             case R.id.report:
                 if (databaseHelper.getTotalWalletBalance() > 0) {
-                    startActivity(new Intent(DashboardActivity.this, ExpenseReportActivity.class));
+                    startActivity(new Intent(DashboardActivity.this, RecordsReportActivity.class));
                 } else {
                     ux.showDialog(R.layout.dialog_no_expense_wallet, "No expense wallet found", new UX.onDialogOkListener() {
                         @Override

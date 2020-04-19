@@ -35,7 +35,7 @@
             android:windowSoftInputMode="adjustNothing"/>
 
         <activity
-            android:name=".activities.report.ExpenseReportActivity"
+            android:name=".activities.report.RecordsReportActivity"
             android:theme="@style/AppThemeNoActionBar"
             android:windowSoftInputMode="adjustNothing" />
 
