@@ -18,58 +18,27 @@
             android:id="@+id/mainLayout"
             android:orientation="vertical">
 
-            <androidx.cardview.widget.CardView
+            <RelativeLayout
                 android:id="@+id/SliderContainer"
-                android:layout_below="@id/app_bar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginTop="8dp"
-                app:cardCornerRadius="12dp"
-                android:translationZ="4dp"
-                android:clickable="true"
-                app:cardBackgroundColor="@color/md_white_1000"
-                android:foreground="?attr/selectableItemBackgroundBorderless"
-                app:cardUseCompatPadding="true">
+                android:layout_height="170dp"
+                android:background="@drawable/cover">
 
-                <RelativeLayout
+                <com.yarolegovich.discretescrollview.DiscreteScrollView
+                    android:id="@+id/wallet_slider"
                     android:layout_width="match_parent"
-                    android:layout_height="170dp"
-                    android:background="@drawable/cover">
+                    android:layout_height="200dp"
+                    android:layout_gravity="center|left"
+                    android:background="@drawable/cover"
+                    app:dsv_orientation="horizontal" />
 
-                    <com.smarteist.autoimageslider.SliderView
-                        android:id="@+id/Slider"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:translationZ="4dp"
-                        android:translationY="4dp"
-                        android:elevation="8dp"
-                        app:sliderAnimationDuration="500"
-                        app:sliderAutoCycleDirection="back_and_forth"
-                        app:sliderAutoCycleEnabled="false"
-                        app:sliderCircularHandlerEnabled="true"
-                        app:sliderIndicatorAnimationDuration="500"
-                        app:sliderIndicatorGravity="center_horizontal|bottom"
-                        app:sliderIndicatorMargin="16dp"
-                        app:sliderIndicatorOrientation="horizontal"
-                        app:sliderIndicatorPadding="4dp"
-                        app:sliderIndicatorRadius="1dp"
-                        app:sliderIndicatorSelectedColor="@color/md_grey_600"
-                        app:sliderIndicatorUnselectedColor="@color/md_blue_grey_400"
-                        app:sliderScrollTimeInSec="1"
-                        app:sliderStartAutoCycle="false" />
+                <include
+                    layout="@layout/no_data_layout"/>
 
-                    <include
-                        layout="@layout/no_data_layout"/>
-
-                </RelativeLayout>
-
-            </androidx.cardview.widget.CardView>
+            </RelativeLayout>
 
             <androidx.cardview.widget.CardView
-                android:layout_below="@id/app_bar"
+                android:layout_below="@id/SliderContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"

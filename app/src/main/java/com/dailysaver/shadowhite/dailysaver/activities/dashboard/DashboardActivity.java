@@ -21,15 +21,15 @@ import com.dailysaver.shadowhite.dailysaver.activities.records.RecordsActivity;
 import com.dailysaver.shadowhite.dailysaver.activities.report.RecordsReportActivity;
 import com.dailysaver.shadowhite.dailysaver.activities.wallet.AddNewWalletActivity;
 import com.dailysaver.shadowhite.dailysaver.activities.wallet.WalletDetailsActivity;
-import com.dailysaver.shadowhite.dailysaver.adapters.menu.IconMenuAdapter;
 import com.dailysaver.shadowhite.dailysaver.adapters.dashboardwallet.WalletDetailsSliderAdapter;
+import com.dailysaver.shadowhite.dailysaver.adapters.menu.IconMenuAdapter;
 import com.dailysaver.shadowhite.dailysaver.models.menu.IconPowerMenuItem;
 import com.dailysaver.shadowhite.dailysaver.models.wallet.Wallet;
-import com.dailysaver.shadowhite.dailysaver.utills.chart.Chart;
 import com.dailysaver.shadowhite.dailysaver.utills.DataLoader;
 import com.dailysaver.shadowhite.dailysaver.utills.DataManager;
 import com.dailysaver.shadowhite.dailysaver.utills.Tools;
 import com.dailysaver.shadowhite.dailysaver.utills.UX;
+import com.dailysaver.shadowhite.dailysaver.utills.chart.Chart;
 import com.dailysaver.shadowhite.dailysaver.utills.dbhelper.DatabaseHelper;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.PieChart;
@@ -47,11 +47,12 @@ import com.skydoves.powermenu.CircularEffect;
 import com.skydoves.powermenu.CustomPowerMenu;
 import com.skydoves.powermenu.MenuAnimation;
 import com.skydoves.powermenu.OnMenuItemClickListener;
-import com.smarteist.autoimageslider.IndicatorAnimations;
-import com.smarteist.autoimageslider.SliderAnimations;
-import com.smarteist.autoimageslider.SliderView;
+import com.yarolegovich.discretescrollview.DiscreteScrollView;
+import com.yarolegovich.discretescrollview.transform.ScaleTransformer;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import pl.droidsonroids.gif.GifImageView;
 
 public class DashboardActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -64,7 +65,6 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
     private Toolbar toolbar;
     private FloatingActionButton addButton;
     private CustomPowerMenu powerMenu;
-    private SliderView sliderView;
     private PieChart pieChart;
     private BarChart groupedBarChart;
     private DataLoader dataLoader;
@@ -77,6 +77,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
     private DataManager dataManager;
     private Chart chart;
     private ArrayList<BarEntry> yLabels1, yLabels2;
+    private DiscreteScrollView itemPicker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,8 +100,8 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         navigationView = findViewById(R.id.nav_view);
         drawerLayout = findViewById(R.id.drawerLayout);
         toolbar = findViewById(R.id.tool_bar);
-        sliderView = findViewById(R.id.Slider);
         mainLayout = findViewById(R.id.home_layout);
+        itemPicker = findViewById(R.id.wallet_slider);
         TotalExpense = findViewById(R.id.TotalExpense);
         TotalSavings = findViewById(R.id.TotalSavings);
         pieChart = findViewById(R.id.pieChart);
@@ -284,11 +285,8 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
             @Override
             public void onComplete(ArrayList<Wallet> walletList) {
                 if (walletList != null){
-                    if (walletList.size() != 0){
-                        setWalletAdapter(walletList);
-                    }
+                    if (walletList.size() != 0){ setWalletAdapter(walletList); }
                     else{
-                        sliderView.setVisibility(View.GONE);
                         noWalletData.setVisibility(View.VISIBLE);
                         noDataGif.setVisibility(View.VISIBLE);
                     }
@@ -300,15 +298,20 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
 
     //set up the card slider for wallet dashboard data
     private void setWalletAdapter(ArrayList<Wallet> walletList) {
-        sliderView.setSliderAdapter(new WalletDetailsSliderAdapter(walletList, this, new WalletDetailsSliderAdapter.onItemClick() {
+        WalletDetailsSliderAdapter sliderAdapter = new WalletDetailsSliderAdapter(walletList, this);
+        itemPicker.setAdapter(sliderAdapter);
+        sliderAdapter.onItemClickListener(new WalletDetailsSliderAdapter.onItemClick() {
             @Override
             public void itemClick(Wallet wallet, int id) {
                 startActivity(new Intent(DashboardActivity.this, WalletDetailsActivity.class).putExtra("wallet",wallet));
             }
-        }));
-        sliderView.setIndicatorAnimation(IndicatorAnimations.WORM);
-        sliderView.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
-        sliderView.setIndicatorPadding(8);
+        });
+        itemPicker.setItemTransformer(new ScaleTransformer.Builder()
+                .setMinScale(0.8f)
+                .build());
+        itemPicker.setSlideOnFling(false);
+        itemPicker.scrollToPosition(0);
+        itemPicker.setOverScrollEnabled(false);
     }
 
     //wallet dashboard data setup done

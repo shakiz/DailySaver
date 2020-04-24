@@ -5,33 +5,38 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 import com.dailysaver.shadowhite.dailysaver.R;
 import com.dailysaver.shadowhite.dailysaver.models.wallet.Wallet;
 import com.dailysaver.shadowhite.dailysaver.utills.dbhelper.DatabaseHelper;
 import com.github.lzyzsd.circleprogress.ArcProgress;
-import com.smarteist.autoimageslider.SliderViewAdapter;
 import java.util.ArrayList;
 
-public class WalletDetailsSliderAdapter extends SliderViewAdapter<WalletDetailsSliderAdapter.SliderAdapterVH> {
+public class WalletDetailsSliderAdapter extends RecyclerView.Adapter<WalletDetailsSliderAdapter.SliderAdapterVH> {
 
     private ArrayList<Wallet> cardItemList;
     private Context context;
     private onItemClick onItemClick;
     private DatabaseHelper databaseHelper;
 
-    public WalletDetailsSliderAdapter(ArrayList<Wallet> cardItemList, Context context,onItemClick onItemClick) {
+    public WalletDetailsSliderAdapter(ArrayList<Wallet> cardItemList, Context context) {
         this.cardItemList = cardItemList;
         this.context = context;
-        this.onItemClick = onItemClick;
         databaseHelper = new DatabaseHelper(context);
+    }
+
+    public void onItemClickListener(onItemClick onItemClick){
+        this.onItemClick = onItemClick;
     }
 
     public interface onItemClick{
         void itemClick(Wallet wallet, int id);
     }
 
+    @NonNull
     @Override
-    public SliderAdapterVH onCreateViewHolder(ViewGroup parent) {
+    public SliderAdapterVH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View inflate = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_layout_wallet_dashboard, null);
         return new SliderAdapterVH(inflate);
     }
@@ -52,7 +57,7 @@ public class WalletDetailsSliderAdapter extends SliderViewAdapter<WalletDetailsS
         }
         else if (itemModel.getWalletType().equals("Savings")){
             viewHolder.Amount.setText(""+itemModel.getAmount());
-            viewHolder.TotalHeading.setText("Total Savings");
+            viewHolder.TotalHeading.setText("Savings");
             viewHolder.RemainingHeading.setText("Total Amount");
             viewHolder.WalletType.setTextColor(context.getResources().getColor(R.color.md_green_600));
         }
@@ -69,11 +74,16 @@ public class WalletDetailsSliderAdapter extends SliderViewAdapter<WalletDetailsS
         });
     }
 
+    @Override
+    public int getItemCount() {
+        return cardItemList.size();
+    }
+
     private void setProgressData(Wallet wallet, int totalCost, ArcProgress RemainingBalanceArc) {
         RemainingBalanceArc.setSuffixText("");
         RemainingBalanceArc.setFinishedStrokeColor(context.getResources().getColor(R.color.md_green_400));
         RemainingBalanceArc.setUnfinishedStrokeColor(context.getResources().getColor(R.color.md_red_400));
-        RemainingBalanceArc.setTextSize(40);
+        RemainingBalanceArc.setTextSize(32);
         RemainingBalanceArc.setBottomText(null);
         RemainingBalanceArc.setTextColor(context.getResources().getColor(R.color.md_grey_600));
         if (wallet.getWalletType().equals("Expense")) {
@@ -87,12 +97,7 @@ public class WalletDetailsSliderAdapter extends SliderViewAdapter<WalletDetailsS
         }
     }
 
-    @Override
-    public int getCount() {
-        return cardItemList.size();
-    }
-
-    public static class SliderAdapterVH extends SliderViewAdapter.ViewHolder {
+    public static class SliderAdapterVH extends RecyclerView.ViewHolder {
 
         View itemView;
         TextView Title,Amount,TotalCost,Position, WalletType,ExpiresOn, TotalHeading, RemainingHeading;
