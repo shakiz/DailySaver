@@ -113,4 +113,7 @@
     <string name="no_chart_data_available">No chart data available</string>
     <string name="monthly_savings_chart">Monthly Savings Chart</string>
     <string name="all_record_report">All Record Report</string>
+    <string name="clear">Clear</string>
+    <string name="save">Save</string>
+    <string name="update">Update</string>
 </resources>

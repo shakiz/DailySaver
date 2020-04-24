@@ -6,15 +6,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 import com.dailysaver.shadowhite.dailysaver.R;
-import com.dailysaver.shadowhite.dailysaver.activities.expensewallet.AddNewRecordActivity;
+import com.dailysaver.shadowhite.dailysaver.activities.newrecord.AddNewRecordActivity;
 import com.dailysaver.shadowhite.dailysaver.activities.dashboard.DashboardActivity;
 import com.dailysaver.shadowhite.dailysaver.activities.records.RecordsActivity;
 import com.dailysaver.shadowhite.dailysaver.models.wallet.Wallet;
@@ -22,7 +22,6 @@ import com.dailysaver.shadowhite.dailysaver.utills.DataManager;
 import com.dailysaver.shadowhite.dailysaver.utills.Tools;
 import com.dailysaver.shadowhite.dailysaver.utills.UX;
 import com.dailysaver.shadowhite.dailysaver.utills.dbhelper.DatabaseHelper;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 public class AddNewWalletActivity extends AppCompatActivity implements View.OnClickListener {
@@ -32,14 +31,14 @@ public class AddNewWalletActivity extends AppCompatActivity implements View.OnCl
     private int currencyValue;
     private String budgetTypeStr = "";
     private EditText Amount,WalletName,Note;
-    private TextView ExpiresOn;
-    private FloatingActionButton add;
+    private EditText ExpiresOn;
     private Spinner currencySpinner;
     private UX ux;
     private Tools tools;
     private DataManager spinnerData;
     private DatabaseHelper databaseHelper;
     private RadioGroup TransactionType;
+    private Button add, clear;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,8 +70,8 @@ public class AddNewWalletActivity extends AppCompatActivity implements View.OnCl
         Note = findViewById(R.id.Note);
         ExpiresOn = findViewById(R.id.ExpiresOn);
         currencySpinner = findViewById(R.id.Currency);
-        ExpiresOn = findViewById(R.id.ExpiresOn);
         add = findViewById(R.id.add);
+        clear = findViewById(R.id.clear);
         ux = new UX(this, mainLayout);
         tools = new Tools(this);
         databaseHelper = new DatabaseHelper(this);
@@ -99,6 +98,14 @@ public class AddNewWalletActivity extends AppCompatActivity implements View.OnCl
             @Override
             public void onClick(View v) {
                 saveWallet();
+            }
+        });
+
+        //clear ui details listener
+        clear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ux.clearDetailsUI(new int[]{R.id.Amount, R.id.WalletName, R.id.Note, R.id.ExpiresOn, R.id.Currency, R.id.TransactionType});
             }
         });
 

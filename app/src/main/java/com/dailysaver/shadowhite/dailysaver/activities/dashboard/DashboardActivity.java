@@ -16,7 +16,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import com.amitshekhar.DebugDB;
 import com.dailysaver.shadowhite.dailysaver.R;
-import com.dailysaver.shadowhite.dailysaver.activities.expensewallet.AddNewRecordActivity;
+import com.dailysaver.shadowhite.dailysaver.activities.newrecord.AddNewRecordActivity;
 import com.dailysaver.shadowhite.dailysaver.activities.records.RecordsActivity;
 import com.dailysaver.shadowhite.dailysaver.activities.report.RecordsReportActivity;
 import com.dailysaver.shadowhite.dailysaver.activities.wallet.AddNewWalletActivity;
@@ -49,10 +49,8 @@ import com.skydoves.powermenu.MenuAnimation;
 import com.skydoves.powermenu.OnMenuItemClickListener;
 import com.yarolegovich.discretescrollview.DiscreteScrollView;
 import com.yarolegovich.discretescrollview.transform.ScaleTransformer;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import pl.droidsonroids.gif.GifImageView;
 
 public class DashboardActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -120,16 +118,24 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
 
     //bind components with UI
     private void bindUiWithComponents() {
+        //set the navigation drawer
         setNavDrawer();
+        //set the wallet card slider
         setCardSlider();
+        //set the popUp menu
         setMenu();
+        //make teh category pie chart for savings/expense structure
         makeCategoryPieChart();
+        //make the bar chart for savings vs expense
         makeExpenseVsSavingsBarChart();
 
+        //amount details for savings vs expense bar chart
         TotalExpense.setText(""+databaseHelper.getAllCostBasedOnRecord("Expense"));
         TotalSavings.setText(""+databaseHelper.getAllCostBasedOnRecord("Savings"));
     }
+    //bind UI end
 
+    //set the navigation drawer
     private void setNavDrawer() {
         toggle = new ActionBarDrawerToggle(
                 this, drawerLayout, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -139,7 +145,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
     }
-    //bind UI end
+    //nav drawer built
 
     //set the category pie chart
     private void makeCategoryPieChart() {
@@ -267,7 +273,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
                     ux.showDialog(R.layout.dialog_no_wallet, "No wallet found", new UX.onDialogOkListener() {
                         @Override
                         public void onClick(View dialog, int id) {
-                            startActivity(new Intent(DashboardActivity.this, AddNewWalletActivity.class));
+                            startActivity(new Intent(DashboardActivity.this, AddNewWalletActivity.class).putExtra("from","main"));
                         }
                     });
                 }

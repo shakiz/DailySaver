@@ -63,9 +63,11 @@ public class WalletDetailsSliderAdapter extends RecyclerView.Adapter<WalletDetai
         }
 
         viewHolder.ExpiresOn.setText(itemModel.getExpiresOn());
+        //setting the progress details
         setProgressData(itemModel,databaseHelper.singleWalletTotalCost(walletName),viewHolder.RemainingBalance);
         viewHolder.TotalCost.setText(""+databaseHelper.singleWalletTotalCost(walletName));
 
+        //onClick listener
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

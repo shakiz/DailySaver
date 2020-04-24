@@ -45,7 +45,7 @@
             android:windowSoftInputMode="adjustNothing" />
 
         <activity
-            android:name=".activities.expensewallet.AddNewRecordActivity"
+            android:name=".activities.newrecord.AddNewRecordActivity"
             android:theme="@style/AppThemeNoActionBar"
             android:windowSoftInputMode="adjustPan" />
 

@@ -1,4 +1,4 @@
-package com.dailysaver.shadowhite.dailysaver.activities.expensewallet;
+package com.dailysaver.shadowhite.dailysaver.activities.newrecord;
 
 import android.app.Dialog;
 import android.content.Intent;
@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -31,16 +32,15 @@ import com.dailysaver.shadowhite.dailysaver.utills.DataManager;
 import com.dailysaver.shadowhite.dailysaver.utills.Tools;
 import com.dailysaver.shadowhite.dailysaver.utills.UX;
 import com.dailysaver.shadowhite.dailysaver.utills.dbhelper.DatabaseHelper;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 public class AddNewRecordActivity extends AppCompatActivity implements View.OnClickListener {
 
     private RelativeLayout mainLayout;
     private Toolbar toolbar;
-    private FloatingActionButton addOrUpdate;
     private EditText Amount,Note;
-    private TextView ExpenseDate, DateView, CategorySelector;
+    private TextView DateView, CategorySelector;
+    private EditText ExpenseDate;
     private Spinner currencySpinner, walletSpinner;
     private Dialog itemDialog;
     private LinearLayout dialogLinearLayout;
@@ -55,6 +55,7 @@ public class AddNewRecordActivity extends AppCompatActivity implements View.OnCl
     private DatabaseHelper databaseHelper;
     private DataManager dataManager;
     private Record record;
+    private Button addOrUpdate, clear;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +100,7 @@ public class AddNewRecordActivity extends AppCompatActivity implements View.OnCl
         ExpenseDate = findViewById(R.id.ExpenseDate);
         Note = findViewById(R.id.Note);
         addOrUpdate = findViewById(R.id.add);
+        clear = findViewById(R.id.clear);
         ux = new UX(this,mainLayout);
         tools = new Tools(this);
         databaseHelper = new DatabaseHelper(this);
@@ -163,6 +165,14 @@ public class AddNewRecordActivity extends AppCompatActivity implements View.OnCl
                 else {
                     saveExpense();
                 }
+            }
+        });
+
+        //clear listener
+        clear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ux.clearDetailsUI(new int[]{R.id.RecordType, R.id.Amount, R.id.Currency, R.id.Wallet, R.id.Note, R.id.ExpenseDate});
             }
         });
 
@@ -259,7 +269,7 @@ public class AddNewRecordActivity extends AppCompatActivity implements View.OnCl
         currencySpinner.setSelection(record.getWalletId(), true);
         currencyValue = record.getCurrency();
         walletSpinner.setSelection(record.getWalletId(), true);
-        addOrUpdate.setImageResource(R.drawable.ic_action_done);
+        addOrUpdate.setText(getResources().getString(R.string.update));
     }
 
     //Set category icon

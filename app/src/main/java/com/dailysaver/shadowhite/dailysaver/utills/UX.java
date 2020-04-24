@@ -13,11 +13,12 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
@@ -88,7 +89,25 @@ public class UX {
             }
             else if(child instanceof EditText){
                 EditText editText = (EditText) child;
-                editText.setText("");
+                if (!TextUtils.isEmpty(editText.getTag().toString())){
+                    if (editText.getTag().toString().equals("Date")){
+                        editText.setHint(context.getResources().getString(R.string.date_hint));
+                    }
+                }
+                else editText.setText("");
+            }
+            else if (child instanceof Spinner){
+                Spinner spinner = (Spinner) child;
+                spinner.setSelection(0);
+            }
+            else if (child instanceof RadioGroup){
+                RadioGroup radioGroup = (RadioGroup) child;
+                for (int start = 0; start < radioGroup.getChildCount(); start++) {
+                    RadioButton radioButton = (RadioButton) radioGroup.getChildAt(start);
+                    if (radioButton.isChecked()){
+                        radioButton.setChecked(false);
+                    }
+                }
             }
         }
     }

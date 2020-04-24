@@ -21,7 +21,7 @@
             <RelativeLayout
                 android:id="@+id/SliderContainer"
                 android:layout_width="match_parent"
-                android:layout_height="170dp"
+                android:layout_height="200dp"
                 android:background="@drawable/cover">
 
                 <com.yarolegovich.discretescrollview.DiscreteScrollView
@@ -30,6 +30,7 @@
                     android:layout_height="200dp"
                     android:layout_gravity="center|left"
                     android:background="@drawable/cover"
+                    android:layout_marginBottom="16dp"
                     app:dsv_orientation="horizontal" />
 
                 <include
