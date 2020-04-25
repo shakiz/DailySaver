@@ -3,10 +3,10 @@ package com.dailysaver.shadowhite.dailysaver.activities.wallet;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.dailysaver.shadowhite.dailysaver.R;
@@ -19,19 +19,19 @@ import com.dailysaver.shadowhite.dailysaver.utills.Tools;
 import com.dailysaver.shadowhite.dailysaver.utills.UX;
 import com.dailysaver.shadowhite.dailysaver.utills.dbhelper.DatabaseHelper;
 import java.util.ArrayList;
-import in.codeshuffle.typewriterview.TypeWriterView;
+
+import pl.droidsonroids.gif.GifImageView;
 
 public class WalletDetailsActivity extends AppCompatActivity {
-    private CoordinatorLayout mainLayout;
-    private TextView TotalCost, Amount, WalletName, CostHeading;
-    private TypeWriterView CurrentBalance;
+    private RelativeLayout mainLayout;
+    private TextView TotalCost, Amount, WalletName, CostHeading, noBudgetData, CurrentBalance;
+    private GifImageView noDataGif;
     private Toolbar toolbar;
     private UX ux;
     private String walletName = "";
     private Tools tools;
     private RecyclerView recyclerView;
     private DatabaseHelper databaseHelper;
-    private TextView noBudgetData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +45,9 @@ public class WalletDetailsActivity extends AppCompatActivity {
         }
 
         ux.setToolbar(toolbar,this, DashboardActivity.class,"","");
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_left_arrow_white);
+        if (getActionBar() != null) {
+            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_left_arrow_grey);
+        }
         tools.setAnimation(mainLayout);
 
         bindUIWithComponents();
@@ -55,7 +57,8 @@ public class WalletDetailsActivity extends AppCompatActivity {
     //will init all the components and new instances
     private void init() {
         recyclerView = findViewById(R.id.mRecyclerView);
-        noBudgetData = findViewById(R.id.NoDataBudget);
+        noBudgetData = findViewById(R.id.NoData);
+        noDataGif = findViewById(R.id.NoDataGif);
         Amount = findViewById(R.id.Amount);
         WalletName = findViewById(R.id.WalletName);
         TotalCost = findViewById(R.id.TotalCost);
@@ -73,14 +76,12 @@ public class WalletDetailsActivity extends AppCompatActivity {
         Wallet wallet = (Wallet) getIntent().getSerializableExtra("wallet");
         int walletId = wallet.getId();
         walletName = wallet.getTitle();
-        CurrentBalance.setWithMusic(false);
-        CurrentBalance.setDelay(0);
         if (wallet.getWalletType().equals("Savings")){
             CostHeading.setText("Additional Savings");
-            CurrentBalance.animateText(""+(wallet.getAmount() + databaseHelper.singleWalletTotalCost(walletName)));
+            CurrentBalance.setText(""+(wallet.getAmount() + databaseHelper.singleWalletTotalCost(walletName)));
         }
         else{
-            CurrentBalance.animateText(""+(wallet.getAmount() - databaseHelper.singleWalletTotalCost(walletName)));
+            CurrentBalance.setText(""+(wallet.getAmount() - databaseHelper.singleWalletTotalCost(walletName)));
         }
         Amount.setText(""+wallet.getAmount());
         WalletName.setText(wallet.getTitle());
@@ -96,6 +97,7 @@ public class WalletDetailsActivity extends AppCompatActivity {
         MonthlyExpenseAdapter monthlyExpenseAdapter = null;
         if (allRecordItems.size() <=0 ){
             noBudgetData.setVisibility(View.VISIBLE);
+            noDataGif.setVisibility(View.VISIBLE);
         }
         else {
             monthlyExpenseAdapter = new MonthlyExpenseAdapter(allRecordItems, this,new MonthlyExpenseAdapter.onItemClick() {

@@ -77,7 +77,9 @@ public class AddNewRecordActivity extends AppCompatActivity implements View.OnCl
         if (getIntent().getStringExtra("from").equals("record")) ux.setToolbar(toolbar,this,RecordsActivity.class,"","");
         else ux.setToolbar(toolbar,this, DashboardActivity.class,"","");
 
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_left_arrow_grey);
+        if (getActionBar() != null) {
+            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_left_arrow_grey);
+        }
         tools.setAnimation(mainLayout);
 
         // all the user interactions
@@ -292,7 +294,9 @@ public class AddNewRecordActivity extends AppCompatActivity implements View.OnCl
         itemDialog.setContentView(R.layout.category_list_layout);
         customViewInit(itemDialog);
         setCategoryAdapter();
-        itemDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        if (itemDialog != null) {
+            itemDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        }
         Animation a = AnimationUtils.loadAnimation(itemDialog.getContext(), R.anim.push_up_in);
         dialogLinearLayout.startAnimation(a);
         itemDialog.show();

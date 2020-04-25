@@ -87,7 +87,9 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         Log.v("db",""+DebugDB.getAddressLog());
 
         setSupportActionBar(toolbar);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_left_arrow_grey);
+        if (getActionBar() != null) {
+            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_left_arrow_grey);
+        }
 
         tools.setAnimation(mainLayout);
         bindUiWithComponents();
@@ -140,7 +142,9 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         toggle = new ActionBarDrawerToggle(
                 this, drawerLayout, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if (getActionBar() != null) {
+            getActionBar().setDisplayHomeAsUpEnabled(true);
+        }
         toggle.setDrawerIndicatorEnabled(true);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
@@ -153,7 +157,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         setCategoryPieData();
         chart.getLegendForPieChart();
         if (getPieData().size() > 0) {
-            chart.buildPieChart("Categories",12,6,2000,2000,pieData,R.color.md_white_1000,R.color.md_grey_800);
+            chart.buildPieChart("Categories",12,6,1000,1000,pieData,R.color.md_white_1000,R.color.md_grey_800);
         }
     }
     //pie chart build done

@@ -88,7 +88,7 @@
                     <com.github.mikephil.charting.charts.PieChart
                         android:id="@+id/pieChart"
                         android:layout_width="match_parent"
-                        android:layout_height="250dp"
+                        android:layout_height="192dp"
                         android:layout_below="@id/SubHeading1"
                         android:layout_gravity="center"
                         android:layout_margin="8dp"/>
@@ -209,7 +209,7 @@
                     <com.github.mikephil.charting.charts.BarChart
                         android:id="@+id/GroupedBarChart"
                         android:layout_width="match_parent"
-                        android:layout_height="250dp"
+                        android:layout_height="208dp"
                         android:layout_below="@id/TotalSavingsLayout"
                         android:layout_gravity="center"
                         android:layout_margin="8dp" />

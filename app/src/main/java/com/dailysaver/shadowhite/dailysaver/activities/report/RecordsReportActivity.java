@@ -43,7 +43,9 @@ public class RecordsReportActivity extends AppCompatActivity {
 
         //Set toolbar
         ux.setToolbar(toolbar,this, DashboardActivity.class,"","");
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_left_arrow_grey);
+        if (getActionBar() != null) {
+            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_left_arrow_grey);
+        }
         tools.setAnimation(mainLayout);
 
         // all the user interactions

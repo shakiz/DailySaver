@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -23,11 +23,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/tool_bar"
-                android:background="@color/colorPrimary"
+                android:background="@color/md_white_1000"
                 app:navigationIcon="?attr/homeAsUpIndicator"
                 style="@style/TextAppearance.Widget.Event.Toolbar.Title"
                 app:title="@string/wallet_details"
-                app:titleTextColor="@color/md_white_1000">
+                app:titleTextColor="@color/md_grey_800">
 
             </androidx.appcompat.widget.Toolbar>
 
@@ -46,118 +46,162 @@
                 android:id="@+id/mainLayout"
                 android:orientation="vertical">
 
-                <LinearLayout
+                <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:paddingTop="8dp"
-                    android:background="@color/colorPrimary"
-                    android:paddingBottom="48dp">
-
-                    <TextView
-                        android:id="@+id/WalletName"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/title"
-                        android:textColor="@color/md_white_1000"
-                        android:textSize="20sp"
-                        android:gravity="center"
-                        android:textStyle="bold"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginRight="8dp"/>
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/current_balance"
-                        android:textColor="@color/md_white_1000"
-                        android:textSize="18sp"
-                        android:gravity="center"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginRight="8dp"/>
-
-                    <in.codeshuffle.typewriterview.TypeWriterView
-                        android:id="@+id/CurrentBalance"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/md_white_1000"
-                        android:textSize="18sp"
-                        android:layout_marginTop="4dp"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginRight="8dp"
-                        android:text="@string/amount_dummy"
-                        android:gravity="center"
-                        android:textStyle="bold" />
+                    android:translationZ="8dp"
+                    app:cardCornerRadius="12dp"
+                    android:layout_marginTop="-8dp"
+                    app:cardBackgroundColor="@color/md_white_1000">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginRight="8dp"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginTop="8dp"
-                        android:weightSum="2">
+                        android:paddingBottom="16dp"
+                        android:layout_marginTop="12dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/WalletName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/title"
+                            android:textColor="@color/md_grey_800"
+                            android:textSize="20sp"
+                            android:gravity="center"
+                            android:textStyle="bold"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginRight="8dp"/>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/current_balance"
+                            android:textColor="@color/md_grey_800"
+                            android:textSize="16sp"
+                            android:gravity="center"
+                            android:layout_marginTop="4dp"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginRight="8dp"/>
 
                         <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginRight="8dp"
+                            android:gravity="center"
+                            android:background="@drawable/count_round_back"
                             android:orientation="vertical">
 
                             <TextView
-                                android:id="@+id/CostHeading"
+                                android:id="@+id/CurrentBalance"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="@string/cost"
-                                android:gravity="center"
                                 android:textColor="@color/md_white_1000"
-                                android:textSize="14sp"/>
-
-                            <TextView
-                                android:id="@+id/TotalCost"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="@string/cost_hint"
-                                android:gravity="center"
-                                android:textColor="@color/md_white_1000"
-                                android:textSize="14sp"/>
+                                android:textSize="12sp"
+                                android:layout_gravity="center"
+                                android:text="@string/amount_dummy"
+                                android:gravity="center"/>
 
                         </LinearLayout>
-
-                        <View
-                            android:layout_width="1dp"
-                            android:layout_height="24dp"
-                            android:background="@color/md_white_1000"
-                            android:layout_gravity="center"/>
 
                         <LinearLayout
-                            android:layout_width="0dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
+                            android:orientation="horizontal"
+                            android:layout_marginRight="8dp"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginTop="8dp"
+                            android:weightSum="2">
 
-                            <TextView
-                                android:layout_width="match_parent"
+                            <LinearLayout
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:text="@string/balance"
-                                android:gravity="center"
-                                android:textColor="@color/md_white_1000"
-                                android:textSize="14sp"/>
+                                android:layout_weight="1"
+                                android:orientation="vertical">
 
-                            <TextView
-                                android:id="@+id/Amount"
-                                android:layout_width="match_parent"
+                                <TextView
+                                    android:id="@+id/CostHeading"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/cost"
+                                    android:gravity="center"
+                                    android:textColor="@color/md_grey_800"
+                                    android:textSize="14sp"/>
+
+                                <LinearLayout
+                                    android:layout_width="48dp"
+                                    android:layout_height="48dp"
+                                    android:layout_gravity="center"
+                                    android:gravity="center"
+                                    android:background="@drawable/count_round_cost"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:id="@+id/TotalCost"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/cost_hint"
+                                        android:gravity="center"
+                                        android:layout_gravity="center"
+                                        android:textColor="@color/md_white_1000"
+                                        android:textSize="12sp"/>
+
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+                            <View
+                                android:layout_width="1dp"
+                                android:layout_height="24dp"
+                                android:background="@color/md_grey_800"
+                                android:layout_gravity="center"/>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:text="@string/balance_hint"
-                                android:gravity="center"
-                                android:textColor="@color/md_white_1000"
-                                android:textSize="14sp"/>
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/balance"
+                                    android:gravity="center"
+                                    android:textColor="@color/md_grey_800"
+                                    android:textSize="14sp"/>
+
+                                <LinearLayout
+                                    android:layout_width="48dp"
+                                    android:layout_height="48dp"
+                                    android:layout_gravity="center"
+                                    android:gravity="center"
+                                    android:background="@drawable/count_round_balance"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:id="@+id/Amount"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/balance_hint"
+                                        android:gravity="center"
+                                        android:layout_gravity="center"
+                                        android:textColor="@color/md_white_1000"
+                                        android:textSize="12sp"/>
+
+                                </LinearLayout>
+
+                            </LinearLayout>
 
                         </LinearLayout>
+
 
                     </LinearLayout>
 
-                </LinearLayout>
+                </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
@@ -169,28 +213,33 @@
                     app:cardBackgroundColor="@color/transparent"
                     android:layout_marginLeft="8dp"
                     android:layout_marginRight="8dp"
-                    android:layout_marginTop="-48dp">
+                    android:layout_marginTop="16dp">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
                         <TextView
-                            android:id="@+id/NoDataBudget"
+                            android:id="@+id/RecordsHeading"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:visibility="gone"
-                            android:gravity="center"
-                            android:layout_centerInParent="true"
-                            android:textSize="20sp"
-                            android:textColor="@color/md_red_400"
+                            android:text="@string/records"
+                            android:textSize="16sp"
                             android:textStyle="bold"
-                            android:padding="8dp"
-                            android:layout_margin="8dp"
-                            android:text="@string/no_budget_data"/>
+                            android:drawableLeft="@drawable/ic_bullet_list"
+                            android:drawablePadding="8dp"
+                            android:layout_marginRight="8dp"
+                            android:layout_marginTop="8dp"
+                            android:gravity="center|left"
+                            android:textColor="@color/md_grey_800"
+                            android:layout_marginLeft="8dp"/>
+
+                        <include
+                            layout="@layout/no_data_layout"/>
 
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/mRecyclerView"
+                            android:layout_below="@id/RecordsHeading"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             tools:listitem="@layout/adapter_layout_generic_expense"
@@ -206,4 +255,4 @@
 
     </RelativeLayout>
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</RelativeLayout>

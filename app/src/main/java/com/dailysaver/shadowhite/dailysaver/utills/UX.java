@@ -65,7 +65,9 @@ public class UX {
      */
     public void getLoadingView(){
         loadingDialog.setContentView(R.layout.loading_layout);
-        loadingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        if (loadingDialog != null) {
+            loadingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        }
         loadingDialog.setCanceledOnTouchOutside(false);
         loadingDialog.show();
     }
@@ -286,7 +288,9 @@ public class UX {
         final Dialog dialog = new Dialog(context);
         dialog.setContentView(dialogView);
         dialog.setTitle(title);
-        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        if (dialog != null) {
+            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        }
         dialog.show();
 
         DialogMessage = dialogView.findViewById(R.id.DialogMessage);

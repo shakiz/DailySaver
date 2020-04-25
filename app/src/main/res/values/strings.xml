@@ -47,7 +47,7 @@
     <string name="current_balance">Current Balance</string>
     <string name="amount_dummy">18000</string>
     <string name="cost">Cost</string>
-    <string name="cost_hint">2000</string>
+    <string name="cost_hint">50000</string>
     <string name="balance">Balance</string>
     <string name="balance_hint">20000</string>
     <string name="expiry_date_hint">Expires on Sep 2020</string>
@@ -116,4 +116,5 @@
     <string name="clear">Clear</string>
     <string name="save">Save</string>
     <string name="update">Update</string>
+    <string name="no_data_available">No data available</string>
 </resources>

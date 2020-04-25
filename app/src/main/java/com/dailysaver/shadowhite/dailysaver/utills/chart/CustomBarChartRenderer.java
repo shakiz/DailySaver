@@ -197,7 +197,7 @@ public class CustomBarChartRenderer extends BarChartRenderer {
 
         path.rLineTo(0, -heightMinusCorners);
 
-        path.close();//Given close, last lineto can be removed.
+        path.close();//Given close, last lineTo can be removed.
 
         return path;
     }

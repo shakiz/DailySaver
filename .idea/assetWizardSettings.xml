@@ -33,9 +33,10 @@
                         </option>
                         <option name="values">
                           <map>
+                            <entry key="assetSourceType" value="FILE" />
                             <entry key="color" value="3a587d" />
-                            <entry key="outputName" value="ic_date_range" />
-                            <entry key="sourceFile" value="C:\Users\sakha\Downloads\info.svg" />
+                            <entry key="outputName" value="ic_bullet_list" />
+                            <entry key="sourceFile" value="C:\Users\sakha\Downloads\bullet-list.svg" />
                           </map>
                         </option>
                       </PersistentState>

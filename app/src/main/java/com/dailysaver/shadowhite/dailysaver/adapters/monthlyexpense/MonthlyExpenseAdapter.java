@@ -57,7 +57,6 @@ public class MonthlyExpenseAdapter extends RecyclerView.Adapter<MonthlyExpenseAd
             if (recordType.equals("Expense")) indicatorView.setBackgroundColor(context.getResources().getColor(R.color.md_red_400));
             else if (recordType.equals("Savings")) indicatorView.setBackgroundColor(context.getResources().getColor(R.color.md_green_400));
         }
-        else return;
     }
 
     private void setTypeIcon(ImageView icon, String type) {
