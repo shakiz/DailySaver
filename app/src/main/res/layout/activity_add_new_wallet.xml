@@ -91,7 +91,7 @@
                                 android:gravity="center|left"
                                 android:clickable="true"
                                 android:textSize="14sp"
-                                android:textColor="@color/md_grey_800"
+                                android:textColor="@color/md_grey_900"
                                 android:ellipsize="end"
                                 android:padding="4dp"/>
 
@@ -128,7 +128,7 @@
                                 android:gravity="center|left"
                                 android:clickable="true"
                                 android:textSize="14sp"
-                                android:textColor="@color/md_grey_800"
+                                android:textColor="@color/md_grey_900"
                                 android:ellipsize="end"
                                 android:padding="4dp"/>
 
@@ -190,7 +190,7 @@
                             android:paddingRight="8dp"
                             android:text="@string/wallet_name"
                             android:background="@color/md_white_1000"
-                            android:textColor="@color/md_grey_800"
+                            android:textColor="@color/md_grey_900"
                             android:textSize="14sp" />
 
                     </RelativeLayout>
@@ -233,7 +233,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/select_wallet_type"
-                            android:textColor="@color/md_grey_800"
+                            android:textColor="@color/md_grey_900"
                             android:textSize="14sp"
                             android:layout_marginLeft="4dp"
                             android:layout_marginRight="4dp"
@@ -291,7 +291,7 @@
                             android:layout_marginRight="8dp"
                             android:ellipsize="end"
                             android:maxLines="1"
-                            android:textColor="@color/md_grey_800"
+                            android:textColor="@color/md_grey_900"
                             android:textSize="14sp"
                             android:padding="4dp"/>
 

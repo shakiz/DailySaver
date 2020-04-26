@@ -48,9 +48,6 @@ dependencies {
     //Android gif loader
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.0'
 
-    //debug db
-    debugImplementation 'com.amitshekhar.android:debug-db:1.0.6'
-
     //memory leak tracker
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5.1'
     releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.1'

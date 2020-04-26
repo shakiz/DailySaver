@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.dailysaver.shadowhite.dailysaver">
+    package="com.sakhawat.expense.tracker">
 
     <application
-        android:name=".activities.leaktracker.MyApplication"
+        android:name="com.sakhawat.expense.tracker.activities.leaktracker.MyApplication"
         android:allowBackup="true"
         android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
@@ -13,7 +13,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".activities.splash.SplashActivity"
+            android:name="com.sakhawat.expense.tracker.activities.splash.SplashActivity"
             android:theme="@style/SplashAppTheme"
             android:windowSoftInputMode="adjustNothing">
             <intent-filter>
@@ -24,33 +24,33 @@
         </activity>
 
         <activity
-            android:name=".activities.dashboard.DashboardActivity"
+            android:name="com.sakhawat.expense.tracker.activities.dashboard.DashboardActivity"
             android:label="@string/app_name"
             android:theme="@style/AppThemeNoActionBar"
             android:windowSoftInputMode="adjustPan" />
 
         <activity
-            android:name=".activities.records.RecordsActivity"
+            android:name="com.sakhawat.expense.tracker.activities.records.RecordsActivity"
             android:theme="@style/AppThemeNoActionBar"
             android:windowSoftInputMode="adjustNothing"/>
 
         <activity
-            android:name=".activities.report.RecordsReportActivity"
+            android:name="com.sakhawat.expense.tracker.activities.report.RecordsReportActivity"
             android:theme="@style/AppThemeNoActionBar"
             android:windowSoftInputMode="adjustNothing" />
 
         <activity
-            android:name=".activities.wallet.WalletDetailsActivity"
+            android:name="com.sakhawat.expense.tracker.activities.wallet.WalletDetailsActivity"
             android:theme="@style/AppThemeNoActionBar"
             android:windowSoftInputMode="adjustNothing" />
 
         <activity
-            android:name=".activities.newrecord.AddNewRecordActivity"
+            android:name="com.sakhawat.expense.tracker.activities.newrecord.AddNewRecordActivity"
             android:theme="@style/AppThemeNoActionBar"
             android:windowSoftInputMode="adjustPan" />
 
         <activity
-            android:name=".activities.wallet.AddNewWalletActivity"
+            android:name="com.sakhawat.expense.tracker.activities.wallet.AddNewWalletActivity"
             android:theme="@style/AppThemeNoActionBar"
             android:windowSoftInputMode="adjustPan" />
 
