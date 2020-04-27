@@ -14,4 +14,22 @@
         android:id="@+id/records"
         android:icon="@drawable/ic_history"/>
 
+    <item
+        android:title="Note"
+        app:showAsAction="ifRoom"
+        android:id="@+id/note"
+        android:icon="@drawable/ic_note"/>
+
+    <item
+        android:title="About"
+        app:showAsAction="ifRoom"
+        android:id="@+id/about"
+        android:icon="@drawable/ic_developer"/>
+
+    <item
+        android:title="Rate It"
+        app:showAsAction="ifRoom"
+        android:id="@+id/rating"
+        android:icon="@drawable/ic_rating_star"/>
+
 </menu>

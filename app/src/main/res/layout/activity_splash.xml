@@ -21,7 +21,6 @@
             android:layout_height="match_parent"
             android:layout_margin="4dp"
             android:id="@+id/mainLayout"
-            android:weightSum="2"
             android:orientation="vertical">
 
             <ImageView

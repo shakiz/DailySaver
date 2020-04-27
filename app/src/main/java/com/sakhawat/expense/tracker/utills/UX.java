@@ -287,10 +287,10 @@ public class UX {
 
         final Dialog dialog = new Dialog(context);
         dialog.setContentView(dialogView);
-        dialog.setTitle(title);
-        if (dialog != null) {
-            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-        }
+
+        if (!TextUtils.isEmpty(title)) dialog.setTitle(title);
+        if (dialog != null) dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+
         dialog.show();
 
         DialogMessage = dialogView.findViewById(R.id.DialogMessage);

@@ -76,6 +76,7 @@
     <string name="welcome">Welcome</string>
     <string name="splash_screen_moto">We have become partners with InterMedCon of Germany to provide IT solutions for health care industries in Europe and around the world!</string>
     <string name="developed_by">Developed By</string>
+    <string name="profession">Jr. Mobile Application Developer</string>
     <string name="sakhawat_hossain">Sakhawat Hossain</string>
     <string name="total">Total</string>
     <string name="dummy_total">2580</string>
@@ -117,4 +118,7 @@
     <string name="save">Save</string>
     <string name="update">Update</string>
     <string name="no_data_available">No data available</string>
+    <string name="company_at">Save The Children in Bangladesh</string>
+    <string name="contact_info">Contact Info</string>
+    <string name="email">shakil.py@gmail.com</string>
 </resources>

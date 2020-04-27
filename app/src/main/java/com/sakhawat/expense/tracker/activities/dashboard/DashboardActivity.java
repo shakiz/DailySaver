@@ -3,7 +3,6 @@ package com.sakhawat.expense.tracker.activities.dashboard;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -154,7 +153,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         setCategoryPieData();
         chart.getLegendForPieChart();
         if (getPieData().size() > 0) {
-            chart.buildPieChart("Categories",12,6,1500, 1500,pieData,R.color.md_white_1000,R.color.md_grey_800);
+            chart.buildPieChart("Categories",12,6,800, 800,pieData,R.color.md_white_1000,R.color.md_grey_800);
         }
     }
     //pie chart build done
@@ -345,6 +344,20 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
                 startActivity(new Intent(DashboardActivity.this, RecordsActivity.class));
                 drawerLayout.closeDrawer(GravityCompat.START);
                 return true;
+            case R.id.note:
+                drawerLayout.closeDrawer(GravityCompat.START);
+                return true;
+            case R.id.about:
+                ux.showDialog(R.layout.about_developer, "About Developer", new UX.onDialogOkListener() {
+                    @Override
+                    public void onClick(View dialog, int id) {
+
+                    }
+                });
+                drawerLayout.closeDrawer(GravityCompat.START);
+                return true;
+            case R.id.rating:
+                drawerLayout.closeDrawer(GravityCompat.START);
             default:
                 return super.onOptionsItemSelected(item);
         }
