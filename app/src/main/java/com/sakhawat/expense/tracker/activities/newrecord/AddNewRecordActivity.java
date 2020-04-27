@@ -358,4 +358,13 @@ public class AddNewRecordActivity extends AppCompatActivity implements View.OnCl
         else startActivity(new Intent(AddNewRecordActivity.this, DashboardActivity.class));
         overridePendingTransition(R.anim.fadein,R.anim.push_up_out);
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        databaseHelper = null;
+        tools = null;
+        ux = null;
+        dataManager = null;
+    }
 }

@@ -116,7 +116,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      *
      * @param walletName
      */
-    public ArrayList<Record> getAllExpenseItems(String walletName) {
+    public ArrayList<Record> getAllRecords(String walletName) {
         // array of columns to fetch
         String[] columns = {
                 COLUMN_RECORD_ID,

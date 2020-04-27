@@ -363,5 +363,16 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
             tools.exitApp();
         }
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        databaseHelper = null;
+        tools = null;
+        ux = null;
+        dataManager = null;
+        dataLoader = null;
+        chart = null;
+    }
 }
 

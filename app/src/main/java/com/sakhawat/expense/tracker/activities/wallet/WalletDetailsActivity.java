@@ -11,15 +11,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.sakhawat.expense.tracker.R;
 import com.sakhawat.expense.tracker.activities.dashboard.DashboardActivity;
-import com.sakhawat.expense.tracker.activities.records.RecordsActivity;
 import com.sakhawat.expense.tracker.adapters.monthlyexpense.MonthlyExpenseAdapter;
 import com.sakhawat.expense.tracker.models.record.Record;
 import com.sakhawat.expense.tracker.models.wallet.Wallet;
+import com.sakhawat.expense.tracker.utills.DataLoader;
 import com.sakhawat.expense.tracker.utills.Tools;
 import com.sakhawat.expense.tracker.utills.UX;
 import com.sakhawat.expense.tracker.utills.dbhelper.DatabaseHelper;
 import java.util.ArrayList;
-
 import pl.droidsonroids.gif.GifImageView;
 
 public class WalletDetailsActivity extends AppCompatActivity {
@@ -32,6 +31,7 @@ public class WalletDetailsActivity extends AppCompatActivity {
     private Tools tools;
     private RecyclerView recyclerView;
     private DatabaseHelper databaseHelper;
+    private DataLoader dataLoader;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +45,7 @@ public class WalletDetailsActivity extends AppCompatActivity {
         }
 
         ux.setToolbar(toolbar,this, DashboardActivity.class,"","");
+
         if (getActionBar() != null) {
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_left_arrow_grey);
         }
@@ -69,12 +70,12 @@ public class WalletDetailsActivity extends AppCompatActivity {
         ux = new UX(this, mainLayout);
         tools = new Tools(this);
         databaseHelper = new DatabaseHelper(this);
+        dataLoader = new DataLoader(this, mainLayout);
     }
 
     //load wallet record
     private void loadRecord() {
         Wallet wallet = (Wallet) getIntent().getSerializableExtra("wallet");
-        int walletId = wallet.getId();
         walletName = wallet.getTitle();
         if (wallet.getWalletType().equals("Savings")){
             CostHeading.setText("Additional Savings");
@@ -89,12 +90,25 @@ public class WalletDetailsActivity extends AppCompatActivity {
     }
 
     private void bindUIWithComponents() {
-        setAdapter(databaseHelper.getAllExpenseItems(walletName));
+        dataLoader.setOnRecordCompleted(walletName,new DataLoader.onRecordCompleted() {
+            @Override
+            public void onComplete(ArrayList<Record> recordList) {
+                if (recordList != null){
+                    if (recordList.size() > 0){
+                        setAdapter(recordList);
+                    }
+                    else {
+                        noBudgetData.setVisibility(View.VISIBLE);
+                        noDataGif.setVisibility(View.VISIBLE);
+                    }
+                }
+            }
+        });
     }
 
     //set adapter for records for the specific wallet
     private void setAdapter(ArrayList<Record> allRecordItems) {
-        MonthlyExpenseAdapter monthlyExpenseAdapter = null;
+        MonthlyExpenseAdapter monthlyExpenseAdapter;
         if (allRecordItems.size() <=0 ){
             noBudgetData.setVisibility(View.VISIBLE);
             noDataGif.setVisibility(View.VISIBLE);
@@ -114,7 +128,16 @@ public class WalletDetailsActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(WalletDetailsActivity.this, RecordsActivity.class));
+        startActivity(new Intent(WalletDetailsActivity.this, DashboardActivity.class));
         overridePendingTransition(R.anim.fadein,R.anim.push_up_out);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        databaseHelper = null;
+        tools = null;
+        ux = null;
+        dataLoader = null;
     }
 }

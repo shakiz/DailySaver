@@ -3,7 +3,6 @@ package com.sakhawat.expense.tracker.utills;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.view.View;
-
 import com.sakhawat.expense.tracker.models.record.Record;
 import com.sakhawat.expense.tracker.models.wallet.Wallet;
 import com.sakhawat.expense.tracker.utills.dbhelper.DatabaseHelper;
@@ -13,7 +12,7 @@ public class DataLoader {
     private Context context;
     private UX ux;
     private onWalletItemsCompleted onWalletItemsCompleted;
-    private onBudgetItemsCompleted onBudgetItemsCompleted;
+    private onRecordCompleted onRecordCompleted;
     private DatabaseHelper databaseHelper;
     private View view;
 
@@ -28,7 +27,7 @@ public class DataLoader {
         void onComplete(ArrayList<Wallet> walletList);
     }
 
-    public interface onBudgetItemsCompleted{
+    public interface onRecordCompleted {
         void onComplete(ArrayList<Record> recordList);
     }
 
@@ -37,9 +36,9 @@ public class DataLoader {
         new LoadWalletsInBackground().execute();
     }
 
-    public void setOnBudgetItemsCompleted(onBudgetItemsCompleted onBudgetItemsCompleted) {
-        this.onBudgetItemsCompleted = onBudgetItemsCompleted;
-        new LoadBudgetsInBackground().execute();
+    public void setOnRecordCompleted(String walletName,onRecordCompleted onRecordCompleted) {
+        this.onRecordCompleted = onRecordCompleted;
+        new LoadBudgetsInBackground(walletName).execute();
     }
 
     private class LoadWalletsInBackground extends AsyncTask<String,Void, ArrayList<Wallet>>{
@@ -64,6 +63,10 @@ public class DataLoader {
     }
 
     private class LoadBudgetsInBackground extends AsyncTask<String,Void, ArrayList<Record>>{
+        String walletName;
+        public LoadBudgetsInBackground(String walletName) {
+            this.walletName = walletName;
+        }
 
         @Override
         protected void onPreExecute() {
@@ -72,12 +75,17 @@ public class DataLoader {
 
         @Override
         protected ArrayList<Record> doInBackground(String... strings) {
-            return databaseHelper.getAllExpenseItems("");
+            if (walletName.isEmpty()) {
+                return databaseHelper.getAllRecords("");
+            }
+            else{
+                return databaseHelper.getAllRecords(walletName);
+            }
         }
 
         @Override
         protected void onPostExecute(ArrayList<Record> expense) {
-            onBudgetItemsCompleted.onComplete(expense);
+            onRecordCompleted.onComplete(expense);
             if (ux.loadingDialog.isShowing()) {
                 ux.removeLoadingView();
             }

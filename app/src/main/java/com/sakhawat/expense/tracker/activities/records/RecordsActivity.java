@@ -74,7 +74,7 @@ public class RecordsActivity extends AppCompatActivity {
     private void bindUiWithComponents() {
         setMenu();
 
-        dataLoader.setOnBudgetItemsCompleted(new DataLoader.onBudgetItemsCompleted() {
+        dataLoader.setOnRecordCompleted("",new DataLoader.onRecordCompleted() {
             @Override
             public void onComplete(ArrayList<Record> recordList) {
                 if (recordList != null){
@@ -140,5 +140,13 @@ public class RecordsActivity extends AppCompatActivity {
     public void onBackPressed() {
         startActivity(new Intent(RecordsActivity.this, DashboardActivity.class));
         overridePendingTransition(R.anim.fadein,R.anim.push_up_out);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        tools = null;
+        ux = null;
+        dataLoader = null;
     }
 }

@@ -230,9 +230,9 @@
                             android:drawablePadding="8dp"
                             android:layout_marginRight="8dp"
                             android:layout_marginTop="8dp"
+                            android:layout_marginLeft="10dp"
                             android:gravity="center|left"
-                            android:textColor="@color/md_grey_800"
-                            android:layout_marginLeft="8dp"/>
+                            android:textColor="@color/md_grey_800"/>
 
                         <include
                             layout="@layout/no_data_layout"/>
