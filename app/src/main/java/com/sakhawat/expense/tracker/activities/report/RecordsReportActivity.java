@@ -78,7 +78,7 @@ public class RecordsReportActivity extends AppCompatActivity {
         chart.setBarChart(savingsBarChart);
         setSavingsBarData();
         if (getSavingsEntries().size() > 0) {
-            chart.buildBarChart(false,savingsBarData,1000,1000,5,0.6f,0,0,24);
+            chart.buildBarChart(false,savingsBarData,800,800,5,0.6f,0,0,24);
         }
         chart.setAxisForBarChart(false,0, getXAxisValues(), 12, 1,0.5f, 0.5f,12,0);
     }
@@ -88,7 +88,7 @@ public class RecordsReportActivity extends AppCompatActivity {
         chart.setBarChart(expenseBarChart);
         setExpenseBarData();
         if (getExpenseEntries().size() > 0) {
-            chart.buildBarChart(false,expenseBarData,1000,1000,5,0.6f,0,0,24);
+            chart.buildBarChart(false,expenseBarData,800,800,5,0.6f,0,0,24);
         }
         chart.setAxisForBarChart(false,0, getXAxisValues(), 12, 1,0.5f, 0.5f,12,0);
     }

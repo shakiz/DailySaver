@@ -208,7 +208,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         setSavingsVsExpenseBarData();
         chart.setLegendForGroupedBarChart();
         chart.setAxisForBarChart(true, 35, dataManager.getMonthNameForLabel(), 12, 1, 0.5f,0.5f, 12, 0);
-        chart.buildBarChart(true,groupedBarData, 1000,1000, 5,barWidth,barSpace,groupSpace,18);
+        chart.buildBarChart(true,groupedBarData, 800,800, 5,barWidth,barSpace,groupSpace,18);
     }
     //end of making the savings vs expense grouped bar chart
 
@@ -357,6 +357,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
                 drawerLayout.closeDrawer(GravityCompat.START);
                 return true;
             case R.id.rating:
+                tools.rateApp();
                 drawerLayout.closeDrawer(GravityCompat.START);
             default:
                 return super.onOptionsItemSelected(item);

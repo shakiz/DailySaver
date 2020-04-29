@@ -6,13 +6,13 @@
         android:title="Report"
         app:showAsAction="always"
         android:id="@+id/report"
-        android:icon="@drawable/ic_report"/>
+        android:icon="@drawable/ic_report_new"/>
 
     <item
         android:title="Records"
         app:showAsAction="ifRoom"
         android:id="@+id/records"
-        android:icon="@drawable/ic_history"/>
+        android:icon="@drawable/ic_record_list"/>
 
     <item
         android:title="Note"
