@@ -345,6 +345,11 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
                 drawerLayout.closeDrawer(GravityCompat.START);
                 return true;
             case R.id.note:
+                ux.showDialog(R.layout.dialog_coming_soon, "Coming Soon ......", new UX.onDialogOkListener() {
+                    @Override
+                    public void onClick(View dialog, int id) {
+                    }
+                });
                 drawerLayout.closeDrawer(GravityCompat.START);
                 return true;
             case R.id.about:

@@ -299,6 +299,7 @@ public class UX {
             @Override
             public void onClick(View v) {
                 onDialogOkListener.onClick(view, view.getId());
+                dialog.dismiss();
             }
         });
 
