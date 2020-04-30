@@ -27,7 +27,7 @@
                 android:id="@+id/iconIMG"
                 android:layout_width="64dp"
                 android:layout_height="64dp"
-                android:src="@drawable/ic_expense"
+                android:src="@drawable/app_icon"
                 android:layout_centerHorizontal="true"
                 android:layout_centerInParent="true"/>
 

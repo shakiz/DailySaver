@@ -129,6 +129,7 @@
                 android:textStyle="bold"
                 android:background="@drawable/button_shape_round_corner_ok_coming_soon"
                 android:text="@string/ok"
+                android:textSize="16sp"
                 android:textAllCaps="false"/>
 
         </LinearLayout>
