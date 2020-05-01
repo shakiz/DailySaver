@@ -3,6 +3,7 @@ package com.sakhawat.expense.tracker.activities.records;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
@@ -18,10 +19,10 @@ import com.sakhawat.expense.tracker.adapters.menu.IconMenuAdapter;
 import com.sakhawat.expense.tracker.adapters.monthlyexpense.MonthlyExpenseAdapter;
 import com.sakhawat.expense.tracker.models.record.Record;
 import com.sakhawat.expense.tracker.models.menu.IconPowerMenuItem;
-import com.sakhawat.expense.tracker.utills.DataLoader;
 import com.sakhawat.expense.tracker.utills.Tools;
 import com.sakhawat.expense.tracker.utills.UX;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.sakhawat.expense.tracker.utills.dbhelper.DatabaseHelper;
 import com.skydoves.powermenu.CircularEffect;
 import com.skydoves.powermenu.CustomPowerMenu;
 import com.skydoves.powermenu.MenuAnimation;
@@ -37,7 +38,7 @@ public class RecordsActivity extends AppCompatActivity {
     private GifImageView noDataGif;
     private RelativeLayout mainLayout;
     private Toolbar toolbar;
-    private DataLoader dataLoader;
+    private DatabaseHelper databaseHelper;
     private Tools tools;
     private UX ux;
 
@@ -66,20 +67,19 @@ public class RecordsActivity extends AppCompatActivity {
         noDataGif = findViewById(R.id.NoDataGif);
         addNew = findViewById(R.id.add);
         mainLayout = findViewById(R.id.mainLayout);
-        dataLoader = new DataLoader(this,mainLayout);
+        databaseHelper = new DatabaseHelper(this);
         tools = new Tools(this);
         ux = new UX(this, mainLayout);
     }
 
     private void bindUiWithComponents() {
         setMenu();
-
-        dataLoader.setOnRecordCompleted("",new DataLoader.onRecordCompleted() {
+        databaseHelper.getAllRecords("").observe(this, new Observer<ArrayList<Record>>() {
             @Override
-            public void onComplete(ArrayList<Record> recordList) {
-                if (recordList != null){
-                    if (recordList.size() > 0){
-                        setBudgetAdapter(recordList);
+            public void onChanged(ArrayList<Record> records) {
+                if (records != null){
+                    if (records.size() > 0){
+                        setBudgetAdapter(records);
                     }
                     else {
                         noBudgetData.setVisibility(View.VISIBLE);
@@ -147,6 +147,6 @@ public class RecordsActivity extends AppCompatActivity {
         super.onDestroy();
         tools = null;
         ux = null;
-        dataLoader = null;
+        databaseHelper = null;
     }
 }

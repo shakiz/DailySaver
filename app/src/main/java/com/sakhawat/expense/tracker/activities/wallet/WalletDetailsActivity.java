@@ -7,6 +7,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.sakhawat.expense.tracker.R;
@@ -14,7 +15,6 @@ import com.sakhawat.expense.tracker.activities.dashboard.DashboardActivity;
 import com.sakhawat.expense.tracker.adapters.monthlyexpense.MonthlyExpenseAdapter;
 import com.sakhawat.expense.tracker.models.record.Record;
 import com.sakhawat.expense.tracker.models.wallet.Wallet;
-import com.sakhawat.expense.tracker.utills.DataLoader;
 import com.sakhawat.expense.tracker.utills.Tools;
 import com.sakhawat.expense.tracker.utills.UX;
 import com.sakhawat.expense.tracker.utills.dbhelper.DatabaseHelper;
@@ -31,7 +31,6 @@ public class WalletDetailsActivity extends AppCompatActivity {
     private Tools tools;
     private RecyclerView recyclerView;
     private DatabaseHelper databaseHelper;
-    private DataLoader dataLoader;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +69,6 @@ public class WalletDetailsActivity extends AppCompatActivity {
         ux = new UX(this, mainLayout);
         tools = new Tools(this);
         databaseHelper = new DatabaseHelper(this);
-        dataLoader = new DataLoader(this, mainLayout);
     }
 
     //load wallet record
@@ -90,12 +88,13 @@ public class WalletDetailsActivity extends AppCompatActivity {
     }
 
     private void bindUIWithComponents() {
-        dataLoader.setOnRecordCompleted(walletName,new DataLoader.onRecordCompleted() {
+
+        databaseHelper.getAllRecords(walletName).observe(this, new Observer<ArrayList<Record>>() {
             @Override
-            public void onComplete(ArrayList<Record> recordList) {
-                if (recordList != null){
-                    if (recordList.size() > 0){
-                        setAdapter(recordList);
+            public void onChanged(ArrayList<Record> records) {
+                if (records != null){
+                    if (records.size() > 0){
+                        setAdapter(records);
                     }
                     else {
                         noBudgetData.setVisibility(View.VISIBLE);
@@ -138,6 +137,5 @@ public class WalletDetailsActivity extends AppCompatActivity {
         databaseHelper = null;
         tools = null;
         ux = null;
-        dataLoader = null;
     }
 }

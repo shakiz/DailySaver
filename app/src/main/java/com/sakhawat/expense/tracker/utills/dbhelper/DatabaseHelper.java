@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.text.TextUtils;
 import android.util.Log;
 import androidx.annotation.Nullable;
+import androidx.lifecycle.MutableLiveData;
 import com.sakhawat.expense.tracker.models.record.Record;
 import com.sakhawat.expense.tracker.models.wallet.Wallet;
 import java.util.ArrayList;
@@ -116,7 +117,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      *
      * @param walletName
      */
-    public ArrayList<Record> getAllRecords(String walletName) {
+    public MutableLiveData<ArrayList<Record>> getAllRecords(String walletName) {
         // array of columns to fetch
         String[] columns = {
                 COLUMN_RECORD_ID,
@@ -132,7 +133,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         // sorting orders
         String sortOrder =
                 COLUMN_RECORD_ID + " DESC";
-        ArrayList<Record> recordList = new ArrayList<Record>();
+        MutableLiveData<ArrayList<Record>> mutableRecordList = new MutableLiveData<ArrayList<Record>>();
+        ArrayList<Record> recordList = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor;
@@ -165,9 +167,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 } while (cursor.moveToNext());
             }
         }
+        mutableRecordList.postValue(recordList);
         cursor.close();
         db.close();
-        return recordList;
+        return mutableRecordList;
     }
 
     /**
@@ -216,7 +219,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      * This method is to get all wallet record
      *
      */
-    public ArrayList<Wallet> getAllWalletItems() {
+    public MutableLiveData<ArrayList<Wallet>> getAllWalletItems() {
         // array of columns to fetch
         String[] columns = {
                 COLUMN_WALLET_ID,
@@ -230,6 +233,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         // sorting orders
         String sortOrder =
                 COLUMN_WALLET_ID + " DESC";
+        MutableLiveData<ArrayList<Wallet>> walletLiveData = new MutableLiveData<ArrayList<Wallet>>();
         ArrayList<Wallet> walletList = new ArrayList<Wallet>();
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -252,9 +256,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 } while (cursor.moveToNext());
             }
         }
+        walletLiveData.postValue(walletList);
         cursor.close();
         db.close();
-        return walletList;
+        return walletLiveData;
     }
 
     /**

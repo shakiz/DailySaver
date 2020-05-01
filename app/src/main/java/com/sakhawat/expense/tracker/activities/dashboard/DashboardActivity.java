@@ -13,6 +13,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.lifecycle.Observer;
 import com.sakhawat.expense.tracker.R;
 import com.sakhawat.expense.tracker.activities.newrecord.AddNewRecordActivity;
 import com.sakhawat.expense.tracker.activities.records.RecordsActivity;
@@ -23,7 +24,6 @@ import com.sakhawat.expense.tracker.adapters.dashboardwallet.WalletDetailsSlider
 import com.sakhawat.expense.tracker.adapters.menu.IconMenuAdapter;
 import com.sakhawat.expense.tracker.models.menu.IconPowerMenuItem;
 import com.sakhawat.expense.tracker.models.wallet.Wallet;
-import com.sakhawat.expense.tracker.utills.DataLoader;
 import com.sakhawat.expense.tracker.utills.DataManager;
 import com.sakhawat.expense.tracker.utills.Tools;
 import com.sakhawat.expense.tracker.utills.UX;
@@ -63,7 +63,6 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
     private CustomPowerMenu powerMenu;
     private PieChart pieChart;
     private BarChart groupedBarChart;
-    private DataLoader dataLoader;
     private Tools tools;
     private UX ux;
     private PieData pieData;
@@ -107,7 +106,6 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         noDataGif = findViewById(R.id.NoDataGif);
         tools = new Tools(this);
         dataManager = new DataManager(this);
-        dataLoader = new DataLoader(this, mainLayout);
         databaseHelper = new DatabaseHelper(this);
         ux = new UX(this, mainLayout);
         chart = new Chart(this);
@@ -269,7 +267,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         public void onItemClick(int position, IconPowerMenuItem item) {
             if (position==0){
                 //check for any wallet exist or not
-                if (databaseHelper.getAllWalletItems().size() == 0){
+                if (databaseHelper.getAllWalletItems().getValue().size() == 0){
                     ux.showDialog(R.layout.dialog_no_wallet, "No wallet found", new UX.onDialogOkListener() {
                         @Override
                         public void onClick(View dialog, int id) {
@@ -287,11 +285,11 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
 
     //set up the card slider for wallet dashboard
     private void setCardSlider() {
-        dataLoader.setOnWalletItemsCompleted(new DataLoader.onWalletItemsCompleted() {
+        databaseHelper.getAllWalletItems().observe(this, new Observer<ArrayList<Wallet>>() {
             @Override
-            public void onComplete(ArrayList<Wallet> walletList) {
-                if (walletList != null){
-                    if (walletList.size() != 0){ setWalletAdapter(walletList); }
+            public void onChanged(ArrayList<Wallet> wallets) {
+                if (wallets != null){
+                    if (wallets.size() != 0){ setWalletAdapter(wallets); }
                     else{
                         noWalletData.setVisibility(View.VISIBLE);
                         noDataGif.setVisibility(View.VISIBLE);
@@ -390,7 +388,6 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         tools = null;
         ux = null;
         dataManager = null;
-        dataLoader = null;
         chart = null;
     }
 }
