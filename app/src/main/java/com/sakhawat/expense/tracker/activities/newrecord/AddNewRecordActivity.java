@@ -2,6 +2,7 @@ package com.sakhawat.expense.tracker.activities.newrecord;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -161,7 +162,7 @@ public class AddNewRecordActivity extends AppCompatActivity implements View.OnCl
         addOrUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (getIntent().getSerializableExtra("expense") != null) {
+                if (getIntent().getSerializableExtra("record") != null) {
                     updateExpense();
                 }
                 else {
@@ -185,18 +186,9 @@ public class AddNewRecordActivity extends AppCompatActivity implements View.OnCl
         if (!recordTypeStr.isEmpty()){
             if (ux.validation(new int[]{R.id.Amount, R.id.Currency, R.id.Wallet, R.id.Note, R.id.ExpenseDate})){
                 if (getRemainingBalance()){
-                    databaseHelper.addNewExpense(new Record(
-                            Integer.parseInt(Amount.getText().toString()),
-                            currencyValue,
-                            recordTypeStr,
-                            categoryTitle.getText().toString(),
-                            walletTitleStr,
-                            walletValue,
-                            Note.getText().toString(),
-                            ExpenseDate.getText().toString()));
-
-                    Toast.makeText(this,getResources().getString(R.string.data_saved_successfully),Toast.LENGTH_LONG).show();
-                    startActivity(new Intent(AddNewRecordActivity.this,RecordsActivity.class));
+                    Record record = new Record(Integer.parseInt(Amount.getText().toString()), currencyValue, recordTypeStr, categoryTitle.getText().toString(), walletTitleStr,
+                            walletValue, Note.getText().toString(), ExpenseDate.getText().toString());
+                    new SaveRecord(record).execute();
                 }
                 else{
                     Snackbar.make(mainLayout,getResources().getString(R.string.wallet_amount_exceeds), Snackbar.LENGTH_SHORT).show();
@@ -213,19 +205,9 @@ public class AddNewRecordActivity extends AppCompatActivity implements View.OnCl
         if (!recordTypeStr.isEmpty()){
             if (ux.validation(new int[]{R.id.Amount, R.id.Currency, R.id.Wallet, R.id.Note, R.id.ExpenseDate})){
                 if (getRemainingBalance()){
-                    databaseHelper.updateExpense(new Record(
-                                    Integer.parseInt(Amount.getText().toString()),
-                                    currencyValue,
-                                    recordTypeStr,
-                                    categoryTitle.getText().toString(),
-                                    walletTitleStr,
-                                    walletValue,
-                                    Note.getText().toString(),
-                                    ExpenseDate.getText().toString())
-                            , record.getId());
-
-                    Toast.makeText(this,getResources().getString(R.string.data_updated_successfully),Toast.LENGTH_LONG).show();
-                    startActivity(new Intent(AddNewRecordActivity.this,RecordsActivity.class));
+                    Record updatableRecord = new Record(Integer.parseInt(Amount.getText().toString()), currencyValue, recordTypeStr, categoryTitle.getText().toString(), walletTitleStr,
+                            walletValue, Note.getText().toString(), ExpenseDate.getText().toString());
+                    new UpdateRecord(updatableRecord,record.getId()).execute();
                 }
                 else{
                     Snackbar.make(mainLayout,getResources().getString(R.string.wallet_amount_exceeds), Snackbar.LENGTH_LONG).show();
@@ -368,5 +350,51 @@ public class AddNewRecordActivity extends AppCompatActivity implements View.OnCl
         tools = null;
         ux = null;
         dataManager = null;
+    }
+
+    //AsyncTask for saving data
+    private class SaveRecord extends AsyncTask<Record, Void, Void>{
+        Record record;
+
+        public SaveRecord(Record record) {
+            this.record = record;
+        }
+
+        @Override
+        protected Void doInBackground(Record... records) {
+            databaseHelper.addNewExpense(record);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            Toast.makeText(getApplicationContext(),getResources().getString(R.string.data_saved_successfully),Toast.LENGTH_LONG).show();
+            startActivity(new Intent(AddNewRecordActivity.this,RecordsActivity.class));
+        }
+    }
+
+    //AsyncTask for updating data
+    private class UpdateRecord extends AsyncTask<Record, Void, Void>{
+        Record record;
+        int recordId;
+
+        public UpdateRecord(Record record, int recordId) {
+            this.record = record;
+            this.recordId = recordId;
+        }
+
+        @Override
+        protected Void doInBackground(Record... records) {
+            databaseHelper.updateExpense(record,recordId);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            Toast.makeText(getApplicationContext(),getResources().getString(R.string.data_updated_successfully),Toast.LENGTH_LONG).show();
+            startActivity(new Intent(AddNewRecordActivity.this,RecordsActivity.class));
+        }
     }
 }

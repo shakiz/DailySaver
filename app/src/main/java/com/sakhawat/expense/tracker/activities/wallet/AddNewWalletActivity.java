@@ -3,6 +3,7 @@ package com.sakhawat.expense.tracker.activities.wallet;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -129,16 +130,9 @@ public class AddNewWalletActivity extends AppCompatActivity implements View.OnCl
     private void saveWallet() {
         if (ux.validation(new int[]{R.id.Amount, R.id.Currency, R.id.WalletName, R.id.Note, R.id.ExpiresOn})){
             if (!budgetTypeStr.isEmpty()){
-
-                databaseHelper.addNewWallet(new Wallet(WalletName.getText().toString(),
-                        Integer.parseInt(Amount.getText().toString()),
-                        currencyValue,
-                        ExpiresOn.getText().toString(),
-                        budgetTypeStr,
-                        Note.getText().toString()));
-
-                Toast.makeText(this,getResources().getString(R.string.data_saved_successfully),Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(AddNewWalletActivity.this, DashboardActivity.class));
+                Wallet wallet = new Wallet(WalletName.getText().toString(), Integer.parseInt(Amount.getText().toString()), currencyValue, ExpiresOn.getText().toString(), budgetTypeStr,
+                        Note.getText().toString());
+                new SaveWallet(wallet).execute();
             }
             else {
                 Snackbar.make(mainLayout,getResources().getString(R.string.select_wallet_type),Snackbar.LENGTH_SHORT).show();
@@ -159,6 +153,28 @@ public class AddNewWalletActivity extends AppCompatActivity implements View.OnCl
         startActivity(new Intent(AddNewWalletActivity.this, DashboardActivity.class));
     }
     //end
+
+    //AsyncTask for saving wallet
+    private class SaveWallet extends AsyncTask<Wallet, Void, Void> {
+        Wallet wallet;
+
+        public SaveWallet(Wallet wallet) {
+            this.wallet = wallet;
+        }
+
+        @Override
+        protected Void doInBackground(Wallet... wallets) {
+            databaseHelper.addNewWallet(wallet);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            Toast.makeText(getApplicationContext(),getResources().getString(R.string.data_saved_successfully),Toast.LENGTH_LONG).show();
+            startActivity(new Intent(AddNewWalletActivity.this,DashboardActivity.class));
+        }
+    }
 
     @Override
     public void onClick(View view) {

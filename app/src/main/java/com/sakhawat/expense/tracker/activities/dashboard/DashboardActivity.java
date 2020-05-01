@@ -267,7 +267,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         public void onItemClick(int position, IconPowerMenuItem item) {
             if (position==0){
                 //check for any wallet exist or not
-                if (databaseHelper.getAllWalletItems().getValue().size() == 0){
+                if (databaseHelper.getWalletCount() == 0){
                     ux.showDialog(R.layout.dialog_no_wallet, "No wallet found", new UX.onDialogOkListener() {
                         @Override
                         public void onClick(View dialog, int id) {

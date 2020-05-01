@@ -398,66 +398,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     /**
-     * This method is to get all the costs
-     */
-    public int getAllCost(){
-        int totalCost = 0;
-        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
-        String[] columns = {
-                COLUMN_RECORD_AMOUNT
-        };
-        Cursor cursor = sqLiteDatabase.query(RECORD_TABLE, columns, null, null, null, null, null);
-
-        if (cursor != null){
-            if (cursor.moveToFirst()){
-                do {
-                    totalCost += cursor.getInt(cursor.getColumnIndex(COLUMN_RECORD_AMOUNT));
-                }while (cursor.moveToNext());
-            }
-        }
-        else{
-            totalCost = 0;
-        }
-
-        cursor.close();
-        sqLiteDatabase.close();
-        return totalCost;
-    }
-
-    /**
-     * This method is to all cost for a single month
-     *
-     */
-    public int getCostOfMonth(String monthName) {
-        int totalCost = 0;
-        // array of columns to fetch
-        String[] columns = {
-                COLUMN_RECORD_ID,
-                COLUMN_RECORD_AMOUNT,
-                COLUMN_RECORD_DATE
-        };
-        // sorting orders
-        String sortOrder =
-                COLUMN_RECORD_ID + " DESC";
-        SQLiteDatabase db = this.getReadableDatabase();
-
-        String where = "" + COLUMN_RECORD_DATE + " LIKE '%"+ monthName +"%' ";
-
-        Cursor cursor = db.query(RECORD_TABLE, columns, where, null, null, null, sortOrder);
-
-        if (cursor != null){
-            if (cursor.moveToFirst()) {
-                do {
-                    totalCost += cursor.getInt(cursor.getColumnIndex(COLUMN_RECORD_AMOUNT));
-                } while (cursor.moveToNext());
-            }
-        }
-        cursor.close();
-        db.close();
-        return totalCost;
-    }
-
-    /**
      * This method is to all cost based on month and record type [savings or expense]
      * @param monthName
      * @param recordType
@@ -538,6 +478,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cursor.close();
         sqLiteDatabase.close();
 
+        if (count > 0){
+            return count;
+        }
+        else return 0;
+    }
+
+    /**
+     * This method is to get count of wallrt
+     */
+    public float getWalletCount() {
+        String countQuery = "SELECT  * FROM " + WALLET_TABLE;
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        Cursor cursor = sqLiteDatabase.rawQuery(countQuery, null);
+        float count = cursor.getCount();
+        cursor.close();
+        sqLiteDatabase.close();
         if (count > 0){
             return count;
         }
