@@ -124,4 +124,8 @@
     <string name="coming">Coming</string>
     <string name="soon">Soon</string>
     <string name="stay_tuned">Stay Tuned</string>
+    <string name="record_shot_details">Record short details</string>
+    <string name="dummy_text">Loren ipsum</string>
+    <string name="record_type">Record Type</string>
+    <string name="expense_date">Expense Date</string>
 </resources>

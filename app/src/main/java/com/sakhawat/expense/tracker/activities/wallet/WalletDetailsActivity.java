@@ -116,7 +116,12 @@ public class WalletDetailsActivity extends AppCompatActivity {
             monthlyExpenseAdapter = new MonthlyExpenseAdapter(allRecordItems, this,new MonthlyExpenseAdapter.onItemClick() {
                 @Override
                 public void itemClick(Record record) {
+                    ux.showRecordDetailsDialog(R.layout.dialog_record_short_details, record, new UX.onDialogOkListener() {
+                        @Override
+                        public void onClick(View dialog, int id) {
 
+                        }
+                    });
                 }
             });
             recyclerView.setLayoutManager(new LinearLayoutManager(this));

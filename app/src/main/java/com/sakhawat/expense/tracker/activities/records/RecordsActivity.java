@@ -128,7 +128,7 @@ public class RecordsActivity extends AppCompatActivity {
         MonthlyExpenseAdapter monthlyExpenseAdapter = new MonthlyExpenseAdapter(recordList, this,new MonthlyExpenseAdapter.onItemClick() {
             @Override
             public void itemClick(Record record) {
-                startActivity(new Intent(RecordsActivity.this, AddNewRecordActivity.class).putExtra("expense", record).putExtra("from","record"));
+                startActivity(new Intent(RecordsActivity.this, AddNewRecordActivity.class).putExtra("record", record).putExtra("from","record"));
             }
         });
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

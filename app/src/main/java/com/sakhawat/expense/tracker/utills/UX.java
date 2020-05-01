@@ -24,6 +24,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import com.sakhawat.expense.tracker.R;
+import com.sakhawat.expense.tracker.models.record.Record;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
@@ -308,6 +309,41 @@ public class UX {
             public void onClick(View v) {
                 dialog.dismiss();
                 dialog.cancel();
+            }
+        });
+    }
+
+    public void showRecordDetailsDialog(int layout, Record record, onDialogOkListener okListener) {
+        final onDialogOkListener onDialogOkListener = okListener;
+        final View dialogView = View.inflate(context, layout, null);
+        TextView WalletTitle,Category,RecordType,Amount,Note,ExpenseDate;
+
+        final Dialog dialog = new Dialog(context);
+        dialog.setContentView(dialogView);
+        WalletTitle = dialog.findViewById(R.id.WalletTitle);
+        Category = dialog.findViewById(R.id.Category);
+        RecordType = dialog.findViewById(R.id.RecordType);
+        Amount = dialog.findViewById(R.id.Amount);
+        Note = dialog.findViewById(R.id.Note);
+        ExpenseDate = dialog.findViewById(R.id.ExpenseDate);
+
+        if (dialog != null){
+            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+            WalletTitle.setText(record.getWalletTitle());
+            Category.setText(record.getCategory());
+            RecordType.setText(record.getRecordType());
+            Amount.setText(String.valueOf(record.getAmount()));
+            Note.setText(record.getNote());
+            ExpenseDate.setText(record.getExpenseDate());
+        }
+
+        dialog.show();
+
+        dialogView.findViewById(R.id.OkButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onDialogOkListener.onClick(view, view.getId());
+                dialog.dismiss();
             }
         });
     }

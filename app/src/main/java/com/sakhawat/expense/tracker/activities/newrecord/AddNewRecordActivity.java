@@ -69,7 +69,7 @@ public class AddNewRecordActivity extends AppCompatActivity implements View.OnCl
         ux.setSpinnerAdapter(dataManager.getWalletTitle(""),walletSpinner);
 
         //Check for pref data
-        if (getIntent().getSerializableExtra("expense") != null){
+        if (getIntent().getSerializableExtra("record") != null){
             loadRecord();
         }
 
@@ -258,20 +258,22 @@ public class AddNewRecordActivity extends AppCompatActivity implements View.OnCl
 
     //Load pref data
     private void loadRecord() {
-        record = (Record) getIntent().getSerializableExtra("expense");
-        loadRadioGroupData();
-        ux.setSpinnerAdapter(dataManager.getWalletTitle(record.getRecordType()),walletSpinner);
-        walletValue = record.getWalletId();
-        walletTitleStr = record.getWalletTitle();
-        categoryTitle.setText(record.getCategory());
-        setTypeIcon(categoryIcon, record.getCategory());
-        Amount.setText(""+ record.getAmount());
-        Note.setText(record.getNote());
-        ExpenseDate.setText(record.getExpenseDate());
-        currencySpinner.setSelection(record.getWalletId(), true);
-        currencyValue = record.getCurrency();
-        walletSpinner.setSelection(record.getWalletId(), true);
-        addOrUpdate.setText(getResources().getString(R.string.update));
+        record = (Record) getIntent().getSerializableExtra("record");
+        if (record != null) {
+            loadRadioGroupData();
+            ux.setSpinnerAdapter(dataManager.getWalletTitle(record.getRecordType()),walletSpinner);
+            walletValue = record.getWalletId();
+            walletTitleStr = record.getWalletTitle();
+            categoryTitle.setText(record.getCategory());
+            setTypeIcon(categoryIcon, record.getCategory());
+            Amount.setText(""+ record.getAmount());
+            Note.setText(record.getNote());
+            ExpenseDate.setText(record.getExpenseDate());
+            currencySpinner.setSelection(record.getWalletId(), true);
+            currencyValue = record.getCurrency();
+            walletSpinner.setSelection(record.getWalletId(), true);
+            addOrUpdate.setText(getResources().getString(R.string.update));
+        }
     }
 
     //Set category icon
