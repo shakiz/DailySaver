@@ -11,6 +11,7 @@ import android.icu.text.SimpleDateFormat;
 import android.os.Build;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
@@ -66,9 +67,12 @@ public class UX {
      */
     public void getLoadingView(){
         loadingDialog.setContentView(R.layout.loading_layout);
+        loadingDialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+        loadingDialog.getWindow().setDimAmount(0.6f);
         if (loadingDialog != null) {
             loadingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         }
+
         loadingDialog.setCanceledOnTouchOutside(false);
         loadingDialog.show();
     }
