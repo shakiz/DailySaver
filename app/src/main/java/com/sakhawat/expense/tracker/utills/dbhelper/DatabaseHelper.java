@@ -66,6 +66,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(DROP_WALLET_TABLE);
     }
 
+    private static DatabaseHelper instance;
+
+    public static synchronized DatabaseHelper getHelper(Context context)
+    {
+        if (instance == null)
+            instance = new DatabaseHelper(context);
+        return instance;
+    }
+
     /**
      * This method is to create EXPENSE record
      *

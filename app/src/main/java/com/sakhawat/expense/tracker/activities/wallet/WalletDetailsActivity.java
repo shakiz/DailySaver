@@ -68,7 +68,7 @@ public class WalletDetailsActivity extends AppCompatActivity {
         mainLayout = findViewById(R.id.home_layout);
         ux = new UX(this, mainLayout);
         tools = new Tools(this);
-        databaseHelper = new DatabaseHelper(this);
+        databaseHelper = DatabaseHelper.getHelper(this);
     }
 
     //load wallet record

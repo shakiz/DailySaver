@@ -77,7 +77,7 @@ public class AddNewWalletActivity extends AppCompatActivity implements View.OnCl
         clear = findViewById(R.id.clear);
         ux = new UX(this, mainLayout);
         tools = new Tools(this);
-        databaseHelper = new DatabaseHelper(this);
+        databaseHelper = DatabaseHelper.getHelper(this);
         spinnerData = new DataManager(this);
     }
 

@@ -67,7 +67,7 @@ public class RecordsActivity extends AppCompatActivity {
         noDataGif = findViewById(R.id.NoDataGif);
         addNew = findViewById(R.id.add);
         mainLayout = findViewById(R.id.mainLayout);
-        databaseHelper = new DatabaseHelper(this);
+        databaseHelper = DatabaseHelper.getHelper(this);
         tools = new Tools(this);
         ux = new UX(this, mainLayout);
     }

@@ -63,7 +63,7 @@ public class RecordsReportActivity extends AppCompatActivity {
         TotalExpense = findViewById(R.id.TotalExpense);
         tools = new Tools(this);
         dataManager = new DataManager(this);
-        databaseHelper = new DatabaseHelper(this);
+        databaseHelper = DatabaseHelper.getHelper(this);
         chart = new Chart(this);
     }
 

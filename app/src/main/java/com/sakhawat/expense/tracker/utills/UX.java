@@ -59,7 +59,6 @@ public class UX {
                 else context.startActivity(new Intent(from, to).putExtra(key,value));
             }
         });
-        //((AppCompatActivity) context).getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_left_arrow);
     }
 
     /**

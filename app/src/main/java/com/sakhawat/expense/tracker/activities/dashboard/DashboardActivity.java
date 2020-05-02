@@ -49,7 +49,6 @@ import com.skydoves.powermenu.OnMenuItemClickListener;
 import com.yarolegovich.discretescrollview.DiscreteScrollView;
 import com.yarolegovich.discretescrollview.transform.ScaleTransformer;
 import java.util.ArrayList;
-import java.util.List;
 import pl.droidsonroids.gif.GifImageView;
 
 public class DashboardActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -106,7 +105,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         noDataGif = findViewById(R.id.NoDataGif);
         tools = new Tools(this);
         dataManager = new DataManager(this);
-        databaseHelper = new DatabaseHelper(this);
+        databaseHelper = DatabaseHelper.getHelper(this);
         ux = new UX(this, mainLayout);
         chart = new Chart(this);
     }
@@ -358,16 +357,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         switch (id) {
             //for item menu generate invoice
             case R.id.report:
-                if (databaseHelper.getTotalWalletBalance() > 0) {
-                    startActivity(new Intent(DashboardActivity.this, RecordsReportActivity.class));
-                } else {
-                    ux.showDialog(R.layout.dialog_no_expense_wallet, "No expense wallet found", new UX.onDialogOkListener() {
-                        @Override
-                        public void onClick(View dialog, int id) {
-                            startActivity(new Intent(DashboardActivity.this, AddNewWalletActivity.class).putExtra("from","main"));
-                        }
-                    });
-                }
+                startActivity(new Intent(DashboardActivity.this, RecordsReportActivity.class));
                 drawerLayout.closeDrawer(GravityCompat.START);
                 return true;
             case R.id.records:
@@ -386,7 +376,6 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
                 ux.showDialog(R.layout.about_developer, "About Developer", new UX.onDialogOkListener() {
                     @Override
                     public void onClick(View dialog, int id) {
-
                     }
                 });
                 drawerLayout.closeDrawer(GravityCompat.START);

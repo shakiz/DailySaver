@@ -24,6 +24,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.sakhawat.expense.tracker.activities.dashboard.DashboardActivity;
 import com.sakhawat.expense.tracker.activities.records.RecordsActivity;
 import com.sakhawat.expense.tracker.adapters.category.CategoryRecyclerAdapter;
@@ -106,7 +107,7 @@ public class AddNewRecordActivity extends AppCompatActivity implements View.OnCl
         clear = findViewById(R.id.clear);
         ux = new UX(this,mainLayout);
         tools = new Tools(this);
-        databaseHelper = new DatabaseHelper(this);
+        databaseHelper = DatabaseHelper.getHelper(this);
         dataManager = new DataManager(this);
     }
 
@@ -185,13 +186,18 @@ public class AddNewRecordActivity extends AppCompatActivity implements View.OnCl
     private void saveExpense(){
         if (!recordTypeStr.isEmpty()){
             if (ux.validation(new int[]{R.id.Amount, R.id.Currency, R.id.Wallet, R.id.Note, R.id.ExpenseDate})){
-                if (getRemainingBalance()){
-                    Record record = new Record(Integer.parseInt(Amount.getText().toString()), currencyValue, recordTypeStr, categoryTitle.getText().toString(), walletTitleStr,
-                            walletValue, Note.getText().toString(), ExpenseDate.getText().toString());
-                    new SaveRecord(record).execute();
+                if (!walletTitleStr.equals("No Data") && !walletTitleStr.equals("Select Wallet")) {
+                    if (getRemainingBalance()){
+                        Record record = new Record(Integer.parseInt(Amount.getText().toString()), currencyValue, recordTypeStr, categoryTitle.getText().toString(), walletTitleStr,
+                                walletValue, Note.getText().toString(), ExpenseDate.getText().toString());
+                        new SaveRecord(record).execute();
+                    }
+                    else{
+                        Snackbar.make(mainLayout,getResources().getString(R.string.wallet_amount_exceeds), Snackbar.LENGTH_SHORT).show();
+                    }
                 }
                 else{
-                    Snackbar.make(mainLayout,getResources().getString(R.string.wallet_amount_exceeds), Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(mainLayout,R.string.select_wallet, BaseTransientBottomBar.LENGTH_SHORT).show();
                 }
             }
         }
@@ -204,13 +210,17 @@ public class AddNewRecordActivity extends AppCompatActivity implements View.OnCl
 
         if (!recordTypeStr.isEmpty()){
             if (ux.validation(new int[]{R.id.Amount, R.id.Currency, R.id.Wallet, R.id.Note, R.id.ExpenseDate})){
-                if (getRemainingBalance()){
-                    Record updatableRecord = new Record(Integer.parseInt(Amount.getText().toString()), currencyValue, recordTypeStr, categoryTitle.getText().toString(), walletTitleStr,
-                            walletValue, Note.getText().toString(), ExpenseDate.getText().toString());
-                    new UpdateRecord(updatableRecord,record.getId()).execute();
-                }
-                else{
-                    Snackbar.make(mainLayout,getResources().getString(R.string.wallet_amount_exceeds), Snackbar.LENGTH_LONG).show();
+                if (!walletTitleStr.equals("No Data") && !walletTitleStr.equals("Select Wallet")) {
+                    if (getRemainingBalance()){
+                        Record updatableRecord = new Record(Integer.parseInt(Amount.getText().toString()), currencyValue, recordTypeStr, categoryTitle.getText().toString(), walletTitleStr,
+                                walletValue, Note.getText().toString(), ExpenseDate.getText().toString());
+                        new UpdateRecord(updatableRecord,record.getId()).execute();
+                    }
+                    else{
+                        Snackbar.make(mainLayout,R.string.wallet_amount_exceeds, Snackbar.LENGTH_LONG).show();
+                    }
+                } else {
+                    Snackbar.make(mainLayout,R.string.select_wallet, Snackbar.LENGTH_LONG).show();
                 }
             }
         }
@@ -220,7 +230,7 @@ public class AddNewRecordActivity extends AppCompatActivity implements View.OnCl
 
     //region get selected wallet remaining balance
     private boolean getRemainingBalance(){
-        if (getIntent().getSerializableExtra("expense") != null) {
+        if (getIntent().getSerializableExtra("record") != null) {
             walletValue = record.getWalletId();
         }
         int remaining = databaseHelper.getWalletBalance(walletValue) - databaseHelper.singleWalletTotalCost(walletTitleStr);
