@@ -34,7 +34,7 @@ public class DataManager {
             if (walletTitleList.get(0).equals("No Data")){
                 ux.showDialog(R.layout.dialog_no_savings_wallet, "No savings wallet found", new UX.onDialogOkListener() {
                     @Override
-                    public void onClick(View dialog, int id) {
+                    public void onClick() {
                         context.startActivity(new Intent(context, AddNewWalletActivity.class).putExtra("from","newRecord"));
                     }
                 });

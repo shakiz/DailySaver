@@ -83,7 +83,7 @@
 
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_weight="1.4"
+                android:layout_weight="1.2"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="4dp"
                 android:layout_marginRight="4dp"
@@ -212,7 +212,7 @@
 
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_weight=".8"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="8dp"
                 android:layout_gravity="center"
@@ -254,37 +254,6 @@
                         android:textStyle="bold" />
 
                 </LinearLayout>
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:visibility="gone"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="4dp"
-                    android:gravity="center">
-
-                    <ImageView
-                        android:src="@drawable/ic_expiry_date"
-                        android:layout_width="16dp"
-                        android:layout_height="16dp"
-                        android:layout_gravity="center"/>
-
-                    <TextView
-                        android:id="@+id/ExpiresOn"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/date_hint"
-                        android:layout_marginLeft="4dp"
-                        android:layout_marginRight="4dp"
-                        android:ellipsize="end"
-                        android:maxLines="2"
-                        android:textColor="@color/md_grey_600"
-                        android:textSize="14sp"/>
-
-                </LinearLayout>
-
 
             </LinearLayout>
 

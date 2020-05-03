@@ -353,15 +353,6 @@ public class AddNewRecordActivity extends AppCompatActivity implements View.OnCl
         overridePendingTransition(R.anim.fadein,R.anim.push_up_out);
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        databaseHelper = null;
-        tools = null;
-        ux = null;
-        dataManager = null;
-    }
-
     //AsyncTask for saving data
     private class SaveRecord extends AsyncTask<Record, Void, Void>{
         Record record;
@@ -406,5 +397,16 @@ public class AddNewRecordActivity extends AppCompatActivity implements View.OnCl
             Toast.makeText(getApplicationContext(),getResources().getString(R.string.data_updated_successfully),Toast.LENGTH_LONG).show();
             startActivity(new Intent(AddNewRecordActivity.this,RecordsActivity.class));
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (databaseHelper != null) {
+            databaseHelper.close();
+        }
+        tools = null;
+        ux = null;
+        dataManager = null;
     }
 }

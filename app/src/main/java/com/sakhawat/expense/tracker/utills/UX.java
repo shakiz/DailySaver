@@ -302,7 +302,7 @@ public class UX {
         dialogView.findViewById(R.id.OkButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onDialogOkListener.onClick(view, view.getId());
+                onDialogOkListener.onClick();
                 dialog.dismiss();
             }
         });
@@ -345,14 +345,14 @@ public class UX {
         dialogView.findViewById(R.id.OkButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onDialogOkListener.onClick(view, view.getId());
+                onDialogOkListener.onClick();
                 dialog.dismiss();
             }
         });
     }
 
     public interface onDialogOkListener {
-        void onClick(View dialog, int id);
+        void onClick();
     }
     //region end for custom dialog
 

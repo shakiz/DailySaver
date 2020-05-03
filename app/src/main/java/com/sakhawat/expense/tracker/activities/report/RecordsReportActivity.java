@@ -153,7 +153,9 @@ public class RecordsReportActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        databaseHelper = null;
+        if (databaseHelper != null) {
+            databaseHelper.close();
+        }
         tools = null;
         ux = null;
         dataManager = null;

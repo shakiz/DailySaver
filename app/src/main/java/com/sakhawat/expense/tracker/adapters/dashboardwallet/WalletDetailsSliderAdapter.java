@@ -61,8 +61,6 @@ public class WalletDetailsSliderAdapter extends RecyclerView.Adapter<WalletDetai
             viewHolder.RemainingHeading.setText("Total Amount");
             viewHolder.WalletType.setTextColor(context.getResources().getColor(R.color.md_green_600));
         }
-
-        viewHolder.ExpiresOn.setText(itemModel.getExpiresOn());
         //setting the progress details
         setProgressData(itemModel,databaseHelper.singleWalletTotalCost(walletName),viewHolder.RemainingBalance);
         viewHolder.TotalCost.setText(""+databaseHelper.singleWalletTotalCost(walletName));
@@ -85,7 +83,7 @@ public class WalletDetailsSliderAdapter extends RecyclerView.Adapter<WalletDetai
         RemainingBalanceArc.setSuffixText("");
         RemainingBalanceArc.setFinishedStrokeColor(context.getResources().getColor(R.color.md_green_400));
         RemainingBalanceArc.setUnfinishedStrokeColor(context.getResources().getColor(R.color.md_red_400));
-        RemainingBalanceArc.setTextSize(32);
+        RemainingBalanceArc.setTextSize(28);
         RemainingBalanceArc.setBottomText(null);
         RemainingBalanceArc.setTextColor(context.getResources().getColor(R.color.md_grey_600));
         if (wallet.getWalletType().equals("Expense")) {

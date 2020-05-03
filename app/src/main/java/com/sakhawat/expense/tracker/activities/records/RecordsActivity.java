@@ -147,6 +147,8 @@ public class RecordsActivity extends AppCompatActivity {
         super.onDestroy();
         tools = null;
         ux = null;
-        databaseHelper = null;
+        if (databaseHelper != null) {
+            databaseHelper.close();
+        }
     }
 }

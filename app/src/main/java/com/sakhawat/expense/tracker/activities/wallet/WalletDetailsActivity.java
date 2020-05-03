@@ -118,8 +118,7 @@ public class WalletDetailsActivity extends AppCompatActivity {
                 public void itemClick(Record record) {
                     ux.showRecordDetailsDialog(R.layout.dialog_record_short_details, record, new UX.onDialogOkListener() {
                         @Override
-                        public void onClick(View dialog, int id) {
-
+                        public void onClick() {
                         }
                     });
                 }
@@ -139,7 +138,9 @@ public class WalletDetailsActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        databaseHelper = null;
+        if (databaseHelper != null) {
+            databaseHelper.close();
+        }
         tools = null;
         ux = null;
     }

@@ -196,7 +196,9 @@ public class AddNewWalletActivity extends AppCompatActivity implements View.OnCl
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        databaseHelper = null;
+        if (databaseHelper != null) {
+            databaseHelper.close();
+        }
         tools = null;
         ux = null;
     }

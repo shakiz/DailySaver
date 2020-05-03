@@ -71,7 +71,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static synchronized DatabaseHelper getHelper(Context context)
     {
         if (instance == null)
-            instance = new DatabaseHelper(context);
+            instance = new DatabaseHelper(context.getApplicationContext());
         return instance;
     }
 
@@ -81,7 +81,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      * @param record
      */
     public void addNewExpense(Record record) {
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         
         ContentValues values = new ContentValues();
         values.put(COLUMN_RECORD_AMOUNT, record.getAmount());
@@ -94,8 +94,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_RECORD_DATE, record.getExpenseDate());
 
         // Inserting Row
-        db.insert(RECORD_TABLE, null, values);
-        db.close();
+        sqLiteDatabase.insert(RECORD_TABLE, null, values);
     }
 
     /**
@@ -104,7 +103,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      * @param record
      */
     public void updateExpense(Record record, int expenseId) {
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
         values.put(COLUMN_RECORD_AMOUNT, record.getAmount());
@@ -117,8 +116,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_RECORD_DATE, record.getExpenseDate());
 
         // Inserting Row
-        db.update(RECORD_TABLE, values, COLUMN_RECORD_ID+" = "+expenseId, null);
-        db.close();
+        sqLiteDatabase.update(RECORD_TABLE, values, COLUMN_RECORD_ID+" = "+expenseId, null);
     }
 
     /**
@@ -144,17 +142,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 COLUMN_RECORD_ID + " DESC";
         MutableLiveData<ArrayList<Record>> mutableRecordList = new MutableLiveData<ArrayList<Record>>();
         ArrayList<Record> recordList = new ArrayList<>();
-        SQLiteDatabase db = this.getReadableDatabase();
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
 
         Cursor cursor;
 
         Log.v("fromDBWalletName",""+walletName);
         if (TextUtils.isEmpty(walletName)) {
-            cursor = db.query(RECORD_TABLE, columns, null, null, null, null, sortOrder);
+            cursor = sqLiteDatabase.query(RECORD_TABLE, columns, null, null, null, null, sortOrder);
         }
         else {
             String where = "" + COLUMN_RECORD_WALLET + " = '"+ walletName +"'";
-            cursor = db.query(RECORD_TABLE, columns, where, null, null, null, sortOrder);
+            cursor = sqLiteDatabase.query(RECORD_TABLE, columns, where, null, null, null, sortOrder);
         }
 
         if (cursor != null){
@@ -178,7 +176,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         mutableRecordList.postValue(recordList);
         cursor.close();
-        db.close();
         return mutableRecordList;
     }
 
@@ -188,7 +185,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      * @param wallet
      */
     public void addNewWallet(Wallet wallet) {
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
         values.put(COLUMN_WALLET_AMOUNT, wallet.getAmount());
@@ -199,8 +196,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_WALLET_EXPIRES_ON,wallet.getExpiresOn());
 
         // Inserting Row
-        db.insert(WALLET_TABLE, null, values);
-        db.close();
+        sqLiteDatabase.insert(WALLET_TABLE, null, values);
     }
 
     /**
@@ -209,7 +205,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      * @param wallet
      */
     public void updateWallet(Wallet wallet, int walletId) {
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
         values.put(COLUMN_WALLET_TITLE, wallet.getTitle());
@@ -220,8 +216,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_WALLET_TYPE, wallet.getWalletType());
 
         // Inserting Row
-        db.update(WALLET_TABLE, values, COLUMN_WALLET_ID + " = "+walletId, null);
-        db.close();
+        sqLiteDatabase.update(WALLET_TABLE, values, COLUMN_WALLET_ID + " = "+walletId, null);
     }
 
     /**
@@ -244,9 +239,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 COLUMN_WALLET_ID + " DESC";
         MutableLiveData<ArrayList<Wallet>> walletLiveData = new MutableLiveData<ArrayList<Wallet>>();
         ArrayList<Wallet> walletList = new ArrayList<Wallet>();
-        SQLiteDatabase db = this.getReadableDatabase();
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
 
-        Cursor cursor = db.query(WALLET_TABLE, columns, null, null, null, null, sortOrder); //The sort order
+        Cursor cursor = sqLiteDatabase.query(WALLET_TABLE, columns, null, null, null, null, sortOrder); //The sort order
 
         if (cursor != null){
             if (cursor.moveToFirst()) {
@@ -266,8 +261,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             }
         }
         walletLiveData.postValue(walletList);
-        cursor.close();
-        db.close();
+        if (cursor != null) { cursor.close(); }
         return walletLiveData;
     }
 
@@ -308,8 +302,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 walletTitle.add("No Data");
             }
         }
-        cursor.close();
-        sqLiteDatabase.close();
+        if (cursor != null) { cursor.close(); }
         return walletTitle;
     }
 
@@ -340,8 +333,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             totalCost = 0;
         }
 
-        cursor.close();
-        sqLiteDatabase.close();
+        if (cursor != null) { cursor.close(); }
+        if (sqLiteDatabase!=null && sqLiteDatabase.isOpen()){ sqLiteDatabase.close(); }
         return totalCost;
     }
 
@@ -371,8 +364,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             balance = 0;
         }
 
-        cursor.close();
-        sqLiteDatabase.close();
+        if (cursor != null) { cursor.close(); }
         return balance;
     }
 
@@ -401,8 +393,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             totalBalance = 0;
         }
 
-        cursor.close();
-        sqLiteDatabase.close();
+        if (cursor != null) { cursor.close(); }
         return totalBalance;
     }
 
@@ -423,11 +414,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         // sorting orders
         String sortOrder =
                 COLUMN_RECORD_ID + " DESC";
-        SQLiteDatabase db = this.getReadableDatabase();
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
 
         String where = "" + COLUMN_RECORD_DATE + " LIKE '%"+ monthName +"%' and " + COLUMN_RECORD_TYPE + " = '" + recordType + "'";
 
-        Cursor cursor = db.query(RECORD_TABLE, columns, where, null, null, null, sortOrder);
+        Cursor cursor = sqLiteDatabase.query(RECORD_TABLE, columns, where, null, null, null, sortOrder);
 
         if (cursor != null){
             if (cursor.moveToFirst()) {
@@ -439,8 +430,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         else{
             totalCost = 0;
         }
-        cursor.close();
-        db.close();
+        if (cursor != null) { cursor.close(); }
         return totalCost;
     }
 
@@ -451,6 +441,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public int getAllCostBasedOnRecord(String recordType){
         int totalCost = 0;
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        if (!sqLiteDatabase.isOpen()){
+            sqLiteDatabase = this.getReadableDatabase();
+        }
         String[] columns = {
                 COLUMN_RECORD_AMOUNT,
                 COLUMN_RECORD_TYPE
@@ -469,8 +462,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             totalCost = 0;
         }
 
-        cursor.close();
-        sqLiteDatabase.close();
+        if (cursor != null) { cursor.close(); }
         return totalCost;
     }
 
@@ -482,10 +474,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         String countQuery = "SELECT  * FROM " + RECORD_TABLE +" WHERE " + COLUMN_RECORD_CATEGORY +" = '"+categoryLabel+"' ";
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        if (!sqLiteDatabase.isOpen()){
+            sqLiteDatabase = this.getReadableDatabase();
+        }
         Cursor cursor = sqLiteDatabase.rawQuery(countQuery, null);
         float count = cursor.getCount();
-        cursor.close();
-        sqLiteDatabase.close();
+
+        if (cursor != null) { cursor.close(); }
 
         if (count > 0){
             return count;
@@ -501,8 +496,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
         Cursor cursor = sqLiteDatabase.rawQuery(countQuery, null);
         float count = cursor.getCount();
-        cursor.close();
-        sqLiteDatabase.close();
+
+        if (cursor != null) { cursor.close(); }
+
         if (count > 0){
             return count;
         }

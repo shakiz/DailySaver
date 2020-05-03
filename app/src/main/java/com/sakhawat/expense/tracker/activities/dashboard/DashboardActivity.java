@@ -164,7 +164,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
                 .setAnimation(MenuAnimation.SHOW_UP_CENTER)
                 .setMenuRadius(16f) // sets the corner radius.
                 .setMenuShadow(16f) // sets the shadow.
-                .setWidth(800)
+                .setWidth(448)
                 .setCircularEffect(CircularEffect.INNER)
                 .setOnMenuItemClickListener(onMenuItemClickListener)
                 .build();
@@ -187,7 +187,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
                 if (databaseHelper.getWalletCount() == 0){
                     ux.showDialog(R.layout.dialog_no_wallet, "No wallet found", new UX.onDialogOkListener() {
                         @Override
-                        public void onClick(View dialog, int id) {
+                        public void onClick() {
                             startActivity(new Intent(DashboardActivity.this, AddNewWalletActivity.class).putExtra("from","main"));
                         }
                     });
@@ -367,7 +367,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
             case R.id.note:
                 ux.showDialog(R.layout.dialog_coming_soon, "Coming Soon ......", new UX.onDialogOkListener() {
                     @Override
-                    public void onClick(View dialog, int id) {
+                    public void onClick() {
                     }
                 });
                 drawerLayout.closeDrawer(GravityCompat.START);
@@ -375,7 +375,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
             case R.id.about:
                 ux.showDialog(R.layout.about_developer, "About Developer", new UX.onDialogOkListener() {
                     @Override
-                    public void onClick(View dialog, int id) {
+                    public void onClick() {
                     }
                 });
                 drawerLayout.closeDrawer(GravityCompat.START);
@@ -405,7 +405,9 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        databaseHelper = null;
+        if (databaseHelper != null) {
+            databaseHelper.close();
+        }
         tools = null;
         ux = null;
         dataManager = null;
