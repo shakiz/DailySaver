@@ -129,4 +129,7 @@
     <string name="record_type">Record Type</string>
     <string name="expense_date">Expense Date</string>
     <string name="loading">Loading</string>
+    <string name="update_wallet_information">Update Walleyt information</string>
+    <string name="update_wallet_information_details">You are going to update wallet details.</string>
+    <string name="want_to_update_wallet">Do you want to update wallet information?</string>
 </resources>

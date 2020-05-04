@@ -83,7 +83,7 @@ public class WalletDetailsSliderAdapter extends RecyclerView.Adapter<WalletDetai
         RemainingBalanceArc.setSuffixText("");
         RemainingBalanceArc.setFinishedStrokeColor(context.getResources().getColor(R.color.md_green_400));
         RemainingBalanceArc.setUnfinishedStrokeColor(context.getResources().getColor(R.color.md_red_400));
-        RemainingBalanceArc.setTextSize(28);
+        RemainingBalanceArc.setTextSize(24);
         RemainingBalanceArc.setBottomText(null);
         RemainingBalanceArc.setTextColor(context.getResources().getColor(R.color.md_grey_600));
         if (wallet.getWalletType().equals("Expense")) {

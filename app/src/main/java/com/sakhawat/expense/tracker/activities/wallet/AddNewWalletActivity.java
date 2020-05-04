@@ -38,8 +38,9 @@ public class AddNewWalletActivity extends AppCompatActivity implements View.OnCl
     private Tools tools;
     private DataManager spinnerData;
     private DatabaseHelper databaseHelper;
-    private RadioGroup TransactionType;
+    private RadioGroup RecordType;
     private Button add, clear;
+    private Wallet wallet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,11 +48,6 @@ public class AddNewWalletActivity extends AppCompatActivity implements View.OnCl
         setContentView(R.layout.activity_add_new_wallet);
 
         init();
-
-        //check for intent to navigate toolbar onBackEventClick
-        if (getIntent().getStringExtra("from").equals("record")) ux.setToolbar(toolbar,this,RecordsActivity.class,"","");
-        else if (getIntent().getStringExtra("from").equals("newRecord")) ux.setToolbar(toolbar,this, AddNewRecordActivity.class,"from","wallet");
-        else if (getIntent().getStringExtra("from").equals("main")) ux.setToolbar(toolbar,this, DashboardActivity.class,"","");
 
         //load animation with activity UI
         if (getSupportActionBar() != null) {
@@ -61,6 +57,44 @@ public class AddNewWalletActivity extends AppCompatActivity implements View.OnCl
 
         // all the user interactions
         bindUiWithComponents();
+
+        //check for any intent data
+        if (getIntent().getSerializableExtra("wallet") != null){
+            loadWalletRecord();
+        }
+
+        //check for intent to navigate toolbar onBackEventClick
+        if (getIntent().getStringExtra("from").equals("record")) ux.setToolbar(toolbar,this,RecordsActivity.class,"","");
+        else if (getIntent().getStringExtra("from").equals("newRecord")) ux.setToolbar(toolbar,this, AddNewRecordActivity.class,"from","wallet");
+        else if (getIntent().getStringExtra("from").equals("walletDetails")) ux.setToolbar(toolbar,this, WalletDetailsActivity.class,"wallet",wallet);
+        else if (getIntent().getStringExtra("from").equals("main")) ux.setToolbar(toolbar,this, DashboardActivity.class,"","");
+    }
+
+    private void loadWalletRecord() {
+        wallet = (Wallet) getIntent().getSerializableExtra("wallet");
+        if (wallet != null){
+            Amount.setText(String.valueOf(wallet.getAmount()));
+            WalletName.setText(wallet.getTitle());
+            Note.setText(wallet.getNote());
+            ExpiresOn.setText(wallet.getExpiresOn());
+            currencySpinner.setSelection(wallet.getCurrency(), true);
+            loadRadioGroupData();
+            add.setText(getText(R.string.update));
+        }
+    }
+
+    //load the radioGroup of recordType data
+    private void loadRadioGroupData(){
+        budgetTypeStr = wallet.getWalletType();
+        for (int i = 0; i < RecordType.getChildCount() ; i++) {
+            RadioButton radioButton = (RadioButton) RecordType.getChildAt(i);
+            if (radioButton.getTag() != null) {
+                if(radioButton.getTag().equals(wallet.getWalletType())) {
+                    radioButton.setChecked(true);
+                    return;
+                }
+            }
+        }
     }
 
     //will init all the components and new instances
@@ -69,7 +103,7 @@ public class AddNewWalletActivity extends AppCompatActivity implements View.OnCl
         mainLayout = findViewById(R.id.home_layout);
         Amount = findViewById(R.id.Amount);
         WalletName = findViewById(R.id.WalletName);
-        TransactionType = findViewById(R.id.TransactionType);
+        RecordType = findViewById(R.id.TransactionType);
         Note = findViewById(R.id.Note);
         ExpiresOn = findViewById(R.id.ExpiresOn);
         currencySpinner = findViewById(R.id.Currency);
@@ -100,7 +134,11 @@ public class AddNewWalletActivity extends AppCompatActivity implements View.OnCl
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                saveWallet();
+                if (wallet != null) {
+                    updateWallet();
+                } else {
+                    saveWallet();
+                }
             }
         });
 
@@ -113,7 +151,7 @@ public class AddNewWalletActivity extends AppCompatActivity implements View.OnCl
         });
 
         //transactionType or recordType change listener
-        TransactionType.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+        RecordType.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 int selectedRadio = group.getCheckedRadioButtonId();
@@ -135,22 +173,23 @@ public class AddNewWalletActivity extends AppCompatActivity implements View.OnCl
                 new SaveWallet(wallet).execute();
             }
             else {
-                Snackbar.make(mainLayout,getResources().getString(R.string.select_wallet_type),Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(mainLayout,getText(R.string.select_wallet_type),Snackbar.LENGTH_SHORT).show();
             }
         }
     }
 
     //Update expense
     private void updateWallet() {
-        databaseHelper.updateWallet(new Wallet(WalletName.getText().toString(),
-                Integer.parseInt(Amount.getText().toString()),
-                currencyValue,
-                ExpiresOn.getText().toString(),
-                budgetTypeStr,
-                Note.getText().toString())
-                ,0);
-        Toast.makeText(this,getResources().getString(R.string.data_updated_successfully),Toast.LENGTH_LONG).show();
-        startActivity(new Intent(AddNewWalletActivity.this, DashboardActivity.class));
+        if (ux.validation(new int[]{R.id.Amount, R.id.Currency, R.id.WalletName, R.id.Note, R.id.ExpiresOn})){
+            if (!budgetTypeStr.isEmpty()){
+                Wallet updatableWallet = new Wallet(WalletName.getText().toString(), Integer.parseInt(Amount.getText().toString()), currencyValue, ExpiresOn.getText().toString(), budgetTypeStr,
+                        Note.getText().toString());
+                new UpdateWallet(updatableWallet, wallet.getId()).execute();
+            }
+            else {
+                Snackbar.make(mainLayout,getText(R.string.select_wallet_type),Snackbar.LENGTH_SHORT).show();
+            }
+        }
     }
     //end
 
@@ -171,8 +210,32 @@ public class AddNewWalletActivity extends AppCompatActivity implements View.OnCl
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            Toast.makeText(getApplicationContext(),getResources().getString(R.string.data_saved_successfully),Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(),getText(R.string.data_saved_successfully),Toast.LENGTH_LONG).show();
             startActivity(new Intent(AddNewWalletActivity.this,DashboardActivity.class));
+        }
+    }
+
+    //AsyncTask for updating wallet
+    private class UpdateWallet extends AsyncTask<Wallet, Void, Void> {
+        Wallet wallet;
+        int walletId;
+
+        public UpdateWallet(Wallet wallet, int walletId) {
+            this.wallet = wallet;
+            this.walletId = walletId;
+        }
+
+        @Override
+        protected Void doInBackground(Wallet... wallets) {
+            databaseHelper.updateWallet(wallet, walletId);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            Toast.makeText(getApplicationContext(),getText(R.string.data_updated_successfully),Toast.LENGTH_LONG).show();
+            startActivity(new Intent(AddNewWalletActivity.this, WalletDetailsActivity.class).putExtra("wallet",wallet));
         }
     }
 
@@ -190,6 +253,7 @@ public class AddNewWalletActivity extends AppCompatActivity implements View.OnCl
         if (getIntent().getStringExtra("from").equals("record")) startActivity(new Intent(AddNewWalletActivity.this, RecordsActivity.class));
         else if (getIntent().getStringExtra("from").equals("newRecord")) startActivity(new Intent(this, AddNewRecordActivity.class).putExtra("from","wallet"));
         else if (getIntent().getStringExtra("from").equals("home")) startActivity(new Intent(AddNewWalletActivity.this, DashboardActivity.class));
+        else if (getIntent().getStringExtra("from").equals("walletDetails")) startActivity(new Intent(AddNewWalletActivity.this, WalletDetailsActivity.class).putExtra("wallet",wallet));
         overridePendingTransition(R.anim.fadein,R.anim.push_up_out);
     }
 

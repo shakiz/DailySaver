@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="12dp"
+    android:elevation="0dp"
+    app:cardElevation="0dp"
+    app:cardBackgroundColor="@color/md_white_1000"
+    android:layout_margin="0dp"
+    android:translationZ="0dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/MessageLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/md_blue_grey_400"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_info"
+                android:layout_marginTop="8dp"
+                android:layout_gravity="center" />
+
+            <TextView
+                android:id="@+id/DialogMessage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textColor="@color/md_white_1000"
+                android:textSize="16sp"
+                android:text="@string/update_wallet_information"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/Heading1"
+            android:layout_below="@id/MessageLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center|left"
+            android:padding="4dp"
+            android:textSize="14sp"
+            android:textColor="@color/md_blue_grey_800"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="4dp"
+            android:text="@string/update_wallet_information_details"/>
+
+        <TextView
+            android:layout_below="@id/Heading1"
+            android:id="@+id/Heading2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center|left"
+            android:padding="4dp"
+            android:textSize="14sp"
+            android:textColor="@color/md_green_700"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="4dp"
+            android:text="@string/want_to_update_wallet"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="4dp"
+            android:layout_below="@id/Heading2"
+            android:gravity="center|right"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/CancelButton"
+                android:layout_width="64dp"
+                android:layout_height="40dp"
+                android:text="@string/cancel"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
+                android:textColor="@color/md_white_1000"
+                android:layout_marginRight="16dp"
+                android:clickable="true"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:background="@drawable/button_shape_round_corner_cancel"
+                android:textAllCaps="false"/>
+
+            <Button
+                android:id="@+id/OkButton"
+                android:layout_width="64dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
+                android:layout_marginRight="12dp"
+                android:textColor="@color/md_white_1000"
+                android:clickable="true"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:background="@drawable/button_shape_round_corner_ok"
+                android:text="@string/ok"
+                android:textAllCaps="false"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

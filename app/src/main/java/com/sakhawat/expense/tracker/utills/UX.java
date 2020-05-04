@@ -26,6 +26,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import com.sakhawat.expense.tracker.R;
 import com.sakhawat.expense.tracker.models.record.Record;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
@@ -56,6 +57,22 @@ public class UX {
             @Override
             public void onClick(View v) {
                 if (TextUtils.isEmpty(key) && TextUtils.isEmpty(value)) context.startActivity(new Intent(from, to));
+                else context.startActivity(new Intent(from, to).putExtra(key,value));
+            }
+        });
+    }
+
+    /**
+     * This method will set the Toolbar
+     *
+     * @param toolbar,from,to
+     */
+    public void setToolbar(Toolbar toolbar, final Activity from, final Class to, final String key, final Serializable value){
+        ((AppCompatActivity) context).setSupportActionBar(toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (TextUtils.isEmpty(key) && value == null) context.startActivity(new Intent(from, to));
                 else context.startActivity(new Intent(from, to).putExtra(key,value));
             }
         });

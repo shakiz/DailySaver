@@ -33,6 +33,7 @@ public class WalletDetailsActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private DatabaseHelper databaseHelper;
     private ImageView editButton;
+    private Wallet wallet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +69,7 @@ public class WalletDetailsActivity extends AppCompatActivity {
         CurrentBalance = findViewById(R.id.CurrentBalance);
         toolbar = findViewById(R.id.tool_bar);
         mainLayout = findViewById(R.id.home_layout);
+        editButton = findViewById(R.id.editIcon);
         ux = new UX(this, mainLayout);
         tools = new Tools(this);
         databaseHelper = DatabaseHelper.getHelper(this);
@@ -75,7 +77,7 @@ public class WalletDetailsActivity extends AppCompatActivity {
 
     //load wallet record
     private void loadRecord() {
-        Wallet wallet = (Wallet) getIntent().getSerializableExtra("wallet");
+        wallet = (Wallet) getIntent().getSerializableExtra("wallet");
         walletName = wallet.getTitle();
         if (wallet.getWalletType().equals("Savings")){
             CostHeading.setText("Additional Savings");
@@ -103,6 +105,18 @@ public class WalletDetailsActivity extends AppCompatActivity {
                         noDataGif.setVisibility(View.VISIBLE);
                     }
                 }
+            }
+        });
+
+        editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ux.showDialog(R.layout.dialog_update_confirmation, getResources().getString(R.string.update_wallet_information),new UX.onDialogOkListener() {
+                    @Override
+                    public void onClick() {
+                        startActivity(new Intent(WalletDetailsActivity.this, AddNewWalletActivity.class).putExtra("from","walletDetails").putExtra("wallet",wallet));
+                    }
+                });
             }
         });
     }
