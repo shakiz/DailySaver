@@ -50,7 +50,7 @@ public class RecordsActivity extends AppCompatActivity {
         init();
         //Set toolbar
         ux.setToolbar(toolbar,RecordsActivity.this, DashboardActivity.class,"","");
-        if (getActionBar() != null) {
+        if (getSupportActionBar() != null) {
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_left_arrow_grey);
         }
         tools.setAnimation(mainLayout);

@@ -54,7 +54,7 @@ public class AddNewWalletActivity extends AppCompatActivity implements View.OnCl
         else if (getIntent().getStringExtra("from").equals("main")) ux.setToolbar(toolbar,this, DashboardActivity.class,"","");
 
         //load animation with activity UI
-        if (getActionBar() != null) {
+        if (getSupportActionBar() != null) {
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_left_arrow_grey);
         }
         tools.setAnimation(mainLayout);

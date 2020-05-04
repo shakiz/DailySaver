@@ -79,7 +79,7 @@ public class AddNewRecordActivity extends AppCompatActivity implements View.OnCl
         if (getIntent().getStringExtra("from").equals("record")) ux.setToolbar(toolbar,this,RecordsActivity.class,"","");
         else ux.setToolbar(toolbar,this, DashboardActivity.class,"","");
 
-        if (getActionBar() != null) {
+        if (getSupportActionBar() != null) {
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_left_arrow_grey);
         }
         tools.setAnimation(mainLayout);

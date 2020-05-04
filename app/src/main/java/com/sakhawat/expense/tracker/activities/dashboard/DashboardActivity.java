@@ -81,10 +81,6 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         init();
 
         setSupportActionBar(toolbar);
-        if (getActionBar() != null) {
-            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_left_arrow_grey);
-        }
-
         tools.setAnimation(mainLayout);
         bindUiWithComponents();
     }
@@ -135,8 +131,8 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         toggle = new ActionBarDrawerToggle(
                 this, drawerLayout, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
-        if (getActionBar() != null) {
-            getActionBar().setDisplayHomeAsUpEnabled(true);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
         toggle.setDrawerIndicatorEnabled(true);
         toggle.syncState();

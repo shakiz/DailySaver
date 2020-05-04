@@ -3,6 +3,7 @@ package com.sakhawat.expense.tracker.activities.wallet;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
@@ -31,6 +32,7 @@ public class WalletDetailsActivity extends AppCompatActivity {
     private Tools tools;
     private RecyclerView recyclerView;
     private DatabaseHelper databaseHelper;
+    private ImageView editButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +47,7 @@ public class WalletDetailsActivity extends AppCompatActivity {
 
         ux.setToolbar(toolbar,this, DashboardActivity.class,"","");
 
-        if (getActionBar() != null) {
+        if (getSupportActionBar() != null) {
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_left_arrow_grey);
         }
         tools.setAnimation(mainLayout);
