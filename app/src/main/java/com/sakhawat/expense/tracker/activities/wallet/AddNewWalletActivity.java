@@ -5,6 +5,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -14,6 +15,8 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.sakhawat.expense.tracker.R;
 import com.sakhawat.expense.tracker.activities.newrecord.AddNewRecordActivity;
 import com.sakhawat.expense.tracker.activities.dashboard.DashboardActivity;
@@ -166,29 +169,61 @@ public class AddNewWalletActivity extends AppCompatActivity implements View.OnCl
 
     //save wallet
     private void saveWallet() {
-        if (ux.validation(new int[]{R.id.Amount, R.id.Currency, R.id.WalletName, R.id.Note, R.id.ExpiresOn})){
-            if (!budgetTypeStr.isEmpty()){
-                Wallet wallet = new Wallet(WalletName.getText().toString(), Integer.parseInt(Amount.getText().toString()), currencyValue, ExpiresOn.getText().toString(), budgetTypeStr,
-                        Note.getText().toString());
-                new SaveWallet(wallet).execute();
+        if (!TextUtils.isEmpty(Amount.getText().toString())){
+            if (!TextUtils.isEmpty(WalletName.getText().toString())){
+                if (!TextUtils.isEmpty(Note.getText().toString())){
+                    if (!budgetTypeStr.isEmpty()){
+                        Wallet wallet = new Wallet(WalletName.getText().toString(), Integer.parseInt(Amount.getText().toString()), currencyValue, ExpiresOn.getText().toString(), budgetTypeStr,
+                                Note.getText().toString());
+                        new SaveWallet(wallet).execute();
+                    }
+                    else {
+                        Snackbar.make(mainLayout,getText(R.string.select_wallet_type),Snackbar.LENGTH_SHORT).show();
+                    }
+                }
+                else {
+                    Note.requestFocus();
+                    Note.setError(getText(R.string.input_validation));
+                }
             }
             else {
-                Snackbar.make(mainLayout,getText(R.string.select_wallet_type),Snackbar.LENGTH_SHORT).show();
+                WalletName.requestFocus();
+                WalletName.setError(getText(R.string.input_validation));
             }
+        }
+        else {
+            Amount.requestFocus();
+            Amount.setError(getText(R.string.input_validation));
         }
     }
 
     //Update expense
     private void updateWallet() {
-        if (ux.validation(new int[]{R.id.Amount, R.id.Currency, R.id.WalletName, R.id.Note, R.id.ExpiresOn})){
-            if (!budgetTypeStr.isEmpty()){
-                Wallet updatableWallet = new Wallet(WalletName.getText().toString(), Integer.parseInt(Amount.getText().toString()), currencyValue, ExpiresOn.getText().toString(), budgetTypeStr,
-                        Note.getText().toString());
-                new UpdateWallet(updatableWallet, wallet.getId()).execute();
+        if (!TextUtils.isEmpty(Amount.getText().toString())){
+            if (!TextUtils.isEmpty(WalletName.getText().toString())){
+                if (!TextUtils.isEmpty(Note.getText().toString())){
+                    if (!budgetTypeStr.isEmpty()){
+                        Wallet updatableWallet = new Wallet(WalletName.getText().toString(), Integer.parseInt(Amount.getText().toString()), currencyValue, ExpiresOn.getText().toString(), budgetTypeStr,
+                                Note.getText().toString());
+                        new UpdateWallet(updatableWallet, wallet.getId()).execute();
+                    }
+                    else {
+                        Snackbar.make(mainLayout,getText(R.string.select_wallet_type),Snackbar.LENGTH_SHORT).show();
+                    }
+                }
+                else {
+                    Note.requestFocus();
+                    Note.setError(getText(R.string.input_validation));
+                }
             }
             else {
-                Snackbar.make(mainLayout,getText(R.string.select_wallet_type),Snackbar.LENGTH_SHORT).show();
+                WalletName.requestFocus();
+                WalletName.setError(getText(R.string.input_validation));
             }
+        }
+        else {
+            Amount.requestFocus();
+            Amount.setError(getText(R.string.input_validation));
         }
     }
     //end
@@ -250,10 +285,10 @@ public class AddNewWalletActivity extends AppCompatActivity implements View.OnCl
 
     @Override
     public void onBackPressed() {
-        if (getIntent().getStringExtra("from").equals("record")) startActivity(new Intent(AddNewWalletActivity.this, RecordsActivity.class));
-        else if (getIntent().getStringExtra("from").equals("newRecord")) startActivity(new Intent(this, AddNewRecordActivity.class));
-        else if (getIntent().getStringExtra("from").equals("main")) startActivity(new Intent(AddNewWalletActivity.this, DashboardActivity.class));
-        else if (getIntent().getStringExtra("from").equals("walletDetails")) startActivity(new Intent(AddNewWalletActivity.this, WalletDetailsActivity.class).putExtra("wallet",wallet));
+        if (getIntent().getStringExtra("from").equals("record")) startActivity(new Intent(this, RecordsActivity.class));
+        else if (getIntent().getStringExtra("from").equals("newRecord")) startActivity(new Intent(this, AddNewRecordActivity.class).putExtra("from","wallet"));
+        else if (getIntent().getStringExtra("from").equals("main")) startActivity(new Intent(this, DashboardActivity.class));
+        else if (getIntent().getStringExtra("from").equals("walletDetails")) startActivity(new Intent(this, WalletDetailsActivity.class).putExtra("wallet",wallet));
         overridePendingTransition(R.anim.fadein,R.anim.push_up_out);
     }
 

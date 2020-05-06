@@ -5,24 +5,16 @@
     android:layout_height="wrap_content"
     android:focusable="true"
     android:layout_gravity="center"
+    android:background="@drawable/rounded_layout"
+    android:layout_margin="4dp"
     android:focusableInTouchMode="true">
 
-    <LinearLayout
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/categoryRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/rounded_layout"
+        android:layout_height="wrap_content"
         android:layout_margin="4dp"
-        android:orientation="vertical">
-
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/categoryRecyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:visibility="visible"/>
-
-    </LinearLayout>
+        android:visibility="visible"/>
 
 </LinearLayout>
 

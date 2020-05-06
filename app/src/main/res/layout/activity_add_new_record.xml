@@ -132,7 +132,6 @@
                             <TextView
                                 android:id="@+id/CategorySelector"
                                 android:layout_width="match_parent"
-                                android:layout_weight="1"
                                 android:layout_height="wrap_content"
                                 android:text="@string/category"
                                 android:tag="CategorySelector"
@@ -175,7 +174,6 @@
                                     android:textColor="@color/md_grey_800"
                                     android:text="@string/category_sample"/>
 
-
                             </LinearLayout>
 
                         </LinearLayout>
@@ -195,7 +193,6 @@
 
                             <TextView
                                 android:layout_width="match_parent"
-                                android:layout_weight="1"
                                 android:layout_height="wrap_content"
                                 android:text="@string/amount"
                                 android:layout_gravity="center"
@@ -244,7 +241,6 @@
 
                             <TextView
                                 android:layout_width="match_parent"
-                                android:layout_weight="1"
                                 android:layout_height="wrap_content"
                                 android:text="@string/currency"
                                 android:layout_gravity="center"

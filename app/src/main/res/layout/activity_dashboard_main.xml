@@ -39,7 +39,6 @@
             </RelativeLayout>
 
             <androidx.cardview.widget.CardView
-                android:layout_below="@id/SliderContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -98,7 +97,6 @@
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/groupedChartLayout"
-                android:layout_below="@id/app_bar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -221,7 +219,6 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/groupedChartLayout"
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:textColor="@color/md_green_600"

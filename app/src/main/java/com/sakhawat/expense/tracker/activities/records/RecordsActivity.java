@@ -130,7 +130,7 @@ public class RecordsActivity extends AppCompatActivity {
                 .setAnimation(MenuAnimation.SHOW_UP_CENTER)
                 .setMenuRadius(16f) // sets the corner radius.
                 .setMenuShadow(16f) // sets the shadow.
-                .setWidth(448)
+                .setWidth(688)
                 .setCircularEffect(CircularEffect.INNER)
                 .setOnMenuItemClickListener(onMenuItemClickListener)
                 .build();

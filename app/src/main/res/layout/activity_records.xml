@@ -33,33 +33,26 @@
         android:layout_height="match_parent"
         android:layout_below="@id/app_bar"
         android:weightSum="2"
+        android:layout_margin="8dp"
         android:orientation="vertical">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="8dp"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
-            <RelativeLayout
+            <include
+                layout="@layout/no_data_layout"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/mRecyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_marginLeft="4dp"
+                tools:listitem="@layout/adapter_layout_generic_expense"
+                android:layout_marginRight="4dp"
+                android:layout_marginBottom="4dp"/>
 
-                <include
-                    layout="@layout/no_data_layout"/>
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/mRecyclerView"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="4dp"
-                    tools:listitem="@layout/adapter_layout_generic_expense"
-                    android:layout_marginRight="4dp"
-                    android:layout_marginBottom="4dp"/>
-
-            </RelativeLayout>
-
-        </LinearLayout>
+        </RelativeLayout>
 
     </LinearLayout>
 

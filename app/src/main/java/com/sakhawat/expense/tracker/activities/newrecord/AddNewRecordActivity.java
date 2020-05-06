@@ -185,57 +185,86 @@ public class AddNewRecordActivity extends AppCompatActivity implements View.OnCl
     //Save expense into DB with validation
     private void saveRecord(){
         if (!recordTypeStr.isEmpty()){
-            if (ux.validation(new int[]{R.id.Amount, R.id.Currency, R.id.Wallet, R.id.Note, R.id.ExpenseDate})){
-                if (!walletTitleStr.equals("No Data") && !walletTitleStr.equals("Select Wallet")) {
-                    Record record = new Record(Integer.parseInt(Amount.getText().toString()), currencyValue, recordTypeStr, categoryTitle.getText().toString(), walletTitleStr,
-                            walletValue, Note.getText().toString(), ExpenseDate.getText().toString());
-                    if (record.getRecordType().equals(getText(R.string.expense))){
-                        if (getRemainingBalance()){
-                            new SaveRecord(record).execute();
+            if (!TextUtils.isEmpty(Amount.getText().toString())){
+                if (!TextUtils.isEmpty(Note.getText().toString())){
+                    if (!walletTitleStr.equals("No Data") && !walletTitleStr.equals("Select Wallet")) {
+                        if (!TextUtils.isEmpty(ExpenseDate.getText().toString())){
+                            Record record = new Record(Integer.parseInt(Amount.getText().toString()), currencyValue, recordTypeStr, categoryTitle.getText().toString(), walletTitleStr,
+                                    walletValue, Note.getText().toString(), ExpenseDate.getText().toString());
+                            if (record.getRecordType().equals(getText(R.string.expense))){
+                                if (getRemainingBalance()){
+                                    new SaveRecord(record).execute();
+                                }
+                                else{
+                                    Snackbar.make(mainLayout,getResources().getString(R.string.wallet_amount_exceeds), Snackbar.LENGTH_SHORT).show();
+                                }
+                            }
+                            else {
+                                new SaveRecord(record).execute();
+                            }
                         }
-                        else{
-                            Snackbar.make(mainLayout,getResources().getString(R.string.wallet_amount_exceeds), Snackbar.LENGTH_SHORT).show();
+                        else {
+                            ExpenseDate.requestFocus();
+                            ExpenseDate.setError(getText(R.string.input_validation));
                         }
-                    }
-                    else {
-                        new SaveRecord(record).execute();
+
+                    } else {
+                        Snackbar.make(mainLayout,R.string.select_wallet, Snackbar.LENGTH_LONG).show();
                     }
                 }
-                else{
-                    Snackbar.make(mainLayout,R.string.select_wallet, BaseTransientBottomBar.LENGTH_SHORT).show();
+                else {
+                    Note.requestFocus();
+                    Note.setError(getText(R.string.input_validation));
                 }
             }
-        }
-        else Snackbar.make(mainLayout,getResources().getString(R.string.select_record_type_error_message),Snackbar.LENGTH_SHORT).show();
+            else {
+                Amount.requestFocus();
+                Amount.setError(getText(R.string.input_validation));
+            }
+        }else Snackbar.make(mainLayout,getResources().getString(R.string.select_record_type_error_message),Snackbar.LENGTH_SHORT).show();
+
     }
     //end
 
     //Update expense
     private void updateRecord() {
-
         if (!recordTypeStr.isEmpty()){
-            if (ux.validation(new int[]{R.id.Amount, R.id.Currency, R.id.Wallet, R.id.Note, R.id.ExpenseDate})){
-                if (!walletTitleStr.equals("No Data") && !walletTitleStr.equals("Select Wallet")) {
-                    Record updatableRecord = new Record(Integer.parseInt(Amount.getText().toString()), currencyValue, recordTypeStr, categoryTitle.getText().toString(), walletTitleStr,
-                            walletValue, Note.getText().toString(), ExpenseDate.getText().toString());
-                    if (record.getRecordType().equals(getText(R.string.expense))){
-                        if (getRemainingBalance()){
-                            new UpdateRecord(updatableRecord,record.getId()).execute();
+            if (!TextUtils.isEmpty(Amount.getText().toString())){
+                if (!TextUtils.isEmpty(Note.getText().toString())){
+                    if (!walletTitleStr.equals("No Data") && !walletTitleStr.equals("Select Wallet")) {
+                        if (!TextUtils.isEmpty(ExpenseDate.getText().toString())){
+                            Record updatableRecord = new Record(Integer.parseInt(Amount.getText().toString()), currencyValue, recordTypeStr, categoryTitle.getText().toString(), walletTitleStr,
+                                    walletValue, Note.getText().toString(), ExpenseDate.getText().toString());
+                            if (record.getRecordType().equals(getText(R.string.expense))){
+                                if (getRemainingBalance()){
+                                    new UpdateRecord(updatableRecord,record.getId()).execute();
+                                }
+                                else{
+                                    Snackbar.make(mainLayout,R.string.wallet_amount_exceeds, Snackbar.LENGTH_LONG).show();
+                                }
+                            }
+                            else{
+                                new UpdateRecord(updatableRecord,record.getId()).execute();
+                            }
                         }
-                        else{
-                            Snackbar.make(mainLayout,R.string.wallet_amount_exceeds, Snackbar.LENGTH_LONG).show();
+                        else {
+                            ExpenseDate.requestFocus();
+                            ExpenseDate.setError(getText(R.string.input_validation));
                         }
+                    } else {
+                        Snackbar.make(mainLayout,R.string.select_wallet, Snackbar.LENGTH_LONG).show();
                     }
-                    else{
-                        new UpdateRecord(updatableRecord,record.getId()).execute();
-                    }
-
-                } else {
-                    Snackbar.make(mainLayout,R.string.select_wallet, Snackbar.LENGTH_LONG).show();
+                }
+                else {
+                    Note.requestFocus();
+                    Note.setError(getText(R.string.input_validation));
                 }
             }
-        }
-        else Snackbar.make(mainLayout,getResources().getString(R.string.select_record_type_error_message),Snackbar.LENGTH_SHORT).show();
+            else {
+                Amount.requestFocus();
+                Amount.setError(getText(R.string.input_validation));
+            }
+        }else Snackbar.make(mainLayout,getResources().getString(R.string.select_record_type_error_message),Snackbar.LENGTH_SHORT).show();
     }
     //end
 
@@ -246,12 +275,7 @@ public class AddNewRecordActivity extends AppCompatActivity implements View.OnCl
         }
         int remaining = databaseHelper.getWalletBalance(walletValue) - databaseHelper.singleWalletTotalCost(walletTitleStr);
         if (!TextUtils.isEmpty(Amount.getText().toString())){
-            if (Integer.parseInt(Amount.getText().toString()) < remaining){
-                return true;
-            }
-            else{
-                return false;
-            }
+            return Integer.parseInt(Amount.getText().toString()) < remaining;
         }
         else {
             return false;
