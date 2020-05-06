@@ -164,10 +164,10 @@ public class AddNewRecordActivity extends AppCompatActivity implements View.OnCl
             @Override
             public void onClick(View view) {
                 if (getIntent().getSerializableExtra("record") != null) {
-                    updateExpense();
+                    updateRecord();
                 }
                 else {
-                    saveExpense();
+                    saveRecord();
                 }
             }
         });
@@ -183,17 +183,22 @@ public class AddNewRecordActivity extends AppCompatActivity implements View.OnCl
     }
 
     //Save expense into DB with validation
-    private void saveExpense(){
+    private void saveRecord(){
         if (!recordTypeStr.isEmpty()){
             if (ux.validation(new int[]{R.id.Amount, R.id.Currency, R.id.Wallet, R.id.Note, R.id.ExpenseDate})){
                 if (!walletTitleStr.equals("No Data") && !walletTitleStr.equals("Select Wallet")) {
-                    if (getRemainingBalance()){
-                        Record record = new Record(Integer.parseInt(Amount.getText().toString()), currencyValue, recordTypeStr, categoryTitle.getText().toString(), walletTitleStr,
-                                walletValue, Note.getText().toString(), ExpenseDate.getText().toString());
-                        new SaveRecord(record).execute();
+                    Record record = new Record(Integer.parseInt(Amount.getText().toString()), currencyValue, recordTypeStr, categoryTitle.getText().toString(), walletTitleStr,
+                            walletValue, Note.getText().toString(), ExpenseDate.getText().toString());
+                    if (record.getRecordType().equals(getText(R.string.expense))){
+                        if (getRemainingBalance()){
+                            new SaveRecord(record).execute();
+                        }
+                        else{
+                            Snackbar.make(mainLayout,getResources().getString(R.string.wallet_amount_exceeds), Snackbar.LENGTH_SHORT).show();
+                        }
                     }
-                    else{
-                        Snackbar.make(mainLayout,getResources().getString(R.string.wallet_amount_exceeds), Snackbar.LENGTH_SHORT).show();
+                    else {
+                        new SaveRecord(record).execute();
                     }
                 }
                 else{
@@ -206,19 +211,25 @@ public class AddNewRecordActivity extends AppCompatActivity implements View.OnCl
     //end
 
     //Update expense
-    private void updateExpense() {
+    private void updateRecord() {
 
         if (!recordTypeStr.isEmpty()){
             if (ux.validation(new int[]{R.id.Amount, R.id.Currency, R.id.Wallet, R.id.Note, R.id.ExpenseDate})){
                 if (!walletTitleStr.equals("No Data") && !walletTitleStr.equals("Select Wallet")) {
-                    if (getRemainingBalance()){
-                        Record updatableRecord = new Record(Integer.parseInt(Amount.getText().toString()), currencyValue, recordTypeStr, categoryTitle.getText().toString(), walletTitleStr,
-                                walletValue, Note.getText().toString(), ExpenseDate.getText().toString());
-                        new UpdateRecord(updatableRecord,record.getId()).execute();
+                    Record updatableRecord = new Record(Integer.parseInt(Amount.getText().toString()), currencyValue, recordTypeStr, categoryTitle.getText().toString(), walletTitleStr,
+                            walletValue, Note.getText().toString(), ExpenseDate.getText().toString());
+                    if (record.getRecordType().equals(getText(R.string.expense))){
+                        if (getRemainingBalance()){
+                            new UpdateRecord(updatableRecord,record.getId()).execute();
+                        }
+                        else{
+                            Snackbar.make(mainLayout,R.string.wallet_amount_exceeds, Snackbar.LENGTH_LONG).show();
+                        }
                     }
                     else{
-                        Snackbar.make(mainLayout,R.string.wallet_amount_exceeds, Snackbar.LENGTH_LONG).show();
+                        new UpdateRecord(updatableRecord,record.getId()).execute();
                     }
+
                 } else {
                     Snackbar.make(mainLayout,R.string.select_wallet, Snackbar.LENGTH_LONG).show();
                 }

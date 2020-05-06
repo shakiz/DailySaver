@@ -327,6 +327,46 @@ public class UX {
         dialogView.findViewById(R.id.CancelButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                onDialogOkListener.onClick();
+                dialog.dismiss();
+                dialog.cancel();
+            }
+        });
+    }
+
+    /**
+     * This method will perform custom dialog functionality
+     *
+     * @param layout,title,okListener
+     */
+    public void showDialog(int layout, String title, onDialogCancelListener cancelListener, onDialogOkListener okListener) {
+        final onDialogOkListener onDialogOkListener = okListener;
+        final onDialogCancelListener onDialogCancelListener = cancelListener;
+        TextView DialogMessage;
+        final View dialogView = View.inflate(context, layout, null);
+
+        final Dialog dialog = new Dialog(context);
+        dialog.setContentView(dialogView);
+
+        if (!TextUtils.isEmpty(title)) dialog.setTitle(title);
+        if (dialog != null) dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+
+        dialog.show();
+
+        DialogMessage = dialogView.findViewById(R.id.DialogMessage);
+        DialogMessage.setText(title);
+        dialogView.findViewById(R.id.OkButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onDialogOkListener.onClick();
+                dialog.dismiss();
+            }
+        });
+
+        dialogView.findViewById(R.id.CancelButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onDialogCancelListener.onClick();
                 dialog.dismiss();
                 dialog.cancel();
             }
@@ -371,6 +411,11 @@ public class UX {
     public interface onDialogOkListener {
         void onClick();
     }
+
+    public interface onDialogCancelListener {
+        void onClick();
+    }
+
     //region end for custom dialog
 
 }

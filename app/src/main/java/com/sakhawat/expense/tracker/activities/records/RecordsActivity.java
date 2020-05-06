@@ -104,13 +104,17 @@ public class RecordsActivity extends AppCompatActivity {
             @Override
             public void onSwiped(@NonNull final RecyclerView.ViewHolder viewHolder, int direction) {
                 final Record record = allRecords.get(viewHolder.getAdapterPosition());
-                ux.showDialog(R.layout.dialog_update_confirmation, "Delete Wallet information", new UX.onDialogOkListener() {
+                ux.showDialog(R.layout.dialog_update_confirmation, "Delete Wallet information", new UX.onDialogCancelListener() {
+                    @Override
+                    public void onClick() {
+                        setBudgetAdapter();
+                    }
+                }, new UX.onDialogOkListener() {
                     @Override
                     public void onClick() {
                         databaseHelper.deleteExpense(record.getId());
                         allRecords.remove(viewHolder.getAdapterPosition());
                         setBudgetAdapter();
-                        allRecordsAdapter.notifyDataSetChanged();
                     }
                 });
             }
@@ -153,7 +157,8 @@ public class RecordsActivity extends AppCompatActivity {
 
     //set the budget list adapter
     private void setBudgetAdapter() {
-        allRecordsAdapter = new AllRecordsAdapter(allRecords, this,new AllRecordsAdapter.onItemClick() {
+        allRecordsAdapter = new AllRecordsAdapter(allRecords, this);
+        allRecordsAdapter.onItemClickListener(new AllRecordsAdapter.onItemClick() {
             @Override
             public void itemClick(Record record) {
                 startActivity(new Intent(RecordsActivity.this, AddNewRecordActivity.class).putExtra("record", record).putExtra("from","record"));

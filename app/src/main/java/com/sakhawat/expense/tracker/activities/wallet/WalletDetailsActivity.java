@@ -129,7 +129,8 @@ public class WalletDetailsActivity extends AppCompatActivity {
             noDataGif.setVisibility(View.VISIBLE);
         }
         else {
-            allRecordsAdapter = new AllRecordsAdapter(allRecordItems, this,new AllRecordsAdapter.onItemClick() {
+            allRecordsAdapter = new AllRecordsAdapter(allRecordItems, this);
+            allRecordsAdapter.onItemClickListener(new AllRecordsAdapter.onItemClick() {
                 @Override
                 public void itemClick(Record record) {
                     ux.showRecordDetailsDialog(R.layout.dialog_record_short_details, record, new UX.onDialogOkListener() {

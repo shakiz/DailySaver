@@ -18,10 +18,13 @@ public class AllRecordsAdapter extends RecyclerView.Adapter<AllRecordsAdapter.Vi
     private onItemClick onItemClick;
     private Context context;
 
-    public AllRecordsAdapter(ArrayList<Record> recordList, Context context, onItemClick onItemClick) {
+    public AllRecordsAdapter(ArrayList<Record> recordList, Context context) {
         this.recordList = recordList;
-        this.onItemClick = onItemClick;
         this.context = context;
+    }
+
+    public void onItemClickListener(onItemClick onItemClick){
+        this.onItemClick = onItemClick;
     }
 
     public interface onItemClick{

@@ -251,8 +251,8 @@ public class AddNewWalletActivity extends AppCompatActivity implements View.OnCl
     @Override
     public void onBackPressed() {
         if (getIntent().getStringExtra("from").equals("record")) startActivity(new Intent(AddNewWalletActivity.this, RecordsActivity.class));
-        else if (getIntent().getStringExtra("from").equals("newRecord")) startActivity(new Intent(this, AddNewRecordActivity.class).putExtra("from","wallet"));
-        else if (getIntent().getStringExtra("from").equals("home")) startActivity(new Intent(AddNewWalletActivity.this, DashboardActivity.class));
+        else if (getIntent().getStringExtra("from").equals("newRecord")) startActivity(new Intent(this, AddNewRecordActivity.class));
+        else if (getIntent().getStringExtra("from").equals("main")) startActivity(new Intent(AddNewWalletActivity.this, DashboardActivity.class));
         else if (getIntent().getStringExtra("from").equals("walletDetails")) startActivity(new Intent(AddNewWalletActivity.this, WalletDetailsActivity.class).putExtra("wallet",wallet));
         overridePendingTransition(R.anim.fadein,R.anim.push_up_out);
     }
