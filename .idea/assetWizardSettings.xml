@@ -36,8 +36,8 @@
                             <entry key="assetSourceType" value="FILE" />
                             <entry key="color" value="3a587d" />
                             <entry key="opacityPercent" value="99" />
-                            <entry key="outputName" value="ic_edit" />
-                            <entry key="sourceFile" value="C:\Users\sakha\Downloads\pencil.svg" />
+                            <entry key="outputName" value="ic_remove" />
+                            <entry key="sourceFile" value="C:\Users\sakha\Downloads\remove.svg" />
                           </map>
                         </option>
                       </PersistentState>

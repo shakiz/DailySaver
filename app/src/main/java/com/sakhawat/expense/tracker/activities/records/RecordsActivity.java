@@ -1,9 +1,11 @@
 package com.sakhawat.expense.tracker.activities.records;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Observer;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
@@ -16,7 +18,7 @@ import com.sakhawat.expense.tracker.activities.newrecord.AddNewRecordActivity;
 import com.sakhawat.expense.tracker.activities.dashboard.DashboardActivity;
 import com.sakhawat.expense.tracker.activities.wallet.AddNewWalletActivity;
 import com.sakhawat.expense.tracker.adapters.menu.IconMenuAdapter;
-import com.sakhawat.expense.tracker.adapters.monthlyexpense.MonthlyExpenseAdapter;
+import com.sakhawat.expense.tracker.adapters.allrecords.AllRecordsAdapter;
 import com.sakhawat.expense.tracker.models.record.Record;
 import com.sakhawat.expense.tracker.models.menu.IconPowerMenuItem;
 import com.sakhawat.expense.tracker.utills.Tools;
@@ -41,6 +43,8 @@ public class RecordsActivity extends AppCompatActivity {
     private DatabaseHelper databaseHelper;
     private Tools tools;
     private UX ux;
+    private ArrayList<Record> allRecords;
+    private AllRecordsAdapter allRecordsAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +74,7 @@ public class RecordsActivity extends AppCompatActivity {
         databaseHelper = DatabaseHelper.getHelper(this);
         tools = new Tools(this);
         ux = new UX(this, mainLayout);
+        allRecords = new ArrayList<>();
     }
 
     private void bindUiWithComponents() {
@@ -79,7 +84,8 @@ public class RecordsActivity extends AppCompatActivity {
             public void onChanged(ArrayList<Record> records) {
                 if (records != null){
                     if (records.size() > 0){
-                        setBudgetAdapter(records);
+                        allRecords = records;
+                        setBudgetAdapter();
                     }
                     else {
                         noBudgetData.setVisibility(View.VISIBLE);
@@ -88,6 +94,28 @@ public class RecordsActivity extends AppCompatActivity {
                 }
             }
         });
+
+        ItemTouchHelper.SimpleCallback itemCallBack = new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull final RecyclerView.ViewHolder viewHolder, int direction) {
+                final Record record = allRecords.get(viewHolder.getAdapterPosition());
+                ux.showDialog(R.layout.dialog_update_confirmation, "Delete Wallet information", new UX.onDialogOkListener() {
+                    @Override
+                    public void onClick() {
+                        databaseHelper.deleteExpense(record.getId());
+                        allRecords.remove(viewHolder.getAdapterPosition());
+                        setBudgetAdapter();
+                        allRecordsAdapter.notifyDataSetChanged();
+                    }
+                });
+            }
+        };
+        new ItemTouchHelper(itemCallBack).attachToRecyclerView(recyclerView);
     }
 
     //setting the pop up menu
@@ -98,7 +126,7 @@ public class RecordsActivity extends AppCompatActivity {
                 .setAnimation(MenuAnimation.SHOW_UP_CENTER)
                 .setMenuRadius(16f) // sets the corner radius.
                 .setMenuShadow(16f) // sets the shadow.
-                .setWidth(800)
+                .setWidth(448)
                 .setCircularEffect(CircularEffect.INNER)
                 .setOnMenuItemClickListener(onMenuItemClickListener)
                 .build();
@@ -124,16 +152,16 @@ public class RecordsActivity extends AppCompatActivity {
     //menu click listener end
 
     //set the budget list adapter
-    private void setBudgetAdapter(ArrayList<Record> recordList) {
-        MonthlyExpenseAdapter monthlyExpenseAdapter = new MonthlyExpenseAdapter(recordList, this,new MonthlyExpenseAdapter.onItemClick() {
+    private void setBudgetAdapter() {
+        allRecordsAdapter = new AllRecordsAdapter(allRecords, this,new AllRecordsAdapter.onItemClick() {
             @Override
             public void itemClick(Record record) {
                 startActivity(new Intent(RecordsActivity.this, AddNewRecordActivity.class).putExtra("record", record).putExtra("from","record"));
             }
         });
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(monthlyExpenseAdapter);
-        monthlyExpenseAdapter.notifyDataSetChanged();
+        recyclerView.setAdapter(allRecordsAdapter);
+        allRecordsAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -145,8 +173,6 @@ public class RecordsActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        tools = null;
-        ux = null;
         if (databaseHelper != null) {
             databaseHelper.close();
         }

@@ -156,9 +156,5 @@ public class RecordsReportActivity extends AppCompatActivity {
         if (databaseHelper != null) {
             databaseHelper.close();
         }
-        tools = null;
-        ux = null;
-        dataManager = null;
-        chart = null;
     }
 }

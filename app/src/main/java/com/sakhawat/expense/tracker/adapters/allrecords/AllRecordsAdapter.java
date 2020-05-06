@@ -1,4 +1,4 @@
-package com.sakhawat.expense.tracker.adapters.monthlyexpense;
+package com.sakhawat.expense.tracker.adapters.allrecords;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -13,12 +13,12 @@ import com.sakhawat.expense.tracker.models.record.Record;
 import com.sakhawat.expense.tracker.R;
 import java.util.ArrayList;
 
-public class MonthlyExpenseAdapter extends RecyclerView.Adapter<MonthlyExpenseAdapter.ViewHolder>{
+public class AllRecordsAdapter extends RecyclerView.Adapter<AllRecordsAdapter.ViewHolder>{
     private ArrayList<Record> recordList;
     private onItemClick onItemClick;
     private Context context;
 
-    public MonthlyExpenseAdapter(ArrayList<Record> recordList, Context context, onItemClick onItemClick) {
+    public AllRecordsAdapter(ArrayList<Record> recordList, Context context, onItemClick onItemClick) {
         this.recordList = recordList;
         this.onItemClick = onItemClick;
         this.context = context;

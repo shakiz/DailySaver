@@ -263,7 +263,5 @@ public class AddNewWalletActivity extends AppCompatActivity implements View.OnCl
         if (databaseHelper != null) {
             databaseHelper.close();
         }
-        tools = null;
-        ux = null;
     }
 }

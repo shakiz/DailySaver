@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.sakhawat.expense.tracker.R;
 import com.sakhawat.expense.tracker.activities.dashboard.DashboardActivity;
-import com.sakhawat.expense.tracker.adapters.monthlyexpense.MonthlyExpenseAdapter;
+import com.sakhawat.expense.tracker.adapters.allrecords.AllRecordsAdapter;
 import com.sakhawat.expense.tracker.models.record.Record;
 import com.sakhawat.expense.tracker.models.wallet.Wallet;
 import com.sakhawat.expense.tracker.utills.Tools;
@@ -123,13 +123,13 @@ public class WalletDetailsActivity extends AppCompatActivity {
 
     //set adapter for records for the specific wallet
     private void setAdapter(ArrayList<Record> allRecordItems) {
-        MonthlyExpenseAdapter monthlyExpenseAdapter;
+        AllRecordsAdapter allRecordsAdapter;
         if (allRecordItems.size() <=0 ){
             noBudgetData.setVisibility(View.VISIBLE);
             noDataGif.setVisibility(View.VISIBLE);
         }
         else {
-            monthlyExpenseAdapter = new MonthlyExpenseAdapter(allRecordItems, this,new MonthlyExpenseAdapter.onItemClick() {
+            allRecordsAdapter = new AllRecordsAdapter(allRecordItems, this,new AllRecordsAdapter.onItemClick() {
                 @Override
                 public void itemClick(Record record) {
                     ux.showRecordDetailsDialog(R.layout.dialog_record_short_details, record, new UX.onDialogOkListener() {
@@ -140,8 +140,8 @@ public class WalletDetailsActivity extends AppCompatActivity {
                 }
             });
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
-            recyclerView.setAdapter(monthlyExpenseAdapter);
-            monthlyExpenseAdapter.notifyDataSetChanged();
+            recyclerView.setAdapter(allRecordsAdapter);
+            allRecordsAdapter.notifyDataSetChanged();
         }
     }
 
@@ -157,7 +157,5 @@ public class WalletDetailsActivity extends AppCompatActivity {
         if (databaseHelper != null) {
             databaseHelper.close();
         }
-        tools = null;
-        ux = null;
     }
 }

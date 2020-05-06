@@ -404,10 +404,6 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         if (databaseHelper != null) {
             databaseHelper.close();
         }
-        tools = null;
-        ux = null;
-        dataManager = null;
-        chart = null;
     }
 }
 

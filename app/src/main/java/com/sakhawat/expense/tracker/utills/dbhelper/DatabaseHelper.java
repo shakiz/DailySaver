@@ -97,6 +97,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         sqLiteDatabase.insert(RECORD_TABLE, null, values);
     }
 
+
     /**
      * This method is to update EXPENSE record
      *
@@ -115,8 +116,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_RECORD_NOTE, record.getNote());
         values.put(COLUMN_RECORD_DATE, record.getExpenseDate());
 
-        // Inserting Row
+        // updating Row
         sqLiteDatabase.update(RECORD_TABLE, values, COLUMN_RECORD_ID+" = "+expenseId, null);
+    }
+
+    /**
+     * This method is to create EXPENSE record
+     *
+     * @param recordId
+     */
+    public void deleteExpense(int recordId) {
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        String query = "";
+        if (recordId > 0){
+            query = "delete from " + RECORD_TABLE + " where "+COLUMN_RECORD_ID+" = "+recordId;
+        }
+        // deleting Row
+        sqLiteDatabase.execSQL(query);
     }
 
     /**
