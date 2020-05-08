@@ -48,6 +48,7 @@ import com.skydoves.powermenu.MenuAnimation;
 import com.skydoves.powermenu.OnMenuItemClickListener;
 import com.yarolegovich.discretescrollview.DiscreteScrollView;
 import com.yarolegovich.discretescrollview.transform.ScaleTransformer;
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import pl.droidsonroids.gif.GifImageView;
 
@@ -142,13 +143,13 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
 
     //responsible for making the savings vs expense structure pie chart
     private void makeCategoryPieChart() {
-        new MakePieChart().execute();
+        new MakePieChart(this).execute();
     }
     //pie chart build done
 
     //responsible for making the savings vs expense grouped bar chart
     private void makeExpenseVsSavingsBarChart() {
-        new MakeGroupedChart().execute();
+        new MakeGroupedChart(this).execute();
     }
     //end of making the savings vs expense grouped bar chart
 
@@ -233,21 +234,27 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
     //wallet dashboard data setup done
 
     //will perform grouped chart building in the non ui thread
-    private class MakeGroupedChart extends AsyncTask<Void, Void, String> {
+    private static class MakeGroupedChart extends AsyncTask<Void, Void, String> {
+        WeakReference<DashboardActivity> referenceActivity;
+
+        public MakeGroupedChart(DashboardActivity referenceActivity) {
+            this.referenceActivity = new WeakReference<>(referenceActivity);
+        }
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            ux.getLoadingView();
+            referenceActivity.get().ux.getLoadingView();
         }
 
         @Override
         protected String doInBackground(Void... voids) {
-            yLabels1 = new ArrayList<>();
-            yLabels2 = new ArrayList<>();
+            referenceActivity.get().yLabels1 = new ArrayList<>();
+            referenceActivity.get().yLabels2 = new ArrayList<>();
             String[] monthNames = new String[]{"Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"};
             for (int startIndex = 0; startIndex < monthNames.length; startIndex++) {
-                yLabels1.add(new BarEntry(startIndex,databaseHelper.getCostOfMonthWithRecordType(monthNames[startIndex],"Savings")));
-                yLabels2.add(new BarEntry(startIndex,databaseHelper.getCostOfMonthWithRecordType(monthNames[startIndex],"Expense")));
+                referenceActivity.get().yLabels1.add(new BarEntry(startIndex,referenceActivity.get().databaseHelper.getCostOfMonthWithRecordType(monthNames[startIndex],"Savings")));
+                referenceActivity.get().yLabels2.add(new BarEntry(startIndex,referenceActivity.get().databaseHelper.getCostOfMonthWithRecordType(monthNames[startIndex],"Expense")));
             }
             return "ok";
         }
@@ -255,23 +262,29 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         @Override
         protected void onPostExecute(String result) {
             if (result.equals("ok")){
-                ux.removeLoadingView();
-                chart.setBarChart(groupedBarChart);
-                chart.setLegendForGroupedBarChart();
-                setSavingsVsExpenseBarData();
-                chart.setAxisForBarChart(true, 35, dataManager.getMonthNameForLabel(), 12, 1, 0.5f,0.5f, 12, 0);
-                chart.buildBarChart(true,groupedBarData, 800,800, 5,barWidth,barSpace,groupSpace,18);
+                referenceActivity.get().ux.removeLoadingView();
+                referenceActivity.get().chart.setBarChart(referenceActivity.get().groupedBarChart);
+                referenceActivity.get().chart.setLegendForGroupedBarChart();
+                referenceActivity.get().setSavingsVsExpenseBarData();
+                referenceActivity.get().chart.setAxisForBarChart(true, 35, referenceActivity.get().dataManager.getMonthNameForLabel(), 12, 1, 0.5f,0.5f, 12, 0);
+                referenceActivity.get().chart.buildBarChart(true,referenceActivity.get().groupedBarData, 800,800, 5,referenceActivity.get().barWidth,referenceActivity.get().barSpace,referenceActivity.get().groupSpace,18);
             }
         }
     }
     //chart building done
 
     //will perform grouped chart building in the non ui thread
-    private class MakePieChart extends AsyncTask<Void, Void, ArrayList<PieEntry>> {
+    private static class MakePieChart extends AsyncTask<Void, Void, ArrayList<PieEntry>> {
+        WeakReference<DashboardActivity> referenceActivity;
+
+        public MakePieChart(DashboardActivity referenceActivity) {
+            this.referenceActivity = new WeakReference<>(referenceActivity);
+        }
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            ux.getLoadingView();
+            referenceActivity.get().ux.getLoadingView();
         }
 
         @Override
@@ -283,7 +296,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
 
             //getting individual component value from db
             for (int startIndex = 0; startIndex < categoryLabels.length; startIndex++) {
-                componentValues[startIndex] = databaseHelper.getCategoryCount(categoryLabels[startIndex]) / 100;
+                componentValues[startIndex] = referenceActivity.get().databaseHelper.getCategoryCount(categoryLabels[startIndex]) / 100;
             }
 
             //getting the total of of component value
@@ -294,7 +307,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
             //finally calculating the pie chart value from component and total value
             for (int startIndex = 0; startIndex < componentValues.length; startIndex++) {
                 if (componentValues[startIndex] > 0) {
-                    categoryData.add(new PieEntry(chart.getSinglePieValue(componentValues[startIndex], chart.roundValueIntoTwoDecimal(totalValue)), categoryLabels[startIndex]));
+                    categoryData.add(new PieEntry(referenceActivity.get().chart.getSinglePieValue(componentValues[startIndex], referenceActivity.get().chart.roundValueIntoTwoDecimal(totalValue)), categoryLabels[startIndex]));
                 }
                 else{ continue; }
             }
@@ -306,10 +319,10 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         protected void onPostExecute(ArrayList<PieEntry> result) {
             if (result != null){
                 if (result.size() > 0){
-                    ux.removeLoadingView();
-                    chart.setPieChart(pieChart);
-                    chart.getLegendForPieChart();
-                    chart.buildPieChart("Categories",12,6,800, 800,setCategoryPieData(result),R.color.md_white_1000,R.color.md_grey_800);
+                    referenceActivity.get().ux.removeLoadingView();
+                    referenceActivity.get().chart.setPieChart(referenceActivity.get().pieChart);
+                    referenceActivity.get().chart.getLegendForPieChart();
+                    referenceActivity.get().chart.buildPieChart("Categories",12,6,800, 800,referenceActivity.get().setCategoryPieData(result),R.color.md_white_1000,R.color.md_grey_800);
                 }
             }
         }

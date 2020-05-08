@@ -24,7 +24,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.sakhawat.expense.tracker.activities.dashboard.DashboardActivity;
 import com.sakhawat.expense.tracker.activities.records.RecordsActivity;
 import com.sakhawat.expense.tracker.adapters.category.CategoryRecyclerAdapter;
@@ -35,6 +34,7 @@ import com.sakhawat.expense.tracker.utills.Tools;
 import com.sakhawat.expense.tracker.utills.UX;
 import com.sakhawat.expense.tracker.utills.dbhelper.DatabaseHelper;
 import com.google.android.material.snackbar.Snackbar;
+import java.lang.ref.WeakReference;
 
 public class AddNewRecordActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -193,14 +193,14 @@ public class AddNewRecordActivity extends AppCompatActivity implements View.OnCl
                                     walletValue, Note.getText().toString(), ExpenseDate.getText().toString());
                             if (record.getRecordType().equals(getText(R.string.expense))){
                                 if (getRemainingBalance()){
-                                    new SaveRecord(record).execute();
+                                    new SaveRecord(this,record).execute();
                                 }
                                 else{
                                     Snackbar.make(mainLayout,getResources().getString(R.string.wallet_amount_exceeds), Snackbar.LENGTH_SHORT).show();
                                 }
                             }
                             else {
-                                new SaveRecord(record).execute();
+                                new SaveRecord(this,record).execute();
                             }
                         }
                         else {
@@ -237,14 +237,14 @@ public class AddNewRecordActivity extends AppCompatActivity implements View.OnCl
                                     walletValue, Note.getText().toString(), ExpenseDate.getText().toString());
                             if (record.getRecordType().equals(getText(R.string.expense))){
                                 if (getRemainingBalance()){
-                                    new UpdateRecord(updatableRecord,record.getId()).execute();
+                                    new UpdateRecord(this,updatableRecord,record.getId()).execute();
                                 }
                                 else{
                                     Snackbar.make(mainLayout,R.string.wallet_amount_exceeds, Snackbar.LENGTH_LONG).show();
                                 }
                             }
                             else{
-                                new UpdateRecord(updatableRecord,record.getId()).execute();
+                                new UpdateRecord(this,updatableRecord,record.getId()).execute();
                             }
                         }
                         else {
@@ -389,48 +389,52 @@ public class AddNewRecordActivity extends AppCompatActivity implements View.OnCl
     }
 
     //AsyncTask for saving data
-    private class SaveRecord extends AsyncTask<Record, Void, Void>{
+    private static class SaveRecord extends AsyncTask<Record, Void, Void>{
+        WeakReference<AddNewRecordActivity> referenceActivity;
         Record record;
 
-        public SaveRecord(Record record) {
+        public SaveRecord(AddNewRecordActivity referenceActivity,Record record) {
+            this.referenceActivity = new WeakReference<>(referenceActivity);
             this.record = record;
         }
 
         @Override
         protected Void doInBackground(Record... records) {
-            databaseHelper.addNewExpense(record);
+            referenceActivity.get().databaseHelper.addNewExpense(record);
             return null;
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            Toast.makeText(getApplicationContext(),getResources().getString(R.string.data_saved_successfully),Toast.LENGTH_LONG).show();
-            startActivity(new Intent(AddNewRecordActivity.this,RecordsActivity.class));
+            Toast.makeText(referenceActivity.get().getApplicationContext(),referenceActivity.get().getResources().getString(R.string.data_saved_successfully),Toast.LENGTH_LONG).show();
+            referenceActivity.get().startActivity(new Intent(referenceActivity.get().getApplicationContext(),RecordsActivity.class));
         }
     }
 
     //AsyncTask for updating data
-    private class UpdateRecord extends AsyncTask<Record, Void, Void>{
+    private static class UpdateRecord extends AsyncTask<Record, Void, Void>{
+        WeakReference<AddNewRecordActivity> referenceActivity;
         Record record;
         int recordId;
 
-        public UpdateRecord(Record record, int recordId) {
+        public UpdateRecord(AddNewRecordActivity referenceActivity,Record record, int recordId) {
+            this.referenceActivity = new WeakReference<>(referenceActivity);
             this.record = record;
             this.recordId = recordId;
         }
 
         @Override
         protected Void doInBackground(Record... records) {
-            databaseHelper.updateExpense(record,recordId);
+            referenceActivity.get().databaseHelper.updateExpense(record,recordId);
             return null;
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            Toast.makeText(getApplicationContext(),getResources().getString(R.string.data_updated_successfully),Toast.LENGTH_LONG).show();
-            startActivity(new Intent(AddNewRecordActivity.this,RecordsActivity.class));
+            Toast.makeText(referenceActivity.get().getApplicationContext(),referenceActivity.get().getResources().getString(R.string.data_updated_successfully),Toast.LENGTH_LONG).show();
+            referenceActivity.get().startActivity(new Intent(referenceActivity.get().getApplicationContext(),RecordsActivity.class));
         }
     }
 
