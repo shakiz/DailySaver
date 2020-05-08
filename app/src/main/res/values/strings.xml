@@ -135,4 +135,10 @@
     <string name="update_wallet_information_details">You are going to update wallet details.</string>
     <string name="want_to_update_wallet">Do you want to update wallet information?</string>
     <string name="delete">Delete</string>
+    <string name="your_notes">Your Notes</string>
+    <string name="note_title">Note Title</string>
+    <string name="description">The optimal sizes are 1080 pixels wide by 566 pixels to 1350 pixels high. The maximum Instagram resolution is 1080 pixels wide. Un-square shapes were added for Instagram ads.</string>
+    <string name="no_notes">No notes</string>
+    <string name="add_new_notes_hint">You can try writting the first one</string>
+    <string name="create_note">Create Notes</string>
 </resources>
