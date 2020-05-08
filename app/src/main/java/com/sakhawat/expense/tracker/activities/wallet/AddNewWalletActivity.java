@@ -15,8 +15,6 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
-
-import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.sakhawat.expense.tracker.R;
 import com.sakhawat.expense.tracker.activities.newrecord.AddNewRecordActivity;
 import com.sakhawat.expense.tracker.activities.dashboard.DashboardActivity;
@@ -27,6 +25,7 @@ import com.sakhawat.expense.tracker.utills.Tools;
 import com.sakhawat.expense.tracker.utills.UX;
 import com.sakhawat.expense.tracker.utills.dbhelper.DatabaseHelper;
 import com.google.android.material.snackbar.Snackbar;
+import java.lang.ref.WeakReference;
 
 public class AddNewWalletActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -175,7 +174,7 @@ public class AddNewWalletActivity extends AppCompatActivity implements View.OnCl
                     if (!budgetTypeStr.isEmpty()){
                         Wallet wallet = new Wallet(WalletName.getText().toString(), Integer.parseInt(Amount.getText().toString()), currencyValue, ExpiresOn.getText().toString(), budgetTypeStr,
                                 Note.getText().toString());
-                        new SaveWallet(wallet).execute();
+                        new SaveWallet(this,wallet).execute();
                     }
                     else {
                         Snackbar.make(mainLayout,getText(R.string.select_wallet_type),Snackbar.LENGTH_SHORT).show();
@@ -205,7 +204,7 @@ public class AddNewWalletActivity extends AppCompatActivity implements View.OnCl
                     if (!budgetTypeStr.isEmpty()){
                         Wallet updatableWallet = new Wallet(WalletName.getText().toString(), Integer.parseInt(Amount.getText().toString()), currencyValue, ExpiresOn.getText().toString(), budgetTypeStr,
                                 Note.getText().toString());
-                        new UpdateWallet(updatableWallet, wallet.getId()).execute();
+                        new UpdateWallet(this,updatableWallet, wallet.getId()).execute();
                     }
                     else {
                         Snackbar.make(mainLayout,getText(R.string.select_wallet_type),Snackbar.LENGTH_SHORT).show();
@@ -229,48 +228,52 @@ public class AddNewWalletActivity extends AppCompatActivity implements View.OnCl
     //end
 
     //AsyncTask for saving wallet
-    private class SaveWallet extends AsyncTask<Wallet, Void, Void> {
+    private static class SaveWallet extends AsyncTask<Wallet, Void, Void> {
+        WeakReference<AddNewWalletActivity> referenceActivity;
         Wallet wallet;
 
-        public SaveWallet(Wallet wallet) {
+        public SaveWallet(AddNewWalletActivity referenceActivity,Wallet wallet) {
+            this.referenceActivity = new WeakReference<>(referenceActivity);
             this.wallet = wallet;
         }
 
         @Override
         protected Void doInBackground(Wallet... wallets) {
-            databaseHelper.addNewWallet(wallet);
+            referenceActivity.get().databaseHelper.addNewWallet(wallet);
             return null;
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            Toast.makeText(getApplicationContext(),getText(R.string.data_saved_successfully),Toast.LENGTH_LONG).show();
-            startActivity(new Intent(AddNewWalletActivity.this,DashboardActivity.class));
+            Toast.makeText(referenceActivity.get().getApplicationContext(),referenceActivity.get().getText(R.string.data_saved_successfully),Toast.LENGTH_LONG).show();
+            referenceActivity.get().startActivity(new Intent(referenceActivity.get().getApplicationContext(),DashboardActivity.class));
         }
     }
 
     //AsyncTask for updating wallet
-    private class UpdateWallet extends AsyncTask<Wallet, Void, Void> {
+    private static class UpdateWallet extends AsyncTask<Wallet, Void, Void> {
+        WeakReference<AddNewWalletActivity> referenceActivity;
         Wallet wallet;
         int walletId;
 
-        public UpdateWallet(Wallet wallet, int walletId) {
+        public UpdateWallet(AddNewWalletActivity referenceActivity,Wallet wallet, int walletId) {
+            this.referenceActivity = new WeakReference<>(referenceActivity);
             this.wallet = wallet;
             this.walletId = walletId;
         }
 
         @Override
         protected Void doInBackground(Wallet... wallets) {
-            databaseHelper.updateWallet(wallet, walletId);
+            referenceActivity.get().databaseHelper.updateWallet(wallet, walletId);
             return null;
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            Toast.makeText(getApplicationContext(),getText(R.string.data_updated_successfully),Toast.LENGTH_LONG).show();
-            startActivity(new Intent(AddNewWalletActivity.this, WalletDetailsActivity.class).putExtra("wallet",wallet));
+            Toast.makeText(referenceActivity.get().getApplicationContext(),referenceActivity.get().getText(R.string.data_updated_successfully),Toast.LENGTH_LONG).show();
+            referenceActivity.get().startActivity(new Intent(referenceActivity.get().getApplicationContext(), WalletDetailsActivity.class).putExtra("wallet",wallet));
         }
     }
 
