@@ -23,7 +23,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/action/ic_done_black_24dp.xml" />
+                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/av/ic_stop_black_24dp.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -35,7 +35,7 @@
                           <map>
                             <entry key="color" value="3a587d" />
                             <entry key="opacityPercent" value="99" />
-                            <entry key="outputName" value="ic_done" />
+                            <entry key="outputName" value="ic_stop" />
                             <entry key="sourceFile" value="C:\Users\sakha\Downloads\remove.svg" />
                           </map>
                         </option>

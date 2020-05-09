@@ -71,6 +71,13 @@ public class NoteListActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         recyclerView.setAdapter(noteRecyclerAdapter);
         noteRecyclerAdapter.notifyDataSetChanged();
+
+        noteRecyclerAdapter.onItemClickListener(new NoteRecyclerAdapter.onItemClick() {
+            @Override
+            public void itemClick(Note note) {
+                startActivity(new Intent(NoteListActivity.this, NewNoteActivity.class).putExtra("note",note));
+            }
+        });
     }
 
     @Override

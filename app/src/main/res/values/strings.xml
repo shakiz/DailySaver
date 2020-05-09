@@ -142,4 +142,5 @@
     <string name="add_new_notes_hint">You can try writting the first one</string>
     <string name="create_note">Create Notes</string>
     <string name="new_note">New Note</string>
+    <string name="icon_click_listen">Click the icon to listen</string>
 </resources>
