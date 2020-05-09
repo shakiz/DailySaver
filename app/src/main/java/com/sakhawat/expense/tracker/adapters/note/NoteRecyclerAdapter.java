@@ -9,11 +9,12 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.sakhawat.expense.tracker.R;
 import com.sakhawat.expense.tracker.models.note.Note;
+import java.util.ArrayList;
 import java.util.List;
 
 public class NoteRecyclerAdapter extends RecyclerView.Adapter<NoteRecyclerAdapter.ViewHolder> {
     private Context context;
-    private List<Note> allNotes;
+    private List<Note> allNotes = new ArrayList<>();
 
     public NoteRecyclerAdapter(Context context) {
         this.context = context;
@@ -41,7 +42,8 @@ public class NoteRecyclerAdapter extends RecyclerView.Adapter<NoteRecyclerAdapte
 
     @Override
     public int getItemCount() {
-        return allNotes.size();
+        if (allNotes.size() > 0) return allNotes.size();
+        else return 0;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

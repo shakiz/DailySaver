@@ -62,49 +62,49 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_marginTop="16dp"
                         android:layout_marginLeft="8dp"
-                        android:layout_marginRight="8dp">
+                        android:layout_marginTop="16dp"
+                        android:layout_marginRight="8dp"
+                        android:orientation="vertical">
 
                         <TextView
                             android:id="@+id/HeadingTXTRecordType"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:padding="4dp"
                             android:text="@string/select_record_type"
                             android:textColor="@color/md_grey_800"
                             android:textSize="16sp"
-                            android:textStyle="bold"
-                            android:layout_marginTop="4dp"
-                            android:padding="4dp"/>
+                            android:textStyle="bold" />
 
                         <RadioGroup
                             android:id="@+id/RecordType"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:gravity="center"
                             android:layout_marginBottom="4dp"
+                            android:gravity="center"
                             android:orientation="horizontal">
 
                             <RadioButton
                                 android:id="@+id/Savings"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Savings"
+                                android:buttonTint="@color/md_green_400"
                                 android:tag="@string/savings"
-                                android:textColor="@color/md_black_1000"
-                                android:buttonTint="@color/md_green_400"/>
+                                android:text="Savings"
+                                android:textColor="@color/md_black_1000" />
 
                             <RadioButton
                                 android:id="@+id/Expense"
-                                android:layout_marginLeft="16dp"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Expense"
+                                android:layout_marginLeft="16dp"
+                                android:buttonTint="@color/md_red_400"
                                 android:tag="@string/record"
-                                android:textColor="@color/md_black_1000"
-                                android:buttonTint="@color/md_red_400"/>
+                                android:text="Expense"
+                                android:textColor="@color/md_black_1000" />
 
                         </RadioGroup>
 
@@ -114,55 +114,55 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:gravity="center|left"
-                        android:weightSum="2"
                         android:layout_marginTop="8dp"
-                        android:orientation="horizontal">
+                        android:gravity="center|left"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
 
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
                             android:layout_marginLeft="8dp"
-                            android:layout_marginRight="8dp"
                             android:layout_marginTop="4dp"
+                            android:layout_marginRight="8dp"
                             android:layout_marginBottom="4dp"
+                            android:layout_weight="1"
                             android:orientation="vertical">
 
                             <TextView
                                 android:id="@+id/CategorySelector"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="@string/category"
-                                android:tag="CategorySelector"
                                 android:layout_gravity="center"
-                                android:gravity="center|left"
                                 android:clickable="true"
                                 android:drawableLeft="@drawable/ic_tap"
                                 android:drawablePadding="4dp"
-                                android:textSize="14sp"
-                                android:textColor="@color/md_green_600"
                                 android:ellipsize="end"
-                                android:padding="4dp"/>
+                                android:gravity="center|left"
+                                android:padding="4dp"
+                                android:tag="CategorySelector"
+                                android:text="@string/category"
+                                android:textColor="@color/md_green_600"
+                                android:textSize="14sp" />
 
                             <LinearLayout
                                 android:id="@+id/categoryItemLayout"
-                                android:orientation="horizontal"
                                 android:layout_width="match_parent"
                                 android:layout_height="40dp"
                                 android:layout_marginTop="4dp"
-                                android:padding="2dp"
+                                android:background="@drawable/rectangle_background_savings"
                                 android:clickable="true"
-                                android:background="@drawable/rectangle_background_savings">
+                                android:orientation="horizontal"
+                                android:padding="2dp">
 
                                 <ImageView
                                     android:id="@+id/IconRes"
-                                    app:srcCompat="@drawable/ic_food_icon"
                                     android:layout_width="28dp"
                                     android:layout_height="28dp"
                                     android:layout_gravity="center"
                                     android:layout_margin="4dp"
-                                    android:padding="4dp"/>
+                                    android:padding="4dp"
+                                    app:srcCompat="@drawable/ic_food_icon" />
 
                                 <TextView
                                     android:id="@+id/Title"
@@ -171,8 +171,8 @@
                                     android:layout_gravity="center"
                                     android:layout_margin="4dp"
                                     android:padding="4dp"
-                                    android:textColor="@color/md_grey_800"
-                                    android:text="@string/category_sample"/>
+                                    android:text="@string/category_sample"
+                                    android:textColor="@color/md_grey_800" />
 
                             </LinearLayout>
 
@@ -180,41 +180,41 @@
 
                         <LinearLayout
                             android:layout_width="0dp"
-                            android:layout_weight="1"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:gravity="center"
-                            android:weightSum="2"
                             android:layout_marginLeft="8dp"
-                            android:layout_marginRight="8dp"
                             android:layout_marginTop="4dp"
+                            android:layout_marginRight="8dp"
                             android:layout_marginBottom="4dp"
-                            android:orientation="vertical">
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:weightSum="2">
 
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="@string/amount"
                                 android:layout_gravity="center"
-                                android:gravity="center|left"
                                 android:clickable="true"
-                                android:textSize="14sp"
-                                android:textColor="@color/md_grey_900"
                                 android:ellipsize="end"
-                                android:padding="4dp"/>
+                                android:gravity="center|left"
+                                android:padding="4dp"
+                                android:text="@string/amount"
+                                android:textColor="@color/md_grey_900"
+                                android:textSize="14sp" />
 
                             <EditText
                                 android:id="@+id/Amount"
                                 android:layout_width="match_parent"
                                 android:layout_height="40dp"
-                                android:hint="@string/amount_hint"
-                                android:inputType="numberDecimal"
-                                android:textSize="14sp"
                                 android:layout_marginTop="4dp"
                                 android:background="@drawable/rectangle_background_savings"
-                                android:textColorHint="@color/md_grey_700"
+                                android:hint="@string/amount_hint"
+                                android:inputType="numberDecimal"
+                                android:padding="10dp"
                                 android:textColor="@color/md_grey_800"
-                                android:padding="10dp"/>
+                                android:textColorHint="@color/md_grey_700"
+                                android:textSize="14sp" />
 
                         </LinearLayout>
 
@@ -224,67 +224,67 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:gravity="center|left"
-                        android:weightSum="2"
                         android:layout_marginTop="8dp"
-                        android:orientation="horizontal">
+                        android:gravity="center|left"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
 
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
                             android:layout_marginLeft="8dp"
-                            android:layout_marginRight="8dp"
                             android:layout_marginTop="4dp"
+                            android:layout_marginRight="8dp"
                             android:layout_marginBottom="4dp"
+                            android:layout_weight="1"
                             android:orientation="vertical">
 
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="@string/currency"
                                 android:layout_gravity="center"
-                                android:gravity="center|left"
                                 android:clickable="true"
-                                android:textSize="14sp"
-                                android:textColor="@color/md_grey_900"
                                 android:ellipsize="end"
-                                android:padding="4dp"/>
+                                android:gravity="center|left"
+                                android:padding="4dp"
+                                android:text="@string/currency"
+                                android:textColor="@color/md_grey_900"
+                                android:textSize="14sp" />
 
                             <Spinner
+                                android:id="@+id/Currency"
                                 style="@style/Base.TextAppearance.AppCompat.Medium"
                                 android:layout_width="match_parent"
                                 android:layout_height="40dp"
                                 android:layout_marginTop="4dp"
-                                android:background="@drawable/rectangle_background_savings"
-                                android:id="@+id/Currency"/>
+                                android:background="@drawable/rectangle_background_savings" />
 
                         </LinearLayout>
 
                         <LinearLayout
                             android:layout_width="0dp"
-                            android:layout_weight="1"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:gravity="center"
-                            android:weightSum="2"
                             android:layout_marginLeft="8dp"
-                            android:layout_marginRight="8dp"
                             android:layout_marginTop="4dp"
+                            android:layout_marginRight="8dp"
                             android:layout_marginBottom="4dp"
-                            android:orientation="vertical">
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:weightSum="2">
 
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="@string/select_wallet"
                                 android:layout_gravity="center"
-                                android:gravity="center|left"
                                 android:clickable="true"
-                                android:textSize="14sp"
-                                android:textColor="@color/md_grey_900"
                                 android:ellipsize="end"
-                                android:padding="4dp"/>
+                                android:gravity="center|left"
+                                android:padding="4dp"
+                                android:text="@string/select_wallet"
+                                android:textColor="@color/md_grey_900"
+                                android:textSize="14sp" />
 
                             <Spinner
                                 android:id="@+id/Wallet"
@@ -292,7 +292,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="40dp"
                                 android:layout_marginTop="4dp"
-                                android:background="@drawable/rectangle_background_savings"/>
+                                android:background="@drawable/rectangle_background_savings" />
 
                         </LinearLayout>
 
@@ -303,23 +303,21 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:gravity="center"
-                        android:weightSum="2"
                         android:orientation="horizontal">
 
                         <EditText
-                            android:layout_width="0dp"
-                            android:layout_weight="2"
-                            android:maxLines="2"
+                            android:id="@+id/Note"
+                            android:layout_width="match_parent"
                             android:layout_height="80dp"
-                            android:background="@drawable/rectangle_background_savings"
-                            android:hint="@string/note"
                             android:layout_margin="8dp"
-                            android:textSize="16sp"
-                            android:padding="10dp"
+                            android:background="@drawable/rectangle_background_savings"
                             android:drawableLeft="@drawable/ic_writing"
                             android:drawablePadding="8dp"
-                            android:inputType="text"
-                            android:id="@+id/Note"/>
+                            android:hint="@string/note"
+                            android:inputType="textMultiLine"
+                            android:padding="10dp"
+                            android:scrollbars="vertical"
+                            android:textSize="16sp" />
 
                     </LinearLayout>
 
@@ -333,14 +331,14 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@string/date"
                             android:layout_marginLeft="8dp"
                             android:layout_marginRight="8dp"
                             android:ellipsize="end"
                             android:maxLines="1"
+                            android:padding="4dp"
+                            android:text="@string/date"
                             android:textColor="@color/md_grey_900"
-                            android:textSize="14sp"
-                            android:padding="4dp"/>
+                            android:textSize="14sp" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -354,16 +352,16 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="40dp"
                                 android:background="@drawable/rectangle_background_savings"
-                                android:hint="@string/date_hint"
-                                android:textColorHint="@color/md_grey_800"
+                                android:clickable="true"
                                 android:drawableRight="@drawable/ic_date_range"
                                 android:drawablePadding="8dp"
-                                android:padding="10dp"
                                 android:focusable="false"
-                                android:textSize="14sp"
+                                android:hint="@string/date_hint"
+                                android:padding="10dp"
                                 android:tag="Date"
-                                android:clickable="true"
-                                android:textColor="@color/md_grey_800"/>
+                                android:textColor="@color/md_grey_800"
+                                android:textColorHint="@color/md_grey_800"
+                                android:textSize="14sp" />
 
                         </LinearLayout>
 

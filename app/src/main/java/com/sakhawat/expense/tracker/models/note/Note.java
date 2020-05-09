@@ -11,6 +11,9 @@ public class Note {
     private String Description;
     private String Date;
 
+    public Note() {
+    }
+
     public Note(String title, String description, String date) {
         this.Title = title;
         this.Description = description;
@@ -37,5 +40,15 @@ public class Note {
         return Date;
     }
 
+    public void setTitle(String title) {
+        Title = title;
+    }
 
+    public void setDescription(String description) {
+        Description = description;
+    }
+
+    public void setDate(String date) {
+        Date = date;
+    }
 }

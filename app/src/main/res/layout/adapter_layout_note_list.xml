@@ -2,15 +2,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/cardItemLayout"
-    android:layout_width="192dp"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    app:cardCornerRadius="4dp"
+    app:cardCornerRadius="8dp"
     android:clickable="true"
     app:cardBackgroundColor="@color/md_white_1000"
     android:foreground="?attr/selectableItemBackground"
     app:cardUseCompatPadding="true"
-    app:cardElevation="2dp">
+    android:translationZ="4dp"
+    app:cardElevation="8dp">
 
     <LinearLayout
         android:layout_width="wrap_content"

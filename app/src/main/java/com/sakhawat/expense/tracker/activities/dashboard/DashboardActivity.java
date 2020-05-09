@@ -29,6 +29,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.sakhawat.expense.tracker.R;
 import com.sakhawat.expense.tracker.activities.newrecord.AddNewRecordActivity;
+import com.sakhawat.expense.tracker.activities.note.NoteListActivity;
 import com.sakhawat.expense.tracker.activities.records.RecordsActivity;
 import com.sakhawat.expense.tracker.activities.report.RecordsReportActivity;
 import com.sakhawat.expense.tracker.activities.wallet.AddNewWalletActivity;
@@ -374,11 +375,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
                 drawerLayout.closeDrawer(GravityCompat.START);
                 return true;
             case R.id.note:
-                ux.showDialog(R.layout.dialog_coming_soon, "Coming Soon ......", new UX.onDialogOkListener() {
-                    @Override
-                    public void onClick() {
-                    }
-                });
+                startActivity(new Intent(DashboardActivity.this, NoteListActivity.class));
                 drawerLayout.closeDrawer(GravityCompat.START);
                 return true;
             case R.id.about:

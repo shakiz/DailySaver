@@ -198,14 +198,11 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:gravity="center"
-                        android:weightSum="2"
                         android:orientation="horizontal">
 
                         <EditText
                             android:id="@+id/Note"
-                            android:layout_width="0dp"
-                            android:layout_weight="2"
-                            android:maxLines="2"
+                            android:layout_width="match_parent"
                             android:layout_height="80dp"
                             android:background="@drawable/rectangle_background_savings"
                             android:hint="@string/note"
@@ -214,7 +211,8 @@
                             android:padding="10dp"
                             android:drawableLeft="@drawable/ic_writing"
                             android:drawablePadding="8dp"
-                            android:inputType="text"/>
+                            android:scrollbars="vertical"
+                            android:inputType="textMultiLine"/>
 
                     </LinearLayout>
 
