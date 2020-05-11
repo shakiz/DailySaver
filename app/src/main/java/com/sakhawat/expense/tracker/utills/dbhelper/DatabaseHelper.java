@@ -357,16 +357,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     /**
      * This method is to get the wallet main balance
      *
-     * @param walletId
+     * @param walletTitle
      */
-    public int getWalletBalance(int walletId){
+    public int getWalletBalance(String walletTitle){
         int balance = 0;
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
         String[] columns = {
                 COLUMN_WALLET_ID,
                 COLUMN_WALLET_AMOUNT
         };
-        String where = "" + COLUMN_WALLET_ID + " = "+ walletId +"";
+        String where = "" + COLUMN_WALLET_TITLE + " = '"+ walletTitle +"'";
         Cursor cursor = sqLiteDatabase.query(WALLET_TABLE, columns, where, null, null, null, null);
 
         if (cursor != null){

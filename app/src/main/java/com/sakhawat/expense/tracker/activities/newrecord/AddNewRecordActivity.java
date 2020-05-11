@@ -192,7 +192,7 @@ public class AddNewRecordActivity extends AppCompatActivity implements View.OnCl
                             Record record = new Record(Integer.parseInt(Amount.getText().toString()), currencyValue, recordTypeStr, categoryTitle.getText().toString(), walletTitleStr,
                                     walletValue, Note.getText().toString(), ExpenseDate.getText().toString());
                             if (record.getRecordType().equals(getText(R.string.expense))){
-                                if (getRemainingBalance()){
+                                if (getRemainingBalance(false)){
                                     new SaveRecord(this,record).execute();
                                 }
                                 else{
@@ -236,7 +236,7 @@ public class AddNewRecordActivity extends AppCompatActivity implements View.OnCl
                             Record updatableRecord = new Record(Integer.parseInt(Amount.getText().toString()), currencyValue, recordTypeStr, categoryTitle.getText().toString(), walletTitleStr,
                                     walletValue, Note.getText().toString(), ExpenseDate.getText().toString());
                             if (record.getRecordType().equals(getText(R.string.expense))){
-                                if (getRemainingBalance()){
+                                if (getRemainingBalance(true)){
                                     new UpdateRecord(this,updatableRecord,record.getId()).execute();
                                 }
                                 else{
@@ -269,13 +269,20 @@ public class AddNewRecordActivity extends AppCompatActivity implements View.OnCl
     //end
 
     //region get selected wallet remaining balance
-    private boolean getRemainingBalance(){
+    private boolean getRemainingBalance(boolean isForUpdate){
+        int total = 0, remaining = 0;
         if (getIntent().getSerializableExtra("record") != null) {
             walletValue = record.getWalletId();
         }
-        int remaining = databaseHelper.getWalletBalance(walletValue) - databaseHelper.singleWalletTotalCost(walletTitleStr);
+        total = databaseHelper.getWalletBalance(walletTitleStr);
+        if (isForUpdate){
+            remaining = total - record.getAmount();
+        }
+        else{
+            remaining = total - databaseHelper.singleWalletTotalCost(walletTitleStr);
+        }
         if (!TextUtils.isEmpty(Amount.getText().toString())){
-            return Integer.parseInt(Amount.getText().toString()) < remaining;
+            return Integer.parseInt(Amount.getText().toString()) <= remaining;
         }
         else {
             return false;
